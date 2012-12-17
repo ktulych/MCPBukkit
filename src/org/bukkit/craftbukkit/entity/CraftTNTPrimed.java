@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 
 import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.TNTPrimed;
 
@@ -49,4 +50,17 @@ public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
         return EntityType.PRIMED_TNT;
     }
 
+    public Entity getSource() {
+        net.minecraft.entity.EntityLiving source = getHandle().func_94083_c();
+
+        if (source != null) {
+            Entity bukkitEntity = source.getBukkitEntity();
+
+            if (bukkitEntity.isValid()) {
+                return bukkitEntity;
+            }
+        }
+
+        return null;
+    }
 }
