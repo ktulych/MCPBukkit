@@ -16,13 +16,14 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.EnumGameType;
  import net.minecraft.world.World;
-@@ -48,25 +48,51 @@
+@@ -48,25 +48,52 @@
  import net.minecraft.world.demo.DemoWorldManager;
  import net.minecraft.world.storage.IPlayerFileData;
  
 +// CraftBukkit start
 +import org.bukkit.Location;
 +import org.bukkit.TravelAgent;
++import org.bukkit.WeatherType;
 +import org.bukkit.craftbukkit.CraftServer;
 +import org.bukkit.craftbukkit.CraftWorld;
 +import org.bukkit.craftbukkit.chunkio.ChunkIOExecutor;
@@ -72,7 +73,7 @@
          this.field_72400_f = p_i3376_1_;
          this.field_72401_g.func_73708_a(false);
          this.field_72413_h.func_73708_a(false);
-@@ -85,18 +111,29 @@
+@@ -85,18 +112,29 @@
              s = p_72355_1_.func_74430_c().toString();
          }
  
@@ -105,7 +106,7 @@
          this.func_72377_c(p_72355_2_);
          netserverhandler.func_72569_a(p_72355_2_.field_70165_t, p_72355_2_.field_70163_u, p_72355_2_.field_70161_v, p_72355_2_.field_70177_z, p_72355_2_.field_70125_A);
          this.field_72400_f.func_71212_ac().func_71745_a(netserverhandler);
-@@ -164,6 +201,11 @@
+@@ -164,6 +202,11 @@
  
      public void func_72364_a(WorldServer[] p_72364_1_)
      {
@@ -117,7 +118,7 @@
          this.field_72412_k = p_72364_1_[0].func_72860_G().func_75756_e();
      }
  
-@@ -187,7 +229,7 @@
+@@ -187,7 +230,7 @@
  
      public NBTTagCompound func_72380_a(EntityPlayerMP p_72380_1_)
      {
@@ -126,7 +127,7 @@
          NBTTagCompound nbttagcompound1;
  
          if (p_72380_1_.func_70005_c_().equals(this.field_72400_f.func_71214_G()) && nbttagcompound != null)
-@@ -211,16 +253,58 @@
+@@ -211,16 +254,58 @@
  
      public void func_72377_c(EntityPlayerMP p_72377_1_)
      {
@@ -189,7 +190,7 @@
          }
      }
  
-@@ -229,28 +313,62 @@
+@@ -229,28 +314,62 @@
          p_72358_1_.func_71121_q().func_73040_p().func_72685_d(p_72358_1_);
      }
  
@@ -271,7 +272,7 @@
              String s1 = "You are banned from this server!\nReason: " + banentry.func_73686_f();
  
              if (banentry.func_73680_d() != null)
-@@ -258,15 +376,15 @@
+@@ -258,15 +377,15 @@
                  s1 = s1 + "\nYour ban will be removed on " + field_72403_e.format(banentry.func_73680_d());
              }
  
@@ -293,7 +294,7 @@
              s2 = s2.substring(s2.indexOf("/") + 1);
              s2 = s2.substring(0, s2.indexOf(":"));
  
-@@ -280,17 +398,33 @@
+@@ -280,17 +399,33 @@
                      s3 = s3 + "\nYour ban will be removed on " + field_72403_e.format(banentry1.func_73680_d());
                  }
  
@@ -335,7 +336,7 @@
          ArrayList arraylist = new ArrayList();
          EntityPlayerMP entityplayermp;
  
-@@ -298,7 +432,7 @@
+@@ -298,7 +433,7 @@
          {
              entityplayermp = (EntityPlayerMP)this.field_72404_b.get(i);
  
@@ -344,7 +345,7 @@
              {
                  arraylist.add(entityplayermp);
              }
-@@ -312,186 +446,401 @@
+@@ -312,186 +447,401 @@
              entityplayermp.field_71135_a.func_72565_c("You logged in from another location");
          }
  
@@ -879,7 +880,7 @@
      }
  
      public void func_72374_b()
-@@ -501,11 +850,13 @@
+@@ -501,11 +851,13 @@
              this.field_72408_o = 0;
          }
  
@@ -898,7 +899,7 @@
      }
  
      public void func_72384_a(Packet p_72384_1_)
-@@ -571,11 +922,29 @@
+@@ -571,11 +923,29 @@
      public void func_72386_b(String p_72386_1_)
      {
          this.field_72414_i.add(p_72386_1_.toLowerCase());
@@ -928,7 +929,7 @@
      }
  
      public boolean func_72370_d(String p_72370_1_)
-@@ -586,7 +955,8 @@
+@@ -586,7 +956,8 @@
  
      public boolean func_72353_e(String p_72353_1_)
      {
@@ -938,7 +939,7 @@
      }
  
      public EntityPlayerMP func_72361_f(String p_72361_1_)
-@@ -670,7 +1040,7 @@
+@@ -670,7 +1041,7 @@
                      }
                  }
  
@@ -947,7 +948,7 @@
                  {
                      ((List)object).add(entityplayermp);
                  }
-@@ -758,6 +1128,13 @@
+@@ -758,6 +1129,13 @@
          {
              EntityPlayerMP entityplayermp = (EntityPlayerMP)this.field_72404_b.get(j);
  
@@ -961,7 +962,16 @@
              if (entityplayermp != p_72397_1_ && entityplayermp.field_71093_bK == p_72397_10_)
              {
                  double d4 = p_72397_2_ - entityplayermp.field_70165_t;
-@@ -831,7 +1208,7 @@
+@@ -808,7 +1186,7 @@
+ 
+         if (p_72354_2_.func_72896_J())
+         {
+-            p_72354_1_.field_71135_a.func_72567_b(new Packet70GameEvent(1, 0));
++            p_72354_1_.setPlayerWeather(WeatherType.DOWNFALL, false); // CraftBukkit - handle player specific weather
+         }
+     }
+ 
+@@ -831,7 +1209,7 @@
  
      public String[] func_72373_m()
      {
@@ -970,7 +980,7 @@
      }
  
      public boolean func_72383_n()
-@@ -895,7 +1272,7 @@
+@@ -895,7 +1273,7 @@
      {
          while (!this.field_72404_b.isEmpty())
          {
