@@ -1,6 +1,8 @@
 package org.bukkit.craftbukkit.inventory;
 
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -30,6 +32,12 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
 
     public int getHeldItemSlot() {
         return getInventory().field_70461_c;
+    }
+
+    public void setHeldItemSlot(int slot) {
+        Validate.isTrue(slot >= 0 && slot < net.minecraft.entity.player.InventoryPlayer.func_70451_h(), "Slot is not between 0 and 8 inclusive");
+        this.getInventory().field_70461_c = slot;
+        ((CraftPlayer) this.getHolder()).getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet16BlockItemSwitch(slot));
     }
 
     public ItemStack getHelmet() {
