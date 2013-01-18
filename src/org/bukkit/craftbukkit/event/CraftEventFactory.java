@@ -45,6 +45,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.meta.BookMeta;
 
 public class CraftEventFactory {
     public static final net.minecraft.util.DamageSource MELTING = CraftDamageSource.copyOf(net.minecraft.util.DamageSource.field_76370_b);
@@ -652,5 +653,27 @@ public class CraftEventFactory {
         InventoryCloseEvent event = new InventoryCloseEvent(human.field_71070_bA.getBukkitView());
         human.field_70170_p.getServer().getPluginManager().callEvent(event);
         human.field_71070_bA.transferTo(human.field_71069_bz, human.getBukkitEntity());
+    }
+
+    public static void handleEditBookEvent(net.minecraft.entity.player.EntityPlayerMP player, net.minecraft.item.ItemStack newBookItem) {
+        int itemInHandIndex = player.field_71071_by.field_70461_c;
+
+        PlayerEditBookEvent editBookEvent = new PlayerEditBookEvent(player.getBukkitEntity(), player.field_71071_by.field_70461_c, (BookMeta) CraftItemStack.getItemMeta(player.field_71071_by.func_70448_g()), (BookMeta) CraftItemStack.getItemMeta(newBookItem), newBookItem.field_77993_c == net.minecraft.item.Item.field_77823_bG.field_77779_bT);
+        player.field_70170_p.getServer().getPluginManager().callEvent(editBookEvent);
+        net.minecraft.item.ItemStack itemInHand = player.field_71071_by.func_70301_a(itemInHandIndex);
+
+        // If they've got the same item in their hand, it'll need to be updated.
+        if (itemInHand.field_77993_c == net.minecraft.item.Item.field_77821_bF.field_77779_bT) {
+            if (!editBookEvent.isCancelled()) {
+                CraftItemStack.setItemMeta(itemInHand, editBookEvent.getNewBookMeta());
+                if (editBookEvent.isSigning()) {
+                    itemInHand.field_77993_c = net.minecraft.item.Item.field_77823_bG.field_77779_bT;
+                }
+            }
+
+            // Client will have updated its idea of the book item; we need to overwrite that
+            net.minecraft.inventory.Slot slot = player.field_71070_bA.func_75147_a((net.minecraft.inventory.IInventory) player.field_71071_by, itemInHandIndex);
+            player.field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet103SetSlot(player.field_71070_bA.field_75152_c, slot.field_75222_d, itemInHand));
+        }
     }
 }
