@@ -1,18 +1,26 @@
 --- ../net/minecraft/item/ItemFishingRod.java
 +++ ../net/minecraft/item/ItemFishingRod.java
-@@ -1,5 +1,6 @@
+@@ -1,9 +1,13 @@
  package net.minecraft.item;
  
-+import org.bukkit.event.player.PlayerFishEvent; // CraftBukkit
++// CraftBukkit start
++import org.bukkit.event.player.PlayerFishEvent;
++import org.bukkit.entity.Fish;
  import net.minecraft.creativetab.CreativeTabs;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.projectile.EntityFishHook;
-@@ -25,6 +26,16 @@
+ import net.minecraft.world.World;
++// CraftBukkit end
+ 
+ public class ItemFishingRod extends Item
+ {
+@@ -25,11 +29,22 @@
          }
          else
          {
 +            // CraftBukkit start
-+            PlayerFishEvent playerFishEvent = new PlayerFishEvent((org.bukkit.entity.Player) p_77659_3_.getBukkitEntity(), null, PlayerFishEvent.State.FISHING);
++            EntityFishHook hook = new EntityFishHook(p_77659_2_, p_77659_3_);
++            PlayerFishEvent playerFishEvent = new PlayerFishEvent((org.bukkit.entity.Player) p_77659_3_.getBukkitEntity(), null, (Fish) hook.getBukkitEntity(), PlayerFishEvent.State.FISHING);
 +            p_77659_2_.getServer().getPluginManager().callEvent(playerFishEvent);
 +
 +            if (playerFishEvent.isCancelled())
@@ -24,3 +32,9 @@
              p_77659_2_.func_72956_a(p_77659_3_, "random.bow", 0.5F, 0.4F / (field_77697_d.nextFloat() * 0.4F + 0.8F));
  
              if (!p_77659_2_.field_72995_K)
+             {
+-                p_77659_2_.func_72838_d(new EntityFishHook(p_77659_2_, p_77659_3_));
++                p_77659_2_.func_72838_d(hook); // CraftBukkit - moved creation up
+             }
+ 
+             p_77659_3_.func_71038_i();
