@@ -184,14 +184,14 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             break;
         case DISPENSER:
             if (craftinv.getInventory() instanceof net.minecraft.tileentity.TileEntityDispenser) {
-                getHandle().func_71006_a((net.minecraft.tileentity.TileEntityDispenser)craftinv.getInventory());
+                getHandle().func_71006_a((net.minecraft.tileentity.TileEntityDispenser) craftinv.getInventory());
             } else {
                 openCustomInventory(inventory, player, 3);
             }
             break;
         case FURNACE:
             if (craftinv.getInventory() instanceof net.minecraft.tileentity.TileEntityFurnace) {
-                getHandle().func_71042_a((net.minecraft.tileentity.TileEntityFurnace)craftinv.getInventory());
+                getHandle().func_71042_a((net.minecraft.tileentity.TileEntityFurnace) craftinv.getInventory());
             } else {
                 openCustomInventory(inventory, player, 2);
             }
@@ -201,7 +201,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             break;
         case BREWING:
             if (craftinv.getInventory() instanceof net.minecraft.tileentity.TileEntityBrewingStand) {
-                getHandle().func_71017_a((net.minecraft.tileentity.TileEntityBrewingStand)craftinv.getInventory());
+                getHandle().func_71017_a((net.minecraft.tileentity.TileEntityBrewingStand) craftinv.getInventory());
             } else {
                 openCustomInventory(inventory, player, 5);
             }
@@ -211,7 +211,9 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             break;
         case HOPPER:
             if (craftinv.getInventory() instanceof net.minecraft.tileentity.TileEntityHopper) {
-                getHandle().func_94064_a((net.minecraft.tileentity.TileEntityHopper)craftinv.getInventory());
+                getHandle().func_94064_a((net.minecraft.tileentity.TileEntityHopper) craftinv.getInventory());
+            } else if (craftinv.getInventory() instanceof net.minecraft.entity.item.EntityMinecartHopper) {
+                getHandle().func_96125_a((net.minecraft.entity.item.EntityMinecartHopper) craftinv.getInventory());
             }
             break;
         case CREATIVE:
