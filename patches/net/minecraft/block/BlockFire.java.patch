@@ -6,7 +6,7 @@
  import net.minecraft.world.WorldProviderEnd;
 +
 +// CraftBukkit start
-+import org.bukkit.event.block.BlockIgniteEvent;
++import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.block.BlockBurnEvent;
 +import org.bukkit.event.block.BlockSpreadEvent;
 +// CraftBukkit end
@@ -41,33 +41,26 @@
                  }
                  else
                  {
-@@ -131,6 +137,12 @@
+@@ -131,6 +137,10 @@
                      this.func_72255_a(p_71847_1_, p_71847_2_, p_71847_3_ + 1, p_71847_4_, 250 + b0, p_71847_5_, l);
                      this.func_72255_a(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ - 1, 300 + b0, p_71847_5_, l);
                      this.func_72255_a(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ + 1, 300 + b0, p_71847_5_, l);
 +                    // CraftBukkit start - call to stop spread of fire
 +                    org.bukkit.Server server = p_71847_1_.getServer();
 +                    org.bukkit.World bworld = p_71847_1_.getWorld();
-+                    BlockIgniteEvent.IgniteCause igniteCause = BlockIgniteEvent.IgniteCause.SPREAD;
-+                    org.bukkit.block.Block fromBlock = bworld.getBlockAt(p_71847_2_, p_71847_3_, p_71847_4_);
 +                    // CraftBukkit end
  
                      for (int i1 = p_71847_2_ - 1; i1 <= p_71847_2_ + 1; ++i1)
                      {
-@@ -167,7 +179,32 @@
+@@ -167,7 +177,27 @@
                                                  k2 = 15;
                                              }
  
 -                                            p_71847_1_.func_72832_d(i1, k1, j1, this.field_71990_ca, k2, 3);
 +                                            // CraftBukkit start - call to stop spread of fire
-+                                            org.bukkit.block.Block block = bworld.getBlockAt(i1, k1, j1);
-+
-+                                            if (block.getTypeId() != Block.field_72067_ar.field_71990_ca)
++                                            if (p_71847_1_.func_72798_a(i1, k1, j1) != Block.field_72067_ar.field_71990_ca)
 +                                            {
-+                                                BlockIgniteEvent event = new BlockIgniteEvent(block, igniteCause, null);
-+                                                server.getPluginManager().callEvent(event);
-+
-+                                                if (event.isCancelled())
++                                                if (CraftEventFactory.callBlockIgniteEvent(p_71847_1_, i1, k1, j1, p_71847_2_, p_71847_3_, p_71847_4_).isCancelled())
 +                                                {
 +                                                    continue;
 +                                                }
@@ -75,7 +68,7 @@
 +                                                org.bukkit.block.BlockState blockState = bworld.getBlockAt(i1, k1, j1).getState();
 +                                                blockState.setTypeId(this.field_71990_ca);
 +                                                blockState.setData(new org.bukkit.material.MaterialData(this.field_71990_ca, (byte) k2));
-+                                                BlockSpreadEvent spreadEvent = new BlockSpreadEvent(blockState.getBlock(), fromBlock, blockState);
++                                                BlockSpreadEvent spreadEvent = new BlockSpreadEvent(blockState.getBlock(), bworld.getBlockAt(p_71847_2_, p_71847_3_, p_71847_4_), blockState);
 +                                                server.getPluginManager().callEvent(spreadEvent);
 +
 +                                                if (!spreadEvent.isCancelled())
@@ -88,7 +81,7 @@
                                          }
                                      }
                                  }
-@@ -191,6 +228,17 @@
+@@ -191,6 +221,17 @@
          if (p_72255_6_.nextInt(p_72255_5_) < j1)
          {
              boolean flag = p_72255_1_.func_72798_a(p_72255_2_, p_72255_3_, p_72255_4_) == Block.field_72091_am.field_71990_ca;
@@ -106,7 +99,7 @@
  
              if (p_72255_6_.nextInt(p_72255_7_ + 10) < 5 && !p_72255_1_.func_72951_B(p_72255_2_, p_72255_3_, p_72255_4_))
              {
-@@ -217,7 +265,7 @@
+@@ -217,7 +258,7 @@
  
      private boolean func_72251_l(World p_72251_1_, int p_72251_2_, int p_72251_3_, int p_72251_4_)
      {
@@ -115,7 +108,7 @@
      }
  
      private int func_72254_n(World p_72254_1_, int p_72254_2_, int p_72254_3_, int p_72254_4_)
-@@ -265,7 +313,7 @@
+@@ -265,7 +306,7 @@
      {
          if (!p_71863_1_.func_72797_t(p_71863_2_, p_71863_3_ - 1, p_71863_4_) && !this.func_72251_l(p_71863_1_, p_71863_2_, p_71863_3_, p_71863_4_))
          {
@@ -124,7 +117,7 @@
          }
      }
  
-@@ -275,7 +323,7 @@
+@@ -275,7 +316,7 @@
          {
              if (!p_71861_1_.func_72797_t(p_71861_2_, p_71861_3_ - 1, p_71861_4_) && !this.func_72251_l(p_71861_1_, p_71861_2_, p_71861_3_, p_71861_4_))
              {
@@ -133,7 +126,7 @@
              }
              else
              {
-@@ -283,4 +331,14 @@
+@@ -283,4 +324,14 @@
              }
          }
      }

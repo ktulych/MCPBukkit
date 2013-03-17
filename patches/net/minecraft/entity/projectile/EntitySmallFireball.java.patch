@@ -4,7 +4,7 @@
  package net.minecraft.entity.projectile;
  
 +// CraftBukkit start
-+import org.bukkit.event.block.BlockIgniteEvent;
++import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import net.minecraft.block.Block;
  import net.minecraft.entity.EntityLiving;
@@ -33,17 +33,13 @@
                  }
              }
              else
-@@ -66,7 +79,17 @@
+@@ -66,7 +79,13 @@
  
                  if (this.field_70170_p.func_72799_c(i, j, k))
                  {
 -                    this.field_70170_p.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
 +                    // CraftBukkit start
-+                    org.bukkit.block.Block block = field_70170_p.getWorld().getBlockAt(i, j, k);
-+                    BlockIgniteEvent event = new BlockIgniteEvent(block, BlockIgniteEvent.IgniteCause.FIREBALL, null);
-+                    field_70170_p.getServer().getPluginManager().callEvent(event);
-+
-+                    if (!event.isCancelled())
++                    if (!CraftEventFactory.callBlockIgniteEvent(field_70170_p, i, j, k, this).isCancelled())
 +                    {
 +                        this.field_70170_p.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
 +                    }

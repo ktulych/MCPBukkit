@@ -191,3 +191,16 @@
                      }
  
                      this.field_77287_j.func_72832_d(i, j, k, 0, 0, 3);
+@@ -232,7 +336,11 @@
+ 
+                 if (l == 0 && Block.field_71970_n[i1] && this.field_77290_i.nextInt(3) == 0)
+                 {
+-                    this.field_77287_j.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
++                    // CraftBukkit start - ignition by explosion.
++                    if (!org.bukkit.craftbukkit.event.CraftEventFactory.callBlockIgniteEvent(this.field_77287_j, i, j, k, this).isCancelled())
++                    {
++                        this.field_77287_j.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
++                    } // CraftBukkit end
+                 }
+             }
+         }

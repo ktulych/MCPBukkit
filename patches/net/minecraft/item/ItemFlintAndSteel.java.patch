@@ -1,21 +1,13 @@
 --- ../net/minecraft/item/ItemFlintAndSteel.java
 +++ ../net/minecraft/item/ItemFlintAndSteel.java
-@@ -1,9 +1,14 @@
+@@ -1,5 +1,6 @@
  package net.minecraft.item;
  
-+// CraftBukkit start
-+import org.bukkit.craftbukkit.block.CraftBlockState;
-+import org.bukkit.entity.Player;
-+import org.bukkit.event.block.BlockIgniteEvent;
++import org.bukkit.craftbukkit.block.CraftBlockState; // CraftBukkit
  import net.minecraft.block.Block;
  import net.minecraft.creativetab.CreativeTabs;
  import net.minecraft.entity.player.EntityPlayer;
- import net.minecraft.world.World;
-+// CraftBukkit end
- 
- public class ItemFlintAndSteel extends Item
- {
-@@ -17,6 +22,8 @@
+@@ -17,6 +18,8 @@
  
      public boolean func_77648_a(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
      {
@@ -24,17 +16,12 @@
          if (p_77648_7_ == 0)
          {
              --p_77648_5_;
-@@ -57,8 +64,32 @@
+@@ -57,8 +60,27 @@
  
              if (i1 == 0)
              {
 +                // CraftBukkit start - store the clicked block
-+                org.bukkit.block.Block blockClicked = p_77648_3_.getWorld().getBlockAt(p_77648_4_, p_77648_5_, p_77648_6_);
-+                Player thePlayer = (Player) p_77648_2_.getBukkitEntity();
-+                BlockIgniteEvent eventIgnite = new BlockIgniteEvent(blockClicked, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, thePlayer);
-+                p_77648_3_.getServer().getPluginManager().callEvent(eventIgnite);
-+
-+                if (eventIgnite.isCancelled())
++                if (org.bukkit.craftbukkit.event.CraftEventFactory.callBlockIgniteEvent(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, org.bukkit.event.block.BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p_77648_2_).isCancelled())
 +                {
 +                    p_77648_1_.func_77972_a(1, p_77648_2_);
 +                    return false;

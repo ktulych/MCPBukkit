@@ -8,7 +8,22 @@
  public class EntityEnderCrystal extends Entity
  {
      public int field_70261_a = 0;
-@@ -68,6 +67,13 @@
+@@ -45,7 +44,13 @@
+ 
+         if (this.field_70170_p.func_72798_a(i, j, k) != Block.field_72067_ar.field_71990_ca)
+         {
+-            this.field_70170_p.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
++            // CraftBukkit start
++            if (!org.bukkit.craftbukkit.event.CraftEventFactory.callBlockIgniteEvent(this.field_70170_p, i, j, k, this).isCancelled())
++            {
++                this.field_70170_p.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
++            }
++
++            // CraftBukkit end
+         }
+     }
+ 
+@@ -68,6 +73,13 @@
          {
              if (!this.field_70128_L && !this.field_70170_p.field_72995_K)
              {
@@ -22,7 +37,7 @@
                  this.field_70260_b = 0;
  
                  if (this.field_70260_b <= 0)
-@@ -76,7 +82,7 @@
+@@ -76,7 +88,7 @@
  
                      if (!this.field_70170_p.field_72995_K)
                      {

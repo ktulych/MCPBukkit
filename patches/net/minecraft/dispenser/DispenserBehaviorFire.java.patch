@@ -1,9 +1,10 @@
 --- ../net/minecraft/dispenser/DispenserBehaviorFire.java
 +++ ../net/minecraft/dispenser/DispenserBehaviorFire.java
-@@ -1,14 +1,20 @@
+@@ -1,14 +1,21 @@
  package net.minecraft.dispenser;
  
 +// CraftBukkit start
++import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.craftbukkit.inventory.CraftItemStack;
 +import org.bukkit.event.block.BlockDispenseEvent;
  import net.minecraft.block.Block;
@@ -21,7 +22,7 @@
  
      protected ItemStack func_82487_b(IBlockSource p_82487_1_, ItemStack p_82487_2_)
      {
-@@ -17,6 +23,35 @@
+@@ -17,15 +24,50 @@
          int i = p_82487_1_.func_82623_d() + enumfacing.func_82601_c();
          int j = p_82487_1_.func_82622_e() + enumfacing.func_96559_d();
          int k = p_82487_1_.func_82621_f() + enumfacing.func_82599_e();
@@ -56,4 +57,23 @@
 +        // CraftBukkit end
  
          if (world.func_72799_c(i, j, k))
+         {
+-            world.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
++            // CraftBukkit - ignition by dispensing flint and steel
++            if (!CraftEventFactory.callBlockIgniteEvent(world, i, j, k, p_82487_1_.func_82623_d(), p_82487_1_.func_82622_e(), p_82487_1_.func_82621_f()).isCancelled())
++            {
++                world.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
+ 
+-            if (p_82487_2_.func_96631_a(1, world.field_73012_v))
+-            {
+-                p_82487_2_.field_77994_a = 0;
++                if (p_82487_2_.func_96631_a(1, world.field_73012_v))
++                {
++                    p_82487_2_.field_77994_a = 0;
++                }
+             }
++
++            // CraftBukkit end
+         }
+         else if (world.func_72798_a(i, j, k) == Block.field_72091_am.field_71990_ca)
          {
