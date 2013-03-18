@@ -1,12 +1,13 @@
 --- ../net/minecraft/tileentity/TileEntityHopper.java
 +++ ../net/minecraft/tileentity/TileEntityHopper.java
-@@ -18,12 +18,49 @@
+@@ -18,12 +18,50 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
  
 +// CraftBukkit start
 +import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 +import org.bukkit.entity.HumanEntity;
++import org.bukkit.event.inventory.InventoryPickupItemEvent;
 +// CraftBukkit end
 +
  public class TileEntityHopper extends TileEntity implements Hopper
@@ -50,7 +51,7 @@
      public void func_70307_a(NBTTagCompound p_70307_1_)
      {
          super.func_70307_a(p_70307_1_);
-@@ -197,7 +234,7 @@
+@@ -197,7 +235,7 @@
          {
              if (!this.func_98047_l() && BlockHopper.func_94452_d(this.func_70322_n()))
              {
@@ -59,7 +60,7 @@
  
                  if (flag)
                  {
-@@ -289,7 +326,7 @@
+@@ -289,7 +327,7 @@
  
              if (entityitem != null)
              {
@@ -67,4 +68,21 @@
 +                flag |= func_96114_a((IInventory) p_96116_0_, entityitem);
              }
          }
+ 
+@@ -306,6 +344,16 @@
+         }
+         else
+         {
++            // CraftBukkit start
++            InventoryPickupItemEvent event = new InventoryPickupItemEvent(p_96114_0_.getOwner().getInventory(), (org.bukkit.entity.Item) p_96114_1_.getBukkitEntity());
++            p_96114_1_.field_70170_p.getServer().getPluginManager().callEvent(event);
++
++            if (event.isCancelled())
++            {
++                return false;
++            }
++
++            // CraftBukkit end
+             ItemStack itemstack = p_96114_1_.func_92059_d().func_77946_l();
+             ItemStack itemstack1 = func_94117_a(p_96114_0_, itemstack, -1);
  
