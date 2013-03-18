@@ -35,13 +35,13 @@
  
      public void func_82352_b(String p_82352_1_)
      {
-@@ -33,8 +47,79 @@
+@@ -33,8 +47,108 @@
  
              if (minecraftserver != null && minecraftserver.func_82356_Z())
              {
 -                ICommandManager icommandmanager = minecraftserver.func_71187_D();
 -                return icommandmanager.func_71556_a(this, this.field_82354_a);
-+                // CraftBukkit start - handle command block as console
++                // CraftBukkit start - handle command block commands using Bukkit dispatcher
 +                org.bukkit.command.SimpleCommandMap commandMap = minecraftserver.server.getCommandMap();
 +                Joiner joiner = Joiner.on(" ");
 +                String command = this.field_82354_a;
@@ -72,6 +72,35 @@
 +                if (this.field_70331_k.field_73010_i.isEmpty())
 +                {
 +                    return 0;
++                }
++
++                // testfor command requires special handling
++                if (args[0].equalsIgnoreCase("testfor"))
++                {
++                    if (args.length < 2)
++                    {
++                        return 0;
++                    }
++
++                    EntityPlayerMP[] players = PlayerSelector.func_82380_c(this, args[1]);
++
++                    if (players != null && players.length > 0)
++                    {
++                        return players.length;
++                    }
++                    else
++                    {
++                        EntityPlayerMP player = MinecraftServer.func_71276_C().func_71203_ab().func_72361_f(args[1]); // Should be getPlayer
++
++                        if (player == null)
++                        {
++                            return 0;
++                        }
++                        else
++                        {
++                            return 1;
++                        }
++                    }
 +                }
 +
 +                commands.add(args);
@@ -112,12 +141,12 @@
 +                    }
 +                }
 +
-+                // CraftBukkit end
 +                return completed;
++                // CraftBukkit end
              }
              else
              {
-@@ -43,6 +128,31 @@
+@@ -43,6 +157,31 @@
          }
      }
  
