@@ -22,7 +22,8 @@
  public class TileEntityCommandBlock extends TileEntity implements ICommandSender
  {
      private int field_96106_a = 0;
-     private String field_82354_a = "";
+-    private String field_82354_a = "";
++    public String field_82354_a = ""; // CraftBukkit - private -> public
      private String field_96105_c = "@";
 +    // CraftBukkit start
 +    private final org.bukkit.command.BlockCommandSender sender;
