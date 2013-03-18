@@ -596,7 +596,7 @@
          this.field_71135_a.func_72567_b(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
      }
  
-@@ -824,4 +1081,95 @@
+@@ -824,4 +1081,99 @@
      {
          return new ChunkCoordinates(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u + 0.5D), MathHelper.func_76128_c(this.field_70161_v));
      }
@@ -633,7 +633,11 @@
 +            return;
 +        }
 +
-+        this.weather = type;
++        if (plugin)
++        {
++            this.weather = type;
++        }
++
 +        this.field_71135_a.func_72567_b(new Packet70GameEvent(type == WeatherType.DOWNFALL ? 1 : 2, 0));
 +    }
 +
