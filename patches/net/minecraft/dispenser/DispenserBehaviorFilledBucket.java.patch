@@ -23,23 +23,21 @@
  
      public ItemStack func_82487_b(IBlockSource p_82487_1_, ItemStack p_82487_2_)
      {
-@@ -17,11 +25,61 @@
+@@ -17,11 +25,62 @@
          int j = p_82487_1_.func_82622_e();
          int k = p_82487_1_.func_82621_f();
          EnumFacing enumfacing = BlockDispenser.func_100009_j_(p_82487_1_.func_82620_h());
 +        // CraftBukkit start
 +        World world = p_82487_1_.func_82618_k();
-+        int i2 = i + enumfacing.func_82601_c();
-+        int k2 = k + enumfacing.func_82599_e();
- 
--        if (itembucket.func_77875_a(p_82487_1_.func_82618_k(), (double)i, (double)j, (double)k, i + enumfacing.func_82601_c(), j + enumfacing.func_96559_d(), k + enumfacing.func_82599_e()))
-+        if (world.func_72799_c(i2, j, k2) || world.func_72803_f(i2, j, k2).func_76220_a())
-         {
--            p_82487_2_.field_77993_c = Item.field_77788_aw.field_77779_bT;
--            p_82487_2_.field_77994_a = 1;
++        int x = i + enumfacing.func_82601_c();
++        int y = j + enumfacing.func_96559_d();
++        int z = k + enumfacing.func_82599_e();
++
++        if (world.func_72799_c(x, y, z) || world.func_72803_f(x, y, z).func_76220_a())
++        {
 +            org.bukkit.block.Block block = world.getWorld().getBlockAt(i, j, k);
 +            CraftItemStack craftItem = CraftItemStack.asCraftMirror(p_82487_2_);
-+            BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(0, 0, 0));
++            BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(x, y, z));
 +
 +            if (!BlockDispenser.eventFired)
 +            {
@@ -68,9 +66,11 @@
 +        }
 +
 +        // CraftBukkit end
-+
-+        if (itembucket.func_77875_a(p_82487_1_.func_82618_k(), (double) i, (double) j, (double) k, i + enumfacing.func_82601_c(), j, k + enumfacing.func_82599_e()))
-+        {
+ 
+         if (itembucket.func_77875_a(p_82487_1_.func_82618_k(), (double)i, (double)j, (double)k, i + enumfacing.func_82601_c(), j + enumfacing.func_96559_d(), k + enumfacing.func_82599_e()))
+         {
+-            p_82487_2_.field_77993_c = Item.field_77788_aw.field_77779_bT;
+-            p_82487_2_.field_77994_a = 1;
 +            // CraftBukkit start - handle stacked buckets
 +            Item item = Item.field_77788_aw;
 +
