@@ -58,7 +58,7 @@
 +        System.setOut(new PrintStream(new LoggerOutputStream(this.func_98033_al().func_98076_a(), Level.INFO), true));
 +        System.setErr(new PrintStream(new LoggerOutputStream(this.func_98033_al().func_98076_a(), Level.SEVERE), true));
 +        // CraftBukkit end
-         this.func_98033_al().func_98233_a("Starting minecraft server version 1.5");
+         this.func_98033_al().func_98233_a("Starting minecraft server version 1.5.1");
  
          if (Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
 @@ -61,7 +77,7 @@

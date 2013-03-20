@@ -54,12 +54,12 @@
 +        // CraftBukkit start
 +        catch (java.net.SocketTimeoutException exception)
 +        {
-+            p_73272_0_.func_98232_c("Read timed out");
++            p_73272_0_.func_98233_a("Read timed out");
 +            return null;
 +        }
 +        catch (java.net.SocketException exception)
 +        {
-+            p_73272_0_.func_98232_c("Connection reset");
++            p_73272_0_.func_98233_a("Connection reset");
 +            return null;
 +        }
 +

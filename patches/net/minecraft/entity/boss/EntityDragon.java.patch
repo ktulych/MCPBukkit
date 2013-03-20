@@ -187,7 +187,7 @@
          {
 @@ -480,7 +523,11 @@
                      {
-                         if (j2 != Block.field_72089_ap.field_71990_ca && j2 != Block.field_72082_bJ.field_71990_ca && j2 != Block.field_71986_z.field_71990_ca)
+                         if (j2 != Block.field_72089_ap.field_71990_ca && j2 != Block.field_72082_bJ.field_71990_ca && j2 != Block.field_71986_z.field_71990_ca && this.field_70170_p.func_82736_K().func_82766_b("mobGriefing"))
                          {
 -                            flag1 = this.field_70170_p.func_94571_i(k1, l1, i2) || flag1;
 +                            // CraftBukkit start - add blocks to list rather than destroying them

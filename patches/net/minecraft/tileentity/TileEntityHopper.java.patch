@@ -51,25 +51,7 @@
      public void func_70307_a(NBTTagCompound p_70307_1_)
      {
          super.func_70307_a(p_70307_1_);
-@@ -197,7 +235,7 @@
-         {
-             if (!this.func_98047_l() && BlockHopper.func_94452_d(this.func_70322_n()))
-             {
--                boolean flag = this.func_94116_j() | func_96116_a(this);
-+                boolean flag = this.func_94116_j() | func_96116_a((Hopper) this);
- 
-                 if (flag)
-                 {
-@@ -289,7 +327,7 @@
- 
-             if (entityitem != null)
-             {
--                flag |= func_96114_a(p_96116_0_, entityitem);
-+                flag |= func_96114_a((IInventory) p_96116_0_, entityitem);
-             }
-         }
- 
-@@ -306,6 +344,16 @@
+@@ -324,6 +362,16 @@
          }
          else
          {

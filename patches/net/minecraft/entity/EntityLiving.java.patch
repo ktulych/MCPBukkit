@@ -1,6 +1,14 @@
 --- ../net/minecraft/entity/EntityLiving.java
 +++ ../net/minecraft/entity/EntityLiving.java
-@@ -14,12 +14,14 @@
+@@ -5,6 +5,7 @@
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Random;
++import java.util.concurrent.Callable;
+ import net.minecraft.block.Block;
+ import net.minecraft.block.StepSound;
+ import net.minecraft.block.material.Material;
+@@ -16,12 +17,14 @@
  import net.minecraft.entity.ai.EntityLookHelper;
  import net.minecraft.entity.ai.EntityMoveHelper;
  import net.minecraft.entity.ai.EntitySenses;
@@ -15,7 +23,7 @@
  import net.minecraft.entity.projectile.EntityArrow;
  import net.minecraft.item.Item;
  import net.minecraft.item.ItemArmor;
-@@ -28,6 +30,7 @@
+@@ -30,6 +33,7 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagFloat;
  import net.minecraft.nbt.NBTTagList;
@@ -23,12 +31,13 @@
  import net.minecraft.network.packet.Packet18Animation;
  import net.minecraft.network.packet.Packet22Collect;
  import net.minecraft.network.packet.Packet5PlayerInventory;
-@@ -38,10 +41,18 @@
+@@ -40,11 +44,19 @@
  import net.minecraft.util.ChunkCoordinates;
  import net.minecraft.util.CombatTracker;
  import net.minecraft.util.DamageSource;
 +import net.minecraft.util.EntityDamageSource;
  import net.minecraft.util.MathHelper;
+ import net.minecraft.util.ReportedException;
  import net.minecraft.util.Vec3;
  import net.minecraft.world.World;
  import net.minecraft.world.WorldServer;
@@ -42,7 +51,7 @@
  
  public abstract class EntityLiving extends Entity
  {
-@@ -74,7 +85,7 @@
+@@ -77,7 +89,7 @@
      public float field_70733_aJ;
      protected int field_70734_aK = this.func_70667_aM();
      public int field_70735_aL;
@@ -51,7 +60,7 @@
      public int field_70757_a;
      public int field_70737_aN;
      public int field_70738_aO;
-@@ -90,21 +101,21 @@
+@@ -93,21 +105,21 @@
      public float field_70722_aY;
      public float field_70721_aZ;
      public float field_70754_ba;
@@ -78,7 +87,7 @@
      protected final EntityAITasks field_70715_bh;
      private EntityLiving field_70696_bz;
      private EntitySenses field_70723_bA;
-@@ -112,12 +123,12 @@
+@@ -115,12 +127,12 @@
      private ChunkCoordinates field_70775_bC = new ChunkCoordinates(0, 0, 0);
      private float field_70772_bD = -1.0F;
      private ItemStack[] field_82182_bS = new ItemStack[5];
@@ -94,7 +103,7 @@
      protected final CombatTracker field_94063_bt = new CombatTracker(this);
      protected int field_70716_bi;
      protected double field_70709_bj;
-@@ -126,17 +137,22 @@
+@@ -129,17 +141,22 @@
      protected double field_70712_bm;
      protected double field_70705_bn;
      float field_70706_bo = 0.0F;
@@ -119,7 +128,7 @@
  
      public EntityLiving(World p_i3443_1_)
      {
-@@ -392,10 +408,20 @@
+@@ -395,10 +412,20 @@
              this.func_70642_aH();
          }
  
@@ -144,7 +153,7 @@
  
          if (this.func_70045_F() || this.field_70170_p.field_72995_K)
          {
-@@ -420,14 +446,30 @@
+@@ -423,14 +450,30 @@
                      this.field_70170_p.func_72869_a("bubble", this.field_70165_t + (double)f, this.field_70163_u + (double)f1, this.field_70161_v + (double)f2, this.field_70159_w, this.field_70181_x, this.field_70179_y);
                  }
  
@@ -177,7 +186,7 @@
          }
  
          this.field_70727_aS = this.field_70726_aT;
-@@ -491,26 +533,53 @@
+@@ -494,26 +537,53 @@
          this.field_70170_p.field_72984_F.func_76319_b();
      }
  
@@ -245,7 +254,7 @@
              this.func_70106_y();
  
              for (i = 0; i < 20; ++i)
-@@ -591,7 +660,7 @@
+@@ -594,7 +664,7 @@
  
                  if (!ItemStack.func_77989_b(itemstack, this.field_82180_bT[i]))
                  {
@@ -254,7 +263,7 @@
                      this.field_82180_bT[i] = itemstack == null ? null : itemstack.func_77946_l();
                  }
              }
-@@ -627,7 +696,8 @@
+@@ -630,7 +700,8 @@
          {
              f3 = 1.0F;
              f2 = (float)Math.sqrt((double)f) * 3.0F;
@@ -264,7 +273,7 @@
          }
  
          if (this.field_70733_aJ > 0.0F)
-@@ -724,15 +794,29 @@
+@@ -727,15 +798,29 @@
          this.field_70764_aw += f2;
      }
  
@@ -299,7 +308,7 @@
              }
  
              this.field_70172_ad = this.field_70771_an / 2;
-@@ -788,6 +872,21 @@
+@@ -791,6 +876,21 @@
  
                  this.field_70721_aZ = 1.5F;
                  boolean flag = true;
@@ -321,7 +330,7 @@
  
                  if ((float)this.field_70172_ad > (float)this.field_70771_an / 2.0F)
                  {
-@@ -1045,7 +1144,7 @@
+@@ -1048,7 +1148,7 @@
                  this.func_70628_a(this.field_70718_bc > 0, i);
                  this.func_82160_b(this.field_70718_bc > 0, i);
  
@@ -330,7 +339,7 @@
                  {
                      int j = this.field_70146_Z.nextInt(200) - i;
  
-@@ -1055,15 +1154,26 @@
+@@ -1058,15 +1158,26 @@
                      }
                  }
              }
@@ -358,7 +367,7 @@
          int j = this.func_70633_aT();
  
          if (j > 0)
-@@ -1075,11 +1185,30 @@
+@@ -1078,11 +1189,30 @@
                  k += this.field_70146_Z.nextInt(p_70628_2_ + 1);
              }
  
@@ -394,7 +403,7 @@
      }
  
      protected int func_70633_aT()
-@@ -1094,16 +1223,28 @@
+@@ -1097,16 +1227,28 @@
  
          if (i > 0)
          {
@@ -433,7 +442,7 @@
              int j = this.field_70170_p.func_72798_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u - 0.20000000298023224D - (double)this.field_70129_M), MathHelper.func_76128_c(this.field_70161_v));
  
              if (j > 0)
-@@ -1342,22 +1483,43 @@
+@@ -1345,22 +1487,43 @@
          p_70014_1_.func_74782_a("DropChances", nbttaglist1);
          p_70014_1_.func_74778_a("CustomName", this.func_94057_bL());
          p_70014_1_.func_74757_a("CustomNameVisible", this.func_94062_bN());
@@ -480,7 +489,7 @@
  
          if (p_70037_1_.func_74764_b("CustomName") && p_70037_1_.func_74779_i("CustomName").length() > 0)
          {
-@@ -1531,7 +1693,8 @@
+@@ -1534,7 +1697,8 @@
          this.field_70170_p.field_72984_F.func_76319_b();
          this.field_70170_p.field_72984_F.func_76320_a("looting");
  
@@ -490,7 +499,7 @@
          {
              List list = this.field_70170_p.func_72872_a(EntityItem.class, this.field_70121_D.func_72314_b(1.0D, 0.0D, 1.0D));
              Iterator iterator = list.iterator();
-@@ -1702,12 +1865,12 @@
+@@ -1705,12 +1869,12 @@
                  double d2 = entityplayer.field_70161_v - this.field_70161_v;
                  double d3 = d0 * d0 + d1 * d1 + d2 * d2;
  
@@ -505,7 +514,7 @@
                  {
                      this.func_70106_y();
                  }
-@@ -1716,7 +1879,15 @@
+@@ -1719,7 +1883,15 @@
                      this.field_70708_bq = 0;
                  }
              }
@@ -522,7 +531,7 @@
      }
  
      protected void func_70619_bc()
-@@ -1780,7 +1951,7 @@
+@@ -1783,7 +1955,7 @@
          {
              this.func_70625_a(this.field_70776_bF, 10.0F, (float)this.func_70646_bf());
  
@@ -531,7 +540,7 @@
              {
                  this.field_70776_bF = null;
              }
-@@ -1879,7 +2050,18 @@
+@@ -1882,7 +2054,18 @@
  
      protected void func_70076_C()
      {
@@ -551,7 +560,26 @@
      }
  
      public Vec3 func_70040_Z()
-@@ -2163,7 +2345,7 @@
+@@ -1955,12 +2138,12 @@
+             {
+                 CrashReport crashreport = CrashReport.func_85055_a(throwable, "Ticking mob effect instance");
+                 CrashReportCategory crashreportcategory = crashreport.func_85058_a("Mob effect being ticked");
+-                crashreportcategory.func_71500_a("Effect Name", new CallableEffectName(this, potioneffect));
+-                crashreportcategory.func_71500_a("Effect ID", new CallableEffectID(this, potioneffect));
+-                crashreportcategory.func_71500_a("Effect Duration", new CallableEffectDuration(this, potioneffect));
+-                crashreportcategory.func_71500_a("Effect Amplifier", new CallableEffectAmplifier(this, potioneffect));
+-                crashreportcategory.func_71500_a("Effect is Splash", new CallableEffectIsSplash(this, potioneffect));
+-                crashreportcategory.func_71500_a("Effect is Ambient", new CallableEffectIsAmbient(this, potioneffect));
++                crashreportcategory.func_71500_a("Effect Name", (Callable)(new CallableEffectName(this, potioneffect)));
++                crashreportcategory.func_71500_a("Effect ID", (Callable)(new CallableEffectID(this, potioneffect)));
++                crashreportcategory.func_71500_a("Effect Duration", (Callable)(new CallableEffectDuration(this, potioneffect)));
++                crashreportcategory.func_71500_a("Effect Amplifier", (Callable)(new CallableEffectAmplifier(this, potioneffect)));
++                crashreportcategory.func_71500_a("Effect is Splash", (Callable)(new CallableEffectIsSplash(this, potioneffect)));
++                crashreportcategory.func_71500_a("Effect is Ambient", (Callable)(new CallableEffectIsAmbient(this, potioneffect)));
+                 throw new ReportedException(crashreport);
+             }
+         }
+@@ -2181,7 +2364,7 @@
          }
          else
          {
@@ -560,7 +588,7 @@
              i -= (3 - this.field_70170_p.field_73013_u) * 4;
  
              if (i < 0)
-@@ -2284,17 +2466,17 @@
+@@ -2302,17 +2485,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {
@@ -581,7 +609,7 @@
              }
          }
      }
-@@ -2453,7 +2635,7 @@
+@@ -2471,7 +2654,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {

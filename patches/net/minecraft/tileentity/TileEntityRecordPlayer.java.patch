@@ -1,0 +1,29 @@
+--- ../net/minecraft/tileentity/TileEntityRecordPlayer.java
++++ ../net/minecraft/tileentity/TileEntityRecordPlayer.java
+@@ -2,10 +2,11 @@
+ 
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.nbt.NBTTagCompound;
+-
+ public class TileEntityRecordPlayer extends TileEntity
+ {
+     private ItemStack field_70417_a;
++
++    public TileEntityRecordPlayer() {}
+ 
+     public void func_70307_a(NBTTagCompound p_70307_1_)
+     {
+@@ -39,6 +40,13 @@
+ 
+     public void func_96098_a(ItemStack p_96098_1_)
+     {
++        // CraftBukkit start - There can only be one
++        if (p_96098_1_ != null)
++        {
++            p_96098_1_.field_77994_a = 1;
++        }
++
++        // CraftBukkit end
+         this.field_70417_a = p_96098_1_;
+         this.func_70296_d();
+     }

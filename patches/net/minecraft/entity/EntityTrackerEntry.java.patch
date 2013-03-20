@@ -35,6 +35,18 @@
 -                        Packet packet = Item.field_77744_bd.func_77871_c(itemstack, this.field_73132_a.field_70170_p, entityplayermp);
 -
 -                        if (packet != null)
+-                        {
+-                            entityplayermp.field_71135_a.func_72567_b(packet);
+-                        }
+-                    }
+-                }
+-            }
+-
+-            DataWatcher datawatcher = this.field_73132_a.func_70096_w();
+-
+-            if (datawatcher.func_75684_a())
+-            {
+-                this.func_73116_b(new Packet40EntityMetadata(this.field_73132_a.field_70157_k, datawatcher, false));
 +            EntityItemFrame i4 = (EntityItemFrame) this.field_73132_a;
 +            ItemStack i5 = i4.func_82335_i();
 +
@@ -54,19 +66,13 @@
 +                        Packet j3 = Item.field_77744_bd.func_77871_c(i5, this.field_73132_a.field_70170_p, j2);
 +
 +                        if (j3 != null)
-                         {
--                            entityplayermp.field_71135_a.func_72567_b(packet);
++                        {
 +                            j2.field_71135_a.func_72567_b(j3);
-                         }
-                     }
-                 }
-             }
- 
--            DataWatcher datawatcher = this.field_73132_a.func_70096_w();
--
--            if (datawatcher.func_75684_a())
--            {
--                this.func_73116_b(new Packet40EntityMetadata(this.field_73132_a.field_70157_k, datawatcher, false));
++                        }
++                    }
++                }
++            }
++
 +            DataWatcher i9 = this.field_73132_a.func_70096_w();
 +
 +            if (i9.func_75684_a())
@@ -95,25 +101,25 @@
 +
 +                // CraftBukkit end
 +
-                 if (j1 >= -128 && j1 < 128 && k1 >= -128 && k1 < 128 && l1 >= -128 && l1 < 128 && this.field_73142_u <= 400 && !this.field_73141_v)
+                 if (this.field_73136_m > 0)
                  {
-                     if (flag && flag1)
-@@ -196,6 +217,14 @@
-                 else
-                 {
-                     this.field_73142_u = 0;
+                     if (j1 >= -128 && j1 < 128 && k1 >= -128 && k1 < 128 && l1 >= -128 && l1 < 128 && this.field_73142_u <= 400 && !this.field_73141_v)
+@@ -198,6 +219,14 @@
+                     else
+                     {
+                         this.field_73142_u = 0;
 +
-+                    // CraftBukkit start - refresh list of who can see a player before sending teleport packet
-+                    if (this.field_73132_a instanceof EntityPlayerMP)
-+                    {
-+                        this.func_73125_b(new java.util.ArrayList(this.field_73134_o));
-+                    }
++                        // CraftBukkit start - refresh list of who can see a player before sending teleport packet
++                        if (this.field_73132_a instanceof EntityPlayerMP)
++                        {
++                            this.func_73125_b(new java.util.ArrayList(this.field_73134_o));
++                        }
 +
-+                    // CraftBukkit end
-                     object = new Packet34EntityTeleport(this.field_73132_a.field_70157_k, i, j, k, (byte)l, (byte)i1);
++                        // CraftBukkit end
+                         object = new Packet34EntityTeleport(this.field_73132_a.field_70157_k, i, j, k, (byte)l, (byte)i1);
+                     }
                  }
- 
-@@ -228,19 +257,18 @@
+@@ -231,19 +260,18 @@
                      this.func_73116_b(new Packet40EntityMetadata(this.field_73132_a.field_70157_k, datawatcher1, false));
                  }
  
@@ -145,7 +151,7 @@
                  this.field_73141_v = false;
              }
              else
-@@ -284,7 +312,32 @@
+@@ -287,7 +315,32 @@
  
          if (this.field_73132_a.field_70133_I)
          {
@@ -179,7 +185,7 @@
              this.field_73132_a.field_70133_I = false;
          }
      }
-@@ -341,6 +394,19 @@
+@@ -344,6 +397,19 @@
              {
                  if (!this.field_73134_o.contains(p_73117_1_) && (this.func_73121_d(p_73117_1_) || this.field_73132_a.field_98038_p))
                  {
@@ -199,7 +205,7 @@
                      this.field_73134_o.add(p_73117_1_);
                      Packet packet = this.func_73124_b();
                      p_73117_1_.field_71135_a.func_72567_b(packet);
-@@ -387,6 +453,11 @@
+@@ -390,6 +456,11 @@
                          }
                      }
  
@@ -211,7 +217,7 @@
                      if (this.field_73132_a instanceof EntityLiving)
                      {
                          EntityLiving entityliving = (EntityLiving)this.field_73132_a;
-@@ -425,7 +496,10 @@
+@@ -428,7 +499,10 @@
      {
          if (this.field_73132_a.field_70128_L)
          {

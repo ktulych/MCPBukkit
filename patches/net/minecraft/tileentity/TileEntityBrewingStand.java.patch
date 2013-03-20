@@ -1,6 +1,6 @@
 --- ../net/minecraft/tileentity/TileEntityBrewingStand.java
 +++ ../net/minecraft/tileentity/TileEntityBrewingStand.java
-@@ -10,13 +10,51 @@
+@@ -10,15 +10,53 @@
  import net.minecraft.nbt.NBTTagList;
  import net.minecraft.potion.PotionHelper;
  
@@ -12,10 +12,12 @@
 +
  public class TileEntityBrewingStand extends TileEntity implements ISidedInventory
  {
+     private static final int[] field_102017_a = new int[] {3};
+     private static final int[] field_102016_b = new int[] {0, 1, 2};
 -    private ItemStack[] field_70359_a = new ItemStack[4];
 -    private int field_70357_b;
-+    public ItemStack[] field_70359_a = new ItemStack[4]; // CraftBukkit private -> public
-+    public int field_70357_b; // CraftBukkit private -> public
++    public ItemStack[] field_70359_a = new ItemStack[4]; // CraftBukkit - private -> public
++    public int field_70357_b; // CraftBukkit - private -> public
      private int field_70358_c;
      private int field_70356_d;
      private String field_94132_e;
@@ -54,7 +56,7 @@
  
      public String func_70303_b()
      {
-@@ -134,6 +172,20 @@
+@@ -136,6 +174,20 @@
          if (this.func_70350_k())
          {
              ItemStack itemstack = this.field_70359_a[3];
@@ -75,7 +77,7 @@
  
              for (int i = 0; i < 3; ++i)
              {
-@@ -272,7 +324,7 @@
+@@ -274,7 +326,7 @@
  
      public int func_70297_j_()
      {

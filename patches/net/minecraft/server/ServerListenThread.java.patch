@@ -20,11 +20,14 @@
                  }
  
                  if (netloginhandler.field_72539_c)
-@@ -72,9 +74,19 @@
-                 long i = System.currentTimeMillis();
-                 HashMap hashmap = this.field_71776_c;
- 
-+                // CraftBukkit start
+@@ -68,12 +70,37 @@
+             try
+             {
+                 Socket socket = this.field_71774_e.accept();
++                // CraftBukkit start - connection throttle
++                InetAddress address = socket.getInetAddress();
++                long currentTime = System.currentTimeMillis();
++
 +                if (((MinecraftServer) this.field_71771_f.func_71746_d()).server == null)
 +                {
 +                    socket.close();
@@ -32,16 +35,22 @@
 +                }
 +
 +                connectionThrottle = ((MinecraftServer) this.field_71771_f.func_71746_d()).server.getConnectionThrottle();
-+                // CraftBukkit end
 +
-                 synchronized (this.field_71776_c)
-                 {
--                    if (this.field_71776_c.containsKey(inetaddress) && !func_71770_b(inetaddress) && i - ((Long)this.field_71776_c.get(inetaddress)).longValue() < 4000L)
-+                    if (this.field_71776_c.containsKey(inetaddress) && !func_71770_b(inetaddress) && i - ((Long) this.field_71776_c.get(inetaddress)).longValue() < connectionThrottle)
-                     {
-                         this.field_71776_c.put(inetaddress, Long.valueOf(i));
-                         socket.close();
-@@ -89,7 +101,7 @@
++                synchronized (this.field_71776_c)
++                {
++                    if (this.field_71776_c.containsKey(address) && !"127.0.0.1".equals(address.getHostAddress()) && currentTime - ((Long) this.field_71776_c.get(address)).longValue() < connectionThrottle)
++                    {
++                        this.field_71776_c.put(address, Long.valueOf(currentTime));
++                        socket.close();
++                        continue;
++                    }
++
++                    this.field_71776_c.put(address, Long.valueOf(currentTime));
++                }
++
++                // CraftBukkit end
+                 NetLoginHandler netloginhandler = new NetLoginHandler(this.field_71771_f.func_71746_d(), socket, "Connection #" + this.field_71773_d++);
+                 this.func_71764_a(netloginhandler);
              }
              catch (IOException ioexception)
              {
@@ -50,7 +59,7 @@
              }
          }
  
-@@ -100,7 +112,7 @@
+@@ -84,7 +111,7 @@
      {
          if (p_71764_1_ == null)
          {
