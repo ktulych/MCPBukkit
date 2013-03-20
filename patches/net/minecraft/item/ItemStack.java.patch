@@ -28,7 +28,7 @@
          }
      }
  
-@@ -194,6 +195,26 @@
+@@ -194,9 +195,29 @@
  
      public void func_77964_b(int p_77964_1_)
      {
@@ -40,7 +40,7 @@
 +            return;
 +        }
 +
-+        if (!(this.func_77981_g() || Item.field_77698_e[this.field_77993_c].func_77645_m() || this.field_77993_c > 256))   // Should be canBeDepleted
++        if (!(this.func_77981_g() || Item.field_77698_e[this.field_77993_c].func_77645_m() || this.field_77993_c > 255))   // Should be usesDurability
 +        {
 +            p_77964_1_ = 0;
 +        }
@@ -54,7 +54,11 @@
 +        // CraftBukkit end
          this.field_77991_e = p_77964_1_;
  
-         if (this.field_77991_e < 0)
+-        if (this.field_77991_e < 0)
++        if (this.field_77991_e < -1)   // CraftBukkit - don't filter -1, we use it
+         {
+             this.field_77991_e = 0;
+         }
 @@ -263,6 +284,13 @@
                          this.field_77994_a = 0;
                      }
