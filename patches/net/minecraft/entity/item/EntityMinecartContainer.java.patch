@@ -19,7 +19,8 @@
 +
  public abstract class EntityMinecartContainer extends EntityMinecart implements IInventory
  {
-     private ItemStack[] field_94113_a = new ItemStack[36];
+-    private ItemStack[] field_94113_a = new ItemStack[36];
++    private ItemStack[] field_94113_a = new ItemStack[27]; // CraftBukkit - 36 -> 27
      private boolean field_94112_b = true;
 +
 +    // CraftBukkit start
