@@ -1,14 +1,24 @@
 --- ../net/minecraft/item/ItemStack.java
 +++ ../net/minecraft/item/ItemStack.java
-@@ -60,7 +60,7 @@
+@@ -60,12 +60,12 @@
          this.field_82843_f = null;
          this.field_77993_c = p_i3666_1_;
          this.field_77994_a = p_i3666_2_;
 -        this.field_77991_e = p_i3666_3_;
-+        this.func_77964_b(p_i3666_3_); // CraftBukkit
+-
+-        if (this.field_77991_e < 0)
+-        {
+-            this.field_77991_e = 0;
+-        }
++        // CraftBukkit start - pass to setData to do filtering
++        this.func_77964_b(p_i3666_3_);
++        //if (this.damage < 0) {
++        //    this.damage = 0;
++        //}
++        // CraftBukkit end
+     }
  
-         if (this.field_77991_e < 0)
-         {
+     public static ItemStack func_77949_a(NBTTagCompound p_77949_0_)
 @@ -134,7 +134,7 @@
  
          if (this.field_77990_d != null)
