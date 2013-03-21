@@ -1,0 +1,10 @@
+--- ../net/minecraft/block/BlockDropper.java
++++ ../net/minecraft/block/BlockDropper.java
+@@ -10,7 +10,6 @@
+ import net.minecraft.tileentity.TileEntityHopper;
+ import net.minecraft.util.Facing;
+ import net.minecraft.world.World;
+-
+ public class BlockDropper extends BlockDispenser
+ {
+     private final IBehaviorDispenseItem field_96474_cR = new BehaviorDefaultDispenseItem();
