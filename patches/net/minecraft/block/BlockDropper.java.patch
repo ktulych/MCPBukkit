@@ -8,3 +8,12 @@
  public class BlockDropper extends BlockDispenser
  {
      private final IBehaviorDispenseItem field_96474_cR = new BehaviorDefaultDispenseItem();
+@@ -30,7 +29,7 @@
+         return new TileEntityDropper();
+     }
+ 
+-    protected void func_82526_n(World p_82526_1_, int p_82526_2_, int p_82526_3_, int p_82526_4_)
++    public void func_82526_n(World p_82526_1_, int p_82526_2_, int p_82526_3_, int p_82526_4_)   // CraftBukkit - protected -> public
+     {
+         BlockSourceImpl blocksourceimpl = new BlockSourceImpl(p_82526_1_, p_82526_2_, p_82526_3_, p_82526_4_);
+         TileEntityDispenser tileentitydispenser = (TileEntityDispenser)blocksourceimpl.func_82619_j();

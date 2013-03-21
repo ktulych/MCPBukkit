@@ -411,10 +411,13 @@ public class CraftInventory implements Inventory {
     }
 
     public InventoryType getType() {
+        // Thanks to Droppers extending Dispensers, order is important.
         if (inventory instanceof net.minecraft.inventory.InventoryCrafting) {
             return inventory.func_70302_i_() >= 9 ? InventoryType.WORKBENCH : InventoryType.CRAFTING;
         } else if (inventory instanceof net.minecraft.entity.player.InventoryPlayer) {
             return InventoryType.PLAYER;
+        } else if (inventory instanceof net.minecraft.tileentity.TileEntityDropper) {
+            return InventoryType.DROPPER;
         } else if (inventory instanceof net.minecraft.tileentity.TileEntityDispenser) {
             return InventoryType.DISPENSER;
         } else if (inventory instanceof net.minecraft.tileentity.TileEntityFurnace) {
