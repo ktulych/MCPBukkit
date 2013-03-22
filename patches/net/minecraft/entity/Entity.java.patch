@@ -589,7 +589,7 @@
          else
          {
 +            // CraftBukkit start
-+            if ((this.bukkitEntity instanceof LivingEntity) && (entity.getBukkitEntity() instanceof Vehicle))
++            if ((this.bukkitEntity instanceof LivingEntity) && (entity.getBukkitEntity() instanceof Vehicle) && entity.field_70170_p.func_72916_c_CodeFix_Public((int) entity.field_70165_t >> 4, (int) entity.field_70161_v >> 4))
 +            {
 +                VehicleEnterEvent event = new VehicleEnterEvent((Vehicle) entity.getBukkitEntity(), this.bukkitEntity);
 +                pluginManager.callEvent(event);

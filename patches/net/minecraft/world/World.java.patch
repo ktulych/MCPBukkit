@@ -690,9 +690,12 @@
  
          try
          {
-@@ -3344,4 +3609,4 @@
+@@ -3344,4 +3609,7 @@
      {
          return this.field_98181_L;
      }
 -}
++    public boolean func_72916_c_CodeFix_Public(int a, int b){
++        return func_72916_c(a, b);
++    }
 +}
