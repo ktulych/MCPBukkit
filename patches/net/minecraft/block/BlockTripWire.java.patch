@@ -9,44 +9,50 @@
  public class BlockTripWire extends Block
  {
      public BlockTripWire(int p_i4018_1_)
-@@ -190,6 +192,45 @@
+@@ -190,6 +192,51 @@
              }
          }
  
-+        // CraftBukkit start
-+        org.bukkit.World bworld = p_72147_1_.getWorld();
-+        org.bukkit.plugin.PluginManager manager = p_72147_1_.getServer().getPluginManager();
-+
-+        if (flag != flag1)
++        // CraftBukkit start - Call interact even when triggering connected tripwire
++        if (flag != flag1 && flag1 && (p_72147_1_.func_72805_g(p_72147_2_, p_72147_3_, p_72147_4_) & 4) == 4)
 +        {
-+            if (flag1)
++            org.bukkit.World bworld = p_72147_1_.getWorld();
++            org.bukkit.plugin.PluginManager manager = p_72147_1_.getServer().getPluginManager();
++            org.bukkit.block.Block block = bworld.getBlockAt(p_72147_2_, p_72147_3_, p_72147_4_);
++            boolean allowed = false;
++
++            // If all of the events are cancelled block the tripwire trigger, else allow
++            for (Object object : list)
 +            {
-+                for (Object object : list)
++                if (object != null)
 +                {
-+                    if (object != null)
++                    org.bukkit.event.Cancellable cancellable;
++
++                    if (object instanceof EntityPlayer)
 +                    {
-+                        org.bukkit.event.Cancellable cancellable;
++                        cancellable = org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerInteractEvent((EntityPlayer) object, org.bukkit.event.block.Action.PHYSICAL, p_72147_2_, p_72147_3_, p_72147_4_, -1, null);
++                    }
++                    else if (object instanceof Entity)
++                    {
++                        cancellable = new EntityInteractEvent(((Entity) object).getBukkitEntity(), block);
++                        manager.callEvent((EntityInteractEvent) cancellable);
++                    }
++                    else
++                    {
++                        continue;
++                    }
 +
-+                        if (object instanceof EntityPlayer)
-+                        {
-+                            cancellable = org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerInteractEvent((EntityPlayer) object, org.bukkit.event.block.Action.PHYSICAL, p_72147_2_, p_72147_3_, p_72147_4_, -1, null);
-+                        }
-+                        else if (object instanceof Entity)
-+                        {
-+                            cancellable = new EntityInteractEvent(((Entity) object).getBukkitEntity(), bworld.getBlockAt(p_72147_2_, p_72147_3_, p_72147_4_));
-+                            manager.callEvent((EntityInteractEvent) cancellable);
-+                        }
-+                        else
-+                        {
-+                            continue;
-+                        }
-+
-+                        if (cancellable.isCancelled())
-+                        {
-+                            return;
-+                        }
++                    if (!cancellable.isCancelled())
++                    {
++                        allowed = true;
++                        break;
 +                    }
 +                }
++            }
++
++            if (!allowed)
++            {
++                return;
 +            }
 +        }
 +

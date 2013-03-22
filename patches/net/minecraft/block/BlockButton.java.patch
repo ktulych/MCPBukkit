@@ -51,20 +51,40 @@
                  if (this.field_82537_a)
                  {
                      this.func_82535_o(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_);
-@@ -274,6 +304,16 @@
-             {
-                 if ((p_71869_1_.func_72805_g(p_71869_2_, p_71869_3_, p_71869_4_) & 8) == 0)
-                 {
-+                    // CraftBukkit start - Call interaction when entities (currently arrows) hit wooden buttons
-+                    EntityInteractEvent event = new EntityInteractEvent(p_71869_5_.getBukkitEntity(), p_71869_1_.getWorld().getBlockAt(p_71869_2_, p_71869_3_, p_71869_4_));
-+                    p_71869_1_.getServer().getPluginManager().callEvent(event);
+@@ -289,6 +319,36 @@
+         List list = p_82535_1_.func_72872_a(EntityArrow.class, AxisAlignedBB.func_72332_a().func_72299_a((double)p_82535_2_ + this.field_72026_ch, (double)p_82535_3_ + this.field_72023_ci, (double)p_82535_4_ + this.field_72024_cj, (double)p_82535_2_ + this.field_72021_ck, (double)p_82535_3_ + this.field_72022_cl, (double)p_82535_4_ + this.field_72019_cm));
+         boolean flag1 = !list.isEmpty();
+ 
++        // CraftBukkit start - Call interact event when arrows turn on wooden buttons
++        if (flag != flag1 && flag1)
++        {
++            org.bukkit.block.Block block = p_82535_1_.getWorld().getBlockAt(p_82535_2_, p_82535_3_, p_82535_4_);
++            boolean allowed = false;
 +
-+                    if (event.isCancelled())
++            // If all of the events are cancelled block the button press, else allow
++            for (Object object : list)
++            {
++                if (object != null)
++                {
++                    EntityInteractEvent event = new EntityInteractEvent(((Entity) object).getBukkitEntity(), block);
++                    p_82535_1_.getServer().getPluginManager().callEvent(event);
++
++                    if (!event.isCancelled())
 +                    {
-+                        return;
++                        allowed = true;
++                        break;
 +                    }
++                }
++            }
 +
-+                    // CraftBukkit end
-                     this.func_82535_o(p_71869_1_, p_71869_2_, p_71869_3_, p_71869_4_);
-                 }
-             }
++            if (!allowed)
++            {
++                return;
++            }
++        }
++
++        // CraftBukkit end
++
+         if (flag1 && !flag)
+         {
+             p_82535_1_.func_72921_c(p_82535_2_, p_82535_3_, p_82535_4_, i1 | 8, 3);

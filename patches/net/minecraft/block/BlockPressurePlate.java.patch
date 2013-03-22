@@ -9,11 +9,11 @@
  
  public class BlockPressurePlate extends BlockBasePressurePlate
  {
-@@ -54,6 +56,27 @@
+@@ -54,6 +56,28 @@
              while (iterator.hasNext())
              {
                  Entity entity = (Entity)iterator.next();
-+                // CraftBukkit start
++                // CraftBukkit start - Fire interact event when turning on a pressure plate
 +                org.bukkit.World bworld = p_94351_1_.getWorld();
 +                org.bukkit.plugin.PluginManager manager = p_94351_1_.getServer().getPluginManager();
 +                org.bukkit.event.Cancellable cancellable;
@@ -28,9 +28,10 @@
 +                    manager.callEvent((EntityInteractEvent) cancellable);
 +                }
 +
++                // We only want to block turning the plate on if all events are cancelled
 +                if (cancellable.isCancelled())
 +                {
-+                    return 0;
++                    continue;
 +                }
 +
 +                // CraftBukkit end
