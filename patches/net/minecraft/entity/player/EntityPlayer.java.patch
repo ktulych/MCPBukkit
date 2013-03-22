@@ -1,14 +1,17 @@
 --- ../net/minecraft/entity/player/EntityPlayer.java
 +++ ../net/minecraft/entity/player/EntityPlayer.java
-@@ -35,6 +35,7 @@
+@@ -35,9 +35,9 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagList;
 +import net.minecraft.network.packet.Packet103SetSlot;
  import net.minecraft.potion.Potion;
  import net.minecraft.scoreboard.Score;
- import net.minecraft.scoreboard.ScoreObjective;
-@@ -61,6 +62,18 @@
+-import net.minecraft.scoreboard.ScoreObjective;
+ import net.minecraft.scoreboard.ScoreObjectiveCriteria;
+ import net.minecraft.scoreboard.ScorePlayerTeam;
+ import net.minecraft.scoreboard.Scoreboard;
+@@ -61,6 +61,18 @@
  import net.minecraft.world.World;
  import net.minecraft.world.chunk.IChunkProvider;
  
@@ -27,7 +30,7 @@
  public abstract class EntityPlayer extends EntityLiving implements ICommandSender
  {
      public InventoryPlayer field_71071_by = new InventoryPlayer(this);
-@@ -80,15 +93,27 @@
+@@ -80,15 +92,27 @@
      public double field_71094_bP;
      public double field_71095_bQ;
      public double field_71085_bR;
@@ -57,7 +60,7 @@
      public int field_71068_ca;
      public int field_71067_cb;
      public float field_71106_cc;
-@@ -330,6 +355,37 @@
+@@ -330,6 +354,37 @@
          {
              this.func_71010_c(this.field_71074_e, 16);
              int i = this.field_71074_e.field_77994_a;
@@ -95,7 +98,7 @@
              ItemStack itemstack = this.field_71074_e.func_77950_b(this.field_70170_p, this);
  
              if (itemstack != this.field_71074_e || itemstack != null && itemstack.field_77994_a != i)
-@@ -351,16 +407,24 @@
+@@ -351,16 +406,24 @@
          return this.func_70630_aN() <= 0 || this.func_70608_bn();
      }
  
@@ -124,7 +127,7 @@
  
              if (this.field_70154_o != null)
              {
-@@ -371,7 +435,7 @@
+@@ -371,7 +434,7 @@
          }
          else
          {
@@ -133,7 +136,7 @@
          }
      }
  
-@@ -407,9 +471,11 @@
+@@ -407,9 +470,11 @@
              --this.field_71101_bC;
          }
  
@@ -148,7 +151,7 @@
          }
  
          this.field_71071_by.func_70429_k();
-@@ -425,7 +491,8 @@
+@@ -425,7 +490,8 @@
          }
  
          float f = MathHelper.func_76133_a(this.field_70159_w * this.field_70159_w + this.field_70179_y * this.field_70179_y);
@@ -158,6 +161,33 @@
  
          if (f > 0.1F)
          {
+@@ -519,12 +585,14 @@
+     public void func_70084_c(Entity p_70084_1_, int p_70084_2_)
+     {
+         this.func_85039_t(p_70084_2_);
+-        Collection collection = this.func_96123_co().func_96520_a(ScoreObjectiveCriteria.field_96640_e);
++        // CraftBukkit - Get our scores instead
++        Collection<Score> collection = this.field_70170_p.getServer().getScoreboardManager().getScoreboardScores(ScoreObjectiveCriteria.field_96640_e, this.func_70023_ak(), new java.util.ArrayList<Score>());
+ 
+         if (p_70084_1_ instanceof EntityPlayer)
+         {
+             this.func_71064_a(StatList.field_75932_A, 1);
+-            collection.addAll(this.func_96123_co().func_96520_a(ScoreObjectiveCriteria.field_96639_d));
++            // CraftBukkit - Get our scores instead
++            this.field_70170_p.getServer().getScoreboardManager().getScoreboardScores(ScoreObjectiveCriteria.field_96639_d, this.func_70023_ak(), collection);
+         }
+         else
+         {
+@@ -535,8 +603,7 @@
+ 
+         while (iterator.hasNext())
+         {
+-            ScoreObjective scoreobjective = (ScoreObjective)iterator.next();
+-            Score score = this.func_96123_co().func_96529_a(this.func_70023_ak(), scoreobjective);
++            Score score = (Score) iterator.next(); // CraftBukkit - Use our scores instead
+             score.func_96648_a();
+         }
+     }
 @@ -586,6 +653,19 @@
                  entityitem.field_70179_y += Math.sin((double)f1) * (double)f;
              }
@@ -221,7 +251,49 @@
                  {
                      return false;
                  }
-@@ -919,7 +1010,8 @@
+@@ -801,9 +892,38 @@
+ 
+     public boolean func_96122_a(EntityPlayer p_96122_1_)
+     {
+-        ScorePlayerTeam scoreplayerteam = this.func_96124_cp();
+-        ScorePlayerTeam scoreplayerteam1 = p_96122_1_.func_96124_cp();
+-        return scoreplayerteam != scoreplayerteam1 ? true : (scoreplayerteam != null ? scoreplayerteam.func_96665_g() : true);
++        // CraftBukkit start - Change to check player's scoreboard team according to API reference to this (or main) scoreboard
++        org.bukkit.scoreboard.Team team;
++
++        if (this instanceof EntityPlayerMP)
++        {
++            EntityPlayerMP thisPlayer = (EntityPlayerMP) this;
++            team = thisPlayer.getBukkitEntity().getScoreboard().getPlayerTeam(thisPlayer.getBukkitEntity());
++
++            if (team == null || team.allowFriendlyFire())
++            {
++                return true;
++            }
++        }
++        else
++        {
++            // This should never be called, but is implemented anyway
++            org.bukkit.OfflinePlayer thisPlayer = this.field_70170_p.getServer().getOfflinePlayer(this.field_71092_bJ);
++            team = this.field_70170_p.getServer().getScoreboardManager().getMainScoreboard().getPlayerTeam(thisPlayer);
++
++            if (team == null || team.allowFriendlyFire())
++            {
++                return true;
++            }
++        }
++
++        if (p_96122_1_ instanceof EntityPlayerMP)
++        {
++            return team.hasPlayer(((EntityPlayerMP) p_96122_1_).getBukkitEntity());
++        }
++
++        return team.hasPlayer(this.field_70170_p.getServer().getOfflinePlayer(p_96122_1_.field_71092_bJ));
++        // CraftBukkit end
+     }
+ 
+     protected void func_71022_a(EntityLiving p_71022_1_, boolean p_71022_2_)
+@@ -919,7 +1039,8 @@
  
                  if (itemstack.func_77947_a((EntityLiving)p_70998_1_))
                  {
@@ -231,7 +303,7 @@
                      {
                          this.func_71028_bD();
                      }
-@@ -970,7 +1062,7 @@
+@@ -970,7 +1091,7 @@
  
                  if (p_71059_1_ instanceof EntityLiving)
                  {
@@ -240,7 +312,7 @@
                      j += EnchantmentHelper.func_77507_b(this, (EntityLiving)p_71059_1_);
                  }
  
-@@ -999,6 +1091,19 @@
+@@ -999,6 +1120,19 @@
                      }
  
                      boolean flag2 = p_71059_1_.func_70097_a(DamageSource.func_76365_a(this), i);
@@ -260,7 +332,7 @@
  
                      if (flag2)
                      {
-@@ -1022,7 +1127,7 @@
+@@ -1022,7 +1156,7 @@
  
                          if (i >= 18)
                          {
@@ -269,7 +341,7 @@
                          }
  
                          this.func_70607_j(p_71059_1_);
-@@ -1050,7 +1155,8 @@
+@@ -1050,7 +1184,8 @@
                      {
                          itemstack.func_77961_a((EntityLiving)object, this);
  
@@ -279,7 +351,7 @@
                          {
                              this.func_71028_bD();
                          }
-@@ -1067,7 +1173,16 @@
+@@ -1067,7 +1202,16 @@
  
                          if (l > 0 && flag2)
                          {
@@ -297,7 +369,7 @@
                          }
                          else if (flag1)
                          {
-@@ -1140,6 +1255,21 @@
+@@ -1140,6 +1284,21 @@
              }
          }
  
@@ -319,7 +391,7 @@
          this.func_70105_a(0.2F, 0.2F);
          this.field_70129_M = 0.2F;
  
-@@ -1234,6 +1364,27 @@
+@@ -1234,6 +1393,27 @@
              this.field_70170_p.func_72854_c();
          }
  
@@ -347,7 +419,7 @@
          if (p_70999_1_)
          {
              this.field_71076_b = 0;
-@@ -1319,11 +1470,13 @@
+@@ -1319,11 +1499,13 @@
          {
              this.field_71077_c = new ChunkCoordinates(p_71063_1_);
              this.field_82248_d = p_71063_2_;
@@ -361,7 +433,7 @@
          }
      }
  
-@@ -1453,7 +1606,7 @@
+@@ -1453,7 +1635,7 @@
                      }
                      else if ((double)this.field_71073_d.func_71569_e(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v)) >= 1000000.0D)
                      {
@@ -370,7 +442,7 @@
                      }
                  }
                  else if (this.field_70154_o instanceof EntityBoat)
-@@ -1485,7 +1638,7 @@
+@@ -1485,7 +1667,7 @@
      {
          if (p_70074_1_ instanceof IMob)
          {
@@ -379,7 +451,7 @@
          }
      }
  
-@@ -1572,7 +1725,7 @@
+@@ -1572,7 +1754,7 @@
  
      public boolean func_70996_bM()
      {
@@ -388,7 +460,7 @@
      }
  
      public void func_71008_a(ItemStack p_71008_1_, int p_71008_2_)
-@@ -1656,10 +1809,11 @@
+@@ -1656,10 +1838,11 @@
          return super.func_94062_bN();
      }
  
@@ -402,3 +474,11 @@
  
      public void func_71049_a(EntityPlayer p_71049_1_, boolean p_71049_2_)
      {
+@@ -1752,6 +1935,7 @@
+ 
+     public String func_96090_ax()
+     {
++        // TODO: fun
+         return ScorePlayerTeam.func_96667_a(this.func_96124_cp(), this.field_71092_bJ);
+     }
+ }
