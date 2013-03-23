@@ -22,7 +22,16 @@
  
                          if (d5 < d4 || d4 == 0.0D)
                          {
-@@ -280,21 +286,14 @@
+@@ -209,6 +215,8 @@
+ 
+             if (movingobjectposition != null)
+             {
++                org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileHitEvent(this); // Craftbukkit - Call event
++
+                 if (movingobjectposition.field_72308_g != null)
+                 {
+                     if (movingobjectposition.field_72308_g.func_70097_a(DamageSource.func_76356_a(this, this.field_70204_b), 0))
+@@ -280,21 +288,14 @@
                      }
                      else
                      {
@@ -46,7 +55,7 @@
                              float f5;
  
                              for (l = 0; (float)l < 1.0F + this.field_70130_N * 20.0F; ++l)
-@@ -368,6 +367,18 @@
+@@ -368,6 +369,18 @@
  
              if (this.field_70205_c != null)
              {
@@ -65,7 +74,7 @@
                  double d0 = this.field_70204_b.field_70165_t - this.field_70165_t;
                  double d1 = this.field_70204_b.field_70163_u - this.field_70163_u;
                  double d2 = this.field_70204_b.field_70161_v - this.field_70161_v;
-@@ -381,6 +392,19 @@
+@@ -381,6 +394,19 @@
              else if (this.field_70219_an > 0)
              {
                  EntityItem entityitem = new EntityItem(this.field_70170_p, this.field_70165_t, this.field_70163_u, this.field_70161_v, new ItemStack(Item.field_77754_aU));
@@ -85,7 +94,7 @@
                  double d5 = this.field_70204_b.field_70165_t - this.field_70165_t;
                  double d6 = this.field_70204_b.field_70163_u - this.field_70163_u;
                  double d7 = this.field_70204_b.field_70161_v - this.field_70161_v;
-@@ -391,15 +415,36 @@
+@@ -391,15 +417,36 @@
                  entityitem.field_70179_y = d7 * d9;
                  this.field_70170_p.func_72838_d(entityitem);
                  this.field_70204_b.func_71064_a(StatList.field_75933_B, 1);

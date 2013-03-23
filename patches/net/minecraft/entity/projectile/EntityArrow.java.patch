@@ -8,21 +8,19 @@
  import net.minecraft.entity.monster.EntityEnderman;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.EntityPlayerMP;
-@@ -19,6 +20,13 @@
+@@ -19,6 +20,11 @@
  import net.minecraft.util.MovingObjectPosition;
  import net.minecraft.util.Vec3;
  import net.minecraft.world.World;
 +
 +// CraftBukkit start
-+import org.bukkit.entity.Projectile;
 +import org.bukkit.event.entity.EntityCombustByEntityEvent;
-+import org.bukkit.event.entity.ProjectileHitEvent;
 +import org.bukkit.event.player.PlayerPickupItemEvent;
 +// CraftBukkit end
  
  public class EntityArrow extends Entity implements IProjectile
  {
-@@ -217,7 +225,7 @@
+@@ -217,7 +223,7 @@
  
                      if (movingobjectposition1 != null)
                      {
@@ -31,20 +29,16 @@
  
                          if (d1 < d0 || d0 == 0.0D)
                          {
-@@ -248,6 +256,12 @@
+@@ -248,6 +254,8 @@
  
              if (movingobjectposition != null)
              {
-+                // CraftBukkit start
-+                Projectile projectile = (Projectile) this.getBukkitEntity();
-+                ProjectileHitEvent phe = new ProjectileHitEvent(projectile);
-+                this.field_70170_p.getServer().getPluginManager().callEvent(phe);
-+                // CraftBukkit end
++                org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileHitEvent(this); // CraftBukkit - Call event
 +
                  if (movingobjectposition.field_72308_g != null)
                  {
                      f2 = MathHelper.func_76133_a(this.field_70159_w * this.field_70159_w + this.field_70181_x * this.field_70181_x + this.field_70179_y * this.field_70179_y);
-@@ -269,13 +283,23 @@
+@@ -269,13 +277,23 @@
                          damagesource = DamageSource.func_76353_a(this, this.field_70250_c);
                      }
  
@@ -73,7 +67,7 @@
                          if (movingobjectposition.field_72308_g instanceof EntityLiving)
                          {
                              EntityLiving entityliving = (EntityLiving)movingobjectposition.field_72308_g;
-@@ -344,7 +368,7 @@
+@@ -344,7 +362,7 @@
  
                      if (this.field_70246_g != 0)
                      {
@@ -82,7 +76,7 @@
                      }
                  }
              }
-@@ -450,6 +474,23 @@
+@@ -450,6 +468,23 @@
      {
          if (!this.field_70170_p.field_72995_K && this.field_70254_i && this.field_70249_b <= 0)
          {

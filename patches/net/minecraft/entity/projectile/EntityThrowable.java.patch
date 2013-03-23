@@ -1,15 +1,6 @@
 --- ../net/minecraft/entity/projectile/EntityThrowable.java
 +++ ../net/minecraft/entity/projectile/EntityThrowable.java
-@@ -14,6 +14,8 @@
- import net.minecraft.util.Vec3;
- import net.minecraft.world.World;
- 
-+import org.bukkit.event.entity.ProjectileHitEvent; // CraftBukkit
-+
- public abstract class EntityThrowable extends Entity implements IProjectile
- {
-     private int field_70189_d = -1;
-@@ -22,8 +24,8 @@
+@@ -22,8 +22,8 @@
      private int field_70188_g = 0;
      protected boolean field_70193_a = false;
      public int field_70191_b = 0;
@@ -20,7 +11,7 @@
      private int field_70194_h;
      private int field_70195_i = 0;
  
-@@ -163,7 +165,7 @@
+@@ -163,7 +163,7 @@
  
                      if (movingobjectposition1 != null)
                      {
@@ -29,7 +20,7 @@
  
                          if (d1 < d0 || d0 == 0.0D)
                          {
-@@ -189,6 +191,15 @@
+@@ -189,6 +189,14 @@
              else
              {
                  this.func_70184_a(movingobjectposition);
@@ -37,8 +28,7 @@
 +                // CraftBukkit start
 +                if (this.field_70128_L)
 +                {
-+                    ProjectileHitEvent hitEvent = new ProjectileHitEvent((org.bukkit.entity.Projectile) this.getBukkitEntity());
-+                    org.bukkit.Bukkit.getPluginManager().callEvent(hitEvent);
++                    org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileHitEvent(this);
 +                }
 +
 +                // CraftBukkit end
