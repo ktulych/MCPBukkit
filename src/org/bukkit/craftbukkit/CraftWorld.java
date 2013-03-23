@@ -847,6 +847,8 @@ public class CraftWorld implements World {
             } else if (ThrownExpBottle.class.isAssignableFrom(clazz)) {
                 entity = new net.minecraft.entity.item.EntityExpBottle(world);
                 entity.func_70012_b(x, y, z, 0, 0);
+            } else if (ThrownPotion.class.isAssignableFrom(clazz)) {
+                entity = new net.minecraft.entity.projectile.EntityPotion(world, x, y, z, CraftItemStack.asNMSCopy(new ItemStack(org.bukkit.Material.POTION, 1)));
             } else if (Fireball.class.isAssignableFrom(clazz)) {
                 if (SmallFireball.class.isAssignableFrom(clazz)) {
                     entity = new net.minecraft.entity.projectile.EntitySmallFireball(world);
