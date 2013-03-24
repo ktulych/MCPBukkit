@@ -63,30 +63,116 @@
      }
  
      public void func_75132_a(ICrafting p_75132_1_)
-@@ -129,6 +151,22 @@
-                         this.field_75167_g[j] = EnchantmentHelper.func_77514_a(this.field_75169_l, j, i, itemstack);
-                     }
+@@ -68,16 +90,16 @@
  
+     public void func_75130_a(IInventory p_75130_1_)
+     {
+-        if (p_75130_1_ == this.field_75168_e)
+-        {
+-            ItemStack itemstack = p_75130_1_.func_70301_a(0);
++        if (iinventory == this.enchantSlots)
++        {
++            ItemStack itemstack = iinventory.getItem(0);
+             int i;
+ 
+-            if (itemstack != null && itemstack.func_77956_u())
+-            {
+-                this.field_75166_f = this.field_75169_l.nextLong();
+-
+-                if (!this.field_75172_h.field_72995_K)
++            if (itemstack != null)   // CraftBukkit - relax condition
++            {
++                this.f = this.l.nextLong();
++
++                if (!this.world.isStatic)
+                 {
+                     i = 0;
+                     int j;
+@@ -86,36 +108,36 @@
+                     {
+                         for (int k = -1; k <= 1; ++k)
+                         {
+-                            if ((j != 0 || k != 0) && this.field_75172_h.func_72799_c(this.field_75173_i + k, this.field_75170_j, this.field_75171_k + j) && this.field_75172_h.func_72799_c(this.field_75173_i + k, this.field_75170_j + 1, this.field_75171_k + j))
++                            if ((j != 0 || k != 0) && this.world.isEmpty(this.x + k, this.y, this.z + j) && this.world.isEmpty(this.x + k, this.y + 1, this.z + j))
+                             {
+-                                if (this.field_75172_h.func_72798_a(this.field_75173_i + k * 2, this.field_75170_j, this.field_75171_k + j * 2) == Block.field_72093_an.field_71990_ca)
++                                if (this.world.getTypeId(this.x + k * 2, this.y, this.z + j * 2) == Block.BOOKSHELF.id)
+                                 {
+                                     ++i;
+                                 }
+ 
+-                                if (this.field_75172_h.func_72798_a(this.field_75173_i + k * 2, this.field_75170_j + 1, this.field_75171_k + j * 2) == Block.field_72093_an.field_71990_ca)
++                                if (this.world.getTypeId(this.x + k * 2, this.y + 1, this.z + j * 2) == Block.BOOKSHELF.id)
+                                 {
+                                     ++i;
+                                 }
+ 
+                                 if (k != 0 && j != 0)
+                                 {
+-                                    if (this.field_75172_h.func_72798_a(this.field_75173_i + k * 2, this.field_75170_j, this.field_75171_k + j) == Block.field_72093_an.field_71990_ca)
++                                    if (this.world.getTypeId(this.x + k * 2, this.y, this.z + j) == Block.BOOKSHELF.id)
+                                     {
+                                         ++i;
+                                     }
+ 
+-                                    if (this.field_75172_h.func_72798_a(this.field_75173_i + k * 2, this.field_75170_j + 1, this.field_75171_k + j) == Block.field_72093_an.field_71990_ca)
++                                    if (this.world.getTypeId(this.x + k * 2, this.y + 1, this.z + j) == Block.BOOKSHELF.id)
+                                     {
+                                         ++i;
+                                     }
+ 
+-                                    if (this.field_75172_h.func_72798_a(this.field_75173_i + k, this.field_75170_j, this.field_75171_k + j * 2) == Block.field_72093_an.field_71990_ca)
++                                    if (this.world.getTypeId(this.x + k, this.y, this.z + j * 2) == Block.BOOKSHELF.id)
+                                     {
+                                         ++i;
+                                     }
+ 
+-                                    if (this.field_75172_h.func_72798_a(this.field_75173_i + k, this.field_75170_j + 1, this.field_75171_k + j * 2) == Block.field_72093_an.field_71990_ca)
++                                    if (this.world.getTypeId(this.x + k, this.y + 1, this.z + j * 2) == Block.BOOKSHELF.id)
+                                     {
+                                         ++i;
+                                     }
+@@ -126,17 +148,34 @@
+ 
+                     for (j = 0; j < 3; ++j)
+                     {
+-                        this.field_75167_g[j] = EnchantmentHelper.func_77514_a(this.field_75169_l, j, i, itemstack);
+-                    }
+-
+-                    this.func_75142_b();
++                        this.costs[j] = EnchantmentManager.a(this.l, j, i, itemstack);
++                    }
++
 +                    // CraftBukkit start
 +                    CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
-+                    PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(player, this.getBukkitView(), this.field_75172_h.getWorld().getBlockAt(this.field_75173_i, this.field_75170_j, this.field_75171_k), item, this.field_75167_g, i);
-+                    this.field_75172_h.getServer().getPluginManager().callEvent(event);
++                    PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(player, this.getBukkitView(), this.world.getWorld().getBlockAt(this.x, this.y, this.z), item, this.costs, i);
++                    event.setCancelled(!itemstack.w())
++                    this.world.getServer().getPluginManager().callEvent(event);
 +
 +                    if (event.isCancelled())
 +                    {
 +                        for (i = 0; i < 3; ++i)
 +                        {
-+                            this.field_75167_g[i] = 0;
++                            this.costs[i] = 0;
 +                        }
 +
 +                        return;
 +                    }
 +
 +                    // CraftBukkit end
-                     this.func_75142_b();
++                    this.b();
                  }
              }
-@@ -155,32 +193,64 @@
+             else
+             {
+                 for (i = 0; i < 3; ++i)
+                 {
+-                    this.field_75167_g[i] = 0;
++                    this.costs[i] = 0;
+                 }
+             }
+         }
+@@ -155,32 +194,64 @@
  
                  if (list != null)
                  {
@@ -169,7 +255,7 @@
                      this.func_75130_a(this.field_75168_e);
                  }
              }
-@@ -210,6 +280,11 @@
+@@ -210,6 +281,11 @@
  
      public boolean func_75145_c(EntityPlayer p_75145_1_)
      {
@@ -181,7 +267,7 @@
          return this.field_75172_h.func_72798_a(this.field_75173_i, this.field_75170_j, this.field_75171_k) != Block.field_72096_bE.field_71990_ca ? false : p_75145_1_.func_70092_e((double)this.field_75173_i + 0.5D, (double)this.field_75170_j + 0.5D, (double)this.field_75171_k + 0.5D) <= 64.0D;
      }
  
-@@ -268,4 +343,18 @@
+@@ -268,4 +344,18 @@
  
          return itemstack;
      }
