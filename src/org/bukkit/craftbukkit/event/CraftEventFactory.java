@@ -370,6 +370,8 @@ public class CraftEventFactory {
             } else if (damager.getBukkitEntity() instanceof Projectile) {
                 cause = DamageCause.PROJECTILE;
             }
+        } else if ("thorns".equals(source.field_76373_n)) {
+            cause = DamageCause.THORNS;
         }
 
         return callEntityDamageEvent(damager, entity, cause, damage);
