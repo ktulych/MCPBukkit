@@ -1,6 +1,14 @@
 --- ../net/minecraft/tileentity/TileEntityHopper.java
 +++ ../net/minecraft/tileentity/TileEntityHopper.java
-@@ -18,12 +18,53 @@
+@@ -7,6 +7,7 @@
+ import net.minecraft.command.IEntitySelector;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.item.EntityItem;
++import net.minecraft.entity.item.EntityMinecartHopper;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.inventory.IInventory;
+ import net.minecraft.inventory.ISidedInventory;
+@@ -18,12 +19,53 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
  
@@ -54,7 +62,7 @@
      public void func_70307_a(NBTTagCompound p_70307_1_)
      {
          super.func_70307_a(p_70307_1_);
-@@ -230,11 +271,33 @@
+@@ -230,11 +272,33 @@
                  if (this.func_70301_a(i) != null)
                  {
                      ItemStack itemstack = this.func_70301_a(i).func_77946_l();
@@ -90,7 +98,7 @@
                          return true;
                      }
  
-@@ -300,11 +363,33 @@
+@@ -300,11 +364,42 @@
          if (itemstack != null && func_102013_b(p_102012_1_, itemstack, p_102012_2_, p_102012_3_))
          {
              ItemStack itemstack1 = itemstack.func_77946_l();
@@ -104,7 +112,16 @@
 +            if (event.isCancelled())
 +            {
 +                p_102012_1_.func_70299_a(p_102012_2_, itemstack1);
-+                ((TileEntityHopper) p_102012_0_).func_98046_c(8); // delay hopper checks
++
++                if (p_102012_0_ instanceof TileEntityHopper)
++                {
++                    ((TileEntityHopper) p_102012_0_).func_98046_c(8); // delay hopper checks
++                }
++                else if (p_102012_0_ instanceof EntityMinecartHopper)
++                {
++                    ((EntityMinecartHopper) p_102012_0_).func_98042_n(4); // delay hopper minecart checks
++                }
++
 +                return false;
 +            }
 +
@@ -126,7 +143,7 @@
                  return true;
              }
  
-@@ -324,6 +409,16 @@
+@@ -324,6 +419,16 @@
          }
          else
          {
