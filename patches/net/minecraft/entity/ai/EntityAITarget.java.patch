@@ -1,18 +1,27 @@
 --- ../net/minecraft/entity/ai/EntityAITarget.java
 +++ ../net/minecraft/entity/ai/EntityAITarget.java
-@@ -1,5 +1,7 @@
+@@ -1,11 +1,16 @@
  package net.minecraft.entity.ai;
  
-+import org.bukkit.event.entity.EntityTargetEvent; // CraftBukkit
++// CraftBukkit start
++import org.bukkit.craftbukkit.entity.CraftEntity;
++import org.bukkit.event.entity.EntityTargetEvent;
 +import net.minecraft.entity.EntityCreature;
  import net.minecraft.entity.EntityLiving;
  import net.minecraft.entity.passive.EntityTameable;
  import net.minecraft.entity.player.EntityPlayer;
-@@ -144,6 +146,51 @@
+ import net.minecraft.pathfinding.PathEntity;
+ import net.minecraft.pathfinding.PathPoint;
+ import net.minecraft.util.MathHelper;
++// CraftBukkit end
+ 
+ public abstract class EntityAITarget extends EntityAIBase
+ {
+@@ -144,6 +149,51 @@
                      }
                  }
  
-+                // CraftBukkit start - check all the different target goals for the reason, default to RANDOM_TARGET
++                // CraftBukkit start - Check all the different target goals for the reason, default to RANDOM_TARGET
 +                EntityTargetEvent.TargetReason reason = EntityTargetEvent.TargetReason.RANDOM_TARGET;
 +
 +                if (this instanceof EntityAIDefendVillage)
@@ -48,12 +57,12 @@
 +                }
 +                else if (p_75296_1_.getBukkitEntity() != event.getTarget())
 +                {
-+                    this.field_75299_d.func_70624_b((EntityLiving)((org.bukkit.craftbukkit.entity.CraftEntity) event.getTarget()).getHandle());
++                    this.field_75299_d.func_70624_b((EntityLiving)((CraftEntity) event.getTarget()).getHandle());
 +                }
 +
 +                if (this.field_75299_d instanceof EntityCreature)
 +                {
-+                    ((EntityCreature) this.field_75299_d).field_70789_a = ((org.bukkit.craftbukkit.entity.CraftEntity) event.getTarget()).getHandle();
++                    ((EntityCreature) this.field_75299_d).field_70789_a = ((CraftEntity) event.getTarget()).getHandle();
 +                }
 +
 +                // CraftBukkit end

@@ -32,7 +32,7 @@
                  return;
              }
  
-+            // CraftBukkit start - interact soil
++            // CraftBukkit start - Interact soil
 +            org.bukkit.event.Cancellable cancellable;
 +
 +            if (p_71866_5_ instanceof EntityPlayer)

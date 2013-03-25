@@ -22,21 +22,7 @@
  
  public class ItemInWorldManager
  {
-@@ -33,6 +42,13 @@
-         this.field_73092_a = p_i3397_1_;
-     }
- 
-+    // CraftBukkit start - keep this for backwards compatibility
-+    public ItemInWorldManager(WorldServer world)
-+    {
-+        this((World) world);
-+    }
-+    // CraftBukkit end
-+
-     public void func_73076_a(EnumGameType p_73076_1_)
-     {
-         this.field_73091_c = p_73076_1_;
-@@ -62,7 +78,7 @@
+@@ -62,7 +71,7 @@
  
      public void func_73075_a()
      {
@@ -45,7 +31,7 @@
          int i;
          float f;
          int j;
-@@ -123,8 +139,29 @@
+@@ -123,8 +132,29 @@
  
      public void func_73074_a(int p_73074_1_, int p_73074_2_, int p_73074_3_, int p_73074_4_)
      {
@@ -75,7 +61,7 @@
              if (this.func_73083_d())
              {
                  if (!this.field_73092_a.func_72886_a((EntityPlayer)null, p_73074_1_, p_73074_2_, p_73074_3_, p_73074_4_))
-@@ -139,11 +176,61 @@
+@@ -139,11 +169,61 @@
                  float f = 1.0F;
                  int i1 = this.field_73092_a.func_72798_a(p_73074_1_, p_73074_2_, p_73074_3_);
  
@@ -140,7 +126,7 @@
  
                  if (i1 > 0 && f >= 1.0F)
                  {
-@@ -167,6 +254,7 @@
+@@ -167,6 +247,7 @@
      {
          if (p_73082_1_ == this.field_73086_f && p_73082_2_ == this.field_73087_g && p_73082_3_ == this.field_73099_h)
          {
@@ -148,21 +134,21 @@
              int l = this.field_73100_i - this.field_73089_e;
              int i1 = this.field_73092_a.func_72798_a(p_73082_1_, p_73082_2_, p_73082_3_);
  
-@@ -191,6 +279,13 @@
+@@ -191,6 +272,13 @@
                      this.field_73093_n = this.field_73089_e;
                  }
              }
 +
-+            // CraftBukkit start - force blockreset to client
++            // CraftBukkit start - Force block reset to client
 +        }
 +        else
 +        {
-+            ((EntityPlayerMP) this.field_73090_b).field_71135_a.func_72567_b(new Packet53BlockChange(p_73082_1_, p_73082_2_, p_73082_3_, this.field_73092_a));
++            this.field_73090_b.field_71135_a.func_72567_b(new Packet53BlockChange(p_73082_1_, p_73082_2_, p_73082_3_, this.field_73092_a));
 +            // CraftBukkit end
          }
      }
  
-@@ -222,14 +317,81 @@
+@@ -222,14 +310,81 @@
  
      public boolean func_73084_b(int p_73084_1_, int p_73084_2_, int p_73084_3_)
      {
@@ -230,12 +216,12 @@
 +
 +            if (Block.field_71973_m[l] == null)
 +            {
-+                return false;    // CraftBukkit - a plugin set block to air without cancelling
++                return false;    // CraftBukkit - A plugin set block to air without cancelling
 +            }
 +
              int i1 = this.field_73092_a.func_72805_g(p_73084_1_, p_73084_2_, p_73084_3_);
 +
-+            // CraftBukkit start - special case skulls, their item data comes from a tile entity
++            // CraftBukkit start - Special case skulls, their item data comes from a tile entity
 +            if (l == Block.field_82512_cj.field_71990_ca && !this.func_73083_d())
 +            {
 +                Block.field_82512_cj.func_71914_a(field_73092_a, p_73084_1_, p_73084_2_, p_73084_3_, i1, 1.0F, 0);
@@ -246,11 +232,11 @@
              this.field_73092_a.func_72889_a(this.field_73090_b, 2001, p_73084_1_, p_73084_2_, p_73084_3_, l + (this.field_73092_a.func_72805_g(p_73084_1_, p_73084_2_, p_73084_3_) << 12));
              boolean flag = this.func_73079_d(p_73084_1_, p_73084_2_, p_73084_3_);
  
-@@ -258,6 +420,13 @@
+@@ -258,6 +413,13 @@
                  }
              }
  
-+            // CraftBukkit start - drop event experience
++            // CraftBukkit start - Drop event experience
 +            if (flag && event != null)
 +            {
 +                Block.field_71973_m[l].func_71923_g_CodeFix_Public(this.field_73092_a, p_73084_1_, p_73084_2_, p_73084_3_, event.getExpToDrop());
@@ -260,7 +246,7 @@
              return flag;
          }
      }
-@@ -302,39 +471,57 @@
+@@ -302,39 +464,57 @@
  
      public boolean func_73078_a(EntityPlayer p_73078_1_, World p_73078_2_, ItemStack p_73078_3_, int p_73078_4_, int p_73078_5_, int p_73078_6_, int p_73078_7_, float p_73078_8_, float p_73078_9_, float p_73078_10_)
      {

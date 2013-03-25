@@ -10,7 +10,7 @@ public abstract class CraftProjectile extends AbstractProjectile implements Proj
     }
 
     public LivingEntity getShooter() {
-        if (getHandle().func_85052_h() instanceof net.minecraft.entity.EntityLiving) {
+        if (getHandle().func_85052_h() != null) {
             return (LivingEntity) getHandle().func_85052_h().getBukkitEntity();
         }
 

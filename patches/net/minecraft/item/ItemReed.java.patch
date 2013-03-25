@@ -27,7 +27,7 @@
 -                    {
 -                        Block.field_71973_m[this.field_77830_a].func_71860_a(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_2_, p_77648_1_);
 -                        Block.field_71973_m[this.field_77830_a].func_85105_g(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, j1);
-+                // CraftBukkit start - redirect to common handler
++                // CraftBukkit start - Redirect to common handler
 +                ItemBlock.processBlockPlace(p_77648_3_, p_77648_2_, p_77648_1_, p_77648_4_, p_77648_5_, p_77648_6_, this.field_77830_a, j1, clickedX, clickedY, clickedZ);
 +                /*
 +                if (world.setTypeIdAndData(i, j, k, this.id, j1, 3)) {

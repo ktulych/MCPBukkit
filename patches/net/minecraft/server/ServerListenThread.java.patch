@@ -24,7 +24,7 @@
              try
              {
                  Socket socket = this.field_71774_e.accept();
-+                // CraftBukkit start - connection throttle
++                // CraftBukkit start - Connection throttle
 +                InetAddress address = socket.getInetAddress();
 +                long currentTime = System.currentTimeMillis();
 +

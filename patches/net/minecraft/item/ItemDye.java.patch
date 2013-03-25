@@ -216,7 +216,7 @@
 +            {
 +                if ((double) world.field_73012_v.nextFloat() < 0.4D)
 +                {
-+                    // CraftBukkit start - validate
++                    // CraftBukkit start - Validate
 +                    Player player = (entityplayer instanceof EntityPlayerMP) ? (Player) entityplayer.getBukkitEntity() : null;
 +                    ((BlockMushroom) Block.field_71973_m[l]).func_72271_c(world, i, j, k, world.field_73012_v, true, player, itemstack);
 +                }

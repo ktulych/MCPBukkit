@@ -67,7 +67,7 @@
                  {
                      ItemStack itemstack = this.func_70301_a(i).func_77946_l();
 -                    ItemStack itemstack1 = func_94117_a(iinventory, this.func_70298_a(i, 1), Facing.field_71588_a[BlockHopper.func_94451_c(this.func_70322_n())]);
-+                    // CraftBukkit start - fire event when pushing items into other inventories
++                    // CraftBukkit start - Call event when pushing items into other inventories
 +                    CraftItemStack oitemstack = CraftItemStack.asCraftMirror(this.func_70298_a(i, 1));
 +                    Inventory destinationInventory = iinventory.getOwner() != null ? iinventory.getOwner().getInventory() : null;
 +                    InventoryMoveItemEvent event = new InventoryMoveItemEvent(this.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
@@ -76,7 +76,7 @@
 +                    if (event.isCancelled())
 +                    {
 +                        this.func_70299_a(i, itemstack);
-+                        this.func_98046_c(8); // delay hopper checks
++                        this.func_98046_c(8); // Delay hopper checks
 +                        return false;
 +                    }
 +
@@ -103,7 +103,7 @@
          {
              ItemStack itemstack1 = itemstack.func_77946_l();
 -            ItemStack itemstack2 = func_94117_a(p_102012_0_, p_102012_1_.func_70298_a(p_102012_2_, 1), -1);
-+            // CraftBukkit start - fire event on collection of items from inventories into the hopper
++            // CraftBukkit start - Call event on collection of items from inventories into the hopper
 +            CraftItemStack oitemstack = CraftItemStack.asCraftMirror(p_102012_1_.func_70298_a(p_102012_2_, 1));
 +            Inventory sourceInventory = p_102012_1_.getOwner() != null ? p_102012_1_.getOwner().getInventory() : null;
 +            InventoryMoveItemEvent event = new InventoryMoveItemEvent(sourceInventory, oitemstack.clone(), p_102012_0_.getOwner().getInventory(), false);
@@ -115,11 +115,11 @@
 +
 +                if (p_102012_0_ instanceof TileEntityHopper)
 +                {
-+                    ((TileEntityHopper) p_102012_0_).func_98046_c(8); // delay hopper checks
++                    ((TileEntityHopper) p_102012_0_).func_98046_c(8); // Delay hopper checks
 +                }
 +                else if (p_102012_0_ instanceof EntityMinecartHopper)
 +                {
-+                    ((EntityMinecartHopper) p_102012_0_).func_98042_n(4); // delay hopper minecart checks
++                    ((EntityMinecartHopper) p_102012_0_).func_98042_n(4); // Delay hopper minecart checks
 +                }
 +
 +                return false;

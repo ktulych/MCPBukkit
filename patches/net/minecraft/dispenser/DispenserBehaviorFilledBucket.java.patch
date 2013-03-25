@@ -71,7 +71,7 @@
          {
 -            p_82487_2_.field_77993_c = Item.field_77788_aw.field_77779_bT;
 -            p_82487_2_.field_77994_a = 1;
-+            // CraftBukkit start - handle stacked buckets
++            // CraftBukkit start - Handle stacked buckets
 +            Item item = Item.field_77788_aw;
 +
 +            if (--p_82487_2_.field_77994_a == 0)

@@ -138,7 +138,7 @@
                  this.field_70179_y += this.field_70153_n.field_70179_y * this.field_70276_b;
              }
 -
-+            // CraftBukkit start - block not in vanilla
++            // CraftBukkit start - Support unoccupied deceleration
 +            else if (unoccupiedDeceleration >= 0)
 +            {
 +                this.field_70159_w *= unoccupiedDeceleration;

@@ -22,7 +22,7 @@
          this.func_70107_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
          this.field_70129_M = 0.0F;
          this.field_70159_w = this.field_70181_x = this.field_70179_y = 0.0D;
-+        // CraftBukkit start - (added setDirection method)
++        // CraftBukkit start - Added setDirection method
 +        this.setDirection(p_i3573_3_, p_i3573_5_, p_i3573_7_);
 +    }
 +
@@ -77,7 +77,7 @@
 -            this.field_70159_w = ((NBTTagDouble)nbttaglist.func_74743_b(0)).field_74755_a;
 -            this.field_70181_x = ((NBTTagDouble)nbttaglist.func_74743_b(1)).field_74755_a;
 -            this.field_70179_y = ((NBTTagDouble)nbttaglist.func_74743_b(2)).field_74755_a;
-+        // CraftBukkit - direction -> power
++        // CraftBukkit start - direction -> power
 +        if (p_70037_1_.func_74764_b("power"))
 +        {
 +            NBTTagList nbttaglist = p_70037_1_.func_74761_m("power");

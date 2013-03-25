@@ -40,7 +40,7 @@ public class CraftMapRenderer extends MapRenderer {
             }
 
             net.minecraft.world.storage.MapCoord decoration = (net.minecraft.world.storage.MapCoord) worldMap.field_76203_h.get(key);
-            cursors.addCursor(decoration.field_76214_b, decoration.field_76215_c, (byte) (decoration.field_76212_d & 15), (byte) (decoration.field_76216_a));
+            cursors.addCursor(decoration.field_76214_b, decoration.field_76215_c, (byte) (decoration.field_76212_d & 15), decoration.field_76216_a);
         }
     }
 

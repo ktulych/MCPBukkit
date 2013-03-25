@@ -1,6 +1,6 @@
 --- ../net/minecraft/world/gen/ChunkProviderServer.java
 +++ ../net/minecraft/world/gen/ChunkProviderServer.java
-@@ -6,33 +6,44 @@
+@@ -6,33 +6,43 @@
  import java.util.Iterator;
  import java.util.List;
  import java.util.Set;
@@ -27,7 +27,6 @@
 +import java.util.Random;
 +
 +import org.bukkit.Server;
-+import org.bukkit.craftbukkit.chunkio.ChunkIOExecutor;
 +import org.bukkit.craftbukkit.util.LongHash;
 +import org.bukkit.craftbukkit.util.LongHashSet;
 +import org.bukkit.craftbukkit.util.LongObjectHashMap;
@@ -55,7 +54,7 @@
  
      public ChunkProviderServer(WorldServer p_i3393_1_, IChunkLoader p_i3393_2_, IChunkProvider p_i3393_3_)
      {
-@@ -44,7 +55,7 @@
+@@ -44,7 +54,7 @@
  
      public boolean func_73149_a(int p_73149_1_, int p_73149_2_)
      {
@@ -64,7 +63,7 @@
      }
  
      public void func_73241_b(int p_73241_1_, int p_73241_2_)
-@@ -56,20 +67,38 @@
+@@ -56,20 +66,38 @@
              int l = p_73241_2_ * 16 + 8 - chunkcoordinates.field_71573_c;
              short short1 = 128;
  
@@ -109,11 +108,11 @@
  
          while (iterator.hasNext())
          {
-@@ -78,15 +107,36 @@
+@@ -78,15 +106,36 @@
          }
      }
  
-+    // CraftBukkit start - add async variant, provide compatibility
++    // CraftBukkit start - Add async variant, provide compatibility
      public Chunk func_73158_c(int p_73158_1_, int p_73158_2_)
      {
 -        long k = ChunkCoordIntPair.func_77272_a(p_73158_1_, p_73158_2_);
@@ -137,7 +136,7 @@
 +        // If the chunk exists but isn't loaded do it async
 +        if (chunk == null && runnable != null && loader != null && loader.chunkExists(this.field_73251_h, i, j))
 +        {
-+            ChunkIOExecutor.queueChunkLoad(this.field_73251_h, loader, this, i, j, runnable);
++            org.bukkit.craftbukkit.chunkio.ChunkIOExecutor.queueChunkLoad(this.field_73251_h, loader, this, i, j, runnable);
 +            return null;
 +        }
 +
@@ -150,7 +149,7 @@
  
              if (chunk == null)
              {
-@@ -98,41 +148,81 @@
+@@ -98,41 +147,81 @@
                  {
                      try
                      {
@@ -164,7 +163,7 @@
 -                        crashreportcategory.func_71507_a("Location", String.format("%d,%d", new Object[] {Integer.valueOf(p_73158_1_), Integer.valueOf(p_73158_2_)}));
 -                        crashreportcategory.func_71507_a("Position hash", Long.valueOf(k));
 +                        crashreportcategory.func_71507_a("Location", String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
-+                        crashreportcategory.func_71507_a("Position hash", Long.valueOf(LongHash.toLong(i, j)));
++                        crashreportcategory.func_71507_a("Position hash", Long.valueOf(LongHash.toLong(i, j))); // CraftBukkit - Use LongHash
                          crashreportcategory.func_71507_a("Generator", this.field_73246_d.func_73148_d());
                          throw new ReportedException(crashreport);
                      }
@@ -247,7 +246,7 @@
      {
          if (this.field_73247_e == null)
          {
-@@ -164,7 +254,7 @@
+@@ -164,7 +253,7 @@
          }
      }
  
@@ -256,7 +255,7 @@
      {
          if (this.field_73247_e != null)
          {
-@@ -179,7 +269,7 @@
+@@ -179,7 +268,7 @@
          }
      }
  
@@ -265,7 +264,7 @@
      {
          if (this.field_73247_e != null)
          {
-@@ -188,14 +278,16 @@
+@@ -188,14 +277,16 @@
                  p_73242_1_.field_76641_n = this.field_73251_h.func_82737_E();
                  this.field_73247_e.func_75816_a(this.field_73251_h, p_73242_1_);
              }
@@ -278,7 +277,7 @@
 -            {
 -                minecraftexception.printStackTrace();
 -            }
-+                // CraftBukkit start - remove extra exception
++                // CraftBukkit start - Remove extra exception
 +            }
 +
 +            // } catch (ExceptionWorldConflict exceptionworldconflict) {
@@ -288,7 +287,7 @@
          }
      }
  
-@@ -210,6 +302,26 @@
+@@ -210,6 +301,26 @@
              if (this.field_73246_d != null)
              {
                  this.field_73246_d.func_73153_a(p_73153_1_, p_73153_2_, p_73153_3_);
@@ -315,7 +314,7 @@
                  chunk.func_76630_e();
              }
          }
-@@ -218,10 +330,13 @@
+@@ -218,10 +329,13 @@
      public boolean func_73151_a(boolean p_73151_1_, IProgressUpdate p_73151_2_)
      {
          int i = 0;
@@ -333,7 +332,7 @@
  
              if (p_73151_1_)
              {
-@@ -258,20 +373,33 @@
+@@ -258,20 +372,33 @@
      {
          if (!this.field_73251_h.field_73058_d)
          {
@@ -378,7 +377,7 @@
  
              if (this.field_73247_e != null)
              {
-@@ -289,7 +417,7 @@
+@@ -289,7 +416,7 @@
  
      public String func_73148_d()
      {
@@ -387,7 +386,7 @@
      }
  
      public List func_73155_a(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_)
-@@ -304,7 +432,7 @@
+@@ -304,7 +431,7 @@
  
      public int func_73152_e()
      {

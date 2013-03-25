@@ -5,7 +5,7 @@
  import net.minecraft.world.World;
  
 +// CraftBukkit start
-+import org.bukkit.event.entity.EntityRegainHealthEvent;
++import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.entity.ExplosionPrimeEvent;
 +// CraftBukkit end
 +
@@ -44,7 +44,7 @@
              if (this.field_70173_aa % 10 == 0)
              {
 -                this.func_70691_i(10);
-+                this.heal(10, EntityRegainHealthEvent.RegainReason.WITHER_SPAWN); // CraftBukkit
++                this.heal(10, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.WITHER_SPAWN); // CraftBukkit
              }
          }
          else
@@ -70,7 +70,7 @@
                                  if (i3 > 0 && i3 != Block.field_71986_z.field_71990_ca && i3 != Block.field_72102_bH.field_71990_ca && i3 != Block.field_72104_bI.field_71990_ca)
                                  {
 +                                    // CraftBukkit start
-+                                    if (org.bukkit.craftbukkit.event.CraftEventFactory.callEntityChangeBlockEvent(this, j2, k2, l2, 0, 0).isCancelled())
++                                    if (CraftEventFactory.callEntityChangeBlockEvent(this, j2, k2, l2, 0, 0).isCancelled())
 +                                    {
 +                                        continue;
 +                                    }
@@ -87,7 +87,7 @@
 +        // CraftBukkit start
 +        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
 +        loot.add(new org.bukkit.inventory.ItemStack(Item.field_82792_bS.field_77779_bT, 1));
-+        org.bukkit.craftbukkit.event.CraftEventFactory.callEntityDeathEvent(this, loot);
++        CraftEventFactory.callEntityDeathEvent(this, loot);
 +        // CraftBukkit end
      }
  

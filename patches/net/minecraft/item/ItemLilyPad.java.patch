@@ -21,7 +21,7 @@
                  if (p_77659_2_.func_72803_f(i, j, k) == Material.field_76244_g && p_77659_2_.func_72805_g(i, j, k) == 0 && p_77659_2_.func_72799_c(i, j + 1, k))
                  {
 -                    p_77659_2_.func_94575_c(i, j + 1, k, Block.field_71991_bz.field_71990_ca);
-+                    // CraftBukkit start - waterlily
++                    // CraftBukkit start
 +                    // world.setTypeIdUpdate(i, j + 1, k, Block.WATER_LILY.id);
 +                    if (!processBlockPlace(p_77659_2_, p_77659_3_, null, i, j + 1, k, Block.field_71991_bz.field_71990_ca, 0, clickedX, clickedY, clickedZ))
 +                    {

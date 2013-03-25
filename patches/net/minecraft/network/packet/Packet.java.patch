@@ -4,7 +4,7 @@
      public static long field_73290_p;
      public static long field_73289_q;
      public boolean field_73287_r = false;
-+    // CraftBukkit start - calculate packet ID once - used a bunch of times
++    // CraftBukkit start - Calculate packet ID once - used a bunch of times
 +    private int packetID;
 +
 +    public Packet()

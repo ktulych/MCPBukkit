@@ -4,7 +4,7 @@
      public void func_71914_a(World p_71914_1_, int p_71914_2_, int p_71914_3_, int p_71914_4_, int p_71914_5_, float p_71914_6_, int p_71914_7_)
      {
          super.func_71914_a(p_71914_1_, p_71914_2_, p_71914_3_, p_71914_4_, p_71914_5_, p_71914_6_, p_71914_7_);
-+        /* CraftBukkit start - delegated getExpDrop
++        /* CraftBukkit start - Delegated to getExpDrop
 +        if (this.getDropType(l, world.random, i1) != this.id) {
 +            int j1 = 0;
  

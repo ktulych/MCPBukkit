@@ -161,7 +161,7 @@
      {
          if (!this.field_70178_ae)
          {
-+            // CraftBukkit start - fallen in lava TODO: this event spams!
++            // CraftBukkit start - Fallen in lava TODO: this event spams!
 +            if (this instanceof EntityLiving)
 +            {
 +                Server server = this.field_70170_p.getServer();
@@ -302,8 +302,8 @@
  
 -                    if (this.field_70151_c == 0)
 -                    {
-+                    // CraftBukkit start - not on fire yet
-+                    if (this.field_70151_c <= 0)   // only throw events on the first combust, otherwise it spams
++                    // CraftBukkit start - Not on fire yet
++                    if (this.field_70151_c <= 0)   // Only throw events on the first combust, otherwise it spams
 +                    {
 +                        EntityCombustEvent event = new EntityCombustEvent(this.getBukkitEntity(), 8);
 +                        this.field_70170_p.getServer().getPluginManager().callEvent(event);
@@ -363,7 +363,7 @@
              p_70109_1_.func_74782_a("Pos", this.func_70087_a(new double[] {this.field_70165_t, this.field_70163_u + (double)this.field_70139_V, this.field_70161_v}));
              p_70109_1_.func_74782_a("Motion", this.func_70087_a(new double[] {this.field_70159_w, this.field_70181_x, this.field_70179_y}));
 +
-+            // CraftBukkit start - checking for NaN pitch/yaw and resetting to zero
++            // CraftBukkit start - Checking for NaN pitch/yaw and resetting to zero
 +            // TODO: make sure this is the best way to address this.
 +            if (Float.isNaN(this.field_70177_z))
 +            {
@@ -411,7 +411,7 @@
 -                this.field_70179_y = 0.0D;
 -            }
 -
-+            /* CraftBukkit start - moved section down
++            /* CraftBukkit start - Moved section down
 +            if (Math.abs(this.motX) > 10.0D) {
 +                this.motX = 0.0D;
 +            }
@@ -452,7 +452,7 @@
 +
 +            // CraftBukkit end
 +
-+            // CraftBukkit start - exempt Vehicles from notch's sanity check
++            // CraftBukkit start - Exempt Vehicles from notch's sanity check
 +            if (!(this.getBukkitEntity() instanceof Vehicle))
 +            {
 +                if (Math.abs(this.field_70159_w) > 10.0D)
@@ -473,7 +473,7 @@
 +
 +            // CraftBukkit end
 +
-+            // CraftBukkit start - reset world
++            // CraftBukkit start - Reset world
 +            if (this instanceof EntityPlayerMP)
 +            {
 +                Server server = Bukkit.getServer();
@@ -552,7 +552,7 @@
 +    {
 +        if (this.bukkitEntity == null)
 +        {
-+            this.bukkitEntity = org.bukkit.craftbukkit.entity.CraftEntity.getEntity(this.field_70170_p.getServer(), this);
++            this.bukkitEntity = CraftEntity.getEntity(this.field_70170_p.getServer(), this);
 +        }
 +
 +        return this.bukkitEntity;
@@ -651,7 +651,7 @@
          if (this.field_70151_c == 0)
          {
 -            this.func_70015_d(8);
-+            // CraftBukkit start - raise a combust event when lightning strikes
++            // CraftBukkit start - Call a combust event when lightning strikes
 +            EntityCombustByEntityEvent entityCombustEvent = new EntityCombustByEntityEvent(stormBukkitEntity, thisBukkitEntity, 8);
 +            pluginManager.callEvent(entityCombustEvent);
 +
@@ -672,13 +672,13 @@
 -            WorldServer worldserver = minecraftserver.func_71218_a(j);
 -            WorldServer worldserver1 = minecraftserver.func_71218_a(p_71027_1_);
 -            this.field_71093_bK = p_71027_1_;
-+            // CraftBukkit start - move logic into new function "teleportToLocation"
++            // CraftBukkit start - Move logic into new function "teleportToLocation"
 +            // int j = this.dimension;
 +            WorldServer exitWorld = null;
 +
-+            if (this.field_71093_bK < CraftWorld.CUSTOM_DIMENSION_OFFSET)   // plugins must specify exit from custom Bukkit worlds
++            if (this.field_71093_bK < CraftWorld.CUSTOM_DIMENSION_OFFSET)   // Plugins must specify exit from custom Bukkit worlds
 +            {
-+                // only target existing worlds (compensate for allow-nether/allow-end as false)
++                // Only target existing worlds (compensate for allow-nether/allow-end as false)
 +                for (WorldServer world : minecraftserver.worlds)
 +                {
 +                    if (world.dimension == p_71027_1_)
@@ -719,7 +719,7 @@
              this.field_70128_L = false;
              this.field_70170_p.field_72984_F.func_76320_a("reposition");
 -            minecraftserver.func_71203_ab().func_82448_a(this, j, worldserver, worldserver1);
-+            // CraftBukkit start - ensure chunks are loaded in case TravelAgent is not used which would initially cause chunks to load during find/create
++            // CraftBukkit start - Ensure chunks are loaded in case TravelAgent is not used which would initially cause chunks to load during find/create
 +            // minecraftserver.getPlayerList().a(this, j, worldserver, worldserver1);
 +            boolean before = worldserver1.field_73059_b.field_73250_a;
 +            worldserver1.field_73059_b.field_73250_a = true;
@@ -733,7 +733,7 @@
              {
                  entity.func_82141_a(this, true);
                  worldserver1.func_72838_d(entity);
-+                // CraftBukkit start - forward the CraftEntity to the new entity
++                // CraftBukkit start - Forward the CraftEntity to the new entity
 +                this.getBukkitEntity().setHandle(entity);
 +                entity.bukkitEntity = this.getBukkitEntity();
 +                // CraftBukkit end

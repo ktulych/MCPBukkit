@@ -14,7 +14,7 @@
                      if (l1 > 0)
                      {
 -                        p_71847_1_.func_72832_d(p_71847_2_, p_71847_3_ + 1, p_71847_4_, this.field_71990_ca, l1, 2);
-+                        // CraftBukkit start - fire BlockSpreadEvent
++                        // CraftBukkit start - Call BlockSpreadEvent
 +                        org.bukkit.block.Block source = p_71847_1_.getWorld().getBlockAt(p_71847_2_, p_71847_3_, p_71847_4_);
 +                        org.bukkit.block.Block block = p_71847_1_.getWorld().getBlockAt(p_71847_2_, p_71847_3_ + 1, p_71847_4_);
 +                        CraftEventFactory.handleBlockSpreadEvent(block, source, this.field_71990_ca, l1);
@@ -26,7 +26,7 @@
                      {
                          i2 = k1 + 1 & 3;
                          j2 = k1 + 3 & 3;
-+                        // CraftBukkit start - fire BlockSpreadEvent
++                        // CraftBukkit start - Call BlockSpreadEvent
 +                        org.bukkit.block.Block source = p_71847_1_.getWorld().getBlockAt(p_71847_2_, p_71847_3_, p_71847_4_);
 +                        org.bukkit.block.Block block = p_71847_1_.getWorld().getBlockAt(p_71847_2_ + Direction.field_71583_a[k1], p_71847_3_, p_71847_4_ + Direction.field_71581_b[k1]);
  
@@ -68,7 +68,7 @@
                          if (i2 > 0)
                          {
 -                            p_71847_1_.func_72832_d(p_71847_2_, p_71847_3_ - 1, p_71847_4_, this.field_71990_ca, i2, 2);
-+                            // CraftBukkit start - fire BlockSpreadEvent
++                            // CraftBukkit start - Call BlockSpreadEvent
 +                            org.bukkit.block.Block source = p_71847_1_.getWorld().getBlockAt(p_71847_2_, p_71847_3_, p_71847_4_);
 +                            org.bukkit.block.Block block = p_71847_1_.getWorld().getBlockAt(p_71847_2_, p_71847_3_ - 1, p_71847_4_);
 +                            CraftEventFactory.handleBlockSpreadEvent(block, source, this.field_71990_ca, i2);

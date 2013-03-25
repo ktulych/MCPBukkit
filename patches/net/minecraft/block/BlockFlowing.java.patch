@@ -43,7 +43,7 @@
 -            {
 -                this.func_72210_i(p_71847_1_, p_71847_2_, p_71847_3_ - 1, p_71847_4_, l + 8);
 -            }
-+            // CraftBukkit start - send "down" to the server
++            // CraftBukkit start - Send "down" to the server
 +            BlockFromToEvent event = new BlockFromToEvent(source, BlockFace.DOWN);
 +
 +            if (server != null)
@@ -97,7 +97,7 @@
 -            {
 -                this.func_72210_i(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ + 1, i1);
 -            }
-+            // CraftBukkit start - all four cardinal directions. Do not change the order!
++            // CraftBukkit start - All four cardinal directions. Do not change the order!
 +            BlockFace[] faces = new BlockFace[] { BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH };
 +            int index = 0;
 +

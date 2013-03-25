@@ -32,14 +32,14 @@
 -                for (int i1 = -2; i1 <= 2; ++i1)
 -                {
 -                    for (int j1 = -1; j1 < 3; ++j1)
-+            // CraftBukkit start - modularize end portal creation
++            // CraftBukkit start - Modularize end portal creation
 +            ChunkCoordinates created = this.createEndPortal(p_77185_2_, p_77185_4_, p_77185_6_);
 +            p_77185_1_.func_70012_b((double) created.field_71574_a, (double) created.field_71572_b, (double) created.field_71573_c, p_77185_1_.field_70177_z, 0.0F);
 +            p_77185_1_.field_70159_w = p_77185_1_.field_70181_x = p_77185_1_.field_70179_y = 0.0D;
 +        }
 +    }
 +
-+    // split out from original a(Entity, double, double, double, float) method in order to enable being called from createPortal
++    // Split out from original a(Entity, double, double, double, float) method in order to enable being called from createPortal
 +    private ChunkCoordinates createEndPortal(double x, double y, double z)
 +    {
 +        int i = MathHelper.func_76128_c(x);
@@ -113,7 +113,7 @@
      public boolean func_77184_b(Entity p_77184_1_, double p_77184_2_, double p_77184_4_, double p_77184_6_, float p_77184_8_)
      {
 -        short short1 = 128;
-+        // CraftBukkit start - modularize portal search process and entity teleportation
++        // CraftBukkit start - Modularize portal search process and entity teleportation
 +        ChunkCoordinates found = this.findPortal(p_77184_1_.field_70165_t, p_77184_1_.field_70163_u, p_77184_1_.field_70161_v, 128);
 +
 +        if (found == null)
@@ -182,7 +182,7 @@
                  this.field_85190_d.add(Long.valueOf(j1));
              }
  
-+            // CraftBukkit start - moved entity teleportation logic into exit
++            // CraftBukkit start - Moved entity teleportation logic into exit
 +            return new ChunkCoordinates(i, j, k);
 +        }
 +        else
@@ -190,7 +190,7 @@
 +            return null;
 +        }
 +    }
-+    // entity repositioning logic split out from original b method and combined with repositioning logic for The End from original a method
++    // Entity repositioning logic split out from original b method and combined with repositioning logic for The End from original a method
 +    public void adjustExit(Entity entity, Location position, Vector velocity)
 +    {
 +        Location from = position.clone();
@@ -239,7 +239,7 @@
 +                double d10 = velocity.getX();
 +                double d11 = velocity.getZ();
 +                // CraftBukkit end
-+                // CraftBukkit start - adjust position and velocity instances instead of entity
++                // CraftBukkit start - Adjust position and velocity instances instead of entity
 +                velocity.setX(d10 * (double) f3 + d11 * (double) f6);
 +                velocity.setZ(d10 * (double) f5 + d11 * (double) f4);
 +                f = f - (float)(k2 * 90) + (float)(j2 * 90);
@@ -291,7 +291,7 @@
 +
 +    public boolean func_85188_a(Entity p_85188_1_)
 +    {
-+        // CraftBukkit start - allow for portal creation to be based on coordinates instead of entity
++        // CraftBukkit start - Allow for portal creation to be based on coordinates instead of entity
 +        return this.createPortal(p_85188_1_.field_70165_t, p_85188_1_.field_70163_u, p_85188_1_.field_70161_v, 16);
 +    }
 +

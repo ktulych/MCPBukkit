@@ -10,7 +10,7 @@
      public String[] field_70412_a = new String[] {"", "", "", ""};
      public int field_70410_b = -1;
 -    private boolean field_70411_c = true;
-+    public boolean field_70411_c = true; // CraftBukkit - privite -> public
++    public boolean field_70411_c = true; // CraftBukkit - private -> public
 +
 +    public TileEntitySign() {}
  
@@ -22,7 +22,7 @@
          String[] astring = new String[4];
 -        System.arraycopy(this.field_70412_a, 0, astring, 0, 4);
 +
-+        // CraftBukkit start - limit sign text to 15 chars per line
++        // CraftBukkit start - Limit sign text to 15 chars per line
 +        for (int i = 0; i < 4; ++i)
 +        {
 +            astring[i] = this.field_70412_a[i];

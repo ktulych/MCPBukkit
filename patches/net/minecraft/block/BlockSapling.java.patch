@@ -1,6 +1,6 @@
 --- ../net/minecraft/block/BlockSapling.java
 +++ ../net/minecraft/block/BlockSapling.java
-@@ -1,14 +1,22 @@
+@@ -1,14 +1,23 @@
  package net.minecraft.block;
  
  import java.util.Random;
@@ -19,12 +19,13 @@
 +import org.bukkit.Location;
 +import org.bukkit.TreeType;
 +import org.bukkit.craftbukkit.util.StructureGrowDelegate;
++import org.bukkit.entity.Player;
 +import org.bukkit.event.world.StructureGrowEvent;
 +// CraftBukkit end
  
  public class BlockSapling extends BlockFlower
  {
-@@ -31,40 +39,49 @@
+@@ -31,40 +40,49 @@
  
              if (p_71847_1_.func_72957_l(p_71847_2_, p_71847_3_ + 1, p_71847_4_) >= 9 && p_71847_5_.nextInt(7) == 0)
              {
@@ -42,7 +43,7 @@
 +    }
 +
 +    // CraftBukkit - added bonemeal, player and itemstack
-+    public void func_72269_c(World p_72269_1_, int p_72269_2_, int p_72269_3_, int p_72269_4_, Random p_72269_5_, boolean bonemeal, org.bukkit.entity.Player player, ItemStack itemstack)
++    public void func_72269_c(World p_72269_1_, int p_72269_2_, int p_72269_3_, int p_72269_4_, Random p_72269_5_, boolean bonemeal, Player player, ItemStack itemstack)
 +    {
 +        int l = p_72269_1_.func_72805_g(p_72269_2_, p_72269_3_, p_72269_4_);
  
@@ -64,15 +65,15 @@
 +        }
 +    }
 +
-+    // CraftBukkit - added bonemeal, player and itemstack
-+    public void d(World world, int i, int j, int k, Random random, boolean bonemeal, org.bukkit.entity.Player player, ItemStack itemstack)
++    // CraftBukkit - Added bonemeal, player and itemstack
++    public void d(World world, int i, int j, int k, Random random, boolean bonemeal, Player player, ItemStack itemstack)
 +    {
 +        int l = world.func_72805_g(i, j, k) & 3;
          Object object = null;
          int i1 = 0;
          int j1 = 0;
          boolean flag = false;
-+        // CraftBukkit start - records tree generation and calls StructureGrowEvent
++        // CraftBukkit start - Records tree generation and calls StructureGrowEvent
 +        StructureGrowDelegate delegate = new StructureGrowDelegate(world);
 +        TreeType treeType = null;
 +        TreeGenerator gen = null;
@@ -92,7 +93,7 @@
          }
          else if (l == 3)
          {
-@@ -72,63 +89,100 @@
+@@ -72,63 +90,100 @@
              {
                  for (j1 = 0; j1 >= -1; --j1)
                  {
@@ -218,7 +219,7 @@
      }
  
      public boolean func_72268_e(World p_72268_1_, int p_72268_2_, int p_72268_3_, int p_72268_4_, int p_72268_5_)
-@@ -140,4 +194,13 @@
+@@ -140,4 +195,13 @@
      {
          return p_71899_1_ & 3;
      }

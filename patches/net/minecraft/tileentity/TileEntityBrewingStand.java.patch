@@ -61,7 +61,7 @@
          {
              ItemStack itemstack = this.field_70359_a[3];
 +
-+            // CraftBukkit start - fire BREW event
++            // CraftBukkit start
 +            if (getOwner() != null)
 +            {
 +                BrewEvent event = new BrewEvent(field_70331_k.getWorld().getBlockAt(field_70329_l, field_70330_m, field_70327_n), (org.bukkit.inventory.BrewerInventory) this.getOwner().getInventory());

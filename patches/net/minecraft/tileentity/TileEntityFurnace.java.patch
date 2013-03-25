@@ -113,7 +113,7 @@
 -
 -                if (this.field_70407_a > 0)
 -                {
-+            // CraftBukkit start - handle multiple elapsed ticks
++            // CraftBukkit start - Handle multiple elapsed ticks
 +            if (this.field_70407_a <= 0 && this.func_70402_r() && this.field_70404_d[1] != null)   // CraftBukkit - == to <=
 +            {
 +                CraftItemStack fuel = CraftItemStack.asCraftMirror(this.field_70404_d[1]);
@@ -146,7 +146,7 @@
 -                {
 -                    this.field_70406_c = 0;
 -                    this.func_70399_k();
-+            /* CraftBukkit start - moved up
++            /* CraftBukkit start - Moved up
 +            if (this.isBurning() && this.canBurn()) {
 +                ++this.cookTime;
 +                if (this.cookTime == 200) {

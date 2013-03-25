@@ -68,7 +68,7 @@
 -                    {
 -                        this.field_77288_k.put((EntityPlayer)entity, this.field_77287_j.func_82732_R().func_72345_a(d0 * d10, d1 * d10, d2 * d10));
 -                    }
-+                    // CraftBukkit start - explosion damage hook
++                    // CraftBukkit start - Explosion damage hook
 +                    org.bukkit.entity.Entity damagee = (entity == null) ? null : entity.getBukkitEntity();
 +                    int damageDone = (int)((d10 * d10 + d10) / 2.0D * 8.0D * (double) this.field_77280_f + 1.0D);
 +
@@ -191,16 +191,18 @@
                      }
  
                      this.field_77287_j.func_72832_d(i, j, k, 0, 0, 3);
-@@ -232,7 +336,11 @@
+@@ -232,7 +336,13 @@
  
                  if (l == 0 && Block.field_71970_n[i1] && this.field_77290_i.nextInt(3) == 0)
                  {
 -                    this.field_77287_j.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
-+                    // CraftBukkit start - ignition by explosion.
++                    // CraftBukkit start - Ignition by explosion
 +                    if (!org.bukkit.craftbukkit.event.CraftEventFactory.callBlockIgniteEvent(this.field_77287_j, i, j, k, this).isCancelled())
 +                    {
 +                        this.field_77287_j.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
-+                    } // CraftBukkit end
++                    }
++
++                    // CraftBukkit end
                  }
              }
          }

@@ -17,7 +17,7 @@
      }
  
 -    public void func_71914_a(World p_71914_1_, int p_71914_2_, int p_71914_3_, int p_71914_4_, int p_71914_5_, float p_71914_6_, int p_71914_7_) {}
-+    // CraftBukkit start - special case dropping so we can get info from the tile entity
++    // CraftBukkit start - Special case dropping so we can get info from the tile entity
 +    public void func_71914_a(World p_71914_1_, int p_71914_2_, int p_71914_3_, int p_71914_4_, int p_71914_5_, float p_71914_6_, int p_71914_7_)
 +    {
 +        if (p_71914_1_.field_73012_v.nextFloat() < p_71914_6_)
@@ -51,7 +51,7 @@
 -                {
 -                    itemstack.func_77982_d(new NBTTagCompound());
 -                    itemstack.func_77978_p().func_74778_a("SkullOwner", tileentityskull.func_82120_c());
-+            /* CraftBukkit start - drop item in code above, not here
++            /* CraftBukkit start - Drop item in code above, not here
 +            if ((i1 & 8) == 0) {
 +                ItemStack itemstack = new ItemStack(Item.SKULL.id, 1, this.getDropData(world, i, j, k));
 +                TileEntitySkull tileentityskull = (TileEntitySkull) world.getTileEntity(i, j, k);
@@ -74,7 +74,7 @@
              {
                  if (p_82529_1_.func_72798_a(p_82529_2_, p_82529_3_ - 1, p_82529_4_ + i1) == l && p_82529_1_.func_72798_a(p_82529_2_, p_82529_3_ - 1, p_82529_4_ + i1 + 1) == l && p_82529_1_.func_72798_a(p_82529_2_, p_82529_3_ - 2, p_82529_4_ + i1 + 1) == l && p_82529_1_.func_72798_a(p_82529_2_, p_82529_3_ - 1, p_82529_4_ + i1 + 2) == l && this.func_82528_d(p_82529_1_, p_82529_2_, p_82529_3_, p_82529_4_ + i1, 1) && this.func_82528_d(p_82529_1_, p_82529_2_, p_82529_3_, p_82529_4_ + i1 + 1, 1) && this.func_82528_d(p_82529_1_, p_82529_2_, p_82529_3_, p_82529_4_ + i1 + 2, 1))
                  {
-+                    // CraftBukkit start - use BlockStateListPopulator
++                    // CraftBukkit start - Use BlockStateListPopulator
 +                    BlockStateListPopulator blockList = new BlockStateListPopulator(p_82529_1_.getWorld());
                      p_82529_1_.func_72921_c(p_82529_2_, p_82529_3_, p_82529_4_ + i1, 8, 2);
                      p_82529_1_.func_72921_c(p_82529_2_, p_82529_3_, p_82529_4_ + i1 + 1, 8, 2);
@@ -128,7 +128,7 @@
              {
                  if (p_82529_1_.func_72798_a(p_82529_2_ + i1, p_82529_3_ - 1, p_82529_4_) == l && p_82529_1_.func_72798_a(p_82529_2_ + i1 + 1, p_82529_3_ - 1, p_82529_4_) == l && p_82529_1_.func_72798_a(p_82529_2_ + i1 + 1, p_82529_3_ - 2, p_82529_4_) == l && p_82529_1_.func_72798_a(p_82529_2_ + i1 + 2, p_82529_3_ - 1, p_82529_4_) == l && this.func_82528_d(p_82529_1_, p_82529_2_ + i1, p_82529_3_, p_82529_4_, 1) && this.func_82528_d(p_82529_1_, p_82529_2_ + i1 + 1, p_82529_3_, p_82529_4_, 1) && this.func_82528_d(p_82529_1_, p_82529_2_ + i1 + 2, p_82529_3_, p_82529_4_, 1))
                  {
-+                    // CraftBukkit start - use BlockStateListPopulator
++                    // CraftBukkit start - Use BlockStateListPopulator
 +                    BlockStateListPopulator blockList = new BlockStateListPopulator(p_82529_1_.getWorld());
                      p_82529_1_.func_72921_c(p_82529_2_ + i1, p_82529_3_, p_82529_4_, 8, 2);
                      p_82529_1_.func_72921_c(p_82529_2_ + i1 + 1, p_82529_3_, p_82529_4_, 8, 2);

@@ -1,26 +1,18 @@
 --- ../net/minecraft/entity/projectile/EntitySmallFireball.java
 +++ ../net/minecraft/entity/projectile/EntitySmallFireball.java
-@@ -1,10 +1,14 @@
+@@ -1,5 +1,6 @@
  package net.minecraft.entity.projectile;
  
-+// CraftBukkit start
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
-+import org.bukkit.event.entity.EntityCombustByEntityEvent;
++import org.bukkit.event.entity.EntityCombustByEntityEvent; // CraftBukkit
  import net.minecraft.block.Block;
  import net.minecraft.entity.EntityLiving;
  import net.minecraft.util.DamageSource;
- import net.minecraft.util.MovingObjectPosition;
- import net.minecraft.world.World;
-+// CraftBukkit end
- 
- public class EntitySmallFireball extends EntityFireball
- {
-@@ -34,7 +38,16 @@
+@@ -34,7 +35,16 @@
              {
                  if (!p_70227_1_.field_72308_g.func_70045_F() && p_70227_1_.field_72308_g.func_70097_a(DamageSource.func_76362_a(this, this.field_70235_a), 5))
                  {
 -                    p_70227_1_.field_72308_g.func_70015_d(5);
-+                    // CraftBukkit start - entity damage by entity event + combust event
++                    // CraftBukkit start - Entity damage by entity event + combust event
 +                    EntityCombustByEntityEvent event = new EntityCombustByEntityEvent((org.bukkit.entity.Projectile) this.getBukkitEntity(), p_70227_1_.field_72308_g.getBukkitEntity(), 5);
 +                    p_70227_1_.field_72308_g.field_70170_p.getServer().getPluginManager().callEvent(event);
 +
@@ -33,13 +25,13 @@
                  }
              }
              else
-@@ -66,7 +79,13 @@
+@@ -66,7 +76,13 @@
  
                  if (this.field_70170_p.func_72799_c(i, j, k))
                  {
 -                    this.field_70170_p.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
 +                    // CraftBukkit start
-+                    if (!CraftEventFactory.callBlockIgniteEvent(field_70170_p, i, j, k, this).isCancelled())
++                    if (!org.bukkit.craftbukkit.event.CraftEventFactory.callBlockIgniteEvent(field_70170_p, i, j, k, this).isCancelled())
 +                    {
 +                        this.field_70170_p.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
 +                    }

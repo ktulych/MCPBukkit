@@ -8,7 +8,7 @@
  
      final PlayerManager field_73265_a;
  
-@@ -27,10 +28,17 @@
+@@ -27,10 +28,18 @@
          this.field_73261_d = new short[64];
          this.field_73262_e = 0;
          this.field_73264_c = new ChunkCoordIntPair(p_i3391_2_, p_i3391_3_);
@@ -24,13 +24,14 @@
 +                PlayerInstance.this.loaded = true;
 +            }
 +        });
++        // CraftBukkit end
 +    }
 +
 +    public void func_73255_a(final EntityPlayerMP p_73255_1_)   // CraftBukkit - added final to argument
      {
          if (this.field_73263_b.contains(p_73255_1_))
          {
-@@ -39,7 +47,25 @@
+@@ -39,7 +48,25 @@
          else
          {
              this.field_73263_b.add(p_73255_1_);
@@ -57,7 +58,7 @@
          }
      }
  
-@@ -58,7 +84,7 @@
+@@ -58,7 +85,7 @@
  
                  if (this.field_73262_e > 0)
                  {
@@ -66,7 +67,7 @@
                  }
  
                  this.field_73265_a.func_72688_a().field_73059_b.func_73241_b(this.field_73264_c.field_77276_a, this.field_73264_c.field_77275_b);
-@@ -70,7 +96,7 @@
+@@ -70,7 +97,7 @@
      {
          if (this.field_73262_e == 0)
          {
@@ -75,7 +76,7 @@
          }
  
          this.field_73260_f |= 1 << (p_73259_2_ >> 4);
-@@ -132,7 +158,7 @@
+@@ -132,7 +159,7 @@
                  {
                      i = this.field_73264_c.field_77276_a * 16;
                      j = this.field_73264_c.field_77275_b * 16;

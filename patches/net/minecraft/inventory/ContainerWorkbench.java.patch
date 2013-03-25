@@ -33,7 +33,7 @@
  
      public ContainerWorkbench(InventoryPlayer p_i3603_1_, World p_i3603_2_, int p_i3603_3_, int p_i3603_4_, int p_i3603_5_)
      {
-+        // CraftBukkit start - switched order of IInventory construction and stored player
++        // CraftBukkit start - Switched order of IInventory construction and stored player
 +        this.field_75160_f = new InventoryCraftResult();
 +        this.field_75162_e = new InventoryCrafting(this, 3, 3, p_i3603_1_.field_70458_d); // CraftBukkit - pass player
 +        this.field_75162_e.resultInventory = this.field_75160_f;

@@ -1,21 +1,13 @@
 --- ../net/minecraft/inventory/ContainerBeacon.java
 +++ ../net/minecraft/inventory/ContainerBeacon.java
-@@ -1,9 +1,14 @@
+@@ -1,5 +1,6 @@
  package net.minecraft.inventory;
  
-+// CraftBukkit start
-+import org.bukkit.craftbukkit.inventory.CraftInventory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryBeacon;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
++import org.bukkit.craftbukkit.inventory.CraftInventoryView; // CraftBukkit
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.InventoryPlayer;
  import net.minecraft.item.ItemStack;
- import net.minecraft.tileentity.TileEntityBeacon;
-+// CraftBukkit end
- 
- public class ContainerBeacon extends Container
- {
-@@ -12,9 +17,14 @@
+@@ -12,9 +13,14 @@
      private int field_82865_g;
      private int field_82867_h;
      private int field_82868_i;
@@ -30,7 +22,7 @@
          this.field_82866_e = p_i5076_2_;
          this.func_75146_a(this.field_82864_f = new SlotBeacon(this, p_i5076_2_, 0, 136, 110));
          byte b0 = 36;
-@@ -59,6 +69,11 @@
+@@ -59,6 +65,11 @@
  
      public boolean func_75145_c(EntityPlayer p_75145_1_)
      {
@@ -42,7 +34,7 @@
          return this.field_82866_e.func_70300_a(p_75145_1_);
      }
  
-@@ -126,4 +141,18 @@
+@@ -126,4 +137,18 @@
  
          return itemstack;
      }
@@ -55,7 +47,7 @@
 +            return bukkitEntity;
 +        }
 +
-+        CraftInventory inventory = new CraftInventoryBeacon(this.field_82866_e);
++        org.bukkit.craftbukkit.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.inventory.CraftInventoryBeacon(this.field_82866_e);
 +        bukkitEntity = new CraftInventoryView(this.player.field_70458_d.getBukkitEntity(), inventory, this);
 +        return bukkitEntity;
 +    }

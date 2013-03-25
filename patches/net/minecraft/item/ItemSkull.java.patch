@@ -22,7 +22,7 @@
              else
              {
 -                p_77648_3_.func_72832_d(p_77648_4_, p_77648_5_, p_77648_6_, Block.field_82512_cj.field_71990_ca, p_77648_7_, 2);
-+                // CraftBukkit start - handle in ItemBlock
++                // CraftBukkit start - Handle in ItemBlock
 +                // world.setTypeIdAndData(i, j, k, Block.SKULL.id, l, 2);
 +                if (!ItemBlock.processBlockPlace(p_77648_3_, p_77648_2_, null, p_77648_4_, p_77648_5_, p_77648_6_, Block.field_82512_cj.field_71990_ca, p_77648_7_, clickedX, clickedY, clickedZ))
 +                {

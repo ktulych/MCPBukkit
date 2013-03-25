@@ -26,12 +26,10 @@ public class CraftDropper extends CraftBlockState implements Dropper {
     public void drop() {
         Block block = getBlock();
 
-        synchronized (block) {
-            if (block.getType() == Material.DROPPER) {
-                net.minecraft.block.BlockDropper drop = (net.minecraft.block.BlockDropper) net.minecraft.block.Block.field_96469_cy;
+        if (block.getType() == Material.DROPPER) {
+            net.minecraft.block.BlockDropper drop = (net.minecraft.block.BlockDropper) net.minecraft.block.Block.field_96469_cy;
 
-                drop.func_82526_n(world.getHandle(), getX(), getY(), getZ());
-            }
+            drop.func_82526_n(world.getHandle(), getX(), getY(), getZ());
         }
     }
 

@@ -53,7 +53,7 @@
 -                        movingobjectposition.field_72308_g.func_70015_d(5);
 -                    }
 -
-+                    // CraftBukkit start - moved damage call
++                    // CraftBukkit start - Moved damage call
                      if (movingobjectposition.field_72308_g.func_70097_a(damagesource, i1))
                      {
 +                        if (this.func_70027_ad() && !(movingobjectposition.field_72308_g instanceof EntityEnderman) && (!(movingobjectposition.field_72308_g instanceof EntityPlayerMP) || !(this.field_70250_c instanceof EntityPlayerMP) || this.field_70170_p.pvpMode))   // CraftBukkit - abide by pvp setting if destination is a player

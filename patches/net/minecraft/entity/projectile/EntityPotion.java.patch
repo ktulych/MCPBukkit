@@ -69,7 +69,7 @@
                                  PotionEffect potioneffect = (PotionEffect)iterator1.next();
                                  int i = potioneffect.func_76456_a();
  
-+                                // CraftBukkit start - abide by PVP settings - for players only!
++                                // CraftBukkit start - Abide by PVP settings - for players only!
 +                                if (!this.field_70170_p.pvpMode && this.func_85052_h() instanceof EntityPlayerMP && entityliving instanceof EntityPlayerMP && entityliving != this.func_85052_h())
 +                                {
 +                                    // Block SLOWER_MOVEMENT, SLOWER_DIG, HARM, BLINDNESS, HUNGER, WEAKNESS and POISON potions
@@ -84,7 +84,7 @@
                                  if (Potion.field_76425_a[i].func_76403_b())
                                  {
 -                                    Potion.field_76425_a[i].func_76402_a(this.func_85052_h(), entityliving, potioneffect.func_76458_c(), d1);
-+                                    // CraftBukkit - added 'this'
++                                    // CraftBukkit - Added 'this'
 +                                    Potion.field_76425_a[i].applyInstantEffect(this.func_85052_h(), entityliving, potioneffect.func_76458_c(), d1, this);
                                  }
                                  else

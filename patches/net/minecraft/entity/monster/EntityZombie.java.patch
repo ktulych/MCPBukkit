@@ -50,7 +50,7 @@
      }
  
 -    protected void func_70600_l(int p_70600_1_)
-+    // CraftBukkit start - return rare dropped item instead of dropping it
++    // CraftBukkit start - Return rare dropped item instead of dropping it
 +    protected ItemStack func_70600_l(int i)
      {
          switch (this.field_70146_Z.nextInt(3))

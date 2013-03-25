@@ -25,7 +25,7 @@
 -                        this.func_70818_a(this.field_70170_p.func_72798_a(i, j, k));
 -                        this.func_70817_b(this.field_70170_p.func_72805_g(i, j, k));
 -                        this.field_70170_p.func_94575_c(i, j, k, 0);
-+                        // CraftBukkit start - pickup event
++                        // CraftBukkit start - Pickup event
 +                        if (!CraftEventFactory.callEntityChangeBlockEvent(this, this.field_70170_p.getWorld().getBlockAt(i, j, k), org.bukkit.Material.AIR).isCancelled())
 +                        {
 +                            this.func_70818_a(this.field_70170_p.func_72798_a(i, j, k));
@@ -43,7 +43,7 @@
                  {
 -                    this.field_70170_p.func_72832_d(i, j, k, this.func_70822_p(), this.func_70824_q(), 3);
 -                    this.func_70818_a(0);
-+                    // CraftBukkit start - place event
++                    // CraftBukkit start - Place event
 +                    if (!CraftEventFactory.callEntityChangeBlockEvent(this, i, j, k, this.func_70822_p(), this.func_70824_q()).isCancelled())
 +                    {
 +                        this.field_70170_p.func_72832_d(i, j, k, this.func_70822_p(), this.func_70824_q(), 3);
@@ -76,7 +76,7 @@
              if (flag1)
              {
 -                this.func_70107_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
-+                // CraftBukkit start - teleport event
++                // CraftBukkit start - Teleport event
 +                EntityTeleportEvent teleport = new EntityTeleportEvent(this.getBukkitEntity(), new Location(this.field_70170_p.getWorld(), d3, d4, d5), new Location(this.field_70170_p.getWorld(), this.field_70165_t, this.field_70163_u, this.field_70161_v));
 +                this.field_70170_p.getServer().getPluginManager().callEvent(teleport);
 +
@@ -101,7 +101,7 @@
 -            {
 -                this.func_70025_b(j, 1);
 -            }
-+            // CraftBukkit start - whole method
++            // CraftBukkit start - Whole method
 +            java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
 +            int count = this.field_70146_Z.nextInt(2 + p_70628_2_);
 +

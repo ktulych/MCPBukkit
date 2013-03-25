@@ -34,7 +34,7 @@
  import net.minecraft.server.gui.IUpdatePlayerListBox;
  import net.minecraft.server.management.ServerConfigurationManager;
  import net.minecraft.stats.StatList;
-@@ -45,18 +47,32 @@
+@@ -45,18 +47,30 @@
  import net.minecraft.world.WorldServerMulti;
  import net.minecraft.world.WorldSettings;
  import net.minecraft.world.WorldType;
@@ -46,10 +46,8 @@
  import net.minecraft.world.storage.WorldInfo;
  
 +// CraftBukkit start
-+import java.util.concurrent.ExecutionException;
 +import java.io.IOException;
 +
-+import com.google.common.io.Files;
 +import jline.console.ConsoleReader;
 +import joptsimple.OptionSet;
 +
@@ -70,7 +68,7 @@
      private final List field_71322_p = new ArrayList();
      private final ICommandManager field_71321_q;
      public final Profiler field_71304_b = new Profiler();
-@@ -98,21 +114,64 @@
+@@ -98,21 +112,64 @@
      private String field_71298_S;
      private boolean field_71295_T;
  
@@ -117,7 +115,7 @@
 +                this.reader = new ConsoleReader(System.in, System.out);
 +                this.reader.setExpandEvents(false);
 +            }
-+            catch (java.io.IOException ex)
++            catch (IOException ex)
 +            {
 +                Logger.getLogger(MinecraftServer.class.getName()).log(Level.SEVERE, null, ex);
 +            }
@@ -140,12 +138,12 @@
  
      protected void func_71237_c(String p_71237_1_)
      {
-@@ -134,64 +193,131 @@
+@@ -134,64 +191,131 @@
          this.func_71237_c(p_71247_1_);
          this.func_71192_d("menu.loadingLevel");
          this.field_71305_c = new WorldServer[3];
 -        this.field_71312_k = new long[this.field_71305_c.length][100];
-+        // CraftBukkit - removed ticktime arrays
++        // CraftBukkit - Removed ticktime arrays
          ISaveHandler isavehandler = this.field_71310_m.func_75804_a(p_71247_1_, true);
          WorldInfo worldinfo = isavehandler.func_75757_d();
 -        WorldSettings worldsettings;
@@ -153,7 +151,7 @@
 -        if (worldinfo == null)
 -        {
 -            worldsettings = new WorldSettings(p_71247_3_, this.func_71265_f(), this.func_71225_e(), this.func_71199_h(), p_71247_5_);
-+        // CraftBukkit start - removed worldsettings
++        // CraftBukkit start - Removed worldsettings
 +        int worldCount = 3;
 +
 +        for (int j = 0; j < worldCount; ++j)
@@ -264,7 +262,7 @@
 +                            // Migrate world data too.
 +                            try
 +                            {
-+                                Files.copy(new File(new File(p_71247_1_), "level.dat"), new File(new File(name), "level.dat"));
++                                com.google.common.io.Files.copy(new File(new File(p_71247_1_), "level.dat"), new File(new File(name), "level.dat"));
 +                            }
 +                            catch (IOException exception)
 +                            {
@@ -314,7 +312,7 @@
          }
  
          this.func_71226_c(this.func_71232_g());
-@@ -200,31 +326,48 @@
+@@ -200,31 +324,48 @@
  
      protected void func_71222_d()
      {
@@ -386,7 +384,7 @@
          this.func_71243_i();
      }
  
-@@ -247,18 +390,17 @@
+@@ -247,18 +388,17 @@
      {
          this.field_71302_d = null;
          this.field_71303_e = 0;
@@ -413,7 +411,7 @@
  
                  if (worldserver != null)
                  {
-@@ -267,24 +409,30 @@
+@@ -267,24 +407,30 @@
                          this.func_98033_al().func_98233_a("Saving chunks for level \'" + worldserver.func_72912_H().func_76065_j() + "\'/" + worldserver.field_73011_w.func_80007_l());
                      }
  
@@ -458,7 +456,7 @@
  
              if (this.func_71212_ac() != null)
              {
-@@ -301,12 +449,13 @@
+@@ -301,12 +447,13 @@
              this.func_98033_al().func_98233_a("Saving worlds");
              this.func_71267_a(false);
  
@@ -468,7 +466,7 @@
 -                worldserver.func_73041_k();
 -            }
 -
-+            /* CraftBukkit start - handled in saveChunks
++            /* CraftBukkit start - Handled in saveChunks
 +            for (int i = 0; i < this.worldServer.length; ++i) {
 +                WorldServer worldserver = this.worldServer[i];
 +
@@ -478,7 +476,7 @@
              if (this.field_71307_n != null && this.field_71307_n.func_76468_d())
              {
                  this.field_71307_n.func_76470_e();
-@@ -349,7 +498,11 @@
+@@ -349,7 +496,11 @@
  
                      if (l > 2000L && i - this.field_71299_R >= 15000L)
                      {
@@ -491,7 +489,7 @@
                          l = 2000L;
                          this.field_71299_R = i;
                      }
-@@ -363,7 +516,7 @@
+@@ -363,7 +514,7 @@
                      j += l;
                      i = k;
  
@@ -500,7 +498,7 @@
                      {
                          this.func_71217_p();
                          j = 0L;
-@@ -372,6 +525,7 @@
+@@ -372,6 +523,7 @@
                      {
                          while (j > 50L)
                          {
@@ -508,11 +506,11 @@
                              j -= 50L;
                              this.func_71217_p();
                          }
-@@ -426,6 +580,16 @@
+@@ -426,6 +578,16 @@
              }
              finally
              {
-+                // CraftBukkit start - restore terminal to original settings
++                // CraftBukkit start - Restore terminal to original settings
 +                try
 +                {
 +                    this.reader.getTerminal().restore();
@@ -525,7 +523,7 @@
                  this.func_71240_o();
              }
          }
-@@ -440,7 +604,7 @@
+@@ -440,7 +602,7 @@
  
      protected void func_71240_o() {}
  
@@ -534,7 +532,7 @@
      {
          long i = System.nanoTime();
          AxisAlignedBB.func_72332_a().func_72298_a();
-@@ -456,7 +620,7 @@
+@@ -456,7 +618,7 @@
          this.field_71304_b.func_76320_a("root");
          this.func_71190_q();
  
@@ -543,11 +541,11 @@
          {
              this.field_71304_b.func_76320_a("save");
              this.field_71318_t.func_72389_g();
-@@ -494,60 +658,77 @@
+@@ -494,60 +656,77 @@
      public void func_71190_q()
      {
          this.field_71304_b.func_76320_a("levels");
-+        // CraftBukkit start - only send timeupdates to the people in that world
++        // CraftBukkit start
 +        this.server.getScheduler().mainThreadHeartbeat(this.field_71315_w);
 +
 +        // Run tasks that are waiting on processing
@@ -558,7 +556,7 @@
 +
 +        org.bukkit.craftbukkit.chunkio.ChunkIOExecutor.tick();
 +
-+        // Send timeupdates to everyone, it will get the right time from the world the player is in.
++        // Send time updates to everyone, it will get the right time from the world the player is in.
 +        if (this.field_71315_w % 20 == 0)
 +        {
 +            for (int i = 0; i < this.func_71203_ab().field_72404_b.size(); ++i)
@@ -671,7 +669,7 @@
          }
  
          this.field_71304_b.func_76318_c("connection");
-@@ -574,14 +755,15 @@
+@@ -574,14 +753,15 @@
          this.field_71322_p.add(p_82010_1_);
      }
  
@@ -684,12 +682,12 @@
          try
          {
 -            boolean flag = !GraphicsEnvironment.isHeadless();
-+            /* CraftBukkit start - replace everything
++            /* CraftBukkit start - Replace everything
 +            boolean flag = false;
              String s = null;
              String s1 = ".";
              String s2 = null;
-@@ -589,97 +771,94 @@
+@@ -589,97 +769,94 @@
              boolean flag2 = false;
              int i = -1;
  
@@ -851,7 +849,7 @@
          }
          catch (Exception exception)
          {
-@@ -696,7 +875,7 @@
+@@ -696,7 +873,7 @@
  
      public void func_71256_s()
      {
@@ -860,7 +858,7 @@
      }
  
      public File func_71209_f(String p_71209_1_)
-@@ -716,7 +895,17 @@
+@@ -716,7 +893,17 @@
  
      public WorldServer func_71218_a(int p_71218_1_)
      {
@@ -879,7 +877,7 @@
      }
  
      public String func_71277_t()
-@@ -756,19 +945,75 @@
+@@ -756,19 +943,75 @@
  
      public String func_71258_A()
      {
@@ -891,7 +889,7 @@
 -        RConConsoleSource.field_70010_a.func_70007_b();
 -        this.field_71321_q.func_71556_a(RConConsoleSource.field_70010_a, p_71252_1_);
 -        return RConConsoleSource.field_70010_a.func_70008_c();
-+        // CraftBukkit start - whole method
++        // CraftBukkit start - Whole method
 +        StringBuilder result = new StringBuilder();
 +        org.bukkit.plugin.Plugin[] plugins = server.getPluginManager().getPlugins();
 +        result.append(server.getName());
@@ -944,7 +942,7 @@
 +        {
 +            return waitable.get();
 +        }
-+        catch (ExecutionException e)
++        catch (java.util.concurrent.ExecutionException e)
 +        {
 +            throw new RuntimeException("Exception processing rcon command " + p_71252_1_, e.getCause());
 +        }
@@ -964,7 +962,7 @@
      }
  
      public void func_71201_j(String p_71201_1_)
-@@ -786,21 +1031,21 @@
+@@ -786,21 +1029,21 @@
  
      public String getServerModName()
      {
@@ -993,7 +991,7 @@
          }
  
          return p_71230_1_;
-@@ -808,54 +1053,49 @@
+@@ -808,54 +1051,49 @@
  
      public List func_71248_a(ICommandSender p_71248_1_, String p_71248_2_)
      {
@@ -1067,7 +1065,7 @@
      }
  
      public static MinecraftServer func_71276_C()
-@@ -935,9 +1175,11 @@
+@@ -935,9 +1173,11 @@
  
      public void func_71226_c(int p_71226_1_)
      {
@@ -1082,7 +1080,7 @@
  
              if (worldserver != null)
              {
-@@ -990,9 +1232,11 @@
+@@ -990,9 +1230,11 @@
          this.field_71290_O = true;
          this.func_71254_M().func_75800_d();
  
@@ -1097,7 +1095,7 @@
  
              if (worldserver != null)
              {
-@@ -1000,7 +1244,7 @@
+@@ -1000,7 +1242,7 @@
              }
          }
  
@@ -1106,7 +1104,7 @@
          this.func_71263_m();
      }
  
-@@ -1030,22 +1274,23 @@
+@@ -1030,22 +1272,23 @@
          p_70000_1_.func_76472_a("avg_rec_packet_size", Integer.valueOf((int)MathHelper.func_76127_a(this.field_71314_i)));
          int i = 0;
  
@@ -1146,7 +1144,7 @@
          }
  
          p_70000_1_.func_76472_a("worlds", Integer.valueOf(i));
-@@ -1073,7 +1318,7 @@
+@@ -1073,7 +1316,7 @@
  
      public boolean func_71266_T()
      {
@@ -1155,7 +1153,7 @@
      }
  
      public void func_71229_d(boolean p_71229_1_)
-@@ -1160,9 +1405,11 @@
+@@ -1160,9 +1403,11 @@
  
      public void func_71235_a(EnumGameType p_71235_1_)
      {
@@ -1170,7 +1168,7 @@
          }
      }
  
-@@ -1173,7 +1420,7 @@
+@@ -1173,7 +1418,7 @@
          return false;
      }
  

@@ -401,7 +401,7 @@
              if (i > 1000)
              {
 -                i = 1000;
-+                // CraftBukkit start - if the server has too much to process over time, try to alleviate that
++                // CraftBukkit start - If the server has too much to process over time, try to alleviate that
 +                if (i > 20 * 1000)
 +                {
 +                    i = i / 20;
@@ -424,7 +424,7 @@
 -                {
 -                    System.out.println(this.field_94579_S.size());
 -                }
-+                /* CraftBukkit start - comment out debug spam
++                /* CraftBukkit start - Comment out debug spam
 +                if (!this.T.isEmpty()) {
 +                    System.out.println(this.T.size());
 +                }
@@ -492,7 +492,7 @@
 -        for (int k1 = 0; k1 < this.field_73009_h.size(); ++k1)
 -        {
 -            TileEntity tileentity = (TileEntity)this.field_73009_h.get(k1);
-+        // CraftBukkit start - use iterator
++        // CraftBukkit start - Use iterator
 +        Iterator iterator = this.field_73009_h.iterator();
 +
 +        while (iterator.hasNext())
@@ -629,7 +629,7 @@
 -            {
 -                this.field_73061_a.func_71203_ab().func_72384_a(new Packet70GameEvent(1, 0));
 -            }
-+            // CraftBukkit start - only sending weather packets to those affected
++            // CraftBukkit start - Only send weather packets to those affected
 +            for (int i = 0; i < this.field_73010_i.size(); ++i)
 +            {
 +                if (((EntityPlayerMP) this.field_73010_i.get(i)).field_70170_p == this)

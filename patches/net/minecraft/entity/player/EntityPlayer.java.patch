@@ -284,7 +284,7 @@
                          if (l > 0 && flag2)
                          {
 -                            p_71059_1_.func_70015_d(l * 4);
-+                            // CraftBukkit start - raise a combust event when somebody hits with a fire enchanted item
++                            // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
 +                            EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), p_71059_1_.getBukkitEntity(), l * 4);
 +                            org.bukkit.Bukkit.getPluginManager().callEvent(combustEvent);
 +
@@ -394,7 +394,7 @@
  
 -    public boolean func_98052_bS()
 -    {
-+    /* CraftBukkit start - we use canPickUpLoot on players, can't have this
++    /* CraftBukkit start - We use canPickUpLoot on players, can't have this
 +    public boolean bS() {
          return false;
      }

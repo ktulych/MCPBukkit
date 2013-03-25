@@ -4,7 +4,7 @@
  import java.util.List;
  import java.util.Map;
  
-+// CraftBukkit start - strip down to empty
++// CraftBukkit start - Strip down to empty methods, performance cost
  public class Profiler
  {
 -    private final List field_76325_b = new ArrayList();

@@ -21,13 +21,13 @@
      }
  
 -    public Vec3 func_72345_a(double p_72345_1_, double p_72345_3_, double p_72345_5_)
-+    public final Vec3 func_72345_a(double p_72345_1_, double p_72345_3_, double p_72345_5_)   // CraftBukkit - add final
++    public final Vec3 func_72345_a(double p_72345_1_, double p_72345_3_, double p_72345_5_)   // CraftBukkit - Add final
      {
 -        if (this.func_82589_e())
 +        if (this.field_72346_f == 0)
          {
 -            return new Vec3(this, p_72345_1_, p_72345_3_, p_72345_5_);
-+            return Vec3.func_72443_a(p_72345_1_, p_72345_3_, p_72345_5_);    // CraftBukkit - don't pool objects indefinitely if thread doesn't adhere to contract
++            return Vec3.func_72443_a(p_72345_1_, p_72345_3_, p_72345_5_);    // CraftBukkit - Don't pool objects indefinitely if thread doesn't adhere to contract
 +        }
 +
 +        Vec3 vec3;
@@ -54,14 +54,14 @@
 +            this.alloclisthead = vec3;
 +        }
 +
-+        vec3.next = this.alloclist; // add to allocated list
++        vec3.next = this.alloclist; // Add to allocated list
 +        this.alloclist = vec3;
 +        // CraftBukkit end
 +        ++this.field_72347_d;
 +        return vec3;
 +    }
 +
-+    // CraftBukkit start - offer back vector (can save LOTS of unneeded bloat) - works about 90% of the time
++    // CraftBukkit start - Offer back vector (can save LOTS of unneeded bloat) - works about 90% of the time
 +    public void release(Vec3 v)
 +    {
 +        if (this.alloclist == v)
@@ -90,7 +90,7 @@
 +            this.field_72348_e = this.field_72347_d;
 +        }
 +
-+        // CraftBukkit start - intelligent cache
++        // CraftBukkit start - Intelligent cache
 +        // Take any allocated blocks and put them on free list
 +        if (this.alloclist != null)
 +        {

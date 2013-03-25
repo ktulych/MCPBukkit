@@ -50,7 +50,7 @@
 +    }
 +    // CraftBukkit end
 +
-+    // CraftBukkit start - add async variant, provide compatibility
++    // CraftBukkit start - Add async variant, provide compatibility
 +    public Chunk func_75815_a(World p_75815_1_, int p_75815_2_, int p_75815_3_)
 +    {
 +        Object[] data = this.loadChunk(p_75815_1_, p_75815_2_, p_75815_3_);
@@ -191,7 +191,7 @@
          }
  
 -        NBTTagList nbttaglist1 = p_75823_2_.func_74761_m("Entities");
-+        // CraftBukkit start - end this method here and split off entity loading to another method
++        // CraftBukkit start - End this method here and split off entity loading to another method
 +        return chunk;
 +    }
 +

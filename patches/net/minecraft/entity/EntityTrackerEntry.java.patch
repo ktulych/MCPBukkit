@@ -12,10 +12,12 @@
  public class EntityTrackerEntry
  {
      public Entity field_73132_a;
-@@ -125,37 +130,37 @@
+@@ -123,39 +128,39 @@
+             this.func_73120_a(new Packet39AttachEntity(this.field_73132_a, this.field_73132_a.field_70154_o));
+         }
  
-         if (this.field_73132_a instanceof EntityItemFrame && this.field_73136_m % 10 == 0)
-         {
+-        if (this.field_73132_a instanceof EntityItemFrame && this.field_73136_m % 10 == 0)
+-        {
 -            EntityItemFrame entityitemframe = (EntityItemFrame)this.field_73132_a;
 -            ItemStack itemstack = entityitemframe.func_82335_i();
 -
@@ -47,13 +49,15 @@
 -            if (datawatcher.func_75684_a())
 -            {
 -                this.func_73116_b(new Packet40EntityMetadata(this.field_73132_a.field_70157_k, datawatcher, false));
++        if (this.field_73132_a instanceof EntityItemFrame /*&& this.m % 10 == 0*/)   // CraftBukkit - Moved below, should always enter this block
++        {
 +            EntityItemFrame i4 = (EntityItemFrame) this.field_73132_a;
 +            ItemStack i5 = i4.func_82335_i();
 +
-+            if (i5 != null && i5.func_77973_b() instanceof ItemMap)
++            if (this.field_73136_m % 10 == 0 && i5 != null && i5.func_77973_b() instanceof ItemMap)   // CraftBukkit - Moved this.m % 10 logic here so item frames do not enter the other blocks
 +            {
 +                MapData i7 = Item.field_77744_bd.func_77873_a(i5, this.field_73132_a.field_70170_p);
-+                Iterator j0 = p_73122_1_.iterator();
++                Iterator j0 = this.field_73134_o.iterator(); // CraftBukkit
 +
 +                while (j0.hasNext())
 +                {
@@ -85,7 +89,7 @@
                  boolean flag = Math.abs(j1) >= 4 || Math.abs(k1) >= 4 || Math.abs(l1) >= 4 || this.field_73136_m % 60 == 0;
                  boolean flag1 = Math.abs(l - this.field_73127_g) >= 4 || Math.abs(i1 - this.field_73139_h) >= 4;
  
-+                // CraftBukkit start - code moved from below
++                // CraftBukkit start - Code moved from below
 +                if (flag)
 +                {
 +                    this.field_73128_d = i;
@@ -109,7 +113,7 @@
                      {
                          this.field_73142_u = 0;
 +
-+                        // CraftBukkit start - refresh list of who can see a player before sending teleport packet
++                        // CraftBukkit start - Refresh list of who can see a player before sending teleport packet
 +                        if (this.field_73132_a instanceof EntityPlayerMP)
 +                        {
 +                            this.func_73125_b(new java.util.ArrayList(this.field_73134_o));
@@ -136,7 +140,7 @@
 -                    this.field_73139_h = i1;
 -                }
 -
-+                /* CraftBukkit start - code moved up
++                /* CraftBukkit start - Code moved up
 +                if (flag) {
 +                    this.xLoc = i;
 +                    this.yLoc = j;
@@ -156,7 +160,7 @@
          if (this.field_73132_a.field_70133_I)
          {
 -            this.func_73116_b(new Packet28EntityVelocity(this.field_73132_a));
-+            // CraftBukkit start - create PlayerVelocity event
++            // CraftBukkit start - Create PlayerVelocity event
 +            boolean cancelled = false;
 +
 +            if (this.field_73132_a instanceof EntityPlayerMP)
@@ -222,7 +226,7 @@
          if (this.field_73132_a.field_70128_L)
          {
 -            this.field_73132_a.field_70170_p.func_98180_V().func_98236_b("Fetching addPacket for removed entity");
-+            // CraftBukkit start - remove useless error spam, just return
++            // CraftBukkit start - Remove useless error spam, just return
 +            // this.tracker.world.getLogger().warning("Fetching addPacket for removed entity");
 +            return null;
 +            // CraftBukkit end

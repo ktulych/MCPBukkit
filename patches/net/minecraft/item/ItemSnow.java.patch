@@ -22,7 +22,7 @@
                  int k1 = j1 & 7;
  
 -                if (k1 <= 6 && p_77648_3_.func_72855_b(block.func_71872_e(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_)) && p_77648_3_.func_72921_c(p_77648_4_, p_77648_5_, p_77648_6_, k1 + 1 | j1 & -8, 2))
-+                // CraftBukkit start - redirect to common handler
++                // CraftBukkit start - Redirect to common handler
 +                if (k1 <= 6 && p_77648_3_.func_72855_b(block.func_71872_e(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_)) && ItemBlock.processBlockPlace(p_77648_3_, p_77648_2_, p_77648_1_, p_77648_4_, p_77648_5_, p_77648_6_, Block.field_72037_aS.field_71990_ca, k1 + 1 | j1 & -8, clickedX, clickedY, clickedZ))
                  {
 -                    p_77648_3_.func_72908_a((double)((float)p_77648_4_ + 0.5F), (double)((float)p_77648_5_ + 0.5F), (double)((float)p_77648_6_ + 0.5F), block.field_72020_cn.func_82593_b(), (block.field_72020_cn.func_72677_b() + 1.0F) / 2.0F, block.field_72020_cn.func_72678_c() * 0.8F);

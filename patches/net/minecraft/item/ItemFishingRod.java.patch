@@ -1,26 +1,19 @@
 --- ../net/minecraft/item/ItemFishingRod.java
 +++ ../net/minecraft/item/ItemFishingRod.java
-@@ -1,9 +1,13 @@
+@@ -1,5 +1,6 @@
  package net.minecraft.item;
  
-+// CraftBukkit start
-+import org.bukkit.event.player.PlayerFishEvent;
-+import org.bukkit.entity.Fish;
++import org.bukkit.event.player.PlayerFishEvent; // CraftBukkit
  import net.minecraft.creativetab.CreativeTabs;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.projectile.EntityFishHook;
- import net.minecraft.world.World;
-+// CraftBukkit end
- 
- public class ItemFishingRod extends Item
- {
-@@ -25,11 +29,22 @@
+@@ -25,11 +26,22 @@
          }
          else
          {
 +            // CraftBukkit start
 +            EntityFishHook hook = new EntityFishHook(p_77659_2_, p_77659_3_);
-+            PlayerFishEvent playerFishEvent = new PlayerFishEvent((org.bukkit.entity.Player) p_77659_3_.getBukkitEntity(), null, (Fish) hook.getBukkitEntity(), PlayerFishEvent.State.FISHING);
++            PlayerFishEvent playerFishEvent = new PlayerFishEvent((org.bukkit.entity.Player) p_77659_3_.getBukkitEntity(), null, (org.bukkit.entity.Fish) hook.getBukkitEntity(), PlayerFishEvent.State.FISHING);
 +            p_77659_2_.getServer().getPluginManager().callEvent(playerFishEvent);
 +
 +            if (playerFishEvent.isCancelled())

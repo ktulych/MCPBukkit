@@ -12,7 +12,7 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
-+        // CraftBukkit start - whole method
++        // CraftBukkit start - Whole method
 +        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
          int j = this.func_70633_aT();
  

@@ -16,7 +16,7 @@
 +
      public boolean func_76484_a(World p_76484_1_, Random p_76484_2_, int p_76484_3_, int p_76484_4_, int p_76484_5_)
      {
-+        // CraftBukkit start - moved to generate
++        // CraftBukkit start - Moved to generate
 +        return this.generate((BlockChangeDelegate) p_76484_1_, p_76484_2_, p_76484_3_, p_76484_4_, p_76484_5_);
 +    }
 +

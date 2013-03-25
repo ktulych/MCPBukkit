@@ -18,7 +18,7 @@
 -        if (p_i3301_1_.length() > field_73478_a)
 -        {
 -            p_i3301_1_ = p_i3301_1_.substring(0, field_73478_a);
-+        /* CraftBukkit start - handle this later
++        /* CraftBukkit start - Handle this later
 +        if (s.length() > b) {
 +            s = s.substring(0, b);
          }

@@ -693,7 +693,7 @@ public final class CraftServer implements Server {
         internal.field_72988_C = console.worlds.get(0).field_72988_C;
 
         internal.field_73062_L = new net.minecraft.entity.EntityTracker(internal); // CraftBukkit
-        internal.func_72954_a((net.minecraft.world.IWorldAccess) new net.minecraft.world.WorldManager(console, internal));
+        internal.func_72954_a(new net.minecraft.world.WorldManager(console, internal));
         internal.field_73013_u = 1;
         internal.func_72891_a(true, true);
         console.worlds.add(internal);
@@ -765,7 +765,7 @@ public final class CraftServer implements Server {
 
         if (save) {
             try {
-                handle.func_73044_a(true, (net.minecraft.util.IProgressUpdate) null);
+                handle.func_73044_a(true, null);
                 handle.func_73041_k();
                 WorldSaveEvent event = new WorldSaveEvent(handle.getWorld());
                 getPluginManager().callEvent(event);
@@ -906,12 +906,12 @@ public final class CraftServer implements Server {
 
         if (section != null) {
             for (String key : section.getKeys(false)) {
-                List<String> commands = null;
+                List<String> commands;
 
                 if (section.isList(key)) {
                     commands = section.getStringList(key);
                 } else {
-                    commands = ImmutableList.<String>of(section.getString(key));
+                    commands = ImmutableList.of(section.getString(key));
                 }
 
                 result.put(key, commands.toArray(new String[commands.size()]));
@@ -1217,9 +1217,9 @@ public final class CraftServer implements Server {
 
     public void onPlayerJoin(Player player) {
         if ((updater.isEnabled()) && (updater.getCurrent() != null) && (player.hasPermission(Server.BROADCAST_CHANNEL_ADMINISTRATIVE))) {
-            if ((updater.getCurrent().isBroken()) && (updater.getOnBroken().contains(updater.WARN_OPERATORS))) {
+            if ((updater.getCurrent().isBroken()) && (updater.getOnBroken().contains(AutoUpdater.WARN_OPERATORS))) {
                 player.sendMessage(ChatColor.DARK_RED + "The version of CraftBukkit that this server is running is known to be broken. Please consider updating to the latest version at dl.bukkit.org.");
-            } else if ((updater.isUpdateAvailable()) && (updater.getOnUpdate().contains(updater.WARN_OPERATORS))) {
+            } else if ((updater.isUpdateAvailable()) && (updater.getOnUpdate().contains(AutoUpdater.WARN_OPERATORS))) {
                 player.sendMessage(ChatColor.DARK_PURPLE + "The version of CraftBukkit that this server is running is out of date. Please consider updating to the latest version at dl.bukkit.org.");
             }
         }

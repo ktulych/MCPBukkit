@@ -16,7 +16,7 @@
 -    private float field_75125_b = 5.0F;
 -    private float field_75126_c;
 -    private int field_75123_d = 0;
-+    // CraftBukkit start - all made public
++    // CraftBukkit start - All made public
 +    public int field_75127_a = 20;
 +    public float field_75125_b = 5.0F;
 +    public float field_75126_c;

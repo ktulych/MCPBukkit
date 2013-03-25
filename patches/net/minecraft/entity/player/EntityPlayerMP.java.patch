@@ -83,7 +83,7 @@
 +        this.getBukkitEntity().setExtraData(p_70014_1_); // CraftBukkit
 +    }
 +
-+    // CraftBukkit start - world fallback code, either respawn location or global spawn
++    // CraftBukkit start - World fallback code, either respawn location or global spawn
 +    public void func_70029_a(World world)
 +    {
 +        super.func_70029_a(world);
@@ -257,7 +257,7 @@
 -                {
 -                    this.field_71135_a.func_72569_a((double)chunkcoordinates.field_71574_a, (double)chunkcoordinates.field_71572_b, (double)chunkcoordinates.field_71573_c, 0.0F, 0.0F);
 +                this.func_71029_a((StatBase) AchievementList.field_76002_B);
-+                // CraftBukkit start - rely on custom portal management
++                // CraftBukkit start - Rely on custom portal management
 +                /*
 +                ChunkCoordinates chunkcoordinates = this.server.getWorldServer(i).getDimensionSpawn();
 +
@@ -339,7 +339,7 @@
      public void func_71058_b(int p_71058_1_, int p_71058_2_, int p_71058_3_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerWorkbench(this.field_71071_by, this.field_70170_p, p_71058_1_, p_71058_2_, p_71058_3_));
 +
 +        if (container == null)
@@ -359,7 +359,7 @@
      public void func_71002_c(int p_71002_1_, int p_71002_2_, int p_71002_3_, String p_71002_4_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerEnchantment(this.field_71071_by, this.field_70170_p, p_71002_1_, p_71002_2_, p_71002_3_));
 +
 +        if (container == null)
@@ -379,7 +379,7 @@
      public void func_82244_d(int p_82244_1_, int p_82244_2_, int p_82244_3_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerRepair(this.field_71071_by, this.field_70170_p, p_82244_1_, p_82244_2_, p_82244_3_, this));
 +
 +        if (container == null)
@@ -400,7 +400,7 @@
          }
  
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerChest(this.field_71071_by, p_71007_1_));
 +
 +        if (container == null)
@@ -420,7 +420,7 @@
      public void func_94064_a(TileEntityHopper p_94064_1_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHopper(this.field_71071_by, p_94064_1_));
 +
 +        if (container == null)
@@ -440,7 +440,7 @@
      public void func_96125_a(EntityMinecartHopper p_96125_1_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHopper(this.field_71071_by, p_96125_1_));
 +
 +        if (container == null)
@@ -460,7 +460,7 @@
      public void func_71042_a(TileEntityFurnace p_71042_1_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerFurnace(this.field_71071_by, p_71042_1_));
 +
 +        if (container == null)
@@ -480,7 +480,7 @@
      public void func_71006_a(TileEntityDispenser p_71006_1_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerDispenser(this.field_71071_by, p_71006_1_));
 +
 +        if (container == null)
@@ -500,7 +500,7 @@
      public void func_71017_a(TileEntityBrewingStand p_71017_1_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerBrewingStand(this.field_71071_by, p_71017_1_));
 +
 +        if (container == null)
@@ -520,7 +520,7 @@
      public void func_82240_a(TileEntityBeacon p_82240_1_)
      {
 -        this.func_71117_bO();
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerBeacon(this.field_71071_by, p_82240_1_));
 +
 +        if (container == null)
@@ -541,7 +541,7 @@
      {
 -        this.func_71117_bO();
 -        this.field_71070_bA = new ContainerMerchant(this.field_71071_by, p_71030_1_, this.field_70170_p);
-+        // CraftBukkit start - inventory open hook
++        // CraftBukkit start - Inventory open hook
 +        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerMerchant(this.field_71071_by, p_71030_1_, this.field_70170_p));
 +
 +        if (container == null)
@@ -560,7 +560,7 @@
          this.field_71135_a.func_72567_b(new Packet104WindowItems(p_71110_1_.field_75152_c, p_71110_2_));
          this.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_71071_by.func_70445_o()));
 +
-+        // CraftBukkit start - send a Set Slot to update the crafting result slot
++        // CraftBukkit start - Send a Set Slot to update the crafting result slot
 +        if (java.util.EnumSet.of(InventoryType.CRAFTING, InventoryType.WORKBENCH).contains(p_71110_1_.getBukkitView().getType()))
 +        {
 +            this.field_71135_a.func_72567_b(new Packet103SetSlot(p_71110_1_.field_75152_c, 0, p_71110_1_.func_75139_a(0).func_75211_c()));

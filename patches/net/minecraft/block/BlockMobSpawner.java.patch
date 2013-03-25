@@ -6,7 +6,7 @@
          super.func_71914_a(p_71914_1_, p_71914_2_, p_71914_3_, p_71914_4_, p_71914_5_, p_71914_6_, p_71914_7_);
 -        int j1 = 15 + p_71914_1_.field_73012_v.nextInt(15) + p_71914_1_.field_73012_v.nextInt(15);
 -        this.func_71923_g(p_71914_1_, p_71914_2_, p_71914_3_, p_71914_4_, j1);
-+        /* CraftBukkit start - delegate to getExpDrop
++        /* CraftBukkit start - Delegate to getExpDrop
 +        int j1 = 15 + world.random.nextInt(15) + world.random.nextInt(15);
 +
 +        this.j(world, i, j, k, j1);*/

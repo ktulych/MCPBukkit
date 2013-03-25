@@ -5,7 +5,7 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
 +
-+//CraftBukkit start
++// CraftBukkit start
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.entity.EntityDamageEvent;
 +// CraftBukkit end
@@ -64,7 +64,7 @@
              this.field_98051_e = p_70037_1_.func_74775_l("TileEntityData");
          }
  
-+        // CraftBukkit start - backward compatibility, remove in 1.6
++        // CraftBukkit start - Backward compatibility, remove in 1.6
 +        if (p_70037_1_.func_74764_b("Bukkit.tileData"))
 +        {
 +            this.field_98051_e = (NBTTagCompound) p_70037_1_.func_74775_l("Bukkit.tileData").func_74737_b();

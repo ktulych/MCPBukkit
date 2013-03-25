@@ -57,7 +57,7 @@
                  EnumCreatureType enumcreaturetype = aenumcreaturetype[j1];
 -
 -                if ((!enumcreaturetype.func_75599_d() || p_77192_2_) && (enumcreaturetype.func_75599_d() || p_77192_1_) && (!enumcreaturetype.func_82705_e() || p_77192_3_) && p_77192_0_.func_72907_a(enumcreaturetype.func_75598_a()) <= enumcreaturetype.func_75601_b() * field_77193_b.size() / 256)
-+                // CraftBukkit start - use per-world spawn limits
++                // CraftBukkit start - Use per-world spawn limits
 +                int limit = enumcreaturetype.func_75601_b();
 +
 +                switch (enumcreaturetype)
@@ -110,7 +110,7 @@
                                                              {
                                                                  ++j2;
 -                                                                p_77192_0_.func_72838_d(entityliving);
-+                                                                // CraftBukkit start - added a reason for spawning this creature, moved a(entityliving, world...) up
++                                                                // CraftBukkit start - Added a reason for spawning this creature, moved a(entityliving, world...) up
                                                                  func_77188_a(entityliving, p_77192_0_, f, f1, f2);
 -
 +                                                                p_77192_0_.addEntity(entityliving, SpawnReason.NATURAL);
@@ -133,7 +133,7 @@
  
                              entityliving.func_70012_b((double)f, (double)f1, (double)f2, p_77191_6_.nextFloat() * 360.0F, 0.0F);
 -                            p_77191_0_.func_72838_d(entityliving);
-+                            // CraftBukkit start - added a reason for spawning this creature, moved a(entity, world...) up
++                            // CraftBukkit start - Added a reason for spawning this creature, moved a(entity, world...) up
                              func_77188_a(entityliving, p_77191_0_, f, f1, f2);
 +                            p_77191_0_.addEntity(entityliving, SpawnReason.CHUNK_GEN);
 +                            // CraftBukkit end

@@ -21,7 +21,7 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
-+        // CraftBukkit start - whole method
++        // CraftBukkit start - Whole method
 +        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
          int j = this.field_70146_Z.nextInt(3) + this.field_70146_Z.nextInt(1 + p_70628_2_);
          int k;
@@ -58,7 +58,7 @@
  
          if (itemstack != null && itemstack.field_77993_c == Item.field_77788_aw.field_77779_bT)
          {
-+            // CraftBukkit start - got milk?
++            // CraftBukkit start - Got milk?
 +            org.bukkit.Location loc = this.getBukkitEntity().getLocation();
 +            org.bukkit.event.player.PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(p_70085_1_, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), -1, itemstack, Item.field_77771_aG);
 +

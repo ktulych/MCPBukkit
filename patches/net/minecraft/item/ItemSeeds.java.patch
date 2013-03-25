@@ -26,7 +26,7 @@
              if (i1 == this.field_77838_b && p_77648_3_.func_72799_c(p_77648_4_, p_77648_5_ + 1, p_77648_6_))
              {
 -                p_77648_3_.func_94575_c(p_77648_4_, p_77648_5_ + 1, p_77648_6_, this.field_77839_a);
-+                // CraftBukkit start - seeds
++                // CraftBukkit start - Seeds
 +                // world.setTypeIdUpdate(i, j + 1, k, this.id);
 +                if (!ItemBlock.processBlockPlace(p_77648_3_, p_77648_2_, null, p_77648_4_, p_77648_5_ + 1, p_77648_6_, this.field_77839_a, 0, clickedX, clickedY, clickedZ))
 +                {

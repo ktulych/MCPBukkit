@@ -57,7 +57,7 @@
  
      public void func_70645_a(DamageSource p_70645_1_)
      {
-+        // CraftBukkit start - rearranged the method (super call to end, drop to dropDeathLoot)
++        // CraftBukkit start - Rearranged the method (super call to end, drop to dropDeathLoot)
 +        if (p_70645_1_.func_76346_g() instanceof EntitySkeleton)
 +        {
 +            int i = Item.field_77819_bI.field_77779_bT + this.field_70146_Z.nextInt(Item.field_85180_cf.field_77779_bT - Item.field_77819_bI.field_77779_bT + 1);
@@ -76,7 +76,7 @@
 +        // CraftBukkit end
 +    }
 +
-+    // CraftBukkit start - whole method
++    // CraftBukkit start - Whole method
 +    protected void func_70628_a(boolean flag, int i)
 +    {
 +        int j = this.func_70633_aT();

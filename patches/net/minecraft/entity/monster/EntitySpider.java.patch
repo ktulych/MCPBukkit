@@ -39,7 +39,7 @@
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
 -        super.func_70628_a(p_70628_1_, p_70628_2_);
-+        // CraftBukkit start - whole method; adapted from super.dropDeathLoot.
++        // CraftBukkit start - Whole method; adapted from super.dropDeathLoot.
 +        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
 +        int k = this.field_70146_Z.nextInt(3);
 +

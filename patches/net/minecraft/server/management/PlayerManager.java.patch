@@ -1,13 +1,12 @@
 --- ../net/minecraft/server/management/PlayerManager.java
 +++ ../net/minecraft/server/management/PlayerManager.java
-@@ -8,14 +8,22 @@
+@@ -8,14 +8,21 @@
  import net.minecraft.world.WorldProvider;
  import net.minecraft.world.WorldServer;
  
 +// CraftBukkit start
 +import java.util.Collections;
 +import java.util.Queue;
-+import java.util.Iterator;
 +import java.util.LinkedList;
 +// CraftBukkit end
 +
@@ -24,7 +23,7 @@
  
      public PlayerManager(WorldServer p_i3392_1_, int p_i3392_2_)
      {
-@@ -41,22 +49,42 @@
+@@ -41,22 +48,42 @@
  
      public void func_72693_b()
      {
@@ -35,8 +34,8 @@
 -
 -        this.field_72697_d.clear();
 -
-+        // CraftBukkit start - use iterator
-+        Iterator iterator = this.field_72697_d.iterator();
++        // CraftBukkit start - Use iterator
++        java.util.Iterator iterator = this.field_72697_d.iterator();
 +
 +        while (iterator.hasNext())
 +        {
@@ -47,12 +46,12 @@
 +
 +        // CraftBukkit end
 +
-+        // this.d.clear(); // CraftBukkit - removals are already covered
++        // this.d.clear(); // CraftBukkit - Removals are already covered
          if (this.field_72699_b.isEmpty())
          {
 +            if (!wasNotEmpty)
 +            {
-+                return;    // CraftBukkit - only do unload when we go from non-empty to empty
++                return;    // CraftBukkit - Only do unload when we go from non-empty to empty
 +            }
 +
              WorldProvider worldprovider = this.field_72701_a.field_73011_w;
@@ -75,7 +74,7 @@
      }
  
      private PlayerInstance func_72690_a(int p_72690_1_, int p_72690_2_, boolean p_72690_3_)
-@@ -72,6 +100,19 @@
+@@ -72,6 +99,19 @@
  
          return playerinstance;
      }
@@ -95,11 +94,11 @@
  
      public void func_72687_a(int p_72687_1_, int p_72687_2_, int p_72687_3_)
      {
-@@ -91,15 +132,25 @@
+@@ -91,15 +131,25 @@
          int j = (int)p_72683_1_.field_70161_v >> 4;
          p_72683_1_.field_71131_d = p_72683_1_.field_70165_t;
          p_72683_1_.field_71132_e = p_72683_1_.field_70161_v;
-+        // CraftBukkit start - load nearby chunks first
++        // CraftBukkit start - Load nearby chunks first
 +        List<ChunkCoordIntPair> chunkList = new LinkedList<ChunkCoordIntPair>();
  
          for (int k = i - this.field_72698_e; k <= i + this.field_72698_e; ++k)
@@ -125,7 +124,7 @@
          this.field_72699_b.add(p_72683_1_);
          this.func_72691_b(p_72683_1_);
      }
-@@ -201,6 +252,7 @@
+@@ -201,6 +251,7 @@
              int i1 = this.field_72698_e;
              int j1 = i - k;
              int k1 = j - l;
@@ -133,7 +132,7 @@
  
              if (j1 != 0 || k1 != 0)
              {
-@@ -210,7 +262,7 @@
+@@ -210,7 +261,7 @@
                      {
                          if (!this.func_72684_a(l1, i2, k, l, i1))
                          {
@@ -142,7 +141,7 @@
                          }
  
                          if (!this.func_72684_a(l1 - j1, i2 - k1, i, j, i1))
-@@ -228,6 +280,20 @@
+@@ -228,6 +279,20 @@
                  this.func_72691_b(p_72685_1_);
                  p_72685_1_.field_71131_d = p_72685_1_.field_70165_t;
                  p_72685_1_.field_71132_e = p_72685_1_.field_70161_v;
@@ -163,7 +162,7 @@
              }
          }
      }
-@@ -253,8 +319,65 @@
+@@ -253,8 +318,65 @@
          return p_72689_0_.field_72700_c;
      }
  
@@ -176,7 +175,7 @@
 +        return playermanager.field_72697_d;
 +    }
 +
-+    // CraftBukkit start - sorter to load nearby chunks first
++    // CraftBukkit start - Sorter to load nearby chunks first
 +    private static class ChunkCoordComparator implements java.util.Comparator<ChunkCoordIntPair>
 +    {
 +        private int x;

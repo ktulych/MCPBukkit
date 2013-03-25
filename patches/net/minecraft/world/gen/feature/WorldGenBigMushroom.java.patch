@@ -24,7 +24,7 @@
      public boolean func_76484_a(World p_76484_1_, Random p_76484_2_, int p_76484_3_, int p_76484_4_, int p_76484_5_)
      {
 -        int l = p_76484_2_.nextInt(2);
-+        // CraftBukkit start - moved to generate
++        // CraftBukkit start - Moved to generate
 +        return grow((BlockChangeDelegate) p_76484_1_, p_76484_2_, p_76484_3_, p_76484_4_, p_76484_5_, null, null, null);
 +    }
 +

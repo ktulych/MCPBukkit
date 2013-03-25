@@ -176,7 +176,7 @@
          else
          {
 -            this.func_70050_g(300);
-+            // CraftBukkit start - only set if needed to work around a datawatcher inefficiency
++            // CraftBukkit start - Only set if needed to work around a DataWatcher inefficiency
 +            if (this.func_70086_ai() != 300)
 +            {
 +                this.func_70050_g(maxAirTicks);
@@ -239,7 +239,7 @@
 -                }
 -            }
 -
-+            // CraftBukkit start - update getExpReward() above if the removed if() changes!
++            // CraftBukkit start - Update getExpReward() above if the removed if() changes!
 +            i = this.expToDrop;
 +
 +            while (i > 0)
@@ -277,7 +277,7 @@
          this.field_70764_aw += f2;
      }
  
-+    // CraftBukkit start - delegate so we can handle providing a reason for health being regained
++    // CraftBukkit start - Delegate so we can handle providing a reason for health being regained
      public void func_70691_i(int p_70691_1_)
      {
 +        heal(p_70691_1_, EntityRegainHealthEvent.RegainReason.CUSTOM);
@@ -353,7 +353,7 @@
      }
  
 -    protected void func_70600_l(int p_70600_1_) {}
-+    // CraftBukkit start - change return type to ItemStack
++    // CraftBukkit start - Change return type to ItemStack
 +    protected ItemStack func_70600_l(int i)
 +    {
 +        return null;
@@ -362,7 +362,7 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
-+        // CraftBukkit start - whole method
++        // CraftBukkit start - Whole method
 +        List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
          int j = this.func_70633_aT();
  
@@ -442,7 +442,7 @@
              int j = this.field_70170_p.func_72798_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u - 0.20000000298023224D - (double)this.field_70129_M), MathHelper.func_76128_c(this.field_70161_v));
  
              if (j > 0)
-@@ -1345,22 +1487,43 @@
+@@ -1345,22 +1487,45 @@
          p_70014_1_.func_74782_a("DropChances", nbttaglist1);
          p_70014_1_.func_74778_a("CustomName", this.func_94057_bL());
          p_70014_1_.func_74757_a("CustomNameVisible", this.func_94062_bN());
@@ -459,6 +459,8 @@
 +            this.maxHealth = p_70037_1_.func_74762_e("Bukkit.MaxHealth");
 +        }
 +
++        // CraftBukkit end
++
          if (!p_70037_1_.func_74764_b("Health"))
          {
 -            this.field_70734_aK = this.func_70667_aM();
@@ -470,7 +472,7 @@
          this.field_70724_aR = p_70037_1_.func_74765_d("AttackTime");
 -        this.func_98053_h(p_70037_1_.func_74767_n("CanPickUpLoot"));
 -        this.field_82179_bU = p_70037_1_.func_74767_n("PersistenceRequired");
-+        // CraftBukkit start - if looting or persistence is false only use it if it was set after we started using it
++        // CraftBukkit start - If looting or persistence is false only use it if it was set after we started using it
 +        boolean data = p_70037_1_.func_74767_n("CanPickUpLoot");
 +
 +        if (isLevelAtLeast(p_70037_1_, 1) || data)
@@ -489,7 +491,7 @@
  
          if (p_70037_1_.func_74764_b("CustomName") && p_70037_1_.func_74779_i("CustomName").length() > 0)
          {
-@@ -1534,7 +1697,8 @@
+@@ -1534,7 +1699,8 @@
          this.field_70170_p.field_72984_F.func_76319_b();
          this.field_70170_p.field_72984_F.func_76320_a("looting");
  
@@ -499,7 +501,7 @@
          {
              List list = this.field_70170_p.func_72872_a(EntityItem.class, this.field_70121_D.func_72314_b(1.0D, 0.0D, 1.0D));
              Iterator iterator = list.iterator();
-@@ -1705,12 +1869,12 @@
+@@ -1705,12 +1871,12 @@
                  double d2 = entityplayer.field_70161_v - this.field_70161_v;
                  double d3 = d0 * d0 + d1 * d1 + d2 * d2;
  
@@ -514,7 +516,7 @@
                  {
                      this.func_70106_y();
                  }
-@@ -1719,7 +1883,15 @@
+@@ -1719,7 +1885,15 @@
                      this.field_70708_bq = 0;
                  }
              }
@@ -531,7 +533,7 @@
      }
  
      protected void func_70619_bc()
-@@ -1783,7 +1955,7 @@
+@@ -1783,7 +1957,7 @@
          {
              this.func_70625_a(this.field_70776_bF, 10.0F, (float)this.func_70646_bf());
  
@@ -540,7 +542,7 @@
              {
                  this.field_70776_bF = null;
              }
-@@ -1882,7 +2054,18 @@
+@@ -1882,7 +2056,18 @@
  
      protected void func_70076_C()
      {
@@ -560,7 +562,7 @@
      }
  
      public Vec3 func_70040_Z()
-@@ -1955,12 +2138,12 @@
+@@ -1955,12 +2140,12 @@
              {
                  CrashReport crashreport = CrashReport.func_85055_a(throwable, "Ticking mob effect instance");
                  CrashReportCategory crashreportcategory = crashreport.func_85058_a("Mob effect being ticked");
@@ -579,16 +581,16 @@
                  throw new ReportedException(crashreport);
              }
          }
-@@ -2181,7 +2364,7 @@
+@@ -2181,7 +2366,7 @@
          }
          else
          {
 -            int i = (int)((float)this.field_70734_aK - (float)this.func_70667_aM() * 0.33F);
-+            int i = (int)((float) this.field_70734_aK - (float) this.maxHealth * 0.33F);  // this.getMaxHealth() -> this.maxHealth
++            int i = (int)((float) this.field_70734_aK - (float) this.maxHealth * 0.33F);  // CraftBukkit - this.getMaxHealth() -> this.maxHealth
              i -= (3 - this.field_70170_p.field_73013_u) * 4;
  
              if (i < 0)
-@@ -2302,17 +2485,17 @@
+@@ -2302,17 +2487,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {
@@ -609,7 +611,7 @@
              }
          }
      }
-@@ -2471,7 +2654,7 @@
+@@ -2471,7 +2656,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {

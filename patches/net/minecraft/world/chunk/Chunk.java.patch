@@ -13,19 +13,16 @@
  import net.minecraft.tileentity.TileEntity;
  import net.minecraft.util.AxisAlignedBB;
  import net.minecraft.util.MathHelper;
-@@ -22,6 +24,11 @@
+@@ -22,6 +24,8 @@
  import net.minecraft.world.biome.BiomeGenBase;
  import net.minecraft.world.biome.WorldChunkManager;
  import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 +
-+// CraftBukkit start
-+import org.bukkit.Bukkit;
-+import org.bukkit.Location;
-+// CraftBukkit end
++import org.bukkit.Bukkit; // CraftBukkit
  
  public class Chunk
  {
-@@ -71,12 +78,22 @@
+@@ -71,12 +75,22 @@
  
          for (int k = 0; k < this.field_76645_j.length; ++k)
          {
@@ -50,7 +47,7 @@
  
      public Chunk(World p_i3772_1_, byte[] p_i3772_2_, int p_i3772_3_, int p_i3772_4_)
      {
-@@ -525,13 +542,21 @@
+@@ -525,13 +539,21 @@
  
                  if (p_76592_4_ != 0)
                  {
@@ -63,7 +60,7 @@
  
                      if (Block.field_71973_m[p_76592_4_] instanceof ITileEntityProvider)
                      {
-+                        // CraftBukkit start - don't create tile entity if placement failed
++                        // CraftBukkit start - Don't create tile entity if placement failed
 +                        if (this.func_76610_a(p_76592_1_, p_76592_2_, p_76592_3_) != p_76592_4_)
 +                        {
 +                            return false;
@@ -73,7 +70,7 @@
                          tileentity = this.func_76597_e(p_76592_1_, p_76592_2_, p_76592_3_);
  
                          if (tileentity == null)
-@@ -668,8 +693,11 @@
+@@ -668,8 +690,11 @@
  
          if (i != this.field_76635_g || j != this.field_76647_h)
          {
@@ -87,7 +84,7 @@
          }
  
          int k = MathHelper.func_76128_c(p_76612_1_.field_70163_u / 16.0D);
-@@ -780,6 +808,15 @@
+@@ -780,6 +805,15 @@
  
              p_76604_4_.func_70312_q();
              this.field_76648_i.put(chunkposition, p_76604_4_);
@@ -103,7 +100,7 @@
          }
      }
  
-@@ -822,6 +859,22 @@
+@@ -822,6 +856,22 @@
  
          for (int i = 0; i < this.field_76645_j.length; ++i)
          {

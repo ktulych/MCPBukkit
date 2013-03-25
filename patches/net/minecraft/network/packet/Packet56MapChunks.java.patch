@@ -24,7 +24,7 @@
              this.field_73584_f[k] = packet51mapchunkdata.field_74582_a;
          }
  
-+        /* CraftBukkit start - moved to compress()
++        /* CraftBukkit start - Moved to compress()
          Deflater deflater = new Deflater(-1);
  
 -        try

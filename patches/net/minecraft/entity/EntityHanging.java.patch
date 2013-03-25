@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/EntityHanging.java
 +++ ../net/minecraft/entity/EntityHanging.java
-@@ -3,12 +3,21 @@
+@@ -3,12 +3,20 @@
  import java.util.Iterator;
  import java.util.List;
  import net.minecraft.block.material.Material;
@@ -15,14 +15,13 @@
 +// CraftBukkit start
 +import org.bukkit.entity.Hanging;
 +import org.bukkit.entity.Painting;
-+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 +import org.bukkit.event.hanging.HangingBreakEvent;
 +import org.bukkit.event.painting.PaintingBreakEvent;
 +// CraftBukkit end
  
  public abstract class EntityHanging extends Entity
  {
-@@ -122,6 +131,38 @@
+@@ -122,6 +130,38 @@
  
              if (!this.field_70128_L && !this.func_70518_d())
              {
@@ -61,7 +60,7 @@
                  this.func_70106_y();
                  this.func_82331_h();
              }
-@@ -225,6 +266,39 @@
+@@ -225,6 +265,39 @@
          {
              if (!this.field_70128_L && !this.field_70170_p.field_72995_K)
              {
@@ -71,7 +70,7 @@
 +
 +                if (p_70097_1_.func_76346_g() != null)
 +                {
-+                    event = new HangingBreakByEntityEvent((Hanging) this.getBukkitEntity(), p_70097_1_.func_76346_g() == null ? null : p_70097_1_.func_76346_g().getBukkitEntity());
++                    event = new org.bukkit.event.hanging.HangingBreakByEntityEvent((Hanging) this.getBukkitEntity(), p_70097_1_.func_76346_g() == null ? null : p_70097_1_.func_76346_g().getBukkitEntity());
 +
 +                    if (this instanceof EntityPainting)
 +                    {
@@ -101,7 +100,7 @@
                  this.func_70106_y();
                  this.func_70018_K();
                  EntityPlayer entityplayer = null;
-@@ -250,6 +324,11 @@
+@@ -250,6 +323,11 @@
      {
          if (!this.field_70170_p.field_72995_K && !this.field_70128_L && p_70091_1_ * p_70091_1_ + p_70091_3_ * p_70091_3_ + p_70091_5_ * p_70091_5_ > 0.0D)
          {
@@ -113,7 +112,7 @@
              this.func_70106_y();
              this.func_82331_h();
          }
-@@ -257,7 +336,7 @@
+@@ -257,7 +335,7 @@
  
      public void func_70024_g(double p_70024_1_, double p_70024_3_, double p_70024_5_)
      {

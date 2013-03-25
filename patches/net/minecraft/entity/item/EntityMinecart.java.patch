@@ -1,24 +1,22 @@
 --- ../net/minecraft/entity/item/EntityMinecart.java
 +++ ../net/minecraft/entity/item/EntityMinecart.java
-@@ -20,6 +20,17 @@
+@@ -20,6 +20,15 @@
  import net.minecraft.world.World;
  import net.minecraft.world.WorldServer;
  
 +// CraftBukkit start
 +import org.bukkit.Location;
-+import org.bukkit.entity.HumanEntity;
 +import org.bukkit.entity.Vehicle;
 +import org.bukkit.event.vehicle.VehicleDamageEvent;
 +import org.bukkit.event.vehicle.VehicleDestroyEvent;
 +import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 +import org.bukkit.util.Vector;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 +// CraftBukkit end
 +
  public abstract class EntityMinecart extends Entity
  {
      private boolean field_70499_f;
-@@ -33,6 +44,17 @@
+@@ -33,6 +42,17 @@
      private double field_70512_ao;
      private double field_70513_ap;
  
@@ -36,7 +34,7 @@
      public EntityMinecart(World p_i3541_1_)
      {
          super(p_i3541_1_);
-@@ -102,6 +124,7 @@
+@@ -102,6 +122,7 @@
          this.field_70169_q = p_i9021_2_;
          this.field_70167_r = p_i9021_4_;
          this.field_70166_s = p_i9021_6_;
@@ -44,7 +42,7 @@
      }
  
      public double func_70042_X()
-@@ -119,6 +142,19 @@
+@@ -119,6 +140,19 @@
              }
              else
              {
@@ -64,7 +62,7 @@
                  this.func_70494_i(-this.func_70493_k());
                  this.func_70497_h(10);
                  this.func_70018_K();
-@@ -131,6 +167,18 @@
+@@ -131,6 +165,18 @@
                      {
                          this.field_70153_n.func_70078_a(this);
                      }
@@ -83,7 +81,7 @@
  
                      if (flag && !this.func_94042_c())
                      {
-@@ -181,6 +229,14 @@
+@@ -181,6 +227,14 @@
  
      public void func_70071_h_()
      {
@@ -98,7 +96,7 @@
          if (this.field_82344_g != null)
          {
              this.field_82344_g.func_73660_a();
-@@ -211,7 +267,7 @@
+@@ -211,7 +265,7 @@
  
              if (this.field_71087_bX)
              {
@@ -107,7 +105,7 @@
                  {
                      if (this.field_70154_o == null && this.field_82153_h++ >= i)
                      {
-@@ -290,7 +346,7 @@
+@@ -290,7 +344,7 @@
                  --i;
              }
  
@@ -116,7 +114,7 @@
              double d5 = 0.0078125D;
              int l = this.field_70170_p.func_72798_a(j, i, k);
  
-@@ -333,6 +389,19 @@
+@@ -333,6 +387,19 @@
              }
  
              this.func_70101_b(this.field_70177_z, this.field_70125_A);
@@ -136,7 +134,7 @@
              List list = this.field_70170_p.func_72839_b(this, this.field_70121_D.func_72314_b(0.20000000298023224D, 0.0D, 0.20000000298023224D));
  
              if (list != null && !list.isEmpty())
-@@ -386,18 +455,22 @@
+@@ -386,18 +453,22 @@
  
          if (this.field_70122_E)
          {
@@ -165,7 +163,7 @@
          }
      }
  
-@@ -634,7 +707,7 @@
+@@ -634,7 +705,7 @@
  
      protected void func_94101_h()
      {
@@ -174,7 +172,7 @@
          {
              this.field_70159_w *= 0.996999979019165D;
              this.field_70181_x *= 0.0D;
-@@ -764,6 +837,19 @@
+@@ -764,6 +835,19 @@
          {
              if (p_70108_1_ != this.field_70153_n)
              {
@@ -194,7 +192,7 @@
                  if (p_70108_1_ instanceof EntityLiving && !(p_70108_1_ instanceof EntityPlayer) && !(p_70108_1_ instanceof EntityIronGolem) && this.func_94087_l() == 0 && this.field_70159_w * this.field_70159_w + this.field_70179_y * this.field_70179_y > 0.01D && this.field_70153_n == null && p_70108_1_.field_70154_o == null)
                  {
                      p_70108_1_.func_70078_a(this);
-@@ -773,7 +859,8 @@
+@@ -773,7 +857,8 @@
                  double d1 = p_70108_1_.field_70161_v - this.field_70161_v;
                  double d2 = d0 * d0 + d1 * d1;
  
@@ -204,12 +202,12 @@
                  {
                      d2 = (double)MathHelper.func_76133_a(d2);
                      d0 /= d2;
-@@ -967,4 +1054,30 @@
+@@ -967,4 +1052,30 @@
      {
          return this.field_94102_c;
      }
 +
-+    // CraftBukkit start - methods for getting and setting flying and derailed velocity modifiers
++    // CraftBukkit start - Methods for getting and setting flying and derailed velocity modifiers
 +    public Vector getFlyingVelocityMod()
 +    {
 +        return new Vector(flyingX, flyingY, flyingZ);

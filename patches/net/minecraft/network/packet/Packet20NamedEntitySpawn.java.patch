@@ -21,7 +21,7 @@
          this.field_73516_a = p_i3296_1_.field_70157_k;
 -        this.field_73514_b = p_i3296_1_.field_71092_bJ;
 +
-+        // CraftBukkit start - limit name length to 16 characters
++        // CraftBukkit start - Limit name length to 16 characters
 +        if (p_i3296_1_.field_71092_bJ.length() > 16)
 +        {
 +            this.field_73514_b = p_i3296_1_.field_71092_bJ.substring(0, 16);

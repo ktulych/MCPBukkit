@@ -13,7 +13,7 @@
              int l = p_71847_5_.nextInt(3);
              int i1;
              int j1;
-+            // CraftBukkit start - prevent lava putting something on fire, remember igniter block coords
++            // CraftBukkit start - Prevent lava putting something on fire, remember igniter block coords
 +            int x = p_71847_2_;
 +            int y = p_71847_3_;
 +            int z = p_71847_4_;
@@ -25,7 +25,7 @@
                  {
                      if (this.func_72216_n(p_71847_1_, p_71847_2_ - 1, p_71847_3_, p_71847_4_) || this.func_72216_n(p_71847_1_, p_71847_2_ + 1, p_71847_3_, p_71847_4_) || this.func_72216_n(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ - 1) || this.func_72216_n(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ + 1) || this.func_72216_n(p_71847_1_, p_71847_2_, p_71847_3_ - 1, p_71847_4_) || this.func_72216_n(p_71847_1_, p_71847_2_, p_71847_3_ + 1, p_71847_4_))
                      {
-+                        // CraftBukkit start - prevent lava putting something on fire
++                        // CraftBukkit start - Prevent lava putting something on fire
 +                        if (p_71847_1_.func_72798_a(p_71847_2_, p_71847_3_, p_71847_4_) != Block.field_72067_ar.field_71990_ca)
 +                        {
 +                            if (CraftEventFactory.callBlockIgniteEvent(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_, x, y, z).isCancelled())
@@ -42,7 +42,7 @@
  
                      if (p_71847_1_.func_72799_c(p_71847_2_, p_71847_3_ + 1, p_71847_4_) && this.func_72216_n(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_))
                      {
-+                        // CraftBukkit start - prevent lava putting something on fire
++                        // CraftBukkit start - Prevent lava putting something on fire
 +                        if (p_71847_1_.func_72798_a(p_71847_2_, p_71847_3_ + 1, p_71847_4_) != Block.field_72067_ar.field_71990_ca)
 +                        {
 +                            if (CraftEventFactory.callBlockIgniteEvent(p_71847_1_, p_71847_2_, p_71847_3_ + 1, p_71847_4_, x, y, z).isCancelled())

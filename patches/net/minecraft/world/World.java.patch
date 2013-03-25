@@ -267,7 +267,7 @@
          return true;
      }
  
-+    // CraftBukkit start - used for entities other than creatures
++    // CraftBukkit start - Used for entities other than creatures
      public boolean func_72838_d(Entity p_72838_1_)
      {
 -        int i = MathHelper.func_76128_c(p_72838_1_.field_70165_t / 16.0D);
@@ -380,7 +380,7 @@
          {
              entity = (Entity)this.field_73007_j.get(i);
  
-+            // CraftBukkit start - fixed an NPE, don't process entities in chunks queued for unload
++            // CraftBukkit start - Fixed an NPE, don't process entities in chunks queued for unload
 +            if (entity == null)
 +            {
 +                continue;
@@ -402,7 +402,7 @@
          for (i = 0; i < this.field_72996_f.size(); ++i)
          {
              entity = (Entity)this.field_72996_f.get(i);
-+            // CraftBukkit start - don't tick entities in chunks queued for unload
++            // CraftBukkit start - Don't tick entities in chunks queued for unload
 +            ChunkProviderServer chunkProviderServer = ((WorldServer) this).field_73059_b;
 +
 +            if (chunkProviderServer.field_73248_b.contains(MathHelper.func_76128_c(entity.field_70165_t) >> 4, MathHelper.func_76128_c(entity.field_70161_v) >> 4))
@@ -418,7 +418,7 @@
          while (iterator.hasNext())
          {
              TileEntity tileentity = (TileEntity)iterator.next();
-+            // CraftBukkit start - don't tick entities in chunks queued for unload
++            // CraftBukkit start - Don't tick entities in chunks queued for unload
 +            ChunkProviderServer chunkProviderServer = ((WorldServer) this).field_73059_b;
 +
 +            if (chunkProviderServer.field_73248_b.contains(tileentity.field_70329_l >> 4, tileentity.field_70327_n >> 4))
@@ -439,7 +439,7 @@
 -                        this.field_73009_h.add(tileentity1);
 -                    }
 -
-+                    /* CraftBukkit start - order matters, moved down
++                    /* CraftBukkit start - Order matters, moved down
 +                    if (!this.tileEntityList.contains(tileentity1)) {
 +                        this.tileEntityList.add(tileentity1);
 +                    }
@@ -452,7 +452,7 @@
                          {
                              chunk1.func_76604_a(tileentity1.field_70329_l & 15, tileentity1.field_70330_m, tileentity1.field_70327_n & 15, tileentity1);
 +
-+                            // CraftBukkit start - moved down from above
++                            // CraftBukkit start - Moved down from above
 +                            if (!this.field_73009_h.contains(tileentity1))
 +                            {
 +                                this.field_73009_h.add(tileentity1);
@@ -545,7 +545,7 @@
                  for (int i1 = -b0; i1 <= b0; ++i1)
                  {
 -                    this.field_72993_I.add(new ChunkCoordIntPair(l + j, i1 + k));
-+                    // CraftBukkit start - don't tick chunks queued for unload
++                    // CraftBukkit start - Don't tick chunks queued for unload
 +                    ChunkProviderServer chunkProviderServer = ((WorldServer) entityplayer.field_70170_p).field_73059_b;
 +
 +                    if (chunkProviderServer.field_73248_b.contains(l + j, i1 + k))
@@ -624,7 +624,7 @@
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
 +
-+            // CraftBukkit start - fixed an NPE
++            // CraftBukkit start - Fixed an NPE
 +            if (entityplayer1 == null || entityplayer1.field_70128_L)
 +            {
 +                continue;
@@ -638,7 +638,7 @@
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
  
-+            // CraftBukkit start - fixed an NPE
++            // CraftBukkit start - Fixed an NPE
 +            if (entityplayer1 == null || entityplayer1.field_70128_L)
 +            {
 +                continue;

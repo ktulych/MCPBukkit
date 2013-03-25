@@ -48,7 +48,7 @@
 -
 -                            if (inventoryplayer.func_70445_o().field_77994_a == 0)
 -                            {
-+                            // CraftBukkit start - store a reference
++                            // CraftBukkit start - Store a reference
 +                            ItemStack itemstack4 = inventoryplayer.func_70445_o();
 +
 +                            if (itemstack4.field_77994_a > 0)

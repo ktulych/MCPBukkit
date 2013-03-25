@@ -91,21 +91,24 @@
      }
  
      public boolean func_70085_c(EntityPlayer p_70085_1_)
-@@ -138,9 +181,10 @@
+@@ -138,10 +181,12 @@
          return false;
      }
  
 -    protected void func_70600_l(int p_70600_1_)
 -    {
 -        this.func_70025_b(Item.field_77717_p.field_77779_bT, 1);
-+    // CraftBukkit start - return rare dropped item instead of dropping it
+-    }
++    // CraftBukkit start - Return rare dropped item instead of dropping it
 +    protected ItemStack func_70600_l(int i)
 +    {
 +        return new ItemStack(Item.field_77717_p.field_77779_bT, 1, 0);
-     }
++    }
++    // CraftBukkit end
  
      protected int func_70633_aT()
-@@ -166,7 +210,7 @@
+     {
+@@ -166,7 +211,7 @@
  
          if (itemstack != null)
          {

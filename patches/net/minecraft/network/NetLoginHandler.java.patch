@@ -136,7 +136,7 @@
 -                {
 -                    object = iterator.next();
 -
-+                // CraftBukkit start - fix decompile issues, don't create a list from an array
++                // CraftBukkit start - Fix decompile issues, don't create a list from an array
 +                Object[] list = new Object[] { 1, 60, this.field_72534_f.func_71249_w(), pingEvent.getMotd(), serverconfigurationmanager.func_72394_k(), pingEvent.getMaxPlayers() };
 +
 +                for (Object object : list)

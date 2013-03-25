@@ -18,7 +18,7 @@
          }
  
 -        if (this.field_72301_f++ == this.field_72306_a)
-+        // CraftBukkit start - intelligent cache
++        // CraftBukkit start - Intelligent cache
 +        if ((this.field_72301_f++ & 0xff) == 0)
          {
 -            int i = Math.max(this.field_72303_e, this.field_72305_c.size() - this.field_72304_b);

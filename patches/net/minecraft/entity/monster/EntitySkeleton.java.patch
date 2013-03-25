@@ -69,7 +69,7 @@
      {
 -        int j;
 -        int k;
-+        // CraftBukkit start - whole method
++        // CraftBukkit start - Whole method
 +        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
  
          if (this.func_82202_m() == 1)

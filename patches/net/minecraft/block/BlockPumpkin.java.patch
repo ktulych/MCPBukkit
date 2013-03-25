@@ -25,7 +25,7 @@
 -                p_71861_1_.func_72832_d(p_71861_2_, p_71861_3_, p_71861_4_, 0, 0, 2);
 -                p_71861_1_.func_72832_d(p_71861_2_, p_71861_3_ - 1, p_71861_4_, 0, 0, 2);
 -                p_71861_1_.func_72832_d(p_71861_2_, p_71861_3_ - 2, p_71861_4_, 0, 0, 2);
-+                // CraftBukkit start - use BlockStateListPopulator
++                // CraftBukkit start - Use BlockStateListPopulator
 +                BlockStateListPopulator blockList = new BlockStateListPopulator(p_71861_1_.getWorld());
 +                blockList.setTypeId(p_71861_2_, p_71861_3_, p_71861_4_, 0);
 +                blockList.setTypeId(p_71861_2_, p_71861_3_ - 1, p_71861_4_, 0);
@@ -53,7 +53,7 @@
 -                p_71861_1_.func_72832_d(p_71861_2_, p_71861_3_, p_71861_4_, 0, 0, 2);
 -                p_71861_1_.func_72832_d(p_71861_2_, p_71861_3_ - 1, p_71861_4_, 0, 0, 2);
 -                p_71861_1_.func_72832_d(p_71861_2_, p_71861_3_ - 2, p_71861_4_, 0, 0, 2);
-+                // CraftBukkit start - use BlockStateListPopulator
++                // CraftBukkit start - Use BlockStateListPopulator
 +                BlockStateListPopulator blockList = new BlockStateListPopulator(p_71861_1_.getWorld());
 +                blockList.setTypeId(p_71861_2_, p_71861_3_, p_71861_4_, 0);
 +                blockList.setTypeId(p_71861_2_, p_71861_3_ - 1, p_71861_4_, 0);

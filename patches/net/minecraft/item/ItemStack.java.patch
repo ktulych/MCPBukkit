@@ -10,7 +10,7 @@
 -        {
 -            this.field_77991_e = 0;
 -        }
-+        // CraftBukkit start - pass to setData to do filtering
++        // CraftBukkit start - Pass to setData to do filtering
 +        this.func_77964_b(p_i3666_3_);
 +        //if (this.damage < 0) {
 +        //    this.damage = 0;
@@ -42,7 +42,7 @@
  
      public void func_77964_b(int p_77964_1_)
      {
-+        // CraftBukkit start - filter out data for items that shouldn't have it
++        // CraftBukkit start - Filter out data for items that shouldn't have it
 +        // The crafting system uses this value for a special purpose so we have to allow it
 +        if (p_77964_1_ == 32767)
 +        {

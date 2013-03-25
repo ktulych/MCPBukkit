@@ -222,13 +222,13 @@ public class CraftChunk implements Chunk {
             if (includeBiomeTempRain) {
                 biomeTemp = new double[256];
                 biomeRain = new double[256];
-                float[] dat = wcm.func_76934_b((float[]) null, getX() << 4, getZ() << 4, 16, 16);
+                float[] dat = wcm.func_76934_b(null, getX() << 4, getZ() << 4, 16, 16);
 
                 for (int i = 0; i < 256; i++) {
                     biomeTemp[i] = dat[i];
                 }
 
-                dat = wcm.func_76936_a((float[]) null, getX() << 4, getZ() << 4, 16, 16);
+                dat = wcm.func_76936_a(null, getX() << 4, getZ() << 4, 16, 16);
 
                 for (int i = 0; i < 256; i++) {
                     biomeRain[i] = dat[i];
@@ -258,13 +258,13 @@ public class CraftChunk implements Chunk {
             if (includeBiomeTempRain) {
                 biomeTemp = new double[256];
                 biomeRain = new double[256];
-                float[] dat = wcm.func_76934_b((float[]) null, x << 4, z << 4, 16, 16);
+                float[] dat = wcm.func_76934_b(null, x << 4, z << 4, 16, 16);
 
                 for (int i = 0; i < 256; i++) {
                     biomeTemp[i] = dat[i];
                 }
 
-                dat = wcm.func_76936_a((float[]) null, x << 4, z << 4, 16, 16);
+                dat = wcm.func_76936_a(null, x << 4, z << 4, 16, 16);
 
                 for (int i = 0; i < 256; i++) {
                     biomeRain[i] = dat[i];

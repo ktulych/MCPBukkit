@@ -57,7 +57,7 @@ public class CraftEventFactory {
 
         net.minecraft.util.ChunkCoordinates chunkcoordinates = worldServer.func_72861_E();
 
-        int distanceFromSpawn = (int) Math.max(Math.abs(x - chunkcoordinates.field_71574_a), Math.abs(z - chunkcoordinates.field_71573_c));
+        int distanceFromSpawn = Math.max(Math.abs(x - chunkcoordinates.field_71574_a), Math.abs(z - chunkcoordinates.field_71573_c));
         return distanceFromSpawn >= spawnSize;
     }
 
@@ -70,8 +70,8 @@ public class CraftEventFactory {
      * Block place methods
      */
     public static BlockPlaceEvent callBlockPlaceEvent(net.minecraft.world.World world, net.minecraft.entity.player.EntityPlayer who, BlockState replacedBlockState, int clickedX, int clickedY, int clickedZ) {
-        CraftWorld craftWorld = ((net.minecraft.world.WorldServer) world).getWorld();
-        CraftServer craftServer = ((net.minecraft.world.WorldServer) world).getServer();
+        CraftWorld craftWorld = world.getWorld();
+        CraftServer craftServer = world.getServer();
 
         Player player = (who == null) ? null : (Player) who.getBukkitEntity();
 
@@ -217,7 +217,7 @@ public class CraftEventFactory {
      */
     public static EntityTameEvent callEntityTameEvent(net.minecraft.entity.EntityLiving entity, net.minecraft.entity.player.EntityPlayer tamer) {
         org.bukkit.entity.Entity bukkitEntity = entity.getBukkitEntity();
-        org.bukkit.entity.AnimalTamer bukkitTamer = (tamer != null ? (AnimalTamer) tamer.getBukkitEntity() : null);
+        org.bukkit.entity.AnimalTamer bukkitTamer = (tamer != null ? tamer.getBukkitEntity() : null);
         CraftServer craftServer = (CraftServer) bukkitEntity.getServer();
 
         entity.field_82179_bU = true;
@@ -248,7 +248,7 @@ public class CraftEventFactory {
 
         ItemDespawnEvent event = new ItemDespawnEvent(entity, entity.getLocation());
 
-        ((CraftServer) entity.getServer()).getPluginManager().callEvent(event);
+        entity.getServer().getPluginManager().callEvent(event);
         return event;
     }
 
@@ -310,7 +310,7 @@ public class CraftEventFactory {
     }
 
     public static PlayerDeathEvent callPlayerDeathEvent(net.minecraft.entity.player.EntityPlayerMP victim, List<org.bukkit.inventory.ItemStack> drops, String deathMessage) {
-        CraftPlayer entity = (CraftPlayer) victim.getBukkitEntity();
+        CraftPlayer entity = victim.getBukkitEntity();
         PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage);
         org.bukkit.World world = entity.getWorld();
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -414,7 +414,7 @@ public class CraftEventFactory {
     }
 
     public static FoodLevelChangeEvent callFoodLevelChangeEvent(net.minecraft.entity.player.EntityPlayer entity, int level) {
-        FoodLevelChangeEvent event = new FoodLevelChangeEvent((Player) entity.getBukkitEntity(), level);
+        FoodLevelChangeEvent event = new FoodLevelChangeEvent(entity.getBukkitEntity(), level);
         entity.getBukkitEntity().getServer().getPluginManager().callEvent(event);
         return event;
     }
@@ -479,8 +479,8 @@ public class CraftEventFactory {
             player.field_71135_a.func_72474_a(new net.minecraft.network.packet.Packet101CloseWindow(player.field_71070_bA.field_75152_c));
         }
 
-        CraftServer server = ((net.minecraft.world.WorldServer) player.field_70170_p).getServer();
-        CraftPlayer craftPlayer = (CraftPlayer) player.getBukkitEntity();
+        CraftServer server = player.field_70170_p.getServer();
+        CraftPlayer craftPlayer = player.getBukkitEntity();
         player.field_71070_bA.transferTo(container, craftPlayer);
 
         InventoryOpenEvent event = new InventoryOpenEvent(container.getBukkitView());
