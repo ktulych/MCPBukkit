@@ -26,7 +26,13 @@
  
      public EntityPotion(World p_i3595_1_)
      {
-@@ -84,9 +92,11 @@
+@@ -79,14 +87,16 @@
+         {
+             List list = Item.field_77726_bs.func_77832_l(this.field_70197_d);
+ 
+-            if (list != null && !list.isEmpty())
++            if (true || list != null && !list.isEmpty())   // CraftBukkit - Call event even if no effects to apply
+             {
                  AxisAlignedBB axisalignedbb = this.field_70121_D.func_72314_b(4.0D, 2.0D, 4.0D);
                  List list1 = this.field_70170_p.func_72872_a(EntityLiving.class, axisalignedbb);
  
@@ -50,7 +56,7 @@
 +
 +                    org.bukkit.event.entity.PotionSplashEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callPotionSplashEvent(this, affected);
 +
-+                    if (!event.isCancelled())
++                    if (!event.isCancelled() && list != null && !list.isEmpty())   // do not process effects if there are no effects to process
 +                    {
 +                        for (LivingEntity victim : event.getAffectedEntities())
 +                        {
