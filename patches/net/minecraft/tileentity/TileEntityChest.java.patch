@@ -95,9 +95,11 @@
                      {
                          ++this.field_70427_h;
                      }
-@@ -390,6 +438,12 @@
+@@ -389,8 +437,28 @@
+             this.field_70427_h = 0;
          }
  
++        int oldPower = Math.max(0, Math.min(15, this.field_70427_h)); // CraftBukkit - Get power before new viewer is added
          ++this.field_70427_h;
 +
 +        if (this.field_70331_k == null)
@@ -106,11 +108,27 @@
 +        }
 +
          this.field_70331_k.func_72965_b(this.field_70329_l, this.field_70330_m, this.field_70327_n, this.func_70311_o().field_71990_ca, 1, this.field_70427_h);
++
++        // CraftBukkit start - Call redstone event
++        if (this.func_70311_o().field_71990_ca == Block.field_94347_ck.field_71990_ca)
++        {
++            int newPower = Math.max(0, Math.min(15, this.field_70427_h));
++
++            if (oldPower != newPower)
++            {
++                org.bukkit.craftbukkit.event.CraftEventFactory.callRedstoneChange(field_70331_k, this.field_70329_l, this.field_70330_m, this.field_70327_n, oldPower, newPower);
++            }
++        }
++
++        // CraftBukkit end
          this.field_70331_k.func_72898_h(this.field_70329_l, this.field_70330_m, this.field_70327_n, this.func_70311_o().field_71990_ca);
          this.field_70331_k.func_72898_h(this.field_70329_l, this.field_70330_m - 1, this.field_70327_n, this.func_70311_o().field_71990_ca);
-@@ -400,6 +454,12 @@
+     }
+@@ -399,8 +467,28 @@
+     {
          if (this.func_70311_o() != null && this.func_70311_o() instanceof BlockChest)
          {
++            int oldPower = Math.max(0, Math.min(15, this.field_70427_h)); // CraftBukkit - Get power before new viewer is added
              --this.field_70427_h;
 +
 +            if (this.field_70331_k == null)
@@ -119,5 +137,19 @@
 +            }
 +
              this.field_70331_k.func_72965_b(this.field_70329_l, this.field_70330_m, this.field_70327_n, this.func_70311_o().field_71990_ca, 1, this.field_70427_h);
++
++            // CraftBukkit start - Call redstone event
++            if (this.func_70311_o().field_71990_ca == Block.field_94347_ck.field_71990_ca)
++            {
++                int newPower = Math.max(0, Math.min(15, this.field_70427_h));
++
++                if (oldPower != newPower)
++                {
++                    org.bukkit.craftbukkit.event.CraftEventFactory.callRedstoneChange(field_70331_k, this.field_70329_l, this.field_70330_m, this.field_70327_n, oldPower, newPower);
++                }
++            }
++
++            // CraftBukkit end
              this.field_70331_k.func_72898_h(this.field_70329_l, this.field_70330_m, this.field_70327_n, this.func_70311_o().field_71990_ca);
              this.field_70331_k.func_72898_h(this.field_70329_l, this.field_70330_m - 1, this.field_70327_n, this.func_70311_o().field_71990_ca);
+         }
