@@ -8,7 +8,7 @@
  import net.minecraft.entity.ai.EntityAIFleeSun;
  import net.minecraft.entity.ai.EntityAIHurtByTarget;
  import net.minecraft.entity.ai.EntityAILookIdle;
-@@ -26,14 +27,17 @@
+@@ -26,10 +27,13 @@
  import net.minecraft.potion.Potion;
  import net.minecraft.potion.PotionEffect;
  import net.minecraft.stats.AchievementList;
@@ -17,16 +17,11 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
  import net.minecraft.world.WorldProviderHell;
- 
-+import org.bukkit.event.entity.EntityCombustEvent; // CraftBukkit
 +
++import org.bukkit.event.entity.EntityCombustEvent; // CraftBukkit
+ 
  public class EntitySkeleton extends EntityMob implements IRangedAttackMob
  {
--    private EntityAIArrowAttack field_85037_d = new EntityAIArrowAttack(this, 0.25F, 20, 60, 15.0F);
-+    private EntityAIArrowAttack field_85037_d = new EntityAIArrowAttack(this, 0.25F, 60, 10.0F);
-     private EntityAIAttackOnCollide field_85038_e = new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.31F, false);
- 
-     public EntitySkeleton(World p_i3555_1_)
 @@ -118,7 +122,7 @@
  
              if (itemstack != null)
