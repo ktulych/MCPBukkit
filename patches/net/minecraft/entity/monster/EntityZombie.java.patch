@@ -1,15 +1,18 @@
 --- ../net/minecraft/entity/monster/EntityZombie.java
 +++ ../net/minecraft/entity/monster/EntityZombie.java
-@@ -25,6 +25,8 @@
+@@ -25,6 +25,11 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
  
-+import org.bukkit.event.entity.EntityCombustEvent; // CraftBukkit
++//CraftBukkit start
++import org.bukkit.event.entity.EntityCombustByEntityEvent;
++import org.bukkit.event.entity.EntityCombustEvent;
++//CraftBukkit end
 +
  public class EntityZombie extends EntityMob
  {
      private int field_82234_d = 0;
-@@ -96,7 +98,7 @@
+@@ -96,7 +101,7 @@
  
      public void func_82227_f(boolean p_82227_1_)
      {
@@ -18,7 +21,7 @@
      }
  
      public boolean func_82231_m()
-@@ -138,7 +140,16 @@
+@@ -138,7 +143,16 @@
  
                  if (flag)
                  {
@@ -36,7 +39,25 @@
                  }
              }
          }
-@@ -182,7 +193,7 @@
+@@ -168,7 +182,16 @@
+ 
+         if (flag && this.func_70694_bm() == null && this.func_70027_ad() && this.field_70146_Z.nextFloat() < (float)this.field_70170_p.field_73013_u * 0.3F)
+         {
+-            p_70652_1_.func_70015_d(2 * this.field_70170_p.field_73013_u);
++            // CraftBukkit start
++            EntityCombustByEntityEvent event = new EntityCombustByEntityEvent(this.getBukkitEntity(), p_70652_1_.getBukkitEntity(), 2 * this.field_70170_p.field_73013_u);
++            this.field_70170_p.getServer().getPluginManager().callEvent(event);
++
++            if (!event.isCancelled())
++            {
++                p_70652_1_.func_70015_d(event.getDuration());
++            }
++
++            // CraftBukkit end
+         }
+ 
+         return flag;
+@@ -182,7 +205,7 @@
  
          if (itemstack != null)
          {
@@ -45,7 +66,7 @@
          }
  
          return i;
-@@ -218,20 +229,22 @@
+@@ -218,20 +241,22 @@
          return EnumCreatureAttribute.UNDEAD;
      }
  
