@@ -67,7 +67,7 @@
 +            return bukkitEntity;
 +        }
 +
-+        org.bukkit.craftbukkit.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.inventory.CraftInventoryAnvil(this.field_82853_g);
++        org.bukkit.craftbukkit.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.inventory.CraftInventoryAnvil(this.field_82853_g, this.field_82852_f);
 +        bukkitEntity = new CraftInventoryView(this.player.field_70458_d.getBukkitEntity(), inventory, this);
 +        return bukkitEntity;
 +    }
