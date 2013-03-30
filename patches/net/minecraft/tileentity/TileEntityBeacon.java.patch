@@ -22,7 +22,7 @@
 +
 +    public ItemStack[] getContents()
 +    {
-+        return null;
++        return new ItemStack[] { this.field_82140_h }; // Should be inventorySlot
 +    }
 +
 +    public void onOpen(CraftHumanEntity who)
