@@ -1,0 +1,19 @@
+--- ../net/minecraft/block/BlockHopper.java
++++ ../net/minecraft/block/BlockHopper.java
+@@ -9,6 +9,7 @@
+ import net.minecraft.entity.item.EntityItem;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.inventory.Container;
++import net.minecraft.inventory.IInventory;
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.tileentity.TileEntity;
+@@ -201,7 +202,7 @@
+ 
+     public int func_94328_b_(World p_94328_1_, int p_94328_2_, int p_94328_3_, int p_94328_4_, int p_94328_5_)
+     {
+-        return Container.func_94526_b(func_98213_d(p_94328_1_, p_94328_2_, p_94328_3_, p_94328_4_));
++        return Container.func_94526_b((IInventory) func_98213_d(p_94328_1_, p_94328_2_, p_94328_3_, p_94328_4_));
+     }
+ 
+     public static TileEntityHopper func_98213_d(IBlockAccess p_98213_0_, int p_98213_1_, int p_98213_2_, int p_98213_3_)
