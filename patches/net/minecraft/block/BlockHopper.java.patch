@@ -8,6 +8,15 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.tileentity.TileEntity;
+@@ -186,7 +187,7 @@
+ 
+     public static int func_94451_c(int p_94451_0_)
+     {
+-        return p_94451_0_ & 7;
++        return Math.min(p_94451_0_ & 7, 5); // CraftBukkit - Fix AIOOBE in callers
+     }
+ 
+     public static boolean func_94452_d(int p_94452_0_)
 @@ -201,7 +202,7 @@
  
      public int func_94328_b_(World p_94328_1_, int p_94328_2_, int p_94328_3_, int p_94328_4_, int p_94328_5_)
