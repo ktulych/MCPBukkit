@@ -33,14 +33,18 @@
  import net.minecraft.network.packet.Packet71Weather;
  import net.minecraft.profiler.Profiler;
  import net.minecraft.scoreboard.ScoreboardSaveData;
-@@ -33,6 +32,14 @@
+@@ -33,6 +32,18 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.management.PlayerManager;
  import net.minecraft.tileentity.TileEntity;
++import net.minecraft.tileentity.TileEntityBeacon;
++import net.minecraft.tileentity.TileEntityBrewingStand;
 +import net.minecraft.tileentity.TileEntityChest;
 +import net.minecraft.tileentity.TileEntityDispenser;
++import net.minecraft.tileentity.TileEntityDropper;
 +import net.minecraft.tileentity.TileEntityEnderChest;
 +import net.minecraft.tileentity.TileEntityFurnace;
++import net.minecraft.tileentity.TileEntityHopper;
 +import net.minecraft.tileentity.TileEntityMobSpawner;
 +import net.minecraft.tileentity.TileEntityNote;
 +import net.minecraft.tileentity.TileEntityRecordPlayer;
@@ -48,7 +52,7 @@
  import net.minecraft.util.ChunkCoordinates;
  import net.minecraft.util.IProgressUpdate;
  import net.minecraft.util.IntHashMap;
-@@ -51,10 +58,22 @@
+@@ -51,10 +62,22 @@
  import net.minecraft.world.gen.feature.WorldGeneratorBonusChest;
  import net.minecraft.world.storage.ISaveHandler;
  
@@ -73,7 +77,7 @@
      private final PlayerManager field_73063_M;
      private Set field_73064_N;
      private TreeSet field_73065_O;
-@@ -69,12 +88,18 @@
+@@ -69,12 +92,18 @@
      private ArrayList field_94579_S = new ArrayList();
      private IntHashMap field_73066_T;
  
@@ -97,7 +101,7 @@
  
          if (this.field_73066_T == null)
          {
-@@ -91,8 +116,8 @@
+@@ -91,8 +120,8 @@
              this.field_73065_O = new TreeSet();
          }
  
@@ -108,7 +112,7 @@
          ScoreboardSaveData scoreboardsavedata = (ScoreboardSaveData)this.field_72988_C.func_75742_a(ScoreboardSaveData.class, "scoreboard");
  
          if (scoreboardsavedata == null)
-@@ -104,6 +129,104 @@
+@@ -104,6 +133,132 @@
          scoreboardsavedata.func_96499_a(this.field_96442_D);
          ((ServerScoreboard)this.field_96442_D).func_96547_a(scoreboardsavedata);
      }
@@ -130,6 +134,13 @@
 +        else if (type == Block.field_72051_aB.field_71990_ca)
 +        {
 +            if (!(result instanceof TileEntityFurnace))
++            {
++                result = fixTileEntity(i, j, k, type, result);
++            }
++        }
++        else if (type == Block.field_96469_cy.field_71990_ca)
++        {
++            if (!(result instanceof TileEntityDropper))
 +            {
 +                result = fixTileEntity(i, j, k, type, result);
 +            }
@@ -176,6 +187,27 @@
 +                result = fixTileEntity(i, j, k, type, result);
 +            }
 +        }
++        else if (type == Block.field_72106_bF.field_71990_ca)
++        {
++            if (!(result instanceof TileEntityBrewingStand))
++            {
++                result = fixTileEntity(i, j, k, type, result);
++            }
++        }
++        else if (type == Block.field_82518_cd.field_71990_ca)
++        {
++            if (!(result instanceof TileEntityBeacon))
++            {
++                result = fixTileEntity(i, j, k, type, result);
++            }
++        }
++        else if (type == Block.field_94340_cs.field_71990_ca)
++        {
++            if (!(result instanceof TileEntityHopper))
++            {
++                result = fixTileEntity(i, j, k, type, result);
++            }
++        }
 +
 +        return result;
 +    }
@@ -213,7 +245,7 @@
  
      public void func_72835_b()
      {
-@@ -134,12 +257,15 @@
+@@ -134,12 +289,15 @@
          }
  
          this.field_72984_F.func_76320_a("mobSpawner");
@@ -235,7 +267,7 @@
          this.field_72984_F.func_76318_c("chunkSource");
          this.field_73020_y.func_73156_b();
          int j = this.func_72967_a(1.0F);
-@@ -164,12 +290,13 @@
+@@ -164,12 +322,13 @@
          this.field_85177_Q.func_85189_a(this.func_82737_E());
          this.field_72984_F.func_76319_b();
          this.func_73055_Q();
@@ -250,7 +282,7 @@
      }
  
      public void func_72854_c()
-@@ -181,7 +308,7 @@
+@@ -181,7 +340,7 @@
          {
              EntityPlayer entityplayer = (EntityPlayer)iterator.next();
  
@@ -259,7 +291,7 @@
              {
                  this.field_73068_P = false;
                  break;
-@@ -209,10 +336,25 @@
+@@ -209,10 +368,25 @@
  
      private void func_73051_P()
      {
@@ -289,7 +321,7 @@
      }
  
      public boolean func_73056_e()
-@@ -220,19 +362,28 @@
+@@ -220,19 +394,28 @@
          if (this.field_73068_P && !this.field_72995_K)
          {
              Iterator iterator = this.field_73010_i.iterator();
@@ -322,7 +354,7 @@
              return false;
          }
          else
-@@ -246,15 +397,19 @@
+@@ -246,15 +429,19 @@
          super.func_72893_g();
          int i = 0;
          int j = 0;
@@ -350,7 +382,7 @@
              this.func_72941_a(k, l, chunk);
              this.field_72984_F.func_76318_c("tickChunk");
              chunk.func_76586_k();
-@@ -291,12 +446,34 @@
+@@ -291,12 +478,34 @@
  
                  if (this.func_72850_v(j1 + k, l1 - 1, k1 + l))
                  {
@@ -387,7 +419,7 @@
                  }
  
                  if (this.func_72896_J())
-@@ -420,7 +597,7 @@
+@@ -420,7 +629,7 @@
  
      public void func_72939_s()
      {
@@ -396,7 +428,7 @@
          {
              if (this.field_80004_Q++ >= 1200)
              {
-@@ -452,7 +629,17 @@
+@@ -452,7 +661,17 @@
          {
              if (i > 1000)
              {
@@ -415,7 +447,7 @@
              }
  
              this.field_72984_F.func_76320_a("cleaning");
-@@ -544,11 +731,11 @@
+@@ -544,11 +763,11 @@
              else
              {
                  iterator = this.field_94579_S.iterator();
@@ -432,7 +464,7 @@
              }
  
              while (iterator.hasNext())
-@@ -578,16 +765,16 @@
+@@ -578,16 +797,16 @@
  
      public void func_72866_a(Entity p_72866_1_, boolean p_72866_2_)
      {
@@ -455,7 +487,7 @@
          if (!(p_72866_1_.field_70153_n instanceof EntityPlayer))
          {
              super.func_72866_a(p_72866_1_, p_72866_2_);
-@@ -602,17 +789,41 @@
+@@ -602,17 +821,41 @@
      protected IChunkProvider func_72970_h()
      {
          IChunkLoader ichunkloader = this.field_73019_z.func_75763_a(this.field_73011_w);
@@ -502,7 +534,7 @@
  
              if (tileentity.field_70329_l >= p_73049_1_ && tileentity.field_70330_m >= p_73049_2_ && tileentity.field_70327_n >= p_73049_3_ && tileentity.field_70329_l < p_73049_4_ && tileentity.field_70330_m < p_73049_5_ && tileentity.field_70327_n < p_73049_6_)
              {
-@@ -666,6 +877,29 @@
+@@ -666,6 +909,29 @@
              int j = this.field_73011_w.func_76557_i();
              int k = 0;
  
@@ -532,7 +564,7 @@
              if (chunkposition != null)
              {
                  i = chunkposition.field_76930_a;
-@@ -678,7 +912,7 @@
+@@ -678,7 +944,7 @@
  
              int l = 0;
  
@@ -541,7 +573,7 @@
              {
                  i += random.nextInt(64) - random.nextInt(64);
                  k += random.nextInt(64) - random.nextInt(64);
-@@ -722,7 +956,7 @@
+@@ -722,7 +988,7 @@
          return this.field_73011_w.func_76554_h();
      }
  
@@ -550,7 +582,7 @@
      {
          if (this.field_73020_y.func_73157_c())
          {
-@@ -742,7 +976,7 @@
+@@ -742,7 +1008,7 @@
          }
      }
  
@@ -559,7 +591,7 @@
      {
          this.func_72906_B();
          this.field_73019_z.func_75755_a(this.field_72986_A, this.field_73061_a.func_71203_ab().func_72378_q());
-@@ -786,9 +1020,19 @@
+@@ -786,9 +1052,19 @@
  
      public boolean func_72942_c(Entity p_72942_1_)
      {
@@ -580,7 +612,7 @@
              return true;
          }
          else
-@@ -805,11 +1049,21 @@
+@@ -805,11 +1081,21 @@
  
      public Explosion func_72885_a(Entity p_72885_1_, double p_72885_2_, double p_72885_4_, double p_72885_6_, float p_72885_8_, boolean p_72885_9_, boolean p_72885_10_)
      {
@@ -607,7 +639,7 @@
  
          if (!p_72885_10_)
          {
-@@ -864,7 +1118,8 @@
+@@ -864,7 +1150,8 @@
  
                  if (this.func_73043_a(blockeventdata))
                  {
@@ -617,7 +649,7 @@
                  }
              }
  
-@@ -890,14 +1145,16 @@
+@@ -890,14 +1177,16 @@
  
          if (flag != this.func_72896_J())
          {
@@ -642,7 +674,7 @@
          }
      }
  
-@@ -920,4 +1177,35 @@
+@@ -920,4 +1209,35 @@
      {
          return this.field_85177_Q;
      }
