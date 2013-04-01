@@ -1,6 +1,6 @@
 --- ../net/minecraft/tileentity/TileEntity.java
 +++ ../net/minecraft/tileentity/TileEntity.java
-@@ -2,12 +2,15 @@
+@@ -2,6 +2,7 @@
  
  import java.util.HashMap;
  import java.util.Map;
@@ -8,14 +8,21 @@
  import net.minecraft.block.Block;
  import net.minecraft.crash.CrashReportCategory;
  import net.minecraft.nbt.NBTTagCompound;
- import net.minecraft.network.packet.Packet;
+@@ -9,11 +10,13 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.world.World;
-+
-+import org.bukkit.inventory.InventoryHolder; // CraftBukkit
  
++import org.bukkit.inventory.InventoryHolder; // CraftBukkit
++
  public class TileEntity
  {
+     private static Map field_70326_a = new HashMap();
+     private static Map field_70323_b = new HashMap();
+-    protected World field_70331_k;
++    public World field_70331_k;
+     public int field_70329_l;
+     public int field_70330_m;
+     public int field_70327_n;
 @@ -21,7 +24,9 @@
      public int field_70325_p = -1;
      public Block field_70324_q;
@@ -65,6 +72,7 @@
          func_70306_a(TileEntityHopper.class, "Hopper");
          func_70306_a(TileEntityComparator.class, "Comparator");
      }
+-}
 +
 +    // CraftBukkit start
 +    public InventoryHolder getOwner()
@@ -79,4 +87,4 @@
 +        return null;
 +    }
 +    // CraftBukkit end
- }
++}
