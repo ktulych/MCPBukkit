@@ -1,6 +1,6 @@
 --- ../net/minecraft/block/BlockDropper.java
 +++ ../net/minecraft/block/BlockDropper.java
-@@ -1,5 +1,8 @@
+@@ -1,8 +1,12 @@
  package net.minecraft.block;
  
 +// CraftBukkit start
@@ -9,7 +9,11 @@
  import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
  import net.minecraft.dispenser.IBehaviorDispenseItem;
  import net.minecraft.inventory.IInventory;
-@@ -10,6 +13,7 @@
++import net.minecraft.inventory.InventoryLargeChest;
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.tileentity.TileEntity;
+ import net.minecraft.tileentity.TileEntityDispenser;
+@@ -10,6 +14,7 @@
  import net.minecraft.tileentity.TileEntityHopper;
  import net.minecraft.util.Facing;
  import net.minecraft.world.World;
@@ -17,7 +21,7 @@
  
  public class BlockDropper extends BlockDispenser
  {
-@@ -30,7 +34,7 @@
+@@ -30,7 +35,7 @@
          return new TileEntityDropper();
      }
  
@@ -26,20 +30,31 @@
      {
          BlockSourceImpl blocksourceimpl = new BlockSourceImpl(p_82526_1_, p_82526_2_, p_82526_3_, p_82526_4_);
          TileEntityDispenser tileentitydispenser = (TileEntityDispenser)blocksourceimpl.func_82619_j();
-@@ -52,10 +56,22 @@
+@@ -52,10 +57,33 @@
  
                  if (iinventory != null)
                  {
 -                    itemstack1 = TileEntityHopper.func_94117_a(iinventory, itemstack.func_77946_l().func_77979_a(1), Facing.field_71588_a[i1]);
 +                    // CraftBukkit start - Fire event when pushing items into other inventories
 +                    CraftItemStack oitemstack = CraftItemStack.asCraftMirror(itemstack.func_77946_l().func_77979_a(1));
-+                    org.bukkit.inventory.Inventory destinationInventory = iinventory.getOwner() != null ? iinventory.getOwner().getInventory() : null;
-+                    InventoryMoveItemEvent event = new InventoryMoveItemEvent(tileentitydispenser.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
-+                    p_82526_1_.getServer().getPluginManager().callEvent(event);
++                    org.bukkit.inventory.Inventory destinationInventory;
  
 -                    if (itemstack1 == null)
-+                    if (event.isCancelled())
++                    // Have to special case large chests as they work oddly
++                    if (iinventory instanceof InventoryLargeChest)
                      {
++                        destinationInventory = new org.bukkit.craftbukkit.inventory.CraftInventoryDoubleChest((InventoryLargeChest) iinventory);
++                    }
++                    else
++                    {
++                        destinationInventory = iinventory.getOwner().getInventory();
++                    }
++
++                    InventoryMoveItemEvent event = new InventoryMoveItemEvent(tileentitydispenser.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
++                    p_82526_1_.getServer().getPluginManager().callEvent(event);
++
++                    if (event.isCancelled())
++                    {
 +                        return;
 +                    }
 +

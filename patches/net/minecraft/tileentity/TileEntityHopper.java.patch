@@ -113,14 +113,25 @@
                          return true;
                      }
  
-@@ -300,11 +376,42 @@
+@@ -300,11 +376,53 @@
          if (itemstack != null && func_102013_b(p_102012_1_, itemstack, p_102012_2_, p_102012_3_))
          {
              ItemStack itemstack1 = itemstack.func_77946_l();
 -            ItemStack itemstack2 = func_94117_a(p_102012_0_, p_102012_1_.func_70298_a(p_102012_2_, 1), -1);
 +            // CraftBukkit start - Call event on collection of items from inventories into the hopper
 +            CraftItemStack oitemstack = CraftItemStack.asCraftMirror(p_102012_1_.func_70298_a(p_102012_2_, 1));
-+            Inventory sourceInventory = p_102012_1_.getOwner() != null ? p_102012_1_.getOwner().getInventory() : null;
++            Inventory sourceInventory;
++
++            // Have to special case large chests as they work oddly
++            if (p_102012_1_ instanceof InventoryLargeChest)
++            {
++                sourceInventory = new org.bukkit.craftbukkit.inventory.CraftInventoryDoubleChest((InventoryLargeChest) p_102012_1_);
++            }
++            else
++            {
++                sourceInventory = p_102012_1_.getOwner().getInventory();
++            }
++
 +            InventoryMoveItemEvent event = new InventoryMoveItemEvent(sourceInventory, oitemstack.clone(), p_102012_0_.getOwner().getInventory(), false);
 +            p_102012_0_.func_70314_l().getServer().getPluginManager().callEvent(event);
 +
@@ -158,7 +169,7 @@
                  return true;
              }
  
-@@ -324,6 +431,16 @@
+@@ -324,6 +442,16 @@
          }
          else
          {
