@@ -71,9 +71,12 @@
      public boolean field_72987_B;
      public MapStorage field_72988_C;
      public final VillageCollection field_72982_D;
-@@ -83,11 +111,15 @@
+@@ -81,13 +109,17 @@
+     public final Profiler field_72984_F;
+     private final Vec3Pool field_82741_K = new Vec3Pool(300, 2000);
      private final Calendar field_83016_L = Calendar.getInstance();
-     protected Scoreboard field_96442_D = new Scoreboard();
+-    protected Scoreboard field_96442_D = new Scoreboard();
++    public Scoreboard field_96442_D = new Scoreboard(); // CraftBukkit - protected -> public
      private final ILogAgent field_98181_L;
 -    private ArrayList field_72998_d = new ArrayList();
 +    private UnsafeList field_72998_d = new UnsafeList(); // CraftBukkit - ArrayList -> UnsafeList
