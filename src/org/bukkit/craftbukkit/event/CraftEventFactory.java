@@ -20,6 +20,7 @@ import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftInventoryCrafting;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.util.CraftDamageSource;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
@@ -45,6 +46,9 @@ import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.InventoryView;
 
 public class CraftEventFactory {
+    public static final net.minecraft.util.DamageSource MELTING = CraftDamageSource.copyOf(net.minecraft.util.DamageSource.field_76370_b);
+    public static final net.minecraft.util.DamageSource POISON = CraftDamageSource.copyOf(net.minecraft.util.DamageSource.field_76376_m);
+
     // helper methods
     private static boolean canBuild(CraftWorld world, Player player, int x, int z) {
         net.minecraft.world.WorldServer worldServer = world.getHandle();
@@ -360,21 +364,58 @@ public class CraftEventFactory {
     }
 
     public static EntityDamageEvent handleEntityDamageEvent(net.minecraft.entity.Entity entity, net.minecraft.util.DamageSource source, int damage) {
-        net.minecraft.entity.Entity damager = source.func_76346_g();
-        DamageCause cause = DamageCause.ENTITY_ATTACK;
+        if (source instanceof net.minecraft.util.EntityDamageSource) {
+            net.minecraft.entity.Entity damager = source.func_76346_g();
+            DamageCause cause = DamageCause.ENTITY_ATTACK;
 
-        if (source instanceof net.minecraft.util.EntityDamageSourceIndirect) {
-            damager = ((net.minecraft.util.EntityDamageSourceIndirect) source).getProximateDamageSource();
-            if (damager.getBukkitEntity() instanceof ThrownPotion) {
-                cause = DamageCause.MAGIC;
-            } else if (damager.getBukkitEntity() instanceof Projectile) {
-                cause = DamageCause.PROJECTILE;
+            if (source instanceof net.minecraft.util.EntityDamageSourceIndirect) {
+                damager = ((net.minecraft.util.EntityDamageSourceIndirect) source).getProximateDamageSource();
+                if (damager.getBukkitEntity() instanceof ThrownPotion) {
+                    cause = DamageCause.MAGIC;
+                } else if (damager.getBukkitEntity() instanceof Projectile) {
+                    cause = DamageCause.PROJECTILE;
+                }
+            } else if ("thorns".equals(source.field_76373_n)) {
+                cause = DamageCause.THORNS;
             }
-        } else if ("thorns".equals(source.field_76373_n)) {
-            cause = DamageCause.THORNS;
+
+            return callEntityDamageEvent(damager, entity, cause, damage);
+        } else if (source == net.minecraft.util.DamageSource.field_76380_i) {
+            EntityDamageEvent event = callEvent(new EntityDamageByBlockEvent(null, entity.getBukkitEntity(), DamageCause.VOID, damage));
+            if (!event.isCancelled()) {
+                event.getEntity().setLastDamageCause(event);
+            }
+            return event;
         }
 
-        return callEntityDamageEvent(damager, entity, cause, damage);
+        DamageCause cause = null;
+        if (source == net.minecraft.util.DamageSource.field_76372_a) {
+            cause = DamageCause.FIRE;
+        } else if (source == net.minecraft.util.DamageSource.field_76366_f) {
+            cause = DamageCause.STARVATION;
+        } else if (source == net.minecraft.util.DamageSource.field_82727_n) {
+            cause = DamageCause.WITHER;
+        } else if (source == net.minecraft.util.DamageSource.field_76368_d) {
+            cause = DamageCause.SUFFOCATION;
+        } else if (source == net.minecraft.util.DamageSource.field_76369_e) {
+            cause = DamageCause.DROWNING;
+        } else if (source == net.minecraft.util.DamageSource.field_76370_b) {
+            cause = DamageCause.FIRE_TICK;
+        } else if (source == MELTING) {
+            cause = DamageCause.MELTING;
+        } else if (source == POISON) {
+            cause = DamageCause.POISON;
+        } else if (source == net.minecraft.util.DamageSource.field_76376_m) {
+            cause = DamageCause.MAGIC;
+        }
+
+        if (cause != null) {
+            return callEntityDamageEvent(null, entity, cause, damage);
+        }
+
+        // If an event was called earlier, we return null.
+        // EG: Cactus, Lava, EntityEnderPearl "fall", FallingSand
+        return null;
     }
 
     // Non-Living Entities such as EntityEnderCrystal need to call this
@@ -382,6 +423,7 @@ public class CraftEventFactory {
         if (!(source instanceof net.minecraft.util.EntityDamageSource)) {
             return false;
         }
+        // We don't need to check for null, since EntityDamageSource will always return an event
         EntityDamageEvent event = handleEntityDamageEvent(entity, source, damage);
         return event.isCancelled() || event.getDamage() == 0;
     }

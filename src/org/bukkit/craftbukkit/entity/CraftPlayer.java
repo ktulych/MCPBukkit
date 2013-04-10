@@ -980,7 +980,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return this.server.getScoreboardManager().getPlayerBoard(this);
     }
 
-    public void setScoreboard(net.minecraft.scoreboard.Scoreboard scoreboard) {
+    public void setScoreboard(Scoreboard scoreboard) {
         Validate.notNull(scoreboard, "Scoreboard cannot be null");
         this.server.getScoreboardManager().setPlayerBoard(this, scoreboard);
     }

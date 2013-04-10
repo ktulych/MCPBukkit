@@ -4,8 +4,8 @@
  package net.minecraft.entity.monster;
  
 +// CraftBukkit start
++import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.block.EntityBlockFormEvent;
-+import org.bukkit.event.entity.EntityDamageEvent;
  import net.minecraft.block.Block;
  import net.minecraft.entity.EntityLiving;
  import net.minecraft.entity.IRangedAttackMob;
@@ -17,45 +17,16 @@
  
  public class EntitySnowman extends EntityGolem implements IRangedAttackMob
  {
-@@ -46,7 +50,17 @@
- 
-         if (this.func_70026_G())
-         {
--            this.func_70097_a(DamageSource.field_76369_e, 1);
-+            // CraftBukkit start
-+            EntityDamageEvent event = new EntityDamageEvent(this.getBukkitEntity(), EntityDamageEvent.DamageCause.DROWNING, 1);
-+            this.field_70170_p.getServer().getPluginManager().callEvent(event);
-+
-+            if (!event.isCancelled())
-+            {
-+                event.getEntity().setLastDamageCause(event);
-+                this.func_70097_a(DamageSource.field_76369_e, event.getDamage());
-+            }
-+
-+            // CraftBukkit end
-         }
- 
-         int i = MathHelper.func_76128_c(this.field_70165_t);
-@@ -54,7 +68,17 @@
+@@ -54,7 +58,7 @@
  
          if (this.field_70170_p.func_72807_a(i, j).func_76743_j() > 1.0F)
          {
 -            this.func_70097_a(DamageSource.field_76370_b, 1);
-+            // CraftBukkit start
-+            EntityDamageEvent event = new EntityDamageEvent(this.getBukkitEntity(), EntityDamageEvent.DamageCause.MELTING, 1);
-+            this.field_70170_p.getServer().getPluginManager().callEvent(event);
-+
-+            if (!event.isCancelled())
-+            {
-+                event.getEntity().setLastDamageCause(event);
-+                this.func_70097_a(DamageSource.field_76370_b, event.getDamage());
-+            }
-+
-+            // CraftBukkit end
++            this.func_70097_a(CraftEventFactory.MELTING, 1); // CraftBukkit - DamageSource.BURN -> CraftEventFactory.MELTING
          }
  
          for (i = 0; i < 4; ++i)
-@@ -65,7 +89,18 @@
+@@ -65,7 +69,18 @@
  
              if (this.field_70170_p.func_72798_a(j, k, l) == 0 && this.field_70170_p.func_72807_a(j, l).func_76743_j() < 0.8F && Block.field_72037_aS.func_71930_b(this.field_70170_p, j, k, l))
              {
@@ -75,7 +46,7 @@
              }
          }
      }
-@@ -77,12 +112,17 @@
+@@ -77,12 +92,17 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -90,7 +61,7 @@
 +            loot.add(new org.bukkit.inventory.ItemStack(Item.field_77768_aD.field_77779_bT, j));
          }
 +
-+        org.bukkit.craftbukkit.event.CraftEventFactory.callEntityDeathEvent(this, loot);
++        CraftEventFactory.callEntityDeathEvent(this, loot);
 +        // CraftBukkit end
      }
  

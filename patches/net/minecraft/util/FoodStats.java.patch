@@ -56,22 +56,3 @@
                  this.field_75123_d = 0;
              }
          }
-@@ -60,7 +77,17 @@
-             {
-                 if (p_75118_1_.func_70630_aN() > 10 || i >= 3 || p_75118_1_.func_70630_aN() > 1 && i >= 2)
-                 {
--                    p_75118_1_.func_70097_a(DamageSource.field_76366_f, 1);
-+                    // CraftBukkit start
-+                    EntityDamageEvent event = new EntityDamageEvent(p_75118_1_.getBukkitEntity(), EntityDamageEvent.DamageCause.STARVATION, 1);
-+                    p_75118_1_.field_70170_p.getServer().getPluginManager().callEvent(event);
-+
-+                    if (!event.isCancelled())
-+                    {
-+                        event.getEntity().setLastDamageCause(event);
-+                        p_75118_1_.func_70097_a(DamageSource.field_76366_f, event.getDamage());
-+                    }
-+
-+                    // CraftBukkit end
-                 }
- 
-                 this.field_75123_d = 0;
