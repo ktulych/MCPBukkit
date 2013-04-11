@@ -8,26 +8,27 @@
  import net.minecraft.block.Block;
  import net.minecraft.block.BlockFurnace;
  import net.minecraft.block.material.Material;
-@@ -14,6 +16,13 @@
+@@ -13,6 +15,14 @@
+ import net.minecraft.item.crafting.FurnaceRecipes;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagList;
- 
++import net.minecraft.server.MinecraftServer;
++
 +import org.bukkit.craftbukkit.inventory.CraftItemStack;
 +import org.bukkit.entity.HumanEntity;
 +import org.bukkit.event.inventory.FurnaceBurnEvent;
 +import org.bukkit.event.inventory.FurnaceSmeltEvent;
 +import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 +// CraftBukkit end
-+
+ 
  public class TileEntityFurnace extends TileEntity implements ISidedInventory
  {
-     private static final int[] field_102010_d = new int[] {0};
-@@ -25,6 +34,39 @@
+@@ -25,6 +35,39 @@
      public int field_70406_c = 0;
      private String field_94130_e;
  
 +    // CraftBukkit start
-+    private int lastTick = (int)(System.currentTimeMillis() / 50);
++    private int lastTick = MinecraftServer.currentTick;
 +    private int maxStack = MAX_STACK;
 +    public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
 +
@@ -62,7 +63,7 @@
      public int func_70302_i_()
      {
          return this.field_70404_d.length;
-@@ -159,7 +201,7 @@
+@@ -159,7 +202,7 @@
  
      public int func_70297_j_()
      {
@@ -71,14 +72,13 @@
      }
  
      public boolean func_70400_i()
-@@ -171,20 +213,55 @@
+@@ -171,20 +214,54 @@
      {
          boolean flag = this.field_70407_a > 0;
          boolean flag1 = false;
-+        // CraftBukkit start
-+        int currentTick = (int)(System.currentTimeMillis() / 50);  // CraftBukkit
-+        int elapsedTicks = currentTick - this.lastTick;
-+        this.lastTick = currentTick;
++        // CraftBukkit start - Use wall time instead of ticks for cooking
++        int elapsedTicks = Math.max(1, MinecraftServer.currentTick - this.lastTick);
++        this.lastTick = MinecraftServer.currentTick;
 +
 +        // CraftBukkit - moved from below
 +        if (this.func_70400_i() && this.func_70402_r())

@@ -1,18 +1,26 @@
 --- ../net/minecraft/entity/monster/EntityZombie.java
 +++ ../net/minecraft/entity/monster/EntityZombie.java
-@@ -25,6 +25,11 @@
+@@ -22,12 +22,19 @@
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.potion.Potion;
+ import net.minecraft.potion.PotionEffect;
++import net.minecraft.server.MinecraftServer;
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
- 
++
 +//CraftBukkit start
 +import org.bukkit.event.entity.EntityCombustByEntityEvent;
 +import org.bukkit.event.entity.EntityCombustEvent;
 +//CraftBukkit end
-+
+ 
  public class EntityZombie extends EntityMob
  {
      private int field_82234_d = 0;
-@@ -96,7 +101,7 @@
++    private int lastTick = MinecraftServer.currentTick; // CraftBukkit
+ 
+     public EntityZombie(World p_i3558_1_)
+     {
+@@ -96,7 +103,7 @@
  
      public void func_82227_f(boolean p_82227_1_)
      {
@@ -21,7 +29,7 @@
      }
  
      public boolean func_82231_m()
-@@ -138,7 +143,16 @@
+@@ -138,7 +145,16 @@
  
                  if (flag)
                  {
@@ -39,7 +47,19 @@
                  }
              }
          }
-@@ -168,7 +182,16 @@
+@@ -151,6 +167,11 @@
+         if (!this.field_70170_p.field_72995_K && this.func_82230_o())
+         {
+             int i = this.func_82233_q();
++            // CraftBukkit start - Use wall time instead of ticks for villager conversion
++            int elapsedTicks = Math.max(1, MinecraftServer.currentTick - this.lastTick);
++            this.lastTick = MinecraftServer.currentTick;
++            i *= elapsedTicks;
++            // CraftBukkit end
+             this.field_82234_d -= i;
+ 
+             if (this.field_82234_d <= 0)
+@@ -168,7 +189,16 @@
  
          if (flag && this.func_70694_bm() == null && this.func_70027_ad() && this.field_70146_Z.nextFloat() < (float)this.field_70170_p.field_73013_u * 0.3F)
          {
@@ -57,7 +77,7 @@
          }
  
          return flag;
-@@ -182,7 +205,7 @@
+@@ -182,7 +212,7 @@
  
          if (itemstack != null)
          {
@@ -66,7 +86,7 @@
          }
  
          return i;
-@@ -218,20 +241,22 @@
+@@ -218,20 +248,22 @@
          return EnumCreatureAttribute.UNDEAD;
      }
  

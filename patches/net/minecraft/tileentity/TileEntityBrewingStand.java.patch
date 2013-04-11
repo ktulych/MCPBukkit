@@ -1,15 +1,17 @@
 --- ../net/minecraft/tileentity/TileEntityBrewingStand.java
 +++ ../net/minecraft/tileentity/TileEntityBrewingStand.java
-@@ -10,15 +10,53 @@
+@@ -9,16 +9,56 @@
+ import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagList;
  import net.minecraft.potion.PotionHelper;
- 
++import net.minecraft.server.MinecraftServer;
++
 +// CraftBukkit start
 +import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 +import org.bukkit.entity.HumanEntity;
 +import org.bukkit.event.inventory.BrewEvent;
 +// CraftBukkit end
-+
+ 
  public class TileEntityBrewingStand extends TileEntity implements ISidedInventory
  {
      private static final int[] field_102017_a = new int[] {3};
@@ -21,6 +23,7 @@
      private int field_70358_c;
      private int field_70356_d;
      private String field_94132_e;
++    private int lastTick = MinecraftServer.currentTick; // CraftBukkit
 +
 +    public TileEntityBrewingStand() {}
 +
@@ -56,7 +59,29 @@
  
      public String func_70303_b()
      {
-@@ -136,6 +174,20 @@
+@@ -42,12 +82,17 @@
+ 
+     public void func_70316_g()
+     {
++        // CraftBukkit start - Use wall time instead of ticks for brewing
++        int elapsedTicks = Math.max(1, MinecraftServer.currentTick - this.lastTick);
++        this.lastTick = MinecraftServer.currentTick;
++
+         if (this.field_70357_b > 0)
+         {
+-            --this.field_70357_b;
+-
+-            if (this.field_70357_b == 0)
+-            {
++            this.field_70357_b -= elapsedTicks;
++
++            if (this.field_70357_b <= 0)   // == -> <=
++            {
++                // CraftBukkit end
+                 this.func_70353_r();
+                 this.func_70296_d();
+             }
+@@ -136,6 +181,20 @@
          if (this.func_70350_k())
          {
              ItemStack itemstack = this.field_70359_a[3];
@@ -77,7 +102,7 @@
  
              for (int i = 0; i < 3; ++i)
              {
-@@ -274,7 +326,7 @@
+@@ -274,7 +333,7 @@
  
      public int func_70297_j_()
      {

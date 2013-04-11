@@ -1,8 +1,10 @@
 --- ../net/minecraft/entity/item/EntityItem.java
 +++ ../net/minecraft/entity/item/EntityItem.java
-@@ -9,10 +9,13 @@
+@@ -8,11 +8,15 @@
+ import net.minecraft.item.Item;
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.server.MinecraftServer;
  import net.minecraft.stats.AchievementList;
 +import net.minecraft.stats.StatBase;
  import net.minecraft.util.DamageSource;
@@ -14,15 +16,15 @@
  
  public class EntityItem extends Entity
  {
-@@ -20,6 +23,7 @@
+@@ -20,6 +24,7 @@
      public int field_70293_c;
      private int field_70291_e;
      public float field_70290_d;
-+    private int lastTick = (int)(System.currentTimeMillis() / 50);  // CraftBukkit
++    private int lastTick = MinecraftServer.currentTick; // CraftBukkit
  
      public EntityItem(World p_i8007_1_, double p_i8007_2_, double p_i8007_4_, double p_i8007_6_)
      {
-@@ -39,6 +43,14 @@
+@@ -39,6 +44,14 @@
      public EntityItem(World p_i3539_1_, double p_i3539_2_, double p_i3539_4_, double p_i3539_6_, ItemStack p_i3539_8_)
      {
          this(p_i3539_1_, p_i3539_2_, p_i3539_4_, p_i3539_6_);
@@ -37,7 +39,7 @@
          this.func_92058_a(p_i3539_8_);
      }
  
-@@ -65,12 +77,11 @@
+@@ -65,12 +78,12 @@
      public void func_70071_h_()
      {
          super.func_70071_h_();
@@ -47,16 +49,22 @@
 -            --this.field_70293_c;
 -        }
 -
-+        // CraftBukkit start
-+        int currentTick = (int)(System.currentTimeMillis() / 50);
-+        this.field_70293_c -= (currentTick - this.lastTick);
-+        this.lastTick = currentTick;
++        // CraftBukkit start - Use wall time for pickup and despawn timers
++        int elapsedTicks = Math.max(1, MinecraftServer.currentTick - this.lastTick);
++        this.field_70293_c -= elapsedTicks;
++        this.field_70292_b += elapsedTicks;
++        this.lastTick = MinecraftServer.currentTick;
 +        // CraftBukkit end
          this.field_70169_q = this.field_70165_t;
          this.field_70167_r = this.field_70163_u;
          this.field_70166_s = this.field_70161_v;
-@@ -121,6 +132,14 @@
+@@ -117,10 +130,17 @@
+             this.field_70181_x *= -0.5D;
+         }
  
+-        ++this.field_70292_b;
+-
++        // ++this.age; // CraftBukkit - Moved up
          if (!this.field_70170_p.field_72995_K && this.field_70292_b >= 6000)
          {
 +            // CraftBukkit start
@@ -70,7 +78,7 @@
              this.func_70106_y();
          }
      }
-@@ -194,7 +213,7 @@
+@@ -194,7 +214,7 @@
  
      public boolean func_70072_I()
      {
@@ -79,7 +87,7 @@
      }
  
      protected void func_70081_e(int p_70081_1_)
-@@ -242,8 +261,27 @@
+@@ -242,8 +262,27 @@
          this.field_70291_e = p_70037_1_.func_74765_d("Health") & 255;
          this.field_70292_b = p_70037_1_.func_74765_d("Age");
          NBTTagCompound nbttagcompound1 = p_70037_1_.func_74775_l("Item");
@@ -109,7 +117,7 @@
          if (this.func_92059_d() == null)
          {
              this.func_70106_y();
-@@ -256,27 +294,49 @@
+@@ -256,27 +295,49 @@
          {
              ItemStack itemstack = this.func_92059_d();
              int i = itemstack.field_77994_a;
