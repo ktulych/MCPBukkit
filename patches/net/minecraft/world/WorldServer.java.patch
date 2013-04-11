@@ -488,7 +488,7 @@
          if (!(p_72866_1_.field_70153_n instanceof EntityPlayer))
          {
              super.func_72866_a(p_72866_1_, p_72866_2_);
-@@ -602,17 +822,41 @@
+@@ -602,7 +822,28 @@
      protected IChunkProvider func_72970_h()
      {
          IChunkLoader ichunkloader = this.field_73019_z.func_75763_a(this.field_73011_w);
@@ -518,24 +518,49 @@
          return this.field_73059_b;
      }
  
-     public List func_73049_a(int p_73049_1_, int p_73049_2_, int p_73049_3_, int p_73049_4_, int p_73049_5_, int p_73049_6_)
+@@ -610,16 +851,31 @@
      {
          ArrayList arraylist = new ArrayList();
--
+ 
 -        for (int k1 = 0; k1 < this.field_73009_h.size(); ++k1)
 -        {
 -            TileEntity tileentity = (TileEntity)this.field_73009_h.get(k1);
-+        // CraftBukkit start - Use iterator
-+        Iterator iterator = this.field_73009_h.iterator();
-+
-+        while (iterator.hasNext())
+-
+-            if (tileentity.field_70329_l >= p_73049_1_ && tileentity.field_70330_m >= p_73049_2_ && tileentity.field_70327_n >= p_73049_3_ && tileentity.field_70329_l < p_73049_4_ && tileentity.field_70330_m < p_73049_5_ && tileentity.field_70327_n < p_73049_6_)
+-            {
+-                arraylist.add(tileentity);
+-            }
+-        }
+-
++        // CraftBukkit start - Get tile entities from chunks instead of world
++        for (int chunkX = (p_73049_1_ >> 4); chunkX <= ((p_73049_4_ - 1) >> 4); chunkX++)
 +        {
-+            TileEntity tileentity = (TileEntity) iterator.next();
-+            // CraftBukkit end
++            for (int chunkZ = (p_73049_3_ >> 4); chunkZ <= ((p_73049_6_ - 1) >> 4); chunkZ++)
++            {
++                Chunk chunk = func_72964_e(chunkX, chunkZ);
++
++                if (chunk == null)
++                {
++                    continue;
++                }
++
++                for (Object te : chunk.field_76648_i.values())
++                {
++                    TileEntity tileentity = (TileEntity) te;
++
++                    if ((tileentity.field_70329_l >= p_73049_1_) && (tileentity.field_70330_m >= p_73049_2_) && (tileentity.field_70327_n >= p_73049_3_) && (tileentity.field_70329_l < p_73049_4_) && (tileentity.field_70330_m < p_73049_5_) && (tileentity.field_70327_n < p_73049_6_))
++                    {
++                        arraylist.add(tileentity);
++                    }
++                }
++            }
++        }
++
++        // CraftBukkit end
+         return arraylist;
+     }
  
-             if (tileentity.field_70329_l >= p_73049_1_ && tileentity.field_70330_m >= p_73049_2_ && tileentity.field_70327_n >= p_73049_3_ && tileentity.field_70329_l < p_73049_4_ && tileentity.field_70330_m < p_73049_5_ && tileentity.field_70327_n < p_73049_6_)
-             {
-@@ -666,6 +910,29 @@
+@@ -666,6 +922,29 @@
              int j = this.field_73011_w.func_76557_i();
              int k = 0;
  
@@ -565,7 +590,7 @@
              if (chunkposition != null)
              {
                  i = chunkposition.field_76930_a;
-@@ -678,7 +945,7 @@
+@@ -678,7 +957,7 @@
  
              int l = 0;
  
@@ -574,7 +599,7 @@
              {
                  i += random.nextInt(64) - random.nextInt(64);
                  k += random.nextInt(64) - random.nextInt(64);
-@@ -722,7 +989,7 @@
+@@ -722,7 +1001,7 @@
          return this.field_73011_w.func_76554_h();
      }
  
@@ -583,7 +608,7 @@
      {
          if (this.field_73020_y.func_73157_c())
          {
-@@ -742,7 +1009,7 @@
+@@ -742,7 +1021,7 @@
          }
      }
  
@@ -592,7 +617,7 @@
      {
          this.func_72906_B();
          this.field_73019_z.func_75755_a(this.field_72986_A, this.field_73061_a.func_71203_ab().func_72378_q());
-@@ -786,9 +1053,19 @@
+@@ -786,9 +1065,19 @@
  
      public boolean func_72942_c(Entity p_72942_1_)
      {
@@ -613,7 +638,7 @@
              return true;
          }
          else
-@@ -805,11 +1082,21 @@
+@@ -805,11 +1094,21 @@
  
      public Explosion func_72885_a(Entity p_72885_1_, double p_72885_2_, double p_72885_4_, double p_72885_6_, float p_72885_8_, boolean p_72885_9_, boolean p_72885_10_)
      {
@@ -640,7 +665,7 @@
  
          if (!p_72885_10_)
          {
-@@ -864,7 +1151,8 @@
+@@ -864,7 +1163,8 @@
  
                  if (this.func_73043_a(blockeventdata))
                  {
@@ -650,7 +675,7 @@
                  }
              }
  
-@@ -890,14 +1178,16 @@
+@@ -890,14 +1190,16 @@
  
          if (flag != this.func_72896_J())
          {
@@ -675,7 +700,7 @@
          }
      }
  
-@@ -920,4 +1210,35 @@
+@@ -920,4 +1222,35 @@
      {
          return this.field_85177_Q;
      }

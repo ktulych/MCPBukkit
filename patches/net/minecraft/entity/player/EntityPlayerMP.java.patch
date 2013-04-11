@@ -129,7 +129,21 @@
  
      public void func_82242_a(int p_82242_1_)
      {
-@@ -243,14 +308,8 @@
+@@ -213,8 +278,11 @@
+ 
+                 if (chunkcoordintpair != null && this.field_70170_p.func_72899_e(chunkcoordintpair.field_77276_a << 4, 0, chunkcoordintpair.field_77275_b << 4))
+                 {
+-                    arraylist.add(this.field_70170_p.func_72964_e(chunkcoordintpair.field_77276_a, chunkcoordintpair.field_77275_b));
+-                    arraylist1.addAll(((WorldServer)this.field_70170_p).func_73049_a(chunkcoordintpair.field_77276_a * 16, 0, chunkcoordintpair.field_77275_b * 16, chunkcoordintpair.field_77276_a * 16 + 16, 256, chunkcoordintpair.field_77275_b * 16 + 16));
++                    // CraftBukkit start - Get tile entities directly from the chunk instead of the world
++                    Chunk chunk = this.field_70170_p.func_72964_e(chunkcoordintpair.field_77276_a, chunkcoordintpair.field_77275_b);
++                    arraylist.add(chunk);
++                    arraylist1.addAll(chunk.field_76648_i.values());
++                    // CraftBukkit end
+                 }
+             }
+ 
+@@ -243,14 +311,8 @@
      public void func_70606_j(int p_70606_1_)
      {
          super.func_70606_j(p_70606_1_);
@@ -146,7 +160,7 @@
      }
  
      public void func_71127_g()
-@@ -276,7 +335,8 @@
+@@ -276,7 +338,8 @@
  
              if (this.func_70630_aN() != this.field_71149_ch || this.field_71146_ci != this.field_71100_bB.func_75116_a() || this.field_71100_bB.func_75115_e() == 0.0F != this.field_71147_cj)
              {
@@ -156,7 +170,7 @@
                  this.field_71149_ch = this.func_70630_aN();
                  this.field_71146_ci = this.field_71100_bB.func_75116_a();
                  this.field_71147_cj = this.field_71100_bB.func_75115_e() == 0.0F;
-@@ -287,6 +347,20 @@
+@@ -287,6 +350,20 @@
                  this.field_71144_ck = this.field_71067_cb;
                  this.field_71135_a.func_72567_b(new Packet43Experience(this.field_71106_cc, this.field_71067_cb, this.field_71068_ca));
              }
@@ -177,7 +191,7 @@
          }
          catch (Throwable throwable)
          {
-@@ -299,20 +373,65 @@
+@@ -299,20 +376,65 @@
  
      public void func_70645_a(DamageSource p_70645_1_)
      {
@@ -253,7 +267,7 @@
              score.func_96648_a();
          }
  
-@@ -332,7 +451,8 @@
+@@ -332,7 +454,8 @@
          }
          else
          {
@@ -263,7 +277,7 @@
  
              if (!flag && this.field_71145_cl > 0 && p_70097_1_ != DamageSource.field_76380_i)
              {
-@@ -367,14 +487,15 @@
+@@ -367,14 +490,15 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
@@ -281,7 +295,7 @@
              this.field_70170_p.func_72900_e(this);
              this.field_71136_j = true;
              this.field_71135_a.func_72567_b(new Packet70GameEvent(4, 0));
-@@ -383,22 +504,28 @@
+@@ -383,22 +507,28 @@
          {
              if (this.field_71093_bK == 1 && p_71027_1_ == 0)
              {
@@ -321,7 +335,7 @@
              this.field_71144_ck = -1;
              this.field_71149_ch = -1;
              this.field_71146_ci = -1;
-@@ -431,7 +558,7 @@
+@@ -431,7 +561,7 @@
          if (enumstatus == EnumStatus.OK)
          {
              Packet17Sleep packet17sleep = new Packet17Sleep(this, 0, p_71018_1_, p_71018_2_, p_71018_3_);
@@ -330,7 +344,7 @@
              this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
              this.field_71135_a.func_72567_b(packet17sleep);
          }
-@@ -441,6 +568,11 @@
+@@ -441,6 +571,11 @@
  
      public void func_70999_a(boolean p_70999_1_, boolean p_70999_2_, boolean p_70999_3_)
      {
@@ -342,7 +356,7 @@
          if (this.func_70608_bn())
          {
              this.func_71121_q().func_73039_n().func_72789_b(this, new Packet18Animation(this, 3));
-@@ -456,7 +588,16 @@
+@@ -456,7 +591,16 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
@@ -360,7 +374,7 @@
          this.field_71135_a.func_72567_b(new Packet39AttachEntity(this, this.field_70154_o));
          this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
      }
-@@ -468,34 +609,62 @@
+@@ -468,34 +612,62 @@
          super.func_70064_a(p_71122_1_, p_71122_3_);
      }
  
@@ -430,7 +444,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -507,71 +676,143 @@
+@@ -507,71 +679,143 @@
              this.func_71053_j();
          }
  
@@ -590,7 +604,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
          InventoryMerchant inventorymerchant = ((ContainerMerchant)this.field_71070_bA).func_75174_d();
-@@ -615,6 +856,14 @@
+@@ -615,6 +859,14 @@
      {
          this.field_71135_a.func_72567_b(new Packet104WindowItems(p_71110_1_.field_75152_c, p_71110_2_));
          this.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_71071_by.func_70445_o()));
@@ -605,7 +619,7 @@
      }
  
      public void func_71112_a(Container p_71112_1_, int p_71112_2_, int p_71112_3_)
-@@ -638,7 +887,7 @@
+@@ -638,7 +890,7 @@
  
      public void func_71128_l()
      {
@@ -614,7 +628,7 @@
          this.field_71070_bA = this.field_71069_bz;
      }
  
-@@ -675,6 +924,7 @@
+@@ -675,6 +927,7 @@
      public void func_71118_n()
      {
          this.field_71149_ch = -99999999;
@@ -622,7 +636,7 @@
      }
  
      public void func_71035_c(String p_71035_1_)
-@@ -816,7 +1066,7 @@
+@@ -816,7 +1069,7 @@
  
      public void func_71115_a(String p_71115_1_, int p_71115_2_)
      {
@@ -631,7 +645,7 @@
          this.field_71135_a.func_72567_b(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
      }
  
-@@ -824,4 +1074,99 @@
+@@ -824,4 +1077,99 @@
      {
          return new ChunkCoordinates(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u + 0.5D), MathHelper.func_76128_c(this.field_70161_v));
      }
