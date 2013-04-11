@@ -170,14 +170,18 @@
              {
                  this.field_70159_w *= 0.5D;
                  this.field_70181_x *= 0.5D;
-@@ -283,18 +366,28 @@
+@@ -281,20 +364,30 @@
+ 
+             if (this.field_70123_F && d3 > 0.2D)
              {
-                 if (!this.field_70170_p.field_72995_K)
-                 {
+-                if (!this.field_70170_p.field_72995_K)
+-                {
 -                    this.func_70106_y();
 -                    int k;
 -
 -                    for (k = 0; k < 3; ++k)
++                if (!this.field_70170_p.field_72995_K && !this.field_70128_L)   // CraftBukkit - That which is dead cannot die
++                {
 +                    // CraftBukkit start
 +                    Vehicle vehicle = (Vehicle) this.getBukkitEntity();
 +                    VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, null);
