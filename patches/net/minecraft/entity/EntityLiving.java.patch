@@ -430,7 +430,22 @@
          {
              List list = this.field_70170_p.func_72872_a(EntityItem.class, this.field_70121_D.func_72314_b(1.0D, 0.0D, 1.0D));
              Iterator iterator = list.iterator();
-@@ -1705,12 +1854,12 @@
+@@ -1635,6 +1784,14 @@
+             {
+                 Entity entity = (Entity)list.get(i);
+ 
++                // CraftBukkit start - Only handle mob (non-player) collisions every other tick
++                if (entity instanceof EntityLiving && !(this instanceof EntityPlayerMP) && this.field_70173_aa % 2 == 0)
++                {
++                    continue;
++                }
++
++                // CraftBukkit end
++
+                 if (entity.func_70104_M())
+                 {
+                     this.func_82167_n(entity);
+@@ -1705,12 +1862,12 @@
                  double d2 = entityplayer.field_70161_v - this.field_70161_v;
                  double d3 = d0 * d0 + d1 * d1 + d2 * d2;
  
@@ -445,7 +460,7 @@
                  {
                      this.func_70106_y();
                  }
-@@ -1719,7 +1868,15 @@
+@@ -1719,7 +1876,15 @@
                      this.field_70708_bq = 0;
                  }
              }
@@ -462,7 +477,7 @@
      }
  
      protected void func_70619_bc()
-@@ -1783,7 +1940,7 @@
+@@ -1783,7 +1948,7 @@
          {
              this.func_70625_a(this.field_70776_bF, 10.0F, (float)this.func_70646_bf());
  
@@ -471,7 +486,7 @@
              {
                  this.field_70776_bF = null;
              }
-@@ -1955,12 +2112,12 @@
+@@ -1955,12 +2120,12 @@
              {
                  CrashReport crashreport = CrashReport.func_85055_a(throwable, "Ticking mob effect instance");
                  CrashReportCategory crashreportcategory = crashreport.func_85058_a("Mob effect being ticked");
@@ -490,7 +505,7 @@
                  throw new ReportedException(crashreport);
              }
          }
-@@ -2181,7 +2338,7 @@
+@@ -2181,7 +2346,7 @@
          }
          else
          {
@@ -499,7 +514,7 @@
              i -= (3 - this.field_70170_p.field_73013_u) * 4;
  
              if (i < 0)
-@@ -2302,17 +2459,17 @@
+@@ -2302,17 +2467,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {
@@ -520,7 +535,7 @@
              }
          }
      }
-@@ -2471,7 +2628,7 @@
+@@ -2471,7 +2636,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {
