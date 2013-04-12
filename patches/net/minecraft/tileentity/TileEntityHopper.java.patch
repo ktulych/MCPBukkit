@@ -66,7 +66,21 @@
      public void func_70307_a(NBTTagCompound p_70307_1_)
      {
          super.func_70307_a(p_70307_1_);
-@@ -230,11 +273,44 @@
+@@ -198,10 +241,12 @@
+             if (!this.func_98047_l() && BlockHopper.func_94452_d(this.func_70322_n()))
+             {
+                 boolean flag = this.func_94116_j() | func_96116_a(this);
++                // CraftBukkit start - Move delay out of if block
++                this.func_98046_c(8);
+ 
+                 if (flag)
+                 {
+-                    this.func_98046_c(8);
++                    // CraftBukkit end
+                     this.func_70296_d();
+                     return true;
+                 }
+@@ -230,11 +275,44 @@
                  if (this.func_70301_a(i) != null)
                  {
                      ItemStack itemstack = this.func_70301_a(i).func_77946_l();
@@ -113,7 +127,7 @@
                          return true;
                      }
  
-@@ -300,11 +376,53 @@
+@@ -300,11 +378,53 @@
          if (itemstack != null && func_102013_b(p_102012_1_, itemstack, p_102012_2_, p_102012_3_))
          {
              ItemStack itemstack1 = itemstack.func_77946_l();
@@ -169,7 +183,7 @@
                  return true;
              }
  
-@@ -324,6 +442,16 @@
+@@ -324,6 +444,16 @@
          }
          else
          {
