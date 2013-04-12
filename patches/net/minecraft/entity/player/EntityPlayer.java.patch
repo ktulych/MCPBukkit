@@ -251,20 +251,21 @@
                  {
                      return false;
                  }
-@@ -801,9 +892,38 @@
+@@ -801,9 +892,39 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
 -        ScorePlayerTeam scoreplayerteam = this.func_96124_cp();
 -        ScorePlayerTeam scoreplayerteam1 = p_96122_1_.func_96124_cp();
 -        return scoreplayerteam != scoreplayerteam1 ? true : (scoreplayerteam != null ? scoreplayerteam.func_96665_g() : true);
-+        // CraftBukkit start - Change to check player's scoreboard team according to API reference to this (or main) scoreboard
++        // CraftBukkit start - Change to check OTHER player's scoreboard team according to API
++        // To summarize this method's logic, it's "Can parameter hurt this"
 +        org.bukkit.scoreboard.Team team;
 +
-+        if (this instanceof EntityPlayerMP)
++        if (p_96122_1_ instanceof EntityPlayerMP)
 +        {
-+            EntityPlayerMP thisPlayer = (EntityPlayerMP) this;
-+            team = thisPlayer.getBukkitEntity().getScoreboard().getPlayerTeam(thisPlayer.getBukkitEntity());
++            EntityPlayerMP thatPlayer = (EntityPlayerMP) p_96122_1_;
++            team = thatPlayer.getBukkitEntity().getScoreboard().getPlayerTeam(thatPlayer.getBukkitEntity());
 +
 +            if (team == null || team.allowFriendlyFire())
 +            {
@@ -274,8 +275,8 @@
 +        else
 +        {
 +            // This should never be called, but is implemented anyway
-+            org.bukkit.OfflinePlayer thisPlayer = this.field_70170_p.getServer().getOfflinePlayer(this.field_71092_bJ);
-+            team = this.field_70170_p.getServer().getScoreboardManager().getMainScoreboard().getPlayerTeam(thisPlayer);
++            org.bukkit.OfflinePlayer thisPlayer = p_96122_1_.field_70170_p.getServer().getOfflinePlayer(p_96122_1_.field_71092_bJ);
++            team = p_96122_1_.field_70170_p.getServer().getScoreboardManager().getMainScoreboard().getPlayerTeam(thisPlayer);
 +
 +            if (team == null || team.allowFriendlyFire())
 +            {
@@ -283,17 +284,17 @@
 +            }
 +        }
 +
-+        if (p_96122_1_ instanceof EntityPlayerMP)
++        if (this instanceof EntityPlayerMP)
 +        {
-+            return team.hasPlayer(((EntityPlayerMP) p_96122_1_).getBukkitEntity());
++            return !team.hasPlayer(((EntityPlayerMP) this).getBukkitEntity());
 +        }
 +
-+        return team.hasPlayer(this.field_70170_p.getServer().getOfflinePlayer(p_96122_1_.field_71092_bJ));
++        return !team.hasPlayer(this.field_70170_p.getServer().getOfflinePlayer(this.field_71092_bJ));
 +        // CraftBukkit end
      }
  
      protected void func_71022_a(EntityLiving p_71022_1_, boolean p_71022_2_)
-@@ -919,7 +1039,8 @@
+@@ -919,7 +1040,8 @@
  
                  if (itemstack.func_77947_a((EntityLiving)p_70998_1_))
                  {
@@ -303,7 +304,7 @@
                      {
                          this.func_71028_bD();
                      }
-@@ -970,7 +1091,7 @@
+@@ -970,7 +1092,7 @@
  
                  if (p_71059_1_ instanceof EntityLiving)
                  {
@@ -312,7 +313,7 @@
                      j += EnchantmentHelper.func_77507_b(this, (EntityLiving)p_71059_1_);
                  }
  
-@@ -999,6 +1120,19 @@
+@@ -999,6 +1121,19 @@
                      }
  
                      boolean flag2 = p_71059_1_.func_70097_a(DamageSource.func_76365_a(this), i);
@@ -332,7 +333,7 @@
  
                      if (flag2)
                      {
-@@ -1022,7 +1156,7 @@
+@@ -1022,7 +1157,7 @@
  
                          if (i >= 18)
                          {
@@ -341,7 +342,7 @@
                          }
  
                          this.func_70607_j(p_71059_1_);
-@@ -1050,7 +1184,8 @@
+@@ -1050,7 +1185,8 @@
                      {
                          itemstack.func_77961_a((EntityLiving)object, this);
  
@@ -351,7 +352,7 @@
                          {
                              this.func_71028_bD();
                          }
-@@ -1067,7 +1202,16 @@
+@@ -1067,7 +1203,16 @@
  
                          if (l > 0 && flag2)
                          {
@@ -369,7 +370,7 @@
                          }
                          else if (flag1)
                          {
-@@ -1140,6 +1284,21 @@
+@@ -1140,6 +1285,21 @@
              }
          }
  
@@ -391,7 +392,7 @@
          this.func_70105_a(0.2F, 0.2F);
          this.field_70129_M = 0.2F;
  
-@@ -1234,6 +1393,27 @@
+@@ -1234,6 +1394,27 @@
              this.field_70170_p.func_72854_c();
          }
  
@@ -419,7 +420,7 @@
          if (p_70999_1_)
          {
              this.field_71076_b = 0;
-@@ -1319,11 +1499,13 @@
+@@ -1319,11 +1500,13 @@
          {
              this.field_71077_c = new ChunkCoordinates(p_71063_1_);
              this.field_82248_d = p_71063_2_;
@@ -433,7 +434,7 @@
          }
      }
  
-@@ -1453,7 +1635,7 @@
+@@ -1453,7 +1636,7 @@
                      }
                      else if ((double)this.field_71073_d.func_71569_e(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v)) >= 1000000.0D)
                      {
@@ -442,7 +443,7 @@
                      }
                  }
                  else if (this.field_70154_o instanceof EntityBoat)
-@@ -1485,7 +1667,7 @@
+@@ -1485,7 +1668,7 @@
      {
          if (p_70074_1_ instanceof IMob)
          {
@@ -451,7 +452,7 @@
          }
      }
  
-@@ -1572,7 +1754,7 @@
+@@ -1572,7 +1755,7 @@
  
      public boolean func_70996_bM()
      {
@@ -460,7 +461,7 @@
      }
  
      public void func_71008_a(ItemStack p_71008_1_, int p_71008_2_)
-@@ -1656,10 +1838,11 @@
+@@ -1656,10 +1839,11 @@
          return super.func_94062_bN();
      }
  
@@ -474,7 +475,7 @@
  
      public void func_71049_a(EntityPlayer p_71049_1_, boolean p_71049_2_)
      {
-@@ -1752,6 +1935,7 @@
+@@ -1752,6 +1936,7 @@
  
      public String func_96090_ax()
      {
