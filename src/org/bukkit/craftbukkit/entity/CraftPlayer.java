@@ -982,6 +982,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     public void setScoreboard(Scoreboard scoreboard) {
         Validate.notNull(scoreboard, "Scoreboard cannot be null");
+        net.minecraft.network.NetServerHandler playerConnection = getHandle().field_71135_a;
+        if (playerConnection == null) {
+            throw new IllegalStateException("Cannot set scoreboard yet");
+        }
+        if (playerConnection.field_72576_c) {
+            throw new IllegalStateException("Cannot set scoreboard for invalid CraftPlayer");
+        }
+
         this.server.getScoreboardManager().setPlayerBoard(this, scoreboard);
     }
 }
