@@ -346,7 +346,7 @@
      }
  
      protected int func_70633_aT()
-@@ -1094,6 +1201,24 @@
+@@ -1094,6 +1201,26 @@
      {
          super.func_70069_a(p_70069_1_);
          int i = MathHelper.func_76123_f(p_70069_1_ - 3.0F);
@@ -356,14 +356,16 @@
 +        {
 +            EntityDamageEvent event = CraftEventFactory.callEntityDamageEvent(null, this, EntityDamageEvent.DamageCause.FALL, i);
 +
-+            if (!event.isCancelled())
++            if (event.isCancelled())
 +            {
-+                i = event.getDamage();
++                return;
++            }
 +
-+                if (i > 0)
-+                {
-+                    this.getBukkitEntity().setLastDamageCause(event);
-+                }
++            i = event.getDamage();
++
++            if (i > 0)
++            {
++                this.getBukkitEntity().setLastDamageCause(event);
 +            }
 +        }
 +
@@ -371,7 +373,7 @@
  
          if (i > 0)
          {
-@@ -1345,22 +1470,45 @@
+@@ -1345,22 +1472,45 @@
          p_70014_1_.func_74782_a("DropChances", nbttaglist1);
          p_70014_1_.func_74778_a("CustomName", this.func_94057_bL());
          p_70014_1_.func_74757_a("CustomNameVisible", this.func_94062_bN());
@@ -420,7 +422,7 @@
  
          if (p_70037_1_.func_74764_b("CustomName") && p_70037_1_.func_74779_i("CustomName").length() > 0)
          {
-@@ -1534,7 +1682,8 @@
+@@ -1534,7 +1684,8 @@
          this.field_70170_p.field_72984_F.func_76319_b();
          this.field_70170_p.field_72984_F.func_76320_a("looting");
  
@@ -430,7 +432,7 @@
          {
              List list = this.field_70170_p.func_72872_a(EntityItem.class, this.field_70121_D.func_72314_b(1.0D, 0.0D, 1.0D));
              Iterator iterator = list.iterator();
-@@ -1635,6 +1784,14 @@
+@@ -1635,6 +1786,14 @@
              {
                  Entity entity = (Entity)list.get(i);
  
@@ -445,7 +447,7 @@
                  if (entity.func_70104_M())
                  {
                      this.func_82167_n(entity);
-@@ -1705,12 +1862,12 @@
+@@ -1705,12 +1864,12 @@
                  double d2 = entityplayer.field_70161_v - this.field_70161_v;
                  double d3 = d0 * d0 + d1 * d1 + d2 * d2;
  
@@ -460,7 +462,7 @@
                  {
                      this.func_70106_y();
                  }
-@@ -1719,7 +1876,15 @@
+@@ -1719,7 +1878,15 @@
                      this.field_70708_bq = 0;
                  }
              }
@@ -477,7 +479,7 @@
      }
  
      protected void func_70619_bc()
-@@ -1783,7 +1948,7 @@
+@@ -1783,7 +1950,7 @@
          {
              this.func_70625_a(this.field_70776_bF, 10.0F, (float)this.func_70646_bf());
  
@@ -486,7 +488,7 @@
              {
                  this.field_70776_bF = null;
              }
-@@ -1955,12 +2120,12 @@
+@@ -1955,12 +2122,12 @@
              {
                  CrashReport crashreport = CrashReport.func_85055_a(throwable, "Ticking mob effect instance");
                  CrashReportCategory crashreportcategory = crashreport.func_85058_a("Mob effect being ticked");
@@ -505,7 +507,7 @@
                  throw new ReportedException(crashreport);
              }
          }
-@@ -2181,7 +2346,7 @@
+@@ -2181,7 +2348,7 @@
          }
          else
          {
@@ -514,7 +516,7 @@
              i -= (3 - this.field_70170_p.field_73013_u) * 4;
  
              if (i < 0)
-@@ -2302,17 +2467,17 @@
+@@ -2302,17 +2469,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {
@@ -535,7 +537,7 @@
              }
          }
      }
-@@ -2471,7 +2636,7 @@
+@@ -2471,7 +2638,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {
