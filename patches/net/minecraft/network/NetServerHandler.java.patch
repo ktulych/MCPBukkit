@@ -37,7 +37,7 @@
  import net.minecraft.network.packet.Packet7UseEntity;
  import net.minecraft.network.packet.Packet9Respawn;
  import net.minecraft.server.MinecraftServer;
-@@ -58,9 +66,49 @@
+@@ -58,9 +66,55 @@
  import net.minecraft.util.AxisAlignedBB;
  import net.minecraft.util.ChatAllowedCharacters;
  import net.minecraft.util.EnumChatFormatting;
@@ -62,12 +62,18 @@
 +import org.bukkit.craftbukkit.entity.CraftPlayer;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +
++import org.bukkit.Bukkit;
 +import org.bukkit.Location;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.block.Action;
 +import org.bukkit.event.block.SignChangeEvent;
++import org.bukkit.event.inventory.ClickType;
++import org.bukkit.event.inventory.CraftItemEvent;
++import org.bukkit.event.inventory.InventoryAction;
 +import org.bukkit.event.inventory.InventoryClickEvent;
++import org.bukkit.event.inventory.InventoryCreativeEvent;
++import org.bukkit.event.inventory.InventoryCloseEvent;
 +import org.bukkit.event.inventory.InventoryType.SlotType;
 +import org.bukkit.event.player.AsyncPlayerChatEvent;
 +import org.bukkit.event.player.PlayerAnimationEvent;
@@ -87,7 +93,7 @@
  
  public class NetServerHandler extends NetHandler
  {
-@@ -75,12 +123,13 @@
+@@ -75,12 +129,13 @@
      private long field_72582_j;
      private static Random field_72583_k = new Random();
      private long field_72580_l;
@@ -103,7 +109,7 @@
      private IntHashMap field_72586_s = new IntHashMap();
  
      public NetServerHandler(MinecraftServer p_i5010_1_, INetworkManager p_i5010_2_, EntityPlayerMP p_i5010_3_)
-@@ -90,7 +139,36 @@
+@@ -90,7 +145,36 @@
          p_i5010_2_.func_74425_a(this);
          this.field_72574_e = p_i5010_3_;
          p_i5010_3_.field_71135_a = this;
@@ -141,7 +147,7 @@
  
      public void func_72570_d()
      {
-@@ -108,10 +186,15 @@
+@@ -108,10 +192,15 @@
              this.func_72567_b(new Packet0KeepAlive(this.field_72585_i));
          }
  
@@ -161,7 +167,7 @@
  
          if (this.field_72578_n > 0)
          {
-@@ -126,11 +209,37 @@
+@@ -126,11 +215,37 @@
      {
          if (!this.field_72576_c)
          {
@@ -201,7 +207,7 @@
              this.field_72576_c = true;
          }
      }
-@@ -154,8 +263,81 @@
+@@ -154,8 +269,81 @@
                  }
              }
  
@@ -285,7 +291,7 @@
                  double d1;
                  double d2;
                  double d3;
-@@ -255,7 +437,8 @@
+@@ -255,7 +443,8 @@
  
                      if (Math.abs(p_72498_1_.field_73545_a) > 3.2E7D || Math.abs(p_72498_1_.field_73544_c) > 3.2E7D)
                      {
@@ -295,7 +301,7 @@
                          return;
                      }
                  }
-@@ -278,12 +461,14 @@
+@@ -278,12 +467,14 @@
                  d4 = d1 - this.field_72574_e.field_70165_t;
                  double d6 = d2 - this.field_72574_e.field_70163_u;
                  double d7 = d3 - this.field_72574_e.field_70161_v;
@@ -314,7 +320,7 @@
                  {
                      this.field_72573_d.func_98033_al().func_98236_b(this.field_72574_e.field_71092_bJ + " moved too quickly! " + d4 + "," + d6 + "," + d7 + " (" + d8 + ", " + d9 + ", " + d10 + ")");
                      this.func_72569_a(this.field_72579_o, this.field_72589_p, this.field_72588_q, this.field_72574_e.field_70177_z, this.field_72574_e.field_70125_A);
-@@ -331,7 +516,7 @@
+@@ -331,7 +522,7 @@
  
                  AxisAlignedBB axisalignedbb = this.field_72574_e.field_70121_D.func_72329_c().func_72314_b((double)f4, (double)f4, (double)f4).func_72321_a(0.0D, -0.55D, 0.0D);
  
@@ -323,7 +329,7 @@
                  {
                      if (d12 >= -0.03125D)
                      {
-@@ -352,6 +537,12 @@
+@@ -352,6 +543,12 @@
  
                  this.field_72574_e.field_70122_E = p_72498_1_.field_73540_g;
                  this.field_72573_d.func_71203_ab().func_72358_d(this.field_72574_e);
@@ -336,7 +342,7 @@
                  this.field_72574_e.func_71122_b(this.field_72574_e.field_70163_u - d0, p_72498_1_.field_73540_g);
              }
          }
-@@ -359,20 +550,85 @@
+@@ -359,20 +556,85 @@
  
      public void func_72569_a(double p_72569_1_, double p_72569_3_, double p_72569_5_, float p_72569_7_, float p_72569_8_)
      {
@@ -427,7 +433,7 @@
              this.field_72574_e.func_71040_bB(false);
          }
          else if (p_72510_1_.field_73342_e == 3)
-@@ -426,13 +682,24 @@
+@@ -426,13 +688,24 @@
  
              if (p_72510_1_.field_73342_e == 0)
              {
@@ -452,7 +458,7 @@
                  }
              }
              else if (p_72510_1_.field_73342_e == 2)
-@@ -459,6 +726,40 @@
+@@ -459,6 +732,40 @@
      public void func_72472_a(Packet15Place p_72472_1_)
      {
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
@@ -493,7 +499,7 @@
          ItemStack itemstack = this.field_72574_e.field_71071_by.func_70448_g();
          boolean flag = false;
          int i = p_72472_1_.func_73403_d();
-@@ -473,7 +774,20 @@
+@@ -473,7 +780,20 @@
                  return;
              }
  
@@ -515,7 +521,7 @@
          }
          else if (p_72472_1_.func_73402_f() >= this.field_72573_d.func_71207_Z() - 1 && (p_72472_1_.func_73401_h() == 1 || p_72472_1_.func_73402_f() >= this.field_72573_d.func_71207_Z()))
          {
-@@ -482,11 +796,16 @@
+@@ -482,11 +802,16 @@
          }
          else
          {
@@ -537,7 +543,7 @@
              flag = true;
          }
  
-@@ -539,11 +858,12 @@
+@@ -539,11 +864,12 @@
          {
              this.field_72574_e.field_71137_h = true;
              this.field_72574_e.field_71071_by.field_70462_a[this.field_72574_e.field_71071_by.field_70461_c] = ItemStack.func_77944_b(this.field_72574_e.field_71071_by.field_70462_a[this.field_72574_e.field_71071_by.field_70461_c]);
@@ -552,7 +558,7 @@
              {
                  this.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71070_bA.field_75152_c, slot.field_75222_d, this.field_72574_e.field_71071_by.func_70448_g()));
              }
-@@ -552,9 +872,21 @@
+@@ -552,9 +878,21 @@
  
      public void func_72515_a(String p_72515_1_, Object[] p_72515_2_)
      {
@@ -576,7 +582,7 @@
          this.field_72576_c = true;
  
          if (this.field_72573_d.func_71264_H() && this.field_72574_e.field_71092_bJ.equals(this.field_72573_d.func_71214_G()))
-@@ -566,6 +898,11 @@
+@@ -566,6 +904,11 @@
  
      public void func_72509_a(Packet p_72509_1_)
      {
@@ -588,7 +594,7 @@
          this.field_72573_d.func_98033_al().func_98236_b(this.getClass() + " wasn\'t prepared to deal with a " + p_72509_1_.getClass());
          this.func_72565_c("Protocol error, unexpected packet");
      }
-@@ -586,7 +923,31 @@
+@@ -586,7 +929,31 @@
              {
                  return;
              }
@@ -621,7 +627,7 @@
  
          try
          {
-@@ -596,21 +957,38 @@
+@@ -596,21 +963,38 @@
          {
              CrashReport crashreport = CrashReport.func_85055_a(throwable, "Sending packet");
              CrashReportCategory crashreportcategory = crashreport.func_85058_a("Packet being sent");
@@ -662,7 +668,7 @@
          }
      }
  
-@@ -626,7 +1004,39 @@
+@@ -626,7 +1010,39 @@
  
              if (s.length() > 100)
              {
@@ -703,7 +709,7 @@
              }
              else
              {
-@@ -636,53 +1046,322 @@
+@@ -636,53 +1052,322 @@
                  {
                      if (!ChatAllowedCharacters.func_71566_a(s.charAt(i)))
                      {
@@ -1048,7 +1054,7 @@
          if (p_72473_1_.field_73366_b == 1)
          {
              this.field_72574_e.func_70095_a(true);
-@@ -702,7 +1381,7 @@
+@@ -702,7 +1387,7 @@
          else if (p_72473_1_.field_73366_b == 3)
          {
              this.field_72574_e.func_70999_a(false, true, true);
@@ -1057,7 +1063,7 @@
          }
      }
  
-@@ -718,6 +1397,11 @@
+@@ -718,6 +1403,11 @@
  
      public void func_72507_a(Packet7UseEntity p_72507_1_)
      {
@@ -1069,7 +1075,7 @@
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
          Entity entity = worldserver.func_73045_a(p_72507_1_.field_73604_b);
  
-@@ -733,13 +1417,46 @@
+@@ -733,13 +1423,46 @@
  
              if (this.field_72574_e.func_70068_e(entity) < d0)
              {
@@ -1116,7 +1122,7 @@
                  }
              }
          }
-@@ -751,7 +1468,7 @@
+@@ -751,7 +1474,7 @@
          {
              if (this.field_72574_e.field_71136_j)
              {
@@ -1125,7 +1131,7 @@
              }
              else if (this.field_72574_e.func_71121_q().func_72912_H().func_76093_s())
              {
-@@ -789,14 +1506,93 @@
+@@ -789,14 +1512,411 @@
  
      public void func_72474_a(Packet101CloseWindow p_72474_1_)
      {
@@ -1149,78 +1155,396 @@
          {
 -            ItemStack itemstack = this.field_72574_e.field_71070_bA.func_75144_a(p_72523_1_.field_73442_b, p_72523_1_.field_73443_c, p_72523_1_.field_73439_f, this.field_72574_e);
 +            // CraftBukkit start - Call InventoryClickEvent
-+            if (p_72523_1_.field_73442_b == -1)
++            if (p_72523_1_.field_73442_b < -1 && p_72523_1_.field_73442_b != -999)
 +            {
-+                // Vanilla doesn't do anything with this, neither should we
 +                return;
 +            }
 +
 +            InventoryView inventory = this.field_72574_e.field_71070_bA.getBukkitView();
 +            SlotType type = CraftInventoryView.getSlotType(inventory, p_72523_1_.field_73442_b);
-+            InventoryClickEvent event = new InventoryClickEvent(inventory, type, p_72523_1_.field_73442_b, p_72523_1_.field_73443_c != 0, p_72523_1_.field_73439_f == 1);
-+            org.bukkit.inventory.Inventory top = inventory.getTopInventory();
-+
-+            if (p_72523_1_.field_73442_b == 0 && top instanceof CraftingInventory)
-+            {
-+                org.bukkit.inventory.Recipe recipe = ((CraftingInventory) top).getRecipe();
-+
-+                if (recipe != null)
-+                {
-+                    event = new org.bukkit.event.inventory.CraftItemEvent(recipe, inventory, type, p_72523_1_.field_73442_b, p_72523_1_.field_73443_c != 0, p_72523_1_.field_73439_f == 1);
-+                }
-+            }
-+
-+            server.getPluginManager().callEvent(event);
++            InventoryClickEvent event = null;
++            ClickType click = ClickType.UNKNOWN;
++            InventoryAction action = InventoryAction.UNKNOWN;
 +            ItemStack itemstack = null;
-+            boolean defaultBehaviour = false;
-+            switch (event.getResult())
-+            {
-+                case DEFAULT:
-+                    itemstack = this.field_72574_e.field_71070_bA.func_75144_a(p_72523_1_.field_73442_b, p_72523_1_.field_73443_c, p_72523_1_.field_73439_f, this.field_72574_e);
-+                    defaultBehaviour = true;
-+                    break;
-+                case DENY: // Deny any change, including changes from the event
-+                    break;
-+                case ALLOW: // Allow changes unconditionally
-+                    org.bukkit.inventory.ItemStack cursor = event.getCursor();
 +
-+                    if (cursor == null)
++            if (p_72523_1_.field_73442_b == -1)
++            {
++                type = SlotType.OUTSIDE; // override
++                click = p_72523_1_.field_73443_c == 0 ? ClickType.WINDOW_BORDER_LEFT : ClickType.WINDOW_BORDER_RIGHT;
++                action = InventoryAction.NOTHING;
++            }
++            else if (p_72523_1_.field_73439_f == 0)
++            {
++                if (p_72523_1_.field_73443_c == 0)
++                {
++                    click = ClickType.LEFT;
++                }
++                else if (p_72523_1_.field_73443_c == 1)
++                {
++                    click = ClickType.RIGHT;
++                }
++
++                if (p_72523_1_.field_73443_c == 0 || p_72523_1_.field_73443_c == 1)
++                {
++                    action = InventoryAction.NOTHING; // Don't want to repeat ourselves
++
++                    if (p_72523_1_.field_73442_b == -999)
 +                    {
-+                        this.field_72574_e.field_71071_by.func_70437_b((ItemStack) null);
++                        if (field_72574_e.field_71071_by.func_70445_o() != null)
++                        {
++                            action = p_72523_1_.field_73443_c == 0 ? InventoryAction.DROP_ALL_CURSOR : InventoryAction.DROP_ONE_CURSOR;
++                        }
 +                    }
 +                    else
 +                    {
-+                        this.field_72574_e.field_71071_by.func_70437_b(CraftItemStack.asNMSCopy(cursor));
-+                    }
++                        Slot slot = this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b);
 +
-+                    org.bukkit.inventory.ItemStack item = event.getCurrentItem();
-+
-+                    if (item != null)
-+                    {
-+                        itemstack = CraftItemStack.asNMSCopy(item);
-+
-+                        if (p_72523_1_.field_73442_b == -999)
++                        if (slot != null)
 +                        {
-+                            this.field_72574_e.func_71021_b(itemstack);
++                            ItemStack clickedItem = slot.func_75211_c();
++                            ItemStack cursor = field_72574_e.field_71071_by.func_70445_o();
++
++                            if (clickedItem == null)
++                            {
++                                if (cursor != null)
++                                {
++                                    action = p_72523_1_.field_73443_c == 0 ? InventoryAction.PLACE_ALL : InventoryAction.PLACE_ONE;
++                                }
++                            }
++                            else if (slot.func_82869_a(field_72574_e))     // Should be Slot.isPlayerAllowed
++                            {
++                                if (cursor == null)
++                                {
++                                    action = p_72523_1_.field_73443_c == 0 ? InventoryAction.PICKUP_ALL : InventoryAction.PICKUP_HALF;
++                                }
++                                else if (slot.func_75214_a(cursor))     // Should be Slot.isItemAllowed
++                                {
++                                    if (clickedItem.func_77969_a(cursor) && ItemStack.func_77970_a(clickedItem, cursor))
++                                    {
++                                        int toPlace = p_72523_1_.field_73443_c == 0 ? cursor.field_77994_a : 1;
++                                        toPlace = Math.min(toPlace, clickedItem.func_77976_d() - clickedItem.field_77994_a);
++                                        toPlace = Math.min(toPlace, slot.field_75224_c.func_70297_j_() - clickedItem.field_77994_a);
++
++                                        if (toPlace == 1)
++                                        {
++                                            action = InventoryAction.PLACE_ONE;
++                                        }
++                                        else if (toPlace == cursor.field_77994_a)
++                                        {
++                                            action = InventoryAction.PLACE_ALL;
++                                        }
++                                        else if (toPlace < 0)
++                                        {
++                                            action = toPlace != -1 ? InventoryAction.PICKUP_SOME : InventoryAction.PICKUP_ONE; // this happens with oversized stacks
++                                        }
++                                        else if (toPlace != 0)
++                                        {
++                                            action = InventoryAction.PLACE_SOME;
++                                        }
++                                    }
++                                    else if (cursor.field_77994_a <= slot.func_75219_a())     // Should be Slot.getMaxStackSize()
++                                    {
++                                        action = InventoryAction.SWAP_WITH_CURSOR;
++                                    }
++                                }
++                                else if (cursor.field_77993_c == clickedItem.field_77993_c && (!cursor.func_77981_g() || cursor.func_77960_j() == clickedItem.func_77960_j()) && ItemStack.func_77970_a(cursor, clickedItem))
++                                {
++                                    if (clickedItem.field_77994_a >= 0)
++                                    {
++                                        if (clickedItem.field_77994_a + cursor.field_77994_a <= cursor.func_77976_d())
++                                        {
++                                            // As of 1.5, this is result slots only
++                                            action = InventoryAction.PICKUP_ALL;
++                                        }
++                                    }
++                                }
++                            }
++                        }
++                    }
++                }
++            }
++            else if (p_72523_1_.field_73439_f == 1)
++            {
++                if (p_72523_1_.field_73443_c == 0)
++                {
++                    click = ClickType.SHIFT_LEFT;
++                }
++                else if (p_72523_1_.field_73443_c == 1)
++                {
++                    click = ClickType.SHIFT_RIGHT;
++                }
++
++                if (p_72523_1_.field_73443_c == 0 || p_72523_1_.field_73443_c == 1)
++                {
++                    if (p_72523_1_.field_73442_b < 0)
++                    {
++                        action = InventoryAction.NOTHING;
++                    }
++                    else
++                    {
++                        Slot slot = this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b);
++
++                        if (slot != null && slot.func_82869_a(this.field_72574_e) && slot.func_75216_d())   // Should be Slot.hasItem()
++                        {
++                            action = InventoryAction.MOVE_TO_OTHER_INVENTORY;
 +                        }
 +                        else
 +                        {
-+                            this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b).func_75215_d(itemstack);
++                            action = InventoryAction.NOTHING;
 +                        }
 +                    }
-+                    else if (p_72523_1_.field_73442_b != -999)
++                }
++            }
++            else if (p_72523_1_.field_73439_f == 2)
++            {
++                if (p_72523_1_.field_73443_c >= 0 && p_72523_1_.field_73443_c < 9)
++                {
++                    click = ClickType.NUMBER_KEY;
++                    Slot clickedSlot = this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b);
++
++                    if (clickedSlot.func_82869_a(field_72574_e))
 +                    {
-+                        this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b).func_75215_d((ItemStack) null);
++                        ItemStack hotbar = this.field_72574_e.field_71071_by.func_70301_a(p_72523_1_.field_73443_c);
++                        boolean canCleanSwap = hotbar == null || (clickedSlot.field_75224_c == field_72574_e.field_71071_by && clickedSlot.func_75214_a(hotbar)); // the slot will accept the hotbar item
++
++                        if (clickedSlot.func_75216_d())
++                        {
++                            if (canCleanSwap)
++                            {
++                                action = InventoryAction.HOTBAR_SWAP;
++                            }
++                            else
++                            {
++                                int firstEmptySlot = field_72574_e.field_71071_by.func_70447_i(); // Should be Inventory.firstEmpty()
++
++                                if (firstEmptySlot > -1)
++                                {
++                                    action = InventoryAction.HOTBAR_MOVE_AND_READD;
++                                }
++                                else
++                                {
++                                    action = InventoryAction.NOTHING; // This is not sane! Mojang: You should test for other slots of same type
++                                }
++                            }
++                        }
++                        else if (!clickedSlot.func_75216_d() && hotbar != null && clickedSlot.func_75214_a(hotbar))
++                        {
++                            action = InventoryAction.HOTBAR_SWAP;
++                        }
++                        else
++                        {
++                            action = InventoryAction.NOTHING;
++                        }
++                    }
++                    else
++                    {
++                        action = InventoryAction.NOTHING;
 +                    }
 +
-+                    break;
++                    // Special constructor for number key
++                    event = new InventoryClickEvent(inventory, type, p_72523_1_.field_73442_b, click, action, p_72523_1_.field_73443_c);
++                }
++            }
++            else if (p_72523_1_.field_73439_f == 3)
++            {
++                if (p_72523_1_.field_73443_c == 2)
++                {
++                    click = ClickType.MIDDLE;
++
++                    if (p_72523_1_.field_73442_b == -999)
++                    {
++                        action = InventoryAction.NOTHING;
++                    }
++                    else
++                    {
++                        Slot slot = this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b);
++
++                        if (slot != null && slot.func_75216_d() && field_72574_e.field_71075_bZ.field_75098_d && field_72574_e.field_71071_by.func_70445_o() == null)
++                        {
++                            action = InventoryAction.CLONE_STACK;
++                        }
++                        else
++                        {
++                            action = InventoryAction.NOTHING;
++                        }
++                    }
++                }
++                else
++                {
++                    click = ClickType.UNKNOWN;
++                    action = InventoryAction.UNKNOWN;
++                }
++            }
++            else if (p_72523_1_.field_73439_f == 4)
++            {
++                if (p_72523_1_.field_73442_b >= 0)
++                {
++                    if (p_72523_1_.field_73443_c == 0)
++                    {
++                        click = ClickType.DROP;
++                        Slot slot = this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b);
++
++                        if (slot != null && slot.func_75216_d() && slot.func_82869_a(field_72574_e) && slot.func_75211_c() != null && slot.func_75211_c().field_77993_c != 0)
++                        {
++                            action = InventoryAction.DROP_ONE_SLOT;
++                        }
++                        else
++                        {
++                            action = InventoryAction.NOTHING;
++                        }
++                    }
++                    else if (p_72523_1_.field_73443_c == 1)
++                    {
++                        click = ClickType.CONTROL_DROP;
++                        Slot slot = this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b);
++
++                        if (slot != null && slot.func_75216_d() && slot.func_82869_a(field_72574_e) && slot.func_75211_c() != null && slot.func_75211_c().field_77993_c != 0)
++                        {
++                            action = InventoryAction.DROP_ALL_SLOT;
++                        }
++                        else
++                        {
++                            action = InventoryAction.NOTHING;
++                        }
++                    }
++                }
++                else
++                {
++                    // Sane default (because this happens when they are holding nothing. Don't ask why.)
++                    click = ClickType.LEFT;
++
++                    if (p_72523_1_.field_73443_c == 1)
++                    {
++                        click = ClickType.RIGHT;
++                    }
++
++                    action = InventoryAction.NOTHING;
++                }
++            }
++            else if (p_72523_1_.field_73439_f == 5)
++            {
++                itemstack = this.field_72574_e.field_71070_bA.func_75144_a(p_72523_1_.field_73442_b, p_72523_1_.field_73443_c, 5, this.field_72574_e);
++            }
++            else if (p_72523_1_.field_73439_f == 6)
++            {
++                click = ClickType.DOUBLE_CLICK;
++                action = InventoryAction.NOTHING;
++
++                if (p_72523_1_.field_73442_b >= 0 && this.field_72574_e.field_71071_by.func_70445_o() != null)
++                {
++                    ItemStack cursor = this.field_72574_e.field_71071_by.func_70445_o();
++                    action = InventoryAction.NOTHING;
++
++                    // Quick check for if we have any of the item
++                    if (inventory.getTopInventory().contains(cursor.field_77993_c) || inventory.getBottomInventory().contains(cursor.field_77993_c))
++                    {
++                        action = InventoryAction.COLLECT_TO_CURSOR;
++                    }
++                }
++            }
++
++            // TODO check on updates
++
++            if (p_72523_1_.field_73439_f != 5)
++            {
++                if (click == ClickType.NUMBER_KEY)
++                {
++                    event = new InventoryClickEvent(inventory, type, p_72523_1_.field_73442_b, click, action, p_72523_1_.field_73443_c);
++                }
++                else
++                {
++                    event = new InventoryClickEvent(inventory, type, p_72523_1_.field_73442_b, click, action);
++                }
++
++                org.bukkit.inventory.Inventory top = inventory.getTopInventory();
++
++                if (p_72523_1_.field_73442_b == 0 && top instanceof CraftingInventory)
++                {
++                    org.bukkit.inventory.Recipe recipe = ((CraftingInventory) top).getRecipe();
++
++                    if (recipe != null)
++                    {
++                        if (click == ClickType.NUMBER_KEY)
++                        {
++                            event = new CraftItemEvent(recipe, inventory, type, p_72523_1_.field_73442_b, click, action, p_72523_1_.field_73443_c);
++                        }
++                        else
++                        {
++                            event = new CraftItemEvent(recipe, inventory, type, p_72523_1_.field_73442_b, click, action);
++                        }
++                    }
++                }
++
++                server.getPluginManager().callEvent(event);
++
++                switch (event.getResult())
++                {
++                    case ALLOW:
++                    case DEFAULT:
++                        itemstack = this.field_72574_e.field_71070_bA.func_75144_a(p_72523_1_.field_73442_b, p_72523_1_.field_73443_c, p_72523_1_.field_73439_f, this.field_72574_e);
++                        break;
++                    case DENY:
++                        /* Needs enum constructor in InventoryAction
++                        if (action.modifiesOtherSlots()) {
++                        } else {
++                            if (action.modifiesCursor()) {
++                                this.player.playerConnection.sendPacket(new Packet103SetSlot(-1, -1, this.player.inventory.getCarried()));
++                            }
++                            if (action.modifiesClicked()) {
++                                this.player.playerConnection.sendPacket(new Packet103SetSlot(this.player.activeContainer.windowId, packet102windowclick.slot, this.player.activeContainer.getSlot(packet102windowclick.slot).getItem()));
++                            }
++                        }*/
++                        switch (action)
++                        {
++                                // Modified other slots
++                            case MOVE_TO_OTHER_INVENTORY:
++                            case HOTBAR_MOVE_AND_READD:
++                            case HOTBAR_SWAP:
++                            case COLLECT_TO_CURSOR:
++                            case UNKNOWN:
++                                this.field_72574_e.func_71120_a(this.field_72574_e.field_71070_bA);
++                                break;
++
++                                // Modified cursor and clicked
++                            case PICKUP_ALL:
++                            case PICKUP_SOME:
++                            case PICKUP_HALF:
++                            case PICKUP_ONE:
++                            case PLACE_ALL:
++                            case PLACE_SOME:
++                            case PLACE_ONE:
++                            case SWAP_WITH_CURSOR:
++                                this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_72574_e.field_71071_by.func_70445_o()));
++                                this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71070_bA.field_75152_c, p_72523_1_.field_73442_b, this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b).func_75211_c()));
++                                break;
++
++                                // Modified clicked only
++                            case DROP_ALL_SLOT:
++                            case DROP_ONE_SLOT:
++                                this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71070_bA.field_75152_c, p_72523_1_.field_73442_b, this.field_72574_e.field_71070_bA.func_75139_a(p_72523_1_.field_73442_b).func_75211_c()));
++                                break;
++
++                                // Modified cursor only
++                            case DROP_ALL_CURSOR:
++                            case DROP_ONE_CURSOR:
++                            case CLONE_STACK:
++                                this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_72574_e.field_71071_by.func_70445_o()));
++                                break;
++
++                                // Nothing
++                            case NOTHING:
++                                break;
++                        }
++
++                        return;
++                }
 +            }
 +
 +            // CraftBukkit end
  
              if (ItemStack.func_77989_b(p_72523_1_.field_73441_e, itemstack))
              {
-@@ -819,6 +1615,14 @@
+@@ -819,6 +1939,14 @@
                  }
  
                  this.field_72574_e.func_71110_a(this.field_72574_e.field_71070_bA, arraylist);
@@ -1235,7 +1559,7 @@
              }
          }
      }
-@@ -827,7 +1631,7 @@
+@@ -827,7 +1955,7 @@
      {
          if (this.field_72574_e.field_71070_bA.field_75152_c == p_72479_1_.field_73446_a && this.field_72574_e.field_71070_bA.func_75129_b(this.field_72574_e))
          {
@@ -1244,7 +1568,7 @@
              this.field_72574_e.field_71070_bA.func_75142_b();
          }
      }
-@@ -839,8 +1643,59 @@
+@@ -839,8 +1967,65 @@
              boolean flag = p_72464_1_.field_73385_a < 0;
              ItemStack itemstack = p_72464_1_.field_73384_b;
              boolean flag1 = p_72464_1_.field_73385_a >= 1 && p_72464_1_.field_73385_a < 36 + InventoryPlayer.func_70451_h();
@@ -1252,60 +1576,66 @@
 +            // CraftBukkit
 +            boolean flag2 = itemstack == null || itemstack.field_77993_c < Item.field_77698_e.length && itemstack.field_77993_c >= 0 && Item.field_77698_e[itemstack.field_77993_c] != null && !invalidItems.contains(itemstack.field_77993_c);
              boolean flag3 = itemstack == null || itemstack.func_77960_j() >= 0 && itemstack.func_77960_j() >= 0 && itemstack.field_77994_a <= 64 && itemstack.field_77994_a > 0;
++
 +            // CraftBukkit start - Call click event
-+            org.bukkit.entity.HumanEntity player = this.field_72574_e.getBukkitEntity();
-+            InventoryView inventory = new CraftInventoryView(player, player.getInventory(), this.field_72574_e.field_71069_bz);
-+            SlotType slot = SlotType.QUICKBAR;
-+
-+            if (p_72464_1_.field_73385_a == -1)
++            if (flag1 || flag)   // Insist on valid slot
 +            {
-+                slot = SlotType.OUTSIDE;
-+            }
++                ItemStack existingItem = this.field_72574_e.field_71069_bz.func_75139_a(p_72464_1_.field_73385_a).func_75211_c();
 +
-+            InventoryClickEvent event = new InventoryClickEvent(inventory, slot, slot == SlotType.OUTSIDE ? -999 : p_72464_1_.field_73385_a, false, false);
-+            server.getPluginManager().callEvent(event);
-+            org.bukkit.inventory.ItemStack item = event.getCurrentItem();
++                // Client assumes that the server forgets the contents of the inventory.  It doesn't.
++                if (!ItemStack.func_77989_b(existingItem, p_72464_1_.field_73384_b))
++                {
++                    org.bukkit.entity.HumanEntity player = this.field_72574_e.getBukkitEntity();
++                    InventoryView inventory = new CraftInventoryView(player, player.getInventory(), this.field_72574_e.field_71069_bz);
++                    org.bukkit.inventory.ItemStack item = CraftItemStack.asBukkitCopy(p_72464_1_.field_73384_b); // Should be packet107setcreativeslot.newitem
++                    SlotType type = SlotType.QUICKBAR;
 +
-+            switch (event.getResult())
-+            {
-+                case ALLOW:
-+                    if (slot == SlotType.QUICKBAR)
++                    if (flag)
 +                    {
-+                        if (item == null)
++                        type = SlotType.OUTSIDE;
++                    }
++                    else if (p_72464_1_.field_73385_a < 36)
++                    {
++                        if (p_72464_1_.field_73385_a >= 5 && p_72464_1_.field_73385_a < 9)
 +                        {
-+                            this.field_72574_e.field_71069_bz.func_75141_a(p_72464_1_.field_73385_a, (ItemStack) null);
++                            type = SlotType.ARMOR;
 +                        }
 +                        else
 +                        {
-+                            this.field_72574_e.field_71069_bz.func_75141_a(p_72464_1_.field_73385_a, CraftItemStack.asNMSCopy(item));
++                            type = SlotType.CONTAINER;
 +                        }
 +                    }
-+                    else if (item != null)
-+                    {
-+                        this.field_72574_e.func_71021_b(CraftItemStack.asNMSCopy(item));
-+                    }
 +
-+                    return;
-+                case DENY:
-+                    // TODO: Will this actually work?
-+                    if (p_72464_1_.field_73385_a > -1)
-+                    {
-+                        this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71069_bz.field_75152_c, p_72464_1_.field_73385_a, CraftItemStack.asNMSCopy(item)));
-+                    }
++                    InventoryCreativeEvent event = new InventoryCreativeEvent(inventory, type, flag ? -999 : p_72464_1_.field_73385_a, item);
++                    server.getPluginManager().callEvent(event);
++                    itemstack = CraftItemStack.asNMSCopy(event.getCursor());
 +
-+                    return;
-+                case DEFAULT:
-+                    // We do the stuff below
-+                    break;
-+                default:
-+                    return;
++                    switch (event.getResult())
++                    {
++                        case ALLOW:
++                            // Plugin cleared the id / stacksize checks
++                            flag2 = flag3 = true;
++                            break;
++                        case DEFAULT:
++                            break;
++                        case DENY:
++                            // Reset the slot
++                            if (p_72464_1_.field_73385_a >= 0)
++                            {
++                                this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71069_bz.field_75152_c, p_72464_1_.field_73385_a, this.field_72574_e.field_71069_bz.func_75139_a(p_72464_1_.field_73385_a).func_75211_c()));
++                                this.field_72574_e.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, null));
++                            }
++
++                            return;
++                    }
++                }
 +            }
 +
 +            // CraftBukkit end
  
              if (flag1 && flag2 && flag3)
              {
-@@ -870,6 +1725,11 @@
+@@ -870,6 +2055,11 @@
  
      public void func_72476_a(Packet106Transaction p_72476_1_)
      {
@@ -1317,7 +1647,7 @@
          Short oshort = (Short)this.field_72586_s.func_76041_a(this.field_72574_e.field_71070_bA.field_75152_c);
  
          if (oshort != null && p_72476_1_.field_73433_b == oshort.shortValue() && this.field_72574_e.field_71070_bA.field_75152_c == p_72476_1_.field_73435_a && !this.field_72574_e.field_71070_bA.func_75129_b(this.field_72574_e))
-@@ -880,6 +1740,11 @@
+@@ -880,6 +2070,11 @@
  
      public void func_72487_a(Packet130UpdateSign p_72487_1_)
      {
@@ -1329,7 +1659,7 @@
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
  
          if (worldserver.func_72899_e(p_72487_1_.field_73311_a, p_72487_1_.field_73309_b, p_72487_1_.field_73310_c))
-@@ -893,6 +1758,7 @@
+@@ -893,6 +2088,7 @@
                  if (!tileentitysign.func_70409_a())
                  {
                      this.field_72573_d.func_71236_h("Player " + this.field_72574_e.field_71092_bJ + " just tried to change non-editable sign");
@@ -1337,7 +1667,7 @@
                      return;
                  }
              }
-@@ -931,7 +1797,27 @@
+@@ -931,7 +2127,27 @@
                  int k = p_72487_1_.field_73309_b;
                  i = p_72487_1_.field_73310_c;
                  TileEntitySign tileentitysign1 = (TileEntitySign)tileentity;
@@ -1366,7 +1696,7 @@
                  tileentitysign1.func_70296_d();
                  worldserver.func_72845_h(j, k, i);
              }
-@@ -954,7 +1840,23 @@
+@@ -954,7 +2170,23 @@
  
      public void func_72471_a(Packet202PlayerAbilities p_72471_1_)
      {
@@ -1391,7 +1721,7 @@
      }
  
      public void func_72461_a(Packet203AutoComplete p_72461_1_)
-@@ -962,13 +1864,13 @@
+@@ -962,13 +2194,13 @@
          StringBuilder stringbuilder = new StringBuilder();
          String s;
  
@@ -1407,7 +1737,7 @@
              }
          }
  
-@@ -986,6 +1888,14 @@
+@@ -986,6 +2218,14 @@
          ItemStack itemstack;
          ItemStack itemstack1;
  
@@ -1422,7 +1752,7 @@
          if ("MC|BEdit".equals(p_72501_1_.field_73630_a))
          {
              try
-@@ -1002,12 +1912,15 @@
+@@ -1002,12 +2242,15 @@
  
                  if (itemstack != null && itemstack.field_77993_c == Item.field_77821_bF.field_77779_bT && itemstack.field_77993_c == itemstack1.field_77993_c)
                  {
@@ -1440,7 +1770,7 @@
              }
          }
          else if ("MC|BSign".equals(p_72501_1_.field_73630_a))
-@@ -1026,15 +1939,18 @@
+@@ -1026,15 +2269,18 @@
  
                  if (itemstack != null && itemstack.field_77993_c == Item.field_77823_bG.field_77779_bT && itemstack1.field_77993_c == Item.field_77821_bF.field_77779_bT)
                  {
@@ -1463,7 +1793,7 @@
              }
          }
          else
-@@ -1056,7 +1972,10 @@
+@@ -1056,7 +2302,10 @@
                  }
                  catch (Exception exception2)
                  {
@@ -1475,7 +1805,7 @@
                  }
              }
              else
-@@ -1089,7 +2008,10 @@
+@@ -1089,7 +2338,10 @@
                          }
                          catch (Exception exception3)
                          {
@@ -1487,7 +1817,7 @@
                          }
                      }
                      else
-@@ -1120,7 +2042,10 @@
+@@ -1120,7 +2372,10 @@
                          }
                          catch (Exception exception4)
                          {
@@ -1499,7 +1829,7 @@
                          }
                      }
                  }
-@@ -1142,6 +2067,45 @@
+@@ -1142,6 +2397,45 @@
                          containerrepair.func_82850_a("");
                      }
                  }
