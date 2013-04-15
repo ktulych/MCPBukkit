@@ -134,10 +134,17 @@
          this.field_76682_b = 0;
          this.field_76683_c = 0;
  
-@@ -202,6 +313,24 @@
+@@ -197,26 +308,70 @@
+ 
+     public void func_76664_a(byte[] p_76664_1_)
+     {
+-        this.field_76680_d = p_76664_1_;
++        this.field_76680_d = this.validateByteArray(p_76664_1_); // CraftBukkit - Validate data
+     }
  
      public void func_76673_a(NibbleArray p_76673_1_)
      {
+-        this.field_76681_e = p_76673_1_;
 +        // CraftBukkit start - Don't hang on to an empty nibble array
 +        boolean empty = true;
 +
@@ -156,6 +163,51 @@
 +        }
 +
 +        // CraftBukkit end
-         this.field_76681_e = p_76673_1_;
++        this.field_76681_e = this.validateNibbleArray(p_76673_1_); // CraftBukkit - Validate data
      }
  
+     public void func_76668_b(NibbleArray p_76668_1_)
+     {
+-        this.field_76678_f = p_76668_1_;
++        this.field_76678_f = this.validateNibbleArray(p_76668_1_); // CraftBukkit - Validate data
+     }
+ 
+     public void func_76659_c(NibbleArray p_76659_1_)
+     {
+-        this.field_76679_g = p_76659_1_;
++        this.field_76679_g = this.validateNibbleArray(p_76659_1_); // CraftBukkit - Validate data
+     }
+ 
+     public void func_76666_d(NibbleArray p_76666_1_)
+     {
+-        this.field_76685_h = p_76666_1_;
+-    }
++        this.field_76685_h = this.validateNibbleArray(p_76666_1_); // CraftBukkit - Validate data
++    }
++
++    // CraftBukkit start - Validate array lengths
++    private NibbleArray validateNibbleArray(NibbleArray nibbleArray)
++    {
++        if (nibbleArray != null && nibbleArray.field_76585_a.length < 2048)
++        {
++            byte[] newArray = new byte[2048];
++            System.arraycopy(nibbleArray.field_76585_a, 0, newArray, 0, ((nibbleArray.field_76585_a.length > 2048) ? 2048 : nibbleArray.field_76585_a.length));
++            nibbleArray = new NibbleArray(newArray, 4);
++        }
++
++        return nibbleArray;
++    }
++
++    private byte[] validateByteArray(byte[] byteArray)
++    {
++        if (byteArray != null && byteArray.length < 4096)
++        {
++            byte[] newArray = new byte[4096];
++            System.arraycopy(byteArray, 0, newArray, 0, byteArray.length);
++            byteArray = newArray;
++        }
++
++        return byteArray;
++    }
++    // CraftBukkit end
+ }
