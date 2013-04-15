@@ -75,7 +75,7 @@
          Object object = this.field_75827_c;
  
          synchronized (this.field_75827_c)
-@@ -59,50 +100,65 @@
+@@ -59,50 +100,81 @@
  
          if (nbttagcompound == null)
          {
@@ -145,6 +145,22 @@
 +                world.func_98180_V().func_98232_c("Chunk file at " + i + "," + j + " is in the wrong location; relocating. (Expected " + i + ", " + j + ", got " + chunk.field_76635_g + ", " + chunk.field_76647_h + ")");
 +                nbttagcompound.func_74775_l("Level").func_74768_a("xPos", i); // CraftBukkit - .getCompound("Level")
 +                nbttagcompound.func_74775_l("Level").func_74768_a("zPos", j); // CraftBukkit - .getCompound("Level")
++                // CraftBukkit start - Have to move tile entities since we don't load them at this stage
++                NBTTagList tileEntities = nbttagcompound.func_74775_l("Level").func_74761_m("TileEntities");
++
++                if (tileEntities != null)
++                {
++                    for (int te = 0; te < tileEntities.func_74745_c(); te++)
++                    {
++                        NBTTagCompound tileEntity = (NBTTagCompound) tileEntities.func_74743_b(te);
++                        int x = tileEntity.func_74762_e("x") - chunk.field_76635_g * 16;
++                        int z = tileEntity.func_74762_e("z") - chunk.field_76647_h * 16;
++                        tileEntity.func_74768_a("x", i * 16 + x);
++                        tileEntity.func_74768_a("z", j * 16 + z);
++                    }
++                }
++
++                // CraftBukkit end
 +                chunk = this.func_75823_a(world, nbttagcompound.func_74775_l("Level"));
 +            }
 +
@@ -173,7 +189,7 @@
  
          try
          {
-@@ -173,10 +229,10 @@
+@@ -173,10 +245,10 @@
          return true;
      }
  
@@ -186,7 +202,7 @@
          dataoutputstream.close();
      }
  
-@@ -335,14 +391,21 @@
+@@ -335,14 +407,21 @@
              chunk.func_76616_a(p_75823_2_.func_74770_j("Biomes"));
          }
  
@@ -210,7 +226,7 @@
                  chunk.field_76644_m = true;
  
                  if (entity != null)
-@@ -352,7 +415,7 @@
+@@ -352,7 +431,7 @@
  
                      for (NBTTagCompound nbttagcompound3 = nbttagcompound2; nbttagcompound3.func_74764_b("Riding"); nbttagcompound3 = nbttagcompound3.func_74775_l("Riding"))
                      {
@@ -219,7 +235,7 @@
  
                          if (entity2 != null)
                          {
-@@ -366,7 +429,7 @@
+@@ -366,7 +445,7 @@
              }
          }
  
@@ -228,7 +244,7 @@
  
          if (nbttaglist2 != null)
          {
-@@ -382,20 +445,20 @@
+@@ -382,20 +461,20 @@
              }
          }
  
