@@ -173,25 +173,17 @@
              iterator = this.field_77281_g.iterator();
  
              while (iterator.hasNext())
-@@ -202,13 +304,15 @@
-                     this.field_77287_j.func_72869_a("smoke", d0, d1, d2, d3, d4, d5);
-                 }
- 
--                if (l > 0)
-+                // CraftBukkit - stop explosions from putting out fire
-+                if (l > 0 && l != Block.field_72067_ar.field_71990_ca)
-                 {
-                     Block block = Block.field_71973_m[l];
+@@ -208,7 +310,8 @@
  
                      if (block.func_85103_a(this))
                      {
 -                        block.func_71914_a(this.field_77287_j, i, j, k, this.field_77287_j.func_72805_g(i, j, k), 1.0F / this.field_77280_f, 0);
-+                        // CraftBukkit
++                        // CraftBukkit - add yield
 +                        block.func_71914_a(this.field_77287_j, i, j, k, this.field_77287_j.func_72805_g(i, j, k), event.getYield(), 0);
                      }
  
                      this.field_77287_j.func_72832_d(i, j, k, 0, 0, 3);
-@@ -232,7 +336,13 @@
+@@ -232,7 +335,13 @@
  
                  if (l == 0 && Block.field_71970_n[i1] && this.field_77290_i.nextInt(3) == 0)
                  {

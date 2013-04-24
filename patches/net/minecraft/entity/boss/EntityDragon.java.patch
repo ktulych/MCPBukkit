@@ -24,7 +24,15 @@
  
  public class EntityDragon extends EntityLiving implements IEntityMultiPart
  {
-@@ -92,7 +103,7 @@
+@@ -39,6 +50,7 @@
+     private Entity field_70993_bI;
+     public int field_70995_bG = 0;
+     public EntityEnderCrystal field_70992_bH = null;
++    private Explosion explosionSource = new Explosion(null, this, Double.NaN, Double.NaN, Double.NaN, Float.NaN); // CraftBukkit - reusable source for CraftTNTPrimed.getSource()
+ 
+     public EntityDragon(World p_i3531_1_)
+     {
+@@ -92,7 +104,7 @@
  
          if (!this.field_70170_p.field_72995_K)
          {
@@ -33,7 +41,7 @@
          }
          else
          {
-@@ -134,10 +145,10 @@
+@@ -134,10 +146,10 @@
  
              if (this.field_70976_f < 0)
              {
@@ -48,7 +56,7 @@
                  }
              }
  
-@@ -158,23 +169,23 @@
+@@ -158,23 +170,23 @@
              {
                  if (this.field_70716_bi > 0)
                  {
@@ -82,7 +90,7 @@
  
                  if (this.field_70993_bI != null)
                  {
-@@ -198,27 +209,27 @@
+@@ -198,27 +210,27 @@
                      this.field_70978_d += this.field_70146_Z.nextGaussian() * 2.0D;
                  }
  
@@ -124,7 +132,7 @@
                  double d9 = MathHelper.func_76138_g(d8 - (double)this.field_70177_z);
  
                  if (d9 > 50.0D)
-@@ -359,9 +370,18 @@
+@@ -359,9 +371,18 @@
  
                  this.field_70992_bH = null;
              }
@@ -146,7 +154,7 @@
              }
          }
  
-@@ -467,6 +487,10 @@
+@@ -467,6 +488,10 @@
          int j1 = MathHelper.func_76128_c(p_70972_1_.field_72334_f);
          boolean flag = false;
          boolean flag1 = false;
@@ -157,7 +165,7 @@
  
          for (int k1 = i; k1 <= l; ++k1)
          {
-@@ -480,7 +504,11 @@
+@@ -480,7 +505,11 @@
                      {
                          if (j2 != Block.field_72089_ap.field_71990_ca && j2 != Block.field_72082_bJ.field_71990_ca && j2 != Block.field_71986_z.field_71990_ca && this.field_70170_p.func_82736_K().func_82766_b("mobGriefing"))
                          {
@@ -170,7 +178,7 @@
                          }
                          else
                          {
-@@ -493,6 +521,26 @@
+@@ -493,6 +522,51 @@
  
          if (flag1)
          {
@@ -185,11 +193,36 @@
 +                // We should consider adding an event extension for it, or perhaps returning true if the event is cancelled.
 +                return flag;
 +            }
++            else if (event.getYield() == 0F)
++            {
++                // Yield zero ==> no drops
++                for (org.bukkit.block.Block block : event.blockList())
++                {
++                    this.field_70170_p.func_94571_i(block.getX(), block.getY(), block.getZ());
++                }
++            }
 +            else
 +            {
 +                for (org.bukkit.block.Block block : event.blockList())
 +                {
-+                    craftWorld.explodeBlock(block, event.getYield());
++                    int blockId = block.getTypeId();
++
++                    if (blockId == 0)
++                    {
++                        continue;
++                    }
++
++                    int blockX = block.getX();
++                    int blockY = block.getY();
++                    int blockZ = block.getZ();
++
++                    if (Block.field_71973_m[blockId].func_85103_a(explosionSource))
++                    {
++                        Block.field_71973_m[blockId].func_71914_a(this.field_70170_p, blockX, blockY, blockZ, block.getData(), event.getYield(), 0);
++                    }
++
++                    Block.field_71973_m[blockId].func_71867_k(field_70170_p, blockX, blockY, blockZ, explosionSource);
++                    this.field_70170_p.func_94571_i(blockX, blockY, blockZ);
 +                }
 +            }
 +
@@ -197,7 +230,7 @@
              double d0 = p_70972_1_.field_72340_a + (p_70972_1_.field_72336_d - p_70972_1_.field_72340_a) * (double)this.field_70146_Z.nextFloat();
              double d1 = p_70972_1_.field_72338_b + (p_70972_1_.field_72337_e - p_70972_1_.field_72338_b) * (double)this.field_70146_Z.nextFloat();
              double d2 = p_70972_1_.field_72339_c + (p_70972_1_.field_72334_f - p_70972_1_.field_72339_c) * (double)this.field_70146_Z.nextFloat();
-@@ -530,7 +578,7 @@
+@@ -530,7 +604,7 @@
          return false;
      }
  
@@ -206,7 +239,7 @@
      {
          return super.func_70097_a(p_82195_1_, p_82195_2_);
      }
-@@ -554,7 +602,7 @@
+@@ -554,7 +628,7 @@
          {
              if (this.field_70995_bG > 150 && this.field_70995_bG % 5 == 0)
              {
@@ -215,7 +248,7 @@
  
                  while (i > 0)
                  {
-@@ -575,7 +623,7 @@
+@@ -575,7 +649,7 @@
  
          if (this.field_70995_bG == 200 && !this.field_70170_p.field_72995_K)
          {
@@ -224,7 +257,7 @@
  
              while (i > 0)
              {
-@@ -594,6 +642,8 @@
+@@ -594,6 +668,8 @@
          byte b0 = 64;
          BlockEndPortal.field_72275_a = true;
          byte b1 = 4;
@@ -233,7 +266,7 @@
  
          for (int k = b0 - 1; k <= b0 + 32; ++k)
          {
-@@ -611,35 +661,64 @@
+@@ -611,35 +687,64 @@
                          {
                              if (d2 <= ((double)(b1 - 1) - 0.5D) * ((double)(b1 - 1) - 0.5D))
                              {
@@ -311,7 +344,7 @@
          BlockEndPortal.field_72275_a = false;
      }
  
-@@ -674,4 +753,13 @@
+@@ -674,4 +779,13 @@
      {
          return 5.0F;
      }
