@@ -312,7 +312,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     }
 
     public boolean isBlocking() {
-        return getHandle().func_70632_aY(); // Should be isBlocking
+        return getHandle().func_70632_aY();
     }
 
     public boolean setWindowProperty(InventoryView.Property prop, int value) {

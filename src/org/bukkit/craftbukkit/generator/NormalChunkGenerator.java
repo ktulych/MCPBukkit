@@ -75,4 +75,6 @@ public class NormalChunkGenerator extends InternalChunkGenerator {
     public String func_73148_d() {
         return "NormalWorldGenerator";
     }
+
+    public void func_104112_b() {}
 }

@@ -77,15 +77,6 @@
  
                                  if (itemstack4.field_77994_a == 0)
                                  {
-@@ -425,7 +458,7 @@
-             {
-                 slot2 = (Slot)this.field_75151_b.get(p_75144_1_);
- 
--                if (slot2 != null && slot2.func_75216_d())
-+                if (slot2 != null && slot2.func_75216_d() && slot2.func_82869_a(p_75144_4_))   // CraftBukkit - Validate before dropping
-                 {
-                     itemstack1 = slot2.func_75209_a(p_75144_2_ == 0 ? 1 : slot2.func_75211_c().field_77994_a);
-                     slot2.func_82870_a(p_75144_4_, itemstack1);
 @@ -520,7 +553,7 @@
          }
      }

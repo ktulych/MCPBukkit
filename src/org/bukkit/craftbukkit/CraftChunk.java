@@ -186,15 +186,15 @@ public class CraftChunk implements Chunk {
 
                 /* Get block data nibbles */
                 sectionBlockData[i] = new byte[2048];
-                System.arraycopy(cs[i].func_76669_j().field_76585_a, 0, sectionBlockData[i], 0, 2048); // Should be getData
+                System.arraycopy(cs[i].func_76669_j().field_76585_a, 0, sectionBlockData[i], 0, 2048);
                 if (cs[i].func_76671_l() == null) {
                     sectionSkyLights[i] = emptyData;
                 } else {
                     sectionSkyLights[i] = new byte[2048];
-                    System.arraycopy(cs[i].func_76671_l().field_76585_a, 0, sectionSkyLights[i], 0, 2048); // Should be getSkyLight
+                    System.arraycopy(cs[i].func_76671_l().field_76585_a, 0, sectionSkyLights[i], 0, 2048);
                 }
                 sectionEmitLights[i] = new byte[2048];
-                System.arraycopy(cs[i].func_76661_k().field_76585_a, 0, sectionEmitLights[i], 0, 2048); // Should be getBlockLight
+                System.arraycopy(cs[i].func_76661_k().field_76585_a, 0, sectionEmitLights[i], 0, 2048);
             }
         }
 

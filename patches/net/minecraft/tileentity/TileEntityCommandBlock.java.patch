@@ -90,7 +90,7 @@
 +                    }
 +                    else
 +                    {
-+                        EntityPlayerMP player = MinecraftServer.func_71276_C().func_71203_ab().func_72361_f(args[1]); // Should be getPlayer
++                        EntityPlayerMP player = MinecraftServer.func_71276_C().func_71203_ab().func_72361_f(args[1]);
 +
 +                        if (player == null)
 +                        {

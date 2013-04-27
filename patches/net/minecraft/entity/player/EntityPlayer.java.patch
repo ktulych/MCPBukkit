@@ -468,7 +468,7 @@
 -    public boolean func_98052_bS()
 -    {
 +    /* CraftBukkit start - We use canPickUpLoot on players, can't have this
-+    public boolean bS() {
++    public boolean bT() {
          return false;
      }
 +    // CraftBukkit end */

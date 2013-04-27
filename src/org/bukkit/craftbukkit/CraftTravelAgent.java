@@ -38,7 +38,7 @@ public class CraftTravelAgent extends net.minecraft.world.Teleporter implements 
     }
 
     public Location findPortal(Location location) {
-        net.minecraft.world.Teleporter pta = ((CraftWorld) location.getWorld()).getHandle().func_85176_s();
+        net.minecraft.world.Teleporter pta = ((CraftWorld) location.getWorld()).getHandle().func_85176_s(); // Should be getTravelAgent
         net.minecraft.util.ChunkCoordinates found = pta.findPortal(location.getX(), location.getY(), location.getZ(), this.getSearchRadius());
         return found != null ? new Location(location.getWorld(), found.field_71574_a, found.field_71572_b, found.field_71573_c, location.getYaw(), location.getPitch()) : null;
     }

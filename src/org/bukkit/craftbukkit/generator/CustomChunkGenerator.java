@@ -137,7 +137,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
                     }
                     // If section built, finish prepping its state
                     if (cs != null) {
-                        cs.func_76662_d();
+                        cs.func_76672_e();
                     }
                 }
             }
@@ -215,4 +215,6 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     public String func_73148_d() {
         return "CustomChunkGenerator";
     }
+
+    public void func_104112_b() {}
 }

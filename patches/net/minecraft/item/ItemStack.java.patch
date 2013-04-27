@@ -50,7 +50,7 @@
 +            return;
 +        }
 +
-+        if (!(this.func_77981_g() || Item.field_77698_e[this.field_77993_c].func_77645_m() || this.field_77993_c > 255))   // Should be usesDurability
++        if (!(this.func_77981_g() || Item.field_77698_e[this.field_77993_c].func_77645_m() || this.field_77993_c > 255))
 +        {
 +            p_77964_1_ = 0;
 +        }

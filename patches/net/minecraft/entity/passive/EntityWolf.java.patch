@@ -17,14 +17,7 @@
      }
  
      public int func_70667_aM()
-@@ -118,12 +117,14 @@
- 
-     protected boolean func_70692_ba()
-     {
--        return this.func_70919_bu();
-+        // CraftBukkit - added && !this.isTamed()
-+        return this.func_70919_bu() && !this.func_70909_n();
-     }
+@@ -123,7 +122,8 @@
  
      protected String func_70639_aQ()
      {
@@ -34,7 +27,7 @@
      }
  
      protected String func_70621_aR()
-@@ -322,13 +323,23 @@
+@@ -322,13 +322,23 @@
  
              if (!this.field_70170_p.field_72995_K)
              {

@@ -10,7 +10,7 @@
  import net.minecraft.block.Block;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.player.EntityPlayer;
-@@ -11,6 +15,7 @@
+@@ -12,6 +16,7 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.util.Vec3;
  import net.minecraft.world.World;
@@ -18,7 +18,7 @@
  
  public class EntityEnderman extends EntityMob
  {
-@@ -129,9 +134,15 @@
+@@ -133,9 +138,15 @@
  
                      if (field_70827_d[l])
                      {
@@ -37,7 +37,7 @@
                      }
                  }
              }
-@@ -145,8 +156,14 @@
+@@ -149,8 +160,14 @@
  
                  if (l == 0 && i1 > 0 && Block.field_71973_m[i1].func_71886_c())
                  {
@@ -54,7 +54,7 @@
                  }
              }
          }
-@@ -191,14 +208,14 @@
+@@ -202,14 +219,14 @@
                      this.field_70702_br = this.field_70701_bs = 0.0F;
                      this.field_70697_bw = 0.0F;
  
@@ -71,7 +71,7 @@
                  {
                      this.field_70828_e = 0;
                  }
-@@ -267,7 +284,18 @@
+@@ -278,7 +295,18 @@
  
              if (flag1)
              {
@@ -91,7 +91,7 @@
  
                  if (this.field_70170_p.func_72945_a(this, this.field_70121_D).isEmpty() && !this.field_70170_p.func_72953_d(this.field_70121_D))
                  {
-@@ -329,12 +357,17 @@
+@@ -340,12 +368,17 @@
  
          if (j > 0)
          {

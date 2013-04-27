@@ -74,7 +74,7 @@
      protected final EntityAITasks field_70715_bh;
      private EntityLiving field_70696_bz;
      private EntitySenses field_70723_bA;
-@@ -115,12 +125,12 @@
+@@ -115,13 +125,13 @@
      private ChunkCoordinates field_70775_bC = new ChunkCoordinates(0, 0, 0);
      private float field_70772_bD = -1.0F;
      private ItemStack[] field_82182_bS = new ItemStack[5];
@@ -85,11 +85,13 @@
      public int field_82173_br = 0;
 -    private boolean field_82172_bs = false;
 -    private boolean field_82179_bU = false;
+-    protected final CombatTracker field_94063_bt = new CombatTracker(this);
 +    public boolean field_82172_bs = false; // CraftBukkit - protected -> public
 +    public boolean field_82179_bU = !this.func_70692_ba(); // CraftBukkit - private -> public, change value
-     protected final CombatTracker field_94063_bt = new CombatTracker(this);
++    protected CombatTracker field_94063_bt = new CombatTracker(this); // CraftBukkit - remove final
      protected int field_70716_bi;
      protected double field_70709_bj;
+     protected double field_70710_bk;
 @@ -129,17 +139,22 @@
      protected double field_70712_bm;
      protected double field_70705_bn;
@@ -507,7 +509,24 @@
                  throw new ReportedException(crashreport);
              }
          }
-@@ -2181,7 +2348,7 @@
+@@ -2044,12 +2211,14 @@
+ 
+     public boolean func_82165_m(int p_82165_1_)
+     {
+-        return this.field_70713_bf.containsKey(Integer.valueOf(p_82165_1_));
++        // CraftBukkit - Add size check for efficiency
++        return this.field_70713_bf.size() != 0 && this.field_70713_bf.containsKey(Integer.valueOf(p_82165_1_));
+     }
+ 
+     public boolean func_70644_a(Potion p_70644_1_)
+     {
+-        return this.field_70713_bf.containsKey(Integer.valueOf(p_70644_1_.field_76415_H));
++        // CraftBukkit - Add size check for efficiency
++        return this.field_70713_bf.size() != 0 && this.field_70713_bf.containsKey(Integer.valueOf(p_70644_1_.field_76415_H));
+     }
+ 
+     public PotionEffect func_70660_b(Potion p_70660_1_)
+@@ -2181,7 +2350,7 @@
          }
          else
          {
@@ -516,7 +535,7 @@
              i -= (3 - this.field_70170_p.field_73013_u) * 4;
  
              if (i < 0)
-@@ -2302,17 +2469,17 @@
+@@ -2302,17 +2471,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {
@@ -537,7 +556,7 @@
              }
          }
      }
-@@ -2471,7 +2638,7 @@
+@@ -2471,7 +2640,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {

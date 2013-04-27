@@ -26,7 +26,7 @@
 +            return bukkitEntity;
 +        }
 +
-+        CraftInventory inventory = new CraftInventory(this.field_94538_a); // Should be this.hopper
++        CraftInventory inventory = new CraftInventory(this.field_94538_a);
 +        bukkitEntity = new CraftInventoryView(this.player.field_70458_d.getBukkitEntity(), inventory, this);
 +        return bukkitEntity;
 +    }

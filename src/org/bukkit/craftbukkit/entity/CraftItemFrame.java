@@ -49,7 +49,7 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
 
     public void setRotation(Rotation rotation) {
         Validate.notNull(rotation, "Rotation cannot be null");
-        getHandle().func_82336_g(toInteger(rotation)); // Should be setRotation
+        getHandle().func_82336_g(toInteger(rotation));
     }
 
     static int toInteger(Rotation rotation) {

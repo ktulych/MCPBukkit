@@ -630,7 +630,7 @@
 +        Vector velocity = entityplayermp.getBukkitEntity().getVelocity();
 +        boolean before = exitWorld.field_73059_b.field_73250_a;
 +        exitWorld.field_73059_b.field_73250_a = true;
-+        exitWorld.func_85176_s().adjustExit(entityplayermp, exit, velocity);
++        exitWorld.func_85176_s().adjustExit(entityplayermp, exit, velocity); // Should be getTravelAgent
 +        exitWorld.field_73059_b.field_73250_a = before;
 +        this.moveToWorld(entityplayermp, exitWorld.dimension, true, exit, false); // Vanilla doesn't check for suffocation when handling portals, so neither should we
 +
@@ -785,7 +785,7 @@
 +                worldserver1.addEntity(entity);
 +                entity.setPositionRotation(d0, entity.locY, d1, entity.yaw, entity.pitch);
 +                worldserver1.entityJoinedWorld(entity, false);
-+                worldserver1.s().a(entity, d3, d4, d5, f);
++                worldserver1.t().a(entity, d3, d4, d5, f);
 +            }
 +
 +            worldserver.methodProfiler.b();
@@ -872,7 +872,7 @@
 +                if (portal)
 +                {
 +                    Vector velocity = entity.getBukkitEntity().getVelocity();
-+                    worldserver1.func_85176_s().adjustExit(entity, exit, velocity);
++                    worldserver1.func_85176_s().adjustExit(entity, exit, velocity); // Should be getTravelAgent
 +                    entity.func_70012_b(exit.getX(), exit.getY(), exit.getZ(), exit.getYaw(), exit.getPitch());
 +
 +                    if (entity.field_70159_w != velocity.getX() || entity.field_70181_x != velocity.getY() || entity.field_70179_y != velocity.getZ())

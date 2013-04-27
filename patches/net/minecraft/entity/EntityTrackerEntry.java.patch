@@ -112,7 +112,7 @@
 +
 +                // CraftBukkit end
 +
-                 if (this.field_73136_m > 0)
+                 if (this.field_73136_m > 0 || this.field_73132_a instanceof EntityArrow)
                  {
                      if (j1 >= -128 && j1 < 128 && k1 >= -128 && k1 < 128 && l1 >= -128 && l1 < 128 && this.field_73142_u <= 400 && !this.field_73141_v)
 @@ -198,6 +219,14 @@

@@ -8,11 +8,10 @@
  import net.minecraft.block.Block;
  import net.minecraft.block.BlockFluid;
  import net.minecraft.block.BlockHalfSlab;
-@@ -19,8 +20,17 @@
- import net.minecraft.crash.CrashReport;
+@@ -20,8 +21,16 @@
  import net.minecraft.crash.CrashReportCategory;
  import net.minecraft.entity.Entity;
-+import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLiving;
 +import net.minecraft.entity.item.EntityItem;
  import net.minecraft.entity.item.EntityMinecart;
 +import net.minecraft.entity.monster.EntityGhast;
@@ -26,7 +25,7 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.logging.ILogAgent;
  import net.minecraft.pathfinding.PathEntity;
-@@ -44,16 +54,32 @@
+@@ -45,16 +54,32 @@
  import net.minecraft.world.biome.WorldChunkManager;
  import net.minecraft.world.chunk.Chunk;
  import net.minecraft.world.chunk.IChunkProvider;
@@ -60,7 +59,7 @@
      private List field_73002_a = new ArrayList();
      private List field_73000_b = new ArrayList();
      public List field_73010_i = new ArrayList();
-@@ -67,13 +93,14 @@
+@@ -68,13 +93,14 @@
      protected float field_73018_p;
      protected float field_73017_q;
      public int field_73016_r = 0;
@@ -78,7 +77,7 @@
      public boolean field_72987_B;
      public MapStorage field_72988_C;
      public final VillageCollection field_72982_D;
-@@ -81,13 +108,17 @@
+@@ -82,13 +108,17 @@
      public final Profiler field_72984_F;
      private final Vec3Pool field_82741_K = new Vec3Pool(300, 2000);
      private final Calendar field_83016_L = Calendar.getInstance();
@@ -101,7 +100,7 @@
      private int field_72990_M;
      int[] field_72994_J;
      public boolean field_72995_K;
-@@ -112,20 +143,46 @@
+@@ -113,20 +143,46 @@
          return this.field_73011_w.field_76578_c;
      }
  
@@ -159,7 +158,7 @@
          }
          else if (this.field_72986_A != null && this.field_72986_A.func_76076_i() != 0)
          {
-@@ -138,11 +195,11 @@
+@@ -139,11 +195,11 @@
  
          if (this.field_72986_A == null)
          {
@@ -173,7 +172,7 @@
          }
  
          this.field_73011_w.func_76558_a(this);
-@@ -152,7 +209,7 @@
+@@ -153,7 +209,7 @@
          {
              try
              {
@@ -182,7 +181,7 @@
              }
              catch (Throwable throwable)
              {
-@@ -188,6 +245,7 @@
+@@ -189,6 +245,7 @@
  
          this.func_72966_v();
          this.func_72947_a();
@@ -190,7 +189,7 @@
      }
  
      protected abstract IChunkProvider func_72970_h();
-@@ -286,7 +344,8 @@
+@@ -287,7 +344,8 @@
              {
                  for (int l1 = p_72904_3_; l1 <= p_72904_6_; ++l1)
                  {
@@ -200,7 +199,7 @@
                      {
                          return false;
                      }
-@@ -311,10 +370,26 @@
+@@ -312,10 +370,26 @@
          return this.func_72964_e(p_72938_1_ >> 4, p_72938_2_ >> 4);
      }
  
@@ -229,7 +228,7 @@
  
      public boolean func_72832_d(int p_72832_1_, int p_72832_2_, int p_72832_3_, int p_72832_4_, int p_72832_5_, int p_72832_6_)
      {
-@@ -581,6 +656,21 @@
+@@ -582,6 +656,21 @@
              {
                  try
                  {
@@ -251,7 +250,7 @@
                      block.func_71863_a(this, p_72821_1_, p_72821_2_, p_72821_3_, p_72821_4_);
                  }
                  catch (Throwable throwable)
-@@ -598,7 +688,7 @@
+@@ -599,7 +688,7 @@
                          j1 = -1;
                      }
  
@@ -260,7 +259,7 @@
                      CrashReportCategory.func_85068_a(crashreportcategory, p_72821_1_, p_72821_2_, p_72821_3_, i1, j1);
                      throw new ReportedException(crashreport);
                  }
-@@ -1017,9 +1107,12 @@
+@@ -1018,9 +1107,12 @@
  
                          if (movingobjectposition1 != null)
                          {
@@ -273,7 +272,7 @@
                  }
  
                  return null;
-@@ -1092,33 +1185,83 @@
+@@ -1093,33 +1185,83 @@
          return true;
      }
  
@@ -368,7 +367,7 @@
              return true;
          }
      }
-@@ -1129,6 +1272,8 @@
+@@ -1130,6 +1272,8 @@
          {
              ((IWorldAccess)this.field_73021_x.get(i)).func_72703_a(p_72923_1_);
          }
@@ -377,7 +376,7 @@
      }
  
      protected void func_72847_b(Entity p_72847_1_)
-@@ -1137,6 +1282,8 @@
+@@ -1138,6 +1282,8 @@
          {
              ((IWorldAccess)this.field_73021_x.get(i)).func_72709_b(p_72847_1_);
          }
@@ -386,7 +385,7 @@
      }
  
      public void func_72900_e(Entity p_72900_1_)
-@@ -1352,6 +1499,21 @@
+@@ -1353,6 +1499,21 @@
          {
              entity = (Entity)this.field_73007_j.get(i);
  
@@ -408,7 +407,7 @@
              try
              {
                  ++entity.field_70173_aa;
-@@ -1408,6 +1570,15 @@
+@@ -1409,6 +1570,15 @@
          for (i = 0; i < this.field_72996_f.size(); ++i)
          {
              entity = (Entity)this.field_72996_f.get(i);
@@ -424,7 +423,7 @@
  
              if (entity.field_70154_o != null)
              {
-@@ -1464,6 +1635,15 @@
+@@ -1465,6 +1635,15 @@
          while (iterator.hasNext())
          {
              TileEntity tileentity = (TileEntity)iterator.next();
@@ -440,7 +439,7 @@
  
              if (!tileentity.func_70320_p() && tileentity.func_70309_m() && this.func_72899_e(tileentity.field_70329_l, tileentity.field_70330_m, tileentity.field_70327_n))
              {
-@@ -1514,11 +1694,11 @@
+@@ -1515,11 +1694,11 @@
  
                  if (!tileentity1.func_70320_p())
                  {
@@ -457,7 +456,7 @@
                      if (this.func_72916_c(tileentity1.field_70329_l >> 4, tileentity1.field_70327_n >> 4))
                      {
                          Chunk chunk1 = this.func_72964_e(tileentity1.field_70329_l >> 4, tileentity1.field_70327_n >> 4);
-@@ -1526,6 +1706,14 @@
+@@ -1527,6 +1706,14 @@
                          if (chunk1 != null)
                          {
                              chunk1.func_76604_a(tileentity1.field_70329_l & 15, tileentity1.field_70330_m, tileentity1.field_70327_n & 15, tileentity1);
@@ -472,7 +471,7 @@
                          }
                      }
  
-@@ -1838,6 +2026,7 @@
+@@ -1839,6 +2026,7 @@
                  p_72918_3_.field_70179_y += vec3.field_72449_c * d1;
              }
  
@@ -480,7 +479,7 @@
              return flag;
          }
      }
-@@ -1931,6 +2120,7 @@
+@@ -1932,6 +2120,7 @@
          double d2 = 1.0D / ((p_72842_2_.field_72334_f - p_72842_2_.field_72339_c) * 2.0D + 1.0D);
          int i = 0;
          int j = 0;
@@ -488,7 +487,7 @@
  
          for (float f = 0.0F; f <= 1.0F; f = (float)((double)f + d0))
          {
-@@ -1942,7 +2132,7 @@
+@@ -1943,7 +2132,7 @@
                      double d4 = p_72842_2_.field_72338_b + (p_72842_2_.field_72337_e - p_72842_2_.field_72338_b) * (double)f1;
                      double d5 = p_72842_2_.field_72339_c + (p_72842_2_.field_72334_f - p_72842_2_.field_72339_c) * (double)f2;
  
@@ -497,7 +496,7 @@
                      {
                          ++i;
                      }
-@@ -1952,6 +2142,7 @@
+@@ -1953,6 +2142,7 @@
              }
          }
  
@@ -505,7 +504,7 @@
          return (float)i / (float)j;
      }
  
-@@ -2238,7 +2429,16 @@
+@@ -2239,7 +2429,16 @@
  
                  if (i <= 0)
                  {
@@ -523,7 +522,7 @@
                  }
              }
  
-@@ -2262,7 +2462,16 @@
+@@ -2263,7 +2462,16 @@
  
                  if (j <= 0)
                  {
@@ -541,7 +540,7 @@
                  }
              }
  
-@@ -2317,7 +2526,7 @@
+@@ -2318,7 +2526,7 @@
  
      protected void func_72903_x()
      {
@@ -550,7 +549,7 @@
          this.field_72984_F.func_76320_a("buildList");
          int i;
          EntityPlayer entityplayer;
-@@ -2335,7 +2544,16 @@
+@@ -2336,7 +2544,16 @@
              {
                  for (int i1 = -b0; i1 <= b0; ++i1)
                  {
@@ -568,7 +567,7 @@
                  }
              }
          }
-@@ -2372,7 +2590,7 @@
+@@ -2373,7 +2590,7 @@
              int k = this.field_73005_l >> 2;
              int l = k & 15;
              int i1 = k >> 8 & 15;
@@ -577,7 +576,7 @@
              int k1 = p_72941_3_.func_76610_a(l, j1, i1);
              l += p_72941_1_;
              i1 += p_72941_2_;
-@@ -2804,10 +3022,20 @@
+@@ -2805,10 +3022,20 @@
  
      public void func_72868_a(List p_72868_1_)
      {
@@ -599,7 +598,7 @@
              this.func_72923_a((Entity)p_72868_1_.get(i));
          }
      }
-@@ -2829,9 +3057,10 @@
+@@ -2830,9 +3057,10 @@
              axisalignedbb = null;
          }
  
@@ -611,7 +610,7 @@
          }
          else
          {
-@@ -2840,8 +3069,15 @@
+@@ -2841,8 +3069,15 @@
                  block = null;
              }
  
@@ -629,7 +628,7 @@
      }
  
      public PathEntity func_72865_a(Entity p_72865_1_, Entity p_72865_2_, float p_72865_3_, boolean p_72865_4_, boolean p_72865_5_, boolean p_72865_6_, boolean p_72865_7_)
-@@ -2998,6 +3234,14 @@
+@@ -2999,6 +3234,14 @@
          for (int i = 0; i < this.field_73010_i.size(); ++i)
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
@@ -644,7 +643,7 @@
              double d5 = entityplayer1.func_70092_e(p_72977_1_, p_72977_3_, p_72977_5_);
  
              if ((p_72977_7_ < 0.0D || d5 < p_72977_7_ * p_72977_7_) && (d4 == -1.0D || d5 < d4))
-@@ -3024,6 +3268,14 @@
+@@ -3025,6 +3268,14 @@
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
  
@@ -659,7 +658,7 @@
              if (!entityplayer1.field_71075_bZ.field_75102_a && entityplayer1.func_70089_S())
              {
                  double d5 = entityplayer1.func_70092_e(p_72846_1_, p_72846_3_, p_72846_5_);
-@@ -3070,7 +3322,7 @@
+@@ -3071,7 +3322,7 @@
          return null;
      }
  
@@ -668,7 +667,7 @@
      {
          this.field_73019_z.func_75762_c();
      }
-@@ -3136,6 +3388,18 @@
+@@ -3137,6 +3388,18 @@
      }
  
      public void func_72854_c() {}
@@ -687,7 +686,7 @@
  
      public float func_72819_i(float p_72819_1_)
      {
-@@ -3263,9 +3527,9 @@
+@@ -3264,9 +3527,9 @@
      public CrashReportCategory func_72914_a(CrashReport p_72914_1_)
      {
          CrashReportCategory crashreportcategory = p_72914_1_.func_85057_a("Affected level", 1);
@@ -700,7 +699,7 @@
  
          try
          {
-@@ -3344,4 +3608,7 @@
+@@ -3345,4 +3608,7 @@
      {
          return this.field_98181_L;
      }

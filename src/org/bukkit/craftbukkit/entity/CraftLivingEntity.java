@@ -317,7 +317,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     public boolean hasLineOfSight(Entity other) {
-        return getHandle().func_70635_at().func_75522_a(((CraftEntity) other).getHandle()); // az should be getEntitySenses
+        return getHandle().func_70635_at().func_75522_a(((CraftEntity) other).getHandle());
     }
 
     public boolean getRemoveWhenFarAway() {
