@@ -50,7 +50,7 @@
 -        }
 -
 +        // CraftBukkit start - Use wall time for pickup and despawn timers
-+        int elapsedTicks = Math.max(1, MinecraftServer.currentTick - this.lastTick);
++        int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
 +        this.field_70293_c -= elapsedTicks;
 +        this.field_70292_b += elapsedTicks;
 +        this.lastTick = MinecraftServer.currentTick;
