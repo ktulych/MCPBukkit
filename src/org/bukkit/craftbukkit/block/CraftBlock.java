@@ -86,7 +86,7 @@ public class CraftBlock implements Block {
         if (applyPhysics) {
             chunk.getHandle().field_76637_e.func_72921_c(x, y, z, data, 3);
         } else {
-            chunk.getHandle().field_76637_e.func_72921_c(x, y, z, data, 4);
+            chunk.getHandle().field_76637_e.func_72921_c(x, y, z, data, 2);
         }
     }
 
@@ -106,7 +106,7 @@ public class CraftBlock implements Block {
         if (applyPhysics) {
             return setTypeId(type);
         } else {
-            return chunk.getHandle().field_76637_e.func_72832_d(x, y, z, type, getData(), 4);
+            return chunk.getHandle().field_76637_e.func_72832_d(x, y, z, type, getData(), 2);
         }
     }
 
@@ -114,7 +114,7 @@ public class CraftBlock implements Block {
         if (applyPhysics) {
             return chunk.getHandle().field_76637_e.func_72832_d(x, y, z, type, data, 3);
         } else {
-            boolean success = chunk.getHandle().field_76637_e.func_72832_d(x, y, z, type, data, 4);
+            boolean success = chunk.getHandle().field_76637_e.func_72832_d(x, y, z, type, data, 2);
             if (success) {
                 chunk.getHandle().field_76637_e.func_72845_h(x, y, z);
             }
