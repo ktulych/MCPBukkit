@@ -179,7 +179,7 @@
      public void func_70091_d(double p_70091_1_, double p_70091_3_, double p_70091_5_)
      {
 +        // CraftBukkit start - Don't do anything if we aren't moving
-+        if (p_70091_1_ == 0 && p_70091_3_ == 0 && p_70091_5_ == 0)
++        if (p_70091_1_ == 0 && p_70091_3_ == 0 && p_70091_5_ == 0 && this.field_70154_o == null && this.field_70153_n == null)
 +        {
 +            return;
 +        }
