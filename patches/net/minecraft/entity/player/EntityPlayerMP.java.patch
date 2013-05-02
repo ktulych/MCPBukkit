@@ -132,7 +132,23 @@
  
      public void func_82242_a(int p_82242_1_)
      {
-@@ -220,8 +286,11 @@
+@@ -190,6 +256,15 @@
+         this.field_71134_c.func_73075_a();
+         --this.field_71145_cl;
+         this.field_71070_bA.func_75142_b();
++
++        // CraftBukkit start - Check inventory status every tick
++        if (!this.field_71070_bA.func_75145_c(this))   // Should be stillValid
++        {
++            this.func_71053_j();
++            this.field_71070_bA = this.field_71069_bz;
++        }
++
++        // CraftBukkit end
+ 
+         while (!this.field_71130_g.isEmpty())
+         {
+@@ -220,8 +295,11 @@
  
                  if (chunkcoordintpair != null && this.field_70170_p.func_72899_e(chunkcoordintpair.field_77276_a << 4, 0, chunkcoordintpair.field_77275_b << 4))
                  {
@@ -146,7 +162,7 @@
                  }
              }
  
-@@ -250,14 +319,8 @@
+@@ -250,14 +328,8 @@
      public void func_70606_j(int p_70606_1_)
      {
          super.func_70606_j(p_70606_1_);
@@ -163,7 +179,7 @@
      }
  
      public void func_71127_g()
-@@ -283,7 +346,8 @@
+@@ -283,7 +355,8 @@
  
              if (this.func_70630_aN() != this.field_71149_ch || this.field_71146_ci != this.field_71100_bB.func_75116_a() || this.field_71100_bB.func_75115_e() == 0.0F != this.field_71147_cj)
              {
@@ -173,7 +189,7 @@
                  this.field_71149_ch = this.func_70630_aN();
                  this.field_71146_ci = this.field_71100_bB.func_75116_a();
                  this.field_71147_cj = this.field_71100_bB.func_75115_e() == 0.0F;
-@@ -294,6 +358,20 @@
+@@ -294,6 +367,20 @@
                  this.field_71144_ck = this.field_71067_cb;
                  this.field_71135_a.func_72567_b(new Packet43Experience(this.field_71106_cc, this.field_71067_cb, this.field_71068_ca));
              }
@@ -194,7 +210,7 @@
          }
          catch (Throwable throwable)
          {
-@@ -306,20 +384,65 @@
+@@ -306,20 +393,65 @@
  
      public void func_70645_a(DamageSource p_70645_1_)
      {
@@ -270,7 +286,7 @@
              score.func_96648_a();
          }
  
-@@ -339,7 +462,8 @@
+@@ -339,7 +471,8 @@
          }
          else
          {
@@ -280,7 +296,7 @@
  
              if (!flag && this.field_71145_cl > 0 && p_70097_1_ != DamageSource.field_76380_i)
              {
-@@ -374,14 +498,15 @@
+@@ -374,14 +507,15 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
@@ -298,7 +314,7 @@
              this.field_70170_p.func_72900_e(this);
              this.field_71136_j = true;
              this.field_71135_a.func_72567_b(new Packet70GameEvent(4, 0));
-@@ -390,22 +515,28 @@
+@@ -390,22 +524,28 @@
          {
              if (this.field_71093_bK == 1 && p_71027_1_ == 0)
              {
@@ -338,7 +354,7 @@
              this.field_71144_ck = -1;
              this.field_71149_ch = -1;
              this.field_71146_ci = -1;
-@@ -438,7 +569,7 @@
+@@ -438,7 +578,7 @@
          if (enumstatus == EnumStatus.OK)
          {
              Packet17Sleep packet17sleep = new Packet17Sleep(this, 0, p_71018_1_, p_71018_2_, p_71018_3_);
@@ -347,7 +363,7 @@
              this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
              this.field_71135_a.func_72567_b(packet17sleep);
          }
-@@ -448,6 +579,11 @@
+@@ -448,6 +588,11 @@
  
      public void func_70999_a(boolean p_70999_1_, boolean p_70999_2_, boolean p_70999_3_)
      {
@@ -359,7 +375,7 @@
          if (this.func_70608_bn())
          {
              this.func_71121_q().func_73039_n().func_72789_b(this, new Packet18Animation(this, 3));
-@@ -463,7 +599,16 @@
+@@ -463,7 +608,16 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
@@ -377,7 +393,7 @@
          this.field_71135_a.func_72567_b(new Packet39AttachEntity(this, this.field_70154_o));
          this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
      }
-@@ -475,34 +620,62 @@
+@@ -475,34 +629,62 @@
          super.func_70064_a(p_71122_1_, p_71122_3_);
      }
  
@@ -447,7 +463,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -514,71 +687,143 @@
+@@ -514,71 +696,143 @@
              this.func_71053_j();
          }
  
@@ -607,7 +623,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
          InventoryMerchant inventorymerchant = ((ContainerMerchant)this.field_71070_bA).func_75174_d();
-@@ -622,6 +867,14 @@
+@@ -622,6 +876,14 @@
      {
          this.field_71135_a.func_72567_b(new Packet104WindowItems(p_71110_1_.field_75152_c, p_71110_2_));
          this.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_71071_by.func_70445_o()));
@@ -622,7 +638,15 @@
      }
  
      public void func_71112_a(Container p_71112_1_, int p_71112_2_, int p_71112_3_)
-@@ -645,7 +898,7 @@
+@@ -631,6 +893,7 @@
+ 
+     public void func_71053_j()
+     {
++        CraftEventFactory.handleInventoryCloseEvent(this); // CraftBukkit
+         this.field_71135_a.func_72567_b(new Packet101CloseWindow(this.field_71070_bA.field_75152_c));
+         this.func_71128_l();
+     }
+@@ -645,7 +908,7 @@
  
      public void func_71128_l()
      {
@@ -631,7 +655,7 @@
          this.field_71070_bA = this.field_71069_bz;
      }
  
-@@ -682,6 +935,7 @@
+@@ -682,6 +945,7 @@
      public void func_71118_n()
      {
          this.field_71149_ch = -99999999;
@@ -639,7 +663,7 @@
      }
  
      public void func_71035_c(String p_71035_1_)
-@@ -823,7 +1077,7 @@
+@@ -823,7 +1087,7 @@
  
      public void func_71115_a(String p_71115_1_, int p_71115_2_)
      {
@@ -648,7 +672,7 @@
          this.field_71135_a.func_72567_b(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
      }
  
-@@ -831,4 +1085,103 @@
+@@ -831,4 +1095,103 @@
      {
          return new ChunkCoordinates(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u + 0.5D), MathHelper.func_76128_c(this.field_70161_v));
      }

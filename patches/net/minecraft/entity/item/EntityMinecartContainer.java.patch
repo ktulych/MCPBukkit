@@ -67,21 +67,7 @@
  
      public EntityMinecartContainer(World p_i10051_1_)
      {
-@@ -146,6 +195,13 @@
- 
-     public void func_71027_c(int p_71027_1_)
-     {
-+        // CraftBukkit start
-+        for (HumanEntity human : transaction)
-+        {
-+            ((org.bukkit.craftbukkit.entity.CraftHumanEntity) human).getHandle().func_71053_j();
-+        }
-+
-+        // CraftBukkit end
-         this.field_94112_b = false;
-         super.func_71027_c(p_71027_1_);
-     }
-@@ -243,7 +299,7 @@
+@@ -243,7 +292,7 @@
  
      protected void func_94101_h()
      {

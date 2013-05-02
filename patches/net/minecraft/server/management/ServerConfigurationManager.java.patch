@@ -198,7 +198,7 @@
          }
      }
  
-@@ -229,28 +313,64 @@
+@@ -229,28 +313,65 @@
          p_72358_1_.func_71121_q().func_73040_p().func_72685_d(p_72358_1_);
      }
  
@@ -218,6 +218,7 @@
 +        }
 +
 +        // CraftBukkit start - Quitting must be before we do final save of data, in case plugins need to modify it
++        org.bukkit.craftbukkit.event.CraftEventFactory.handleInventoryCloseEvent(entityplayermp);
 +        PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(this.cserver.getPlayer(entityplayermp), "\u00A7e" + entityplayermp.field_71092_bJ + " left the game.");
 +        this.cserver.getPluginManager().callEvent(playerQuitEvent);
 +        entityplayermp.getBukkitEntity().disconnect(playerQuitEvent.getQuitMessage());
@@ -282,7 +283,7 @@
              String s1 = "You are banned from this server!\nReason: " + banentry.func_73686_f();
  
              if (banentry.func_73680_d() != null)
-@@ -258,15 +378,15 @@
+@@ -258,15 +379,15 @@
                  s1 = s1 + "\nYour ban will be removed on " + field_72403_e.format(banentry.func_73680_d());
              }
  
@@ -304,7 +305,7 @@
              s2 = s2.substring(s2.indexOf("/") + 1);
              s2 = s2.substring(0, s2.indexOf(":"));
  
-@@ -280,17 +400,33 @@
+@@ -280,17 +401,33 @@
                      s3 = s3 + "\nYour ban will be removed on " + field_72403_e.format(banentry1.func_73680_d());
                  }
  
@@ -346,7 +347,7 @@
          ArrayList arraylist = new ArrayList();
          EntityPlayerMP entityplayermp;
  
-@@ -298,7 +434,7 @@
+@@ -298,7 +435,7 @@
          {
              entityplayermp = (EntityPlayerMP)this.field_72404_b.get(i);
  
@@ -355,7 +356,7 @@
              {
                  arraylist.add(entityplayermp);
              }
-@@ -312,186 +448,401 @@
+@@ -312,186 +449,401 @@
              entityplayermp.field_71135_a.func_72565_c("You logged in from another location");
          }
  
@@ -890,7 +891,7 @@
      }
  
      public void func_72374_b()
-@@ -501,11 +852,13 @@
+@@ -501,11 +853,13 @@
              this.field_72408_o = 0;
          }
  
@@ -909,7 +910,7 @@
      }
  
      public void func_72384_a(Packet p_72384_1_)
-@@ -571,11 +924,29 @@
+@@ -571,11 +925,29 @@
      public void func_72386_b(String p_72386_1_)
      {
          this.field_72414_i.add(p_72386_1_.toLowerCase());
@@ -939,7 +940,7 @@
      }
  
      public boolean func_72370_d(String p_72370_1_)
-@@ -586,7 +957,8 @@
+@@ -586,7 +958,8 @@
  
      public boolean func_72353_e(String p_72353_1_)
      {
@@ -949,7 +950,7 @@
      }
  
      public EntityPlayerMP func_72361_f(String p_72361_1_)
-@@ -670,7 +1042,7 @@
+@@ -670,7 +1043,7 @@
                      }
                  }
  
@@ -958,7 +959,7 @@
                  {
                      ((List)object).add(entityplayermp);
                  }
-@@ -758,6 +1130,13 @@
+@@ -758,6 +1131,13 @@
          {
              EntityPlayerMP entityplayermp = (EntityPlayerMP)this.field_72404_b.get(j);
  
@@ -972,7 +973,7 @@
              if (entityplayermp != p_72397_1_ && entityplayermp.field_71093_bK == p_72397_10_)
              {
                  double d4 = p_72397_2_ - entityplayermp.field_70165_t;
-@@ -808,7 +1187,7 @@
+@@ -808,7 +1188,7 @@
  
          if (p_72354_2_.func_72896_J())
          {
@@ -981,7 +982,7 @@
          }
      }
  
-@@ -831,7 +1210,7 @@
+@@ -831,7 +1211,7 @@
  
      public String[] func_72373_m()
      {
@@ -990,7 +991,7 @@
      }
  
      public boolean func_72383_n()
-@@ -895,7 +1274,7 @@
+@@ -895,7 +1275,7 @@
      {
          while (!this.field_72404_b.isEmpty())
          {
