@@ -565,3 +565,12 @@
              }
          }
      }
+@@ -2545,4 +2714,7 @@
+     {
+         return this.field_82179_bU;
+     }
+-}
++    public boolean func_70692_ba_CodeFix_Public(){
++        return func_70692_ba();
++    }
++}

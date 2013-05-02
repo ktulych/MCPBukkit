@@ -576,7 +576,32 @@
              int k1 = p_72941_3_.func_76610_a(l, j1, i1);
              l += p_72941_1_;
              i1 += p_72941_2_;
-@@ -2805,10 +3022,20 @@
+@@ -2794,10 +3011,23 @@
+         {
+             Entity entity = (Entity)this.field_72996_f.get(j);
+ 
+-            if ((!(entity instanceof EntityLiving) || !((EntityLiving)entity).func_104002_bU()) && p_72907_1_.isAssignableFrom(entity.getClass()))
++            // CraftBukkit start - Split out persistent check, don't apply it to special persistent mobs
++            if (entity instanceof EntityLiving)
++            {
++                EntityLiving entityliving = (EntityLiving) entity;
++
++                if (!entityliving.func_70692_ba_CodeFix_Public() && entityliving.func_104002_bU())   // Should be isPersistent
++                {
++                    continue;
++                }
++            }
++
++            if (p_72907_1_.isAssignableFrom(entity.getClass()))
+             {
+                 ++i;
+             }
++
++            // CraftBukkit end
+         }
+ 
+         return i;
+@@ -2805,10 +3035,20 @@
  
      public void func_72868_a(List p_72868_1_)
      {
@@ -598,7 +623,7 @@
              this.func_72923_a((Entity)p_72868_1_.get(i));
          }
      }
-@@ -2830,9 +3057,10 @@
+@@ -2830,9 +3070,10 @@
              axisalignedbb = null;
          }
  
@@ -610,7 +635,7 @@
          }
          else
          {
-@@ -2841,8 +3069,15 @@
+@@ -2841,8 +3082,15 @@
                  block = null;
              }
  
@@ -628,7 +653,7 @@
      }
  
      public PathEntity func_72865_a(Entity p_72865_1_, Entity p_72865_2_, float p_72865_3_, boolean p_72865_4_, boolean p_72865_5_, boolean p_72865_6_, boolean p_72865_7_)
-@@ -2999,6 +3234,14 @@
+@@ -2999,6 +3247,14 @@
          for (int i = 0; i < this.field_73010_i.size(); ++i)
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
@@ -643,7 +668,7 @@
              double d5 = entityplayer1.func_70092_e(p_72977_1_, p_72977_3_, p_72977_5_);
  
              if ((p_72977_7_ < 0.0D || d5 < p_72977_7_ * p_72977_7_) && (d4 == -1.0D || d5 < d4))
-@@ -3025,6 +3268,14 @@
+@@ -3025,6 +3281,14 @@
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
  
@@ -658,7 +683,7 @@
              if (!entityplayer1.field_71075_bZ.field_75102_a && entityplayer1.func_70089_S())
              {
                  double d5 = entityplayer1.func_70092_e(p_72846_1_, p_72846_3_, p_72846_5_);
-@@ -3071,7 +3322,7 @@
+@@ -3071,7 +3335,7 @@
          return null;
      }
  
@@ -667,7 +692,7 @@
      {
          this.field_73019_z.func_75762_c();
      }
-@@ -3137,6 +3388,18 @@
+@@ -3137,6 +3401,18 @@
      }
  
      public void func_72854_c() {}
@@ -686,7 +711,7 @@
  
      public float func_72819_i(float p_72819_1_)
      {
-@@ -3264,9 +3527,9 @@
+@@ -3264,9 +3540,9 @@
      public CrashReportCategory func_72914_a(CrashReport p_72914_1_)
      {
          CrashReportCategory crashreportcategory = p_72914_1_.func_85057_a("Affected level", 1);
@@ -699,7 +724,7 @@
  
          try
          {
-@@ -3345,4 +3608,7 @@
+@@ -3345,4 +3621,7 @@
      {
          return this.field_98181_L;
      }
