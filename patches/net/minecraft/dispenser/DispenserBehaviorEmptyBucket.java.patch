@@ -28,9 +28,9 @@
          }
  
 +        // CraftBukkit start
-+        org.bukkit.block.Block block = world.getWorld().getBlockAt(i, j, k);
++        org.bukkit.block.Block block = world.getWorld().getBlockAt(p_82487_1_.func_82623_d(), p_82487_1_.func_82622_e(), p_82487_1_.func_82621_f());
 +        CraftItemStack craftItem = CraftItemStack.asCraftMirror(p_82487_2_);
-+        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(0, 0, 0));
++        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(i, j, k));
 +
 +        if (!BlockDispenser.eventFired)
 +        {
