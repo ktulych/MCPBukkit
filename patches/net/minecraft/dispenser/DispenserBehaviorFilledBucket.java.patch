@@ -33,7 +33,7 @@
 +        int y = j + enumfacing.func_96559_d();
 +        int z = k + enumfacing.func_82599_e();
 +
-+        if (world.func_72799_c(x, y, z) || world.func_72803_f(x, y, z).func_76220_a())
++        if (world.func_72799_c(x, y, z) || !world.func_72803_f(x, y, z).func_76220_a())
 +        {
 +            org.bukkit.block.Block block = world.getWorld().getBlockAt(i, j, k);
 +            CraftItemStack craftItem = CraftItemStack.asCraftMirror(p_82487_2_);
