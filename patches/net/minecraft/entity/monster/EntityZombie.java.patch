@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/monster/EntityZombie.java
 +++ ../net/minecraft/entity/monster/EntityZombie.java
-@@ -22,12 +22,19 @@
+@@ -22,12 +22,20 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.potion.Potion;
  import net.minecraft.potion.PotionEffect;
@@ -9,6 +9,7 @@
  import net.minecraft.world.World;
 +
 +//CraftBukkit start
++import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 +import org.bukkit.event.entity.EntityCombustByEntityEvent;
 +import org.bukkit.event.entity.EntityCombustEvent;
 +//CraftBukkit end
@@ -20,7 +21,7 @@
  
      public EntityZombie(World p_i3558_1_)
      {
-@@ -96,7 +103,7 @@
+@@ -96,7 +104,7 @@
  
      public void func_82227_f(boolean p_82227_1_)
      {
@@ -29,7 +30,7 @@
      }
  
      public boolean func_82231_m()
-@@ -138,7 +145,16 @@
+@@ -138,7 +146,16 @@
  
                  if (flag)
                  {
@@ -47,7 +48,7 @@
                  }
              }
          }
-@@ -151,6 +167,11 @@
+@@ -151,6 +168,11 @@
          if (!this.field_70170_p.field_72995_K && this.func_82230_o())
          {
              int i = this.func_82233_q();
@@ -59,7 +60,7 @@
              this.field_82234_d -= i;
  
              if (this.field_82234_d <= 0)
-@@ -168,7 +189,16 @@
+@@ -168,7 +190,16 @@
  
          if (flag && this.func_70694_bm() == null && this.func_70027_ad() && this.field_70146_Z.nextFloat() < (float)this.field_70170_p.field_73013_u * 0.3F)
          {
@@ -77,7 +78,14 @@
          }
  
          return flag;
-@@ -182,7 +212,7 @@
+@@ -177,12 +208,13 @@
+     public int func_82193_c(Entity p_82193_1_)
+     {
+         ItemStack itemstack = this.func_70694_bm();
+-        float f = (float)(this.func_70667_aM() - this.func_70630_aN()) / (float)this.func_70667_aM();
++        // CraftBukkit - getMaxHealth() -> ((CraftLivingEntity) this.bukkitEntity).getMaxHealth()
++        float f = (float)(((CraftLivingEntity) this.bukkitEntity).getMaxHealth() - this.func_70630_aN()) / (float)((CraftLivingEntity) this.bukkitEntity).getMaxHealth();
+         int i = 3 + MathHelper.func_76141_d(f * 4.0F);
  
          if (itemstack != null)
          {
@@ -86,7 +94,7 @@
          }
  
          return i;
-@@ -218,20 +248,22 @@
+@@ -218,20 +250,22 @@
          return EnumCreatureAttribute.UNDEAD;
      }
  
