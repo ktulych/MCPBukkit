@@ -63,7 +63,7 @@
  
                      while (iterator.hasNext())
                      {
-@@ -179,18 +206,51 @@
+@@ -179,18 +206,55 @@
                              }
  
                              l -= itemstack2.field_77994_a - j1;
@@ -117,6 +117,10 @@
 +                            needsUpdate = true;
 +                        }
 +                    }
++                    else
++                    {
++                        inventoryplayer.func_70437_b(oldCursor);
++                    }
 +
 +                    if (needsUpdate && p_75144_4_ instanceof EntityPlayerMP)
 +                    {
@@ -127,7 +131,7 @@
                  }
  
                  this.func_94533_d();
-@@ -224,10 +284,17 @@
+@@ -224,10 +288,17 @@
  
                          if (p_75144_2_ == 1)
                          {
@@ -149,7 +153,7 @@
                                  inventoryplayer.func_70437_b((ItemStack)null);
                              }
                          }
-@@ -288,7 +355,13 @@
+@@ -288,7 +359,13 @@
                                      k1 = slot2.func_75219_a();
                                  }
  
@@ -164,7 +168,7 @@
  
                                  if (itemstack4.field_77994_a == 0)
                                  {
-@@ -520,7 +593,7 @@
+@@ -520,7 +597,7 @@
          }
      }
  
