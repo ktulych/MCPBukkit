@@ -11,7 +11,7 @@
  public class BlockNetherrack extends Block
  {
 @@ -10,4 +12,17 @@
-         super(p_i9063_1_, Material.field_76246_e);
+         super(p_i2230_1_, Material.field_76246_e);
          this.func_71849_a(CreativeTabs.field_78030_b);
      }
 +

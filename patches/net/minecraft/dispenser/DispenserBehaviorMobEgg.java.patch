@@ -1,6 +1,6 @@
 --- ../net/minecraft/dispenser/DispenserBehaviorMobEgg.java
 +++ ../net/minecraft/dispenser/DispenserBehaviorMobEgg.java
-@@ -1,28 +1,69 @@
+@@ -1,5 +1,8 @@
  package net.minecraft.dispenser;
  
 +// CraftBukkit start
@@ -9,6 +9,7 @@
  import net.minecraft.block.BlockDispenser;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.EntityLiving;
+@@ -7,23 +10,61 @@
  import net.minecraft.item.ItemMonsterPlacer;
  import net.minecraft.item.ItemStack;
  import net.minecraft.util.EnumFacing;
@@ -61,7 +62,7 @@
 +        itemstack1 = CraftItemStack.asNMSCopy(event.getItem());
 +        Entity entity = ItemMonsterPlacer.func_77840_a(p_82487_1_.func_82618_k(), p_82487_2_.func_77960_j(), event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ());
  
-         if (entity instanceof EntityLiving && p_82487_2_.func_82837_s())
+         if (entity instanceof EntityLivingBase && p_82487_2_.func_82837_s())
          {
              ((EntityLiving)entity).func_94058_c(p_82487_2_.func_82833_r());
          }

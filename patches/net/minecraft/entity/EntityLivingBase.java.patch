@@ -1,0 +1,443 @@
+--- ../net/minecraft/entity/EntityLivingBase.java
++++ ../net/minecraft/entity/EntityLivingBase.java
+@@ -21,14 +21,17 @@
+ import net.minecraft.entity.monster.EntityZombie;
+ import net.minecraft.entity.passive.EntityWolf;
+ import net.minecraft.entity.player.EntityPlayer;
++import net.minecraft.entity.player.EntityPlayerMP;
+ import net.minecraft.entity.projectile.EntityArrow;
+ import net.minecraft.item.ItemArmor;
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.nbt.NBTBase;
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.nbt.NBTTagFloat;
++import net.minecraft.nbt.NBTTagInt;
+ import net.minecraft.nbt.NBTTagList;
+ import net.minecraft.nbt.NBTTagShort;
++import net.minecraft.network.packet.Packet;
+ import net.minecraft.network.packet.Packet18Animation;
+ import net.minecraft.network.packet.Packet22Collect;
+ import net.minecraft.network.packet.Packet5PlayerInventory;
+@@ -43,13 +46,20 @@
+ import net.minecraft.world.World;
+ import net.minecraft.world.WorldServer;
+ 
++// CraftBukkit start
++import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.event.entity.EntityDamageByBlockEvent;
++import org.bukkit.event.entity.EntityDamageEvent;
++import org.bukkit.event.entity.EntityRegainHealthEvent;
++// CraftBukkit end
++
+ public abstract class EntityLivingBase extends Entity
+ {
+     private static final UUID field_110156_b = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
+     private static final AttributeModifier field_110157_c = (new AttributeModifier(field_110156_b, "Sprinting speed boost", 0.30000001192092896D, 2)).func_111168_a(false);
+     private BaseAttributeMap field_110155_d;
+-    private final CombatTracker field_94063_bt = new CombatTracker(this);
+-    private final HashMap field_70713_bf = new HashMap();
++    public CombatTracker field_94063_bt = new CombatTracker(this); // CraftBukkit - private -> public, remove final
++    public final HashMap field_70713_bf = new HashMap(); // CraftBukkit - protected -> public
+     private final ItemStack[] field_82180_bT = new ItemStack[5];
+     public boolean field_82175_bq;
+     public int field_110158_av;
+@@ -75,7 +85,7 @@
+     public float field_70759_as;
+     public float field_70758_at;
+     public float field_70747_aH = 0.02F;
+-    protected EntityPlayer field_70717_bb;
++    public EntityPlayer field_70717_bb; // CraftBukkit - protected -> public
+     protected int field_70718_bc;
+     protected boolean field_70729_aU;
+     protected int field_70708_bq;
+@@ -85,7 +95,7 @@
+     protected float field_70763_ax;
+     protected float field_70741_aB;
+     protected int field_70744_aE;
+-    protected float field_110153_bc;
++    public float field_110153_bc; // CraftBukkit - protected -> public
+     protected boolean field_70703_bu;
+     public float field_70702_br;
+     public float field_70701_bs;
+@@ -96,13 +106,18 @@
+     protected double field_110152_bk;
+     protected double field_70712_bm;
+     protected double field_70705_bn;
+-    private boolean field_70752_e = true;
+-    private EntityLivingBase field_70755_b;
++    public boolean field_70752_e = true; // CraftBukkit - private -> public
++    public EntityLivingBase field_70755_b; // CraftBukkit - private -> public
+     private int field_70756_c;
+     private EntityLivingBase field_110150_bn;
+     private float field_70746_aG;
+     private int field_70773_bE;
+     private float field_110151_bq;
++    // CraftBukkit start
++    public int expToDrop;
++    public int maxAirTicks = 300;
++    public float maxHealth;
++    // CraftBukkit end
+ 
+     public EntityLivingBase(World p_i1594_1_)
+     {
+@@ -116,6 +131,7 @@
+         this.field_70177_z = (float)(Math.random() * Math.PI * 2.0D);
+         this.field_70759_as = this.field_70177_z;
+         this.field_70138_W = 0.5F;
++        maxHealth = this.func_110138_aP(); // CraftBukkit - We can't initialize maxHealth until this.ax() has been invoked.
+     }
+ 
+     protected void func_70088_a()
+@@ -225,7 +241,13 @@
+         }
+         else
+         {
+-            this.func_70050_g(300);
++            // CraftBukkit start - Only set if needed to work around a DataWatcher inefficiency
++            if (this.func_70086_ai() != 300)
++            {
++                this.func_70050_g(maxAirTicks);
++            }
++
++            // CraftBukkit end
+         }
+ 
+         this.field_70727_aS = this.field_70726_aT;
+@@ -289,6 +311,34 @@
+         this.field_70170_p.field_72984_F.func_76319_b();
+     }
+ 
++    // CraftBukkit start
++    public int getExpReward()
++    {
++        int exp = this.func_70693_a(this.field_70717_bb);
++
++        if (!this.field_70170_p.field_72995_K && (this.field_70718_bc > 0 || this.func_70684_aJ()) && !this.func_70631_g_())
++        {
++            return exp;
++        }
++        else
++        {
++            return 0;
++        }
++    }
++
++    public float getScaledHealth()
++    {
++        if (this.maxHealth != this.func_110138_aP() && this.func_110143_aJ() > 0)
++        {
++            return this.func_110143_aJ() * this.func_110138_aP() / this.maxHealth + 1;
++        }
++        else
++        {
++            return this.func_110143_aJ();
++        }
++    }
++    // CraftBukkit end
++
+     public boolean func_70631_g_()
+     {
+         return false;
+@@ -298,22 +348,21 @@
+     {
+         ++this.field_70725_aQ;
+ 
+-        if (this.field_70725_aQ == 20)
++        if (this.field_70725_aQ >= 20 && !this.field_70128_L)   // CraftBukkit - (this.deathTicks == 20) -> (this.deathTicks >= 20 && !this.dead)
+         {
+             int i;
+-
+-            if (!this.field_70170_p.field_72995_K && (this.field_70718_bc > 0 || this.func_70684_aJ()) && !this.func_70631_g_() && this.field_70170_p.func_82736_K().func_82766_b("doMobLoot"))
+-            {
+-                i = this.func_70693_a(this.field_70717_bb);
+-
+-                while (i > 0)
+-                {
+-                    int j = EntityXPOrb.func_70527_a(i);
+-                    i -= j;
+-                    this.field_70170_p.func_72838_d(new EntityXPOrb(this.field_70170_p, this.field_70165_t, this.field_70163_u, this.field_70161_v, j));
+-                }
+-            }
+-
++            // CraftBukkit start - Update getExpReward() above if the removed if() changes!
++            i = this.expToDrop;
++
++            while (i > 0)
++            {
++                int j = EntityXPOrb.func_70527_a(i);
++                i -= j;
++                this.field_70170_p.func_72838_d(new EntityXPOrb(this.field_70170_p, this.field_70165_t, this.field_70163_u, this.field_70161_v, j));
++            }
++
++            this.expToDrop = 0;
++            // CraftBukkit end
+             this.func_70106_y();
+ 
+             for (i = 0; i < 20; ++i)
+@@ -380,6 +429,7 @@
+     {
+         p_70014_1_.func_74776_a("HealF", this.func_110143_aJ());
+         p_70014_1_.func_74777_a("Health", (short)((int)Math.ceil((double)this.func_110143_aJ())));
++        p_70014_1_.func_74776_a("Bukkit.MaxHealth", this.maxHealth); // CraftBukkit
+         p_70014_1_.func_74777_a("HurtTime", (short)this.field_70737_aN);
+         p_70014_1_.func_74777_a("DeathTime", (short)this.field_70725_aQ);
+         p_70014_1_.func_74777_a("AttackTime", (short)this.field_70724_aR);
+@@ -449,6 +499,23 @@
+             }
+         }
+ 
++        // CraftBukkit start
++        if (p_70037_1_.func_74764_b("Bukkit.MaxHealth"))
++        {
++            NBTBase nbtbase = p_70037_1_.func_74781_a("Bukkit.MaxHealth");
++
++            if (nbtbase.func_74732_a() == 5)
++            {
++                this.maxHealth = ((NBTTagFloat) nbtbase).field_74750_a;
++            }
++            else if (nbtbase.func_74732_a() == 3)
++            {
++                this.maxHealth = (float)((NBTTagInt) nbtbase).field_74748_a;
++            }
++        }
++
++        // CraftBukkit end
++
+         if (p_70037_1_.func_74764_b("HealF"))
+         {
+             this.func_70606_j(p_70037_1_.func_74760_g("HealF"));
+@@ -459,7 +526,7 @@
+ 
+             if (nbtbase == null)
+             {
+-                this.func_70606_j(this.func_110138_aP());
++                this.func_70606_j(this.maxHealth); // CraftBukkit - this.getMaxHealth() -> this.maxHealth
+             }
+             else if (nbtbase.func_74732_a() == 5)
+             {
+@@ -578,12 +645,14 @@
+ 
+     public boolean func_82165_m(int p_82165_1_)
+     {
+-        return this.field_70713_bf.containsKey(Integer.valueOf(p_82165_1_));
++        // CraftBukkit - Add size check for efficiency
++        return this.field_70713_bf.size() != 0 && this.field_70713_bf.containsKey(Integer.valueOf(p_82165_1_));
+     }
+ 
+     public boolean func_70644_a(Potion p_70644_1_)
+     {
+-        return this.field_70713_bf.containsKey(Integer.valueOf(p_70644_1_.field_76415_H));
++        // CraftBukkit - Add size check for efficiency
++        return this.field_70713_bf.size() != 0 && this.field_70713_bf.containsKey(Integer.valueOf(p_70644_1_.field_76415_H));
+     }
+ 
+     public PotionEffect func_70660_b(Potion p_70660_1_)
+@@ -673,13 +742,33 @@
+         }
+     }
+ 
++    // CraftBukkit start - Delegate so we can handle providing a reason for health being regained
+     public void func_70691_i(float p_70691_1_)
+     {
++        heal(p_70691_1_, EntityRegainHealthEvent.RegainReason.CUSTOM);
++    }
++
++    public void heal(float f, EntityRegainHealthEvent.RegainReason regainReason)
++    {
+         float f1 = this.func_110143_aJ();
+ 
+         if (f1 > 0.0F)
+         {
+-            this.func_70606_j(f1 + p_70691_1_);
++            EntityRegainHealthEvent event = new EntityRegainHealthEvent(this.getBukkitEntity(), f, regainReason);
++            this.field_70170_p.getServer().getPluginManager().callEvent(event);
++
++            if (!event.isCancelled())
++            {
++                this.func_70606_j((float)(this.func_110143_aJ() + event.getAmount()));
++            }
++
++            // TODO should we be doing this anymore
++            if (this.func_110143_aJ() > this.maxHealth)
++            {
++                this.func_70606_j(this.maxHealth);
++            }
++
++            // CraftBukkit end
+         }
+     }
+ 
+@@ -725,6 +814,20 @@
+ 
+                 this.field_70721_aZ = 1.5F;
+                 boolean flag = true;
++                // CraftBukkit start
++                EntityDamageEvent event = CraftEventFactory.handleEntityDamageEvent(this, p_70097_1_, p_70097_2_);
++
++                if (event != null)
++                {
++                    if (event.isCancelled())
++                    {
++                        return false;
++                    }
++
++                    p_70097_2_ = (float) event.getDamage();
++                }
++
++                // CraftBukkit end
+ 
+                 if ((float)this.field_70172_ad > (float)this.field_70771_an / 2.0F)
+                 {
+@@ -868,7 +971,7 @@
+                 this.func_70628_a(this.field_70718_bc > 0, i);
+                 this.func_82160_b(this.field_70718_bc > 0, i);
+ 
+-                if (this.field_70718_bc > 0)
++                if (false && this.field_70718_bc > 0)   // CraftBukkit - move rare item drop call to dropDeathLoot
+                 {
+                     int j = this.field_70146_Z.nextInt(200) - i;
+ 
+@@ -877,6 +980,10 @@
+                         this.func_70600_l(j <= 0 ? 1 : 0);
+                     }
+                 }
++            }
++            else     // CraftBukkit
++            {
++                CraftEventFactory.callEntityDeathEvent(this); // CraftBukkit
+             }
+         }
+ 
+@@ -916,7 +1023,12 @@
+         return "damage.hit";
+     }
+ 
+-    protected void func_70600_l(int p_70600_1_) {}
++    // CraftBukkit start - Change return type to ItemStack
++    protected ItemStack func_70600_l(int i)
++    {
++        return null;
++    }
++    // CraftBukkit end
+ 
+     protected void func_70628_a(boolean p_70628_1_, int p_70628_2_) {}
+ 
+@@ -939,7 +1051,27 @@
+         super.func_70069_a(p_70069_1_);
+         PotionEffect potioneffect = this.func_70660_b(Potion.field_76430_j);
+         float f1 = potioneffect != null ? (float)(potioneffect.func_76458_c() + 1) : 0.0F;
+-        int i = MathHelper.func_76123_f(p_70069_1_ - 3.0F - f1);
++        // CraftBukkit start
++        float i = MathHelper.func_76123_f(p_70069_1_ - 3.0F - f1);
++
++        if (i > 0)
++        {
++            EntityDamageEvent event = CraftEventFactory.callEntityDamageEvent(null, this, EntityDamageEvent.DamageCause.FALL, i);
++
++            if (event.isCancelled())
++            {
++                return;
++            }
++
++            i = (float) event.getDamage();
++
++            if (i > 0)
++            {
++                this.getBukkitEntity().setLastDamageCause(event);
++            }
++        }
++
++        // CraftBukkit end
+ 
+         if (i > 0)
+         {
+@@ -1100,7 +1232,7 @@
+ 
+             if (this.field_70170_p instanceof WorldServer)
+             {
+-                ((WorldServer)this.field_70170_p).func_73039_n().func_72784_a(this, new Packet18Animation(this, 1));
++                ((WorldServer) this.field_70170_p).func_73039_n().func_72784_a((Entity) this, (Packet)(new Packet18Animation(this, 1)));
+             }
+         }
+     }
+@@ -1161,9 +1293,9 @@
+ 
+     public abstract ItemStack func_70694_bm();
+ 
+-    public abstract ItemStack func_71124_b(int i);
+-
+-    public abstract void func_70062_b(int i, ItemStack itemstack);
++    public abstract ItemStack func_71124_b(int p_71124_1_);
++
++    public abstract void func_70062_b(int p_70062_1_, ItemStack p_70062_2_);
+ 
+     public void func_70031_b(boolean p_70031_1_)
+     {
+@@ -1472,7 +1604,7 @@
+ 
+                 if (!ItemStack.func_77989_b(itemstack1, itemstack))
+                 {
+-                    ((WorldServer)this.field_70170_p).func_73039_n().func_72784_a(this, new Packet5PlayerInventory(this.field_70157_k, j, itemstack1));
++                    ((WorldServer) this.field_70170_p).func_73039_n().func_72784_a((Entity) this, (Packet)(new Packet5PlayerInventory(this.field_70157_k, j, itemstack1)));
+ 
+                     if (itemstack != null)
+                     {
+@@ -1502,7 +1634,8 @@
+         {
+             f3 = 1.0F;
+             f2 = (float)Math.sqrt((double)f) * 3.0F;
+-            f1 = (float)Math.atan2(d1, d0) * 180.0F / (float)Math.PI - 90.0F;
++            // CraftBukkit - Math -> TrigMath
++            f1 = (float) org.bukkit.craftbukkit.TrigMath.atan2(d1, d0) * 180.0F / (float)Math.PI - 90.0F;
+         }
+ 
+         if (this.field_70733_aJ > 0.0F)
+@@ -1716,6 +1849,15 @@
+             {
+                 Entity entity = (Entity)list.get(i);
+ 
++                // TODO better check now?
++                // CraftBukkit start - Only handle mob (non-player) collisions every other tick
++                if (entity instanceof EntityLivingBase && !(this instanceof EntityPlayerMP) && this.field_70173_aa % 2 == 0)
++                {
++                    continue;
++                }
++
++                // CraftBukkit end
++
+                 if (entity.func_70104_M())
+                 {
+                     this.func_82167_n(entity);
+@@ -1757,17 +1899,17 @@
+ 
+             if (p_71001_1_ instanceof EntityItem)
+             {
+-                entitytracker.func_72784_a(p_71001_1_, new Packet22Collect(p_71001_1_.field_70157_k, this.field_70157_k));
++                entitytracker.func_72784_a(p_71001_1_, (Packet)(new Packet22Collect(p_71001_1_.field_70157_k, this.field_70157_k)));
+             }
+ 
+             if (p_71001_1_ instanceof EntityArrow)
+             {
+-                entitytracker.func_72784_a(p_71001_1_, new Packet22Collect(p_71001_1_.field_70157_k, this.field_70157_k));
++                entitytracker.func_72784_a(p_71001_1_, (Packet)(new Packet22Collect(p_71001_1_.field_70157_k, this.field_70157_k)));
+             }
+ 
+             if (p_71001_1_ instanceof EntityXPOrb)
+             {
+-                entitytracker.func_72784_a(p_71001_1_, new Packet22Collect(p_71001_1_.field_70157_k, this.field_70157_k));
++                entitytracker.func_72784_a(p_71001_1_, (Packet)(new Packet22Collect(p_71001_1_.field_70157_k, this.field_70157_k)));
+             }
+         }
+     }
+@@ -1853,4 +1995,10 @@
+ 
+         this.field_110151_bq = p_110149_1_;
+     }
+-}
++    public String func_70621_aR_CodeFix_Public(){
++        return func_70621_aR();
++    }
++    public String func_70621_aR_CodeFix_Public(){
++        return func_70621_aR();
++    }
++}

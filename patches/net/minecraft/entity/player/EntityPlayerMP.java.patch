@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/player/EntityPlayerMP.java
 +++ ../net/minecraft/entity/player/EntityPlayerMP.java
-@@ -62,7 +62,6 @@
+@@ -64,7 +64,6 @@
  import net.minecraft.network.packet.Packet8UpdateHealth;
  import net.minecraft.potion.PotionEffect;
  import net.minecraft.scoreboard.Score;
@@ -8,9 +8,9 @@
  import net.minecraft.scoreboard.ScoreObjectiveCriteria;
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.stats.AchievementList;
-@@ -75,8 +74,10 @@
- import net.minecraft.tileentity.TileEntityFurnace;
+@@ -79,8 +78,10 @@
  import net.minecraft.tileentity.TileEntityHopper;
+ import net.minecraft.util.ChatMessageComponent;
  import net.minecraft.util.ChunkCoordinates;
 +import net.minecraft.util.CombatTracker;
  import net.minecraft.util.DamageSource;
@@ -18,8 +18,8 @@
 +import net.minecraft.util.FoodStats;
  import net.minecraft.util.MathHelper;
  import net.minecraft.util.ReportedException;
- import net.minecraft.util.StringTranslate;
-@@ -86,6 +87,17 @@
+ import net.minecraft.village.MerchantRecipeList;
+@@ -89,6 +90,17 @@
  import net.minecraft.world.World;
  import net.minecraft.world.WorldServer;
  import net.minecraft.world.chunk.Chunk;
@@ -37,22 +37,22 @@
  
  public class EntityPlayerMP extends EntityPlayer implements ICrafting
  {
-@@ -100,15 +112,24 @@
-     private int field_71149_ch = -99999999;
+@@ -104,15 +116,24 @@
+     private float field_71149_ch = -1.0E8F;
      private int field_71146_ci = -99999999;
      private boolean field_71147_cj = true;
 -    private int field_71144_ck = -99999999;
 -    private int field_71145_cl = 60;
 +    public int field_71144_ck = -99999999; // CraftBukkit - private -> public
 +    public int field_71145_cl = 60; // CraftBukkit - private -> public
-     private int field_71142_cm = 0;
-     private int field_71143_cn = 0;
+     private int field_71142_cm;
+     private int field_71143_cn;
      private boolean field_71140_co = true;
--    public int field_71139_cq = 0;
-+    private int field_71139_cq = 0;
+-    public int field_71139_cq;
++    private int field_71139_cq;
      public boolean field_71137_h;
      public int field_71138_i;
-     public boolean field_71136_j = false;
+     public boolean field_71136_j;
 +    // CraftBukkit start
 +    public String displayName;
 +    public String listName;
@@ -63,9 +63,9 @@
 +    public boolean keepLevel = false;
 +    // CraftBukkit end
  
-     public EntityPlayerMP(MinecraftServer p_i3396_1_, World p_i3396_2_, String p_i3396_3_, ItemInWorldManager p_i3396_4_)
+     public EntityPlayerMP(MinecraftServer p_i1523_1_, World p_i1523_2_, String p_i1523_3_, ItemInWorldManager p_i1523_4_)
      {
-@@ -139,6 +160,12 @@
+@@ -142,6 +163,12 @@
          {
              this.func_70107_b(this.field_70165_t, this.field_70163_u + 1.0D, this.field_70161_v);
          }
@@ -73,12 +73,12 @@
 +        // CraftBukkit start
 +        this.displayName = this.field_71092_bJ;
 +        this.listName = this.field_71092_bJ;
-+        this.field_82172_bs = true;
++        // this.canPickUpLoot = true; TODO
 +        // CraftBukkit end
      }
  
      public void func_70037_a(NBTTagCompound p_70037_1_)
-@@ -156,13 +183,52 @@
+@@ -159,13 +186,52 @@
                  this.field_71134_c.func_73076_a(EnumGameType.func_77146_a(p_70037_1_.func_74762_e("playerGameType")));
              }
          }
@@ -132,10 +132,16 @@
  
      public void func_82242_a(int p_82242_1_)
      {
-@@ -190,6 +256,15 @@
-         this.field_71134_c.func_73075_a();
+@@ -194,11 +260,20 @@
          --this.field_71145_cl;
          this.field_71070_bA.func_75142_b();
+ 
+-        if (!this.field_70170_p.field_72995_K && !this.field_71070_bA.func_75145_c(this))
++        if (!this.field_70170_p.field_72995_K && !this.field_71070_bA.func_75145_c((EntityPlayer) this))
+         {
+             this.func_71053_j();
+             this.field_71070_bA = this.field_71069_bz;
+         }
 +
 +        // CraftBukkit start - Check inventory status every tick
 +        if (!this.field_71070_bA.func_75145_c(this))   // Should be stillValid
@@ -148,7 +154,7 @@
  
          while (!this.field_71130_g.isEmpty())
          {
-@@ -220,8 +295,11 @@
+@@ -229,8 +304,11 @@
  
                  if (chunkcoordintpair != null && this.field_70170_p.func_72899_e(chunkcoordintpair.field_77276_a << 4, 0, chunkcoordintpair.field_77275_b << 4))
                  {
@@ -162,34 +168,34 @@
                  }
              }
  
-@@ -250,14 +328,8 @@
-     public void func_70606_j(int p_70606_1_)
-     {
-         super.func_70606_j(p_70606_1_);
--        Collection collection = this.func_96123_co().func_96520_a(ScoreObjectiveCriteria.field_96638_f);
--        Iterator iterator = collection.iterator();
--
--        while (iterator.hasNext())
--        {
--            ScoreObjective scoreobjective = (ScoreObjective)iterator.next();
--            this.func_96123_co().func_96529_a(this.func_70023_ak(), scoreobjective).func_96651_a(Arrays.asList(new EntityPlayer[] {this}));
--        }
-+        // CraftBukkit - Update ALL the scores!
-+        this.field_70170_p.getServer().getScoreboardManager().updateAllScoresForList(ScoreObjectiveCriteria.field_96638_f, this.func_70023_ak(), com.google.common.collect.ImmutableList.of(this));
-     }
+@@ -279,7 +357,8 @@
  
-     public void func_71127_g()
-@@ -283,7 +355,8 @@
- 
-             if (this.func_70630_aN() != this.field_71149_ch || this.field_71146_ci != this.field_71100_bB.func_75116_a() || this.field_71100_bB.func_75115_e() == 0.0F != this.field_71147_cj)
+             if (this.func_110143_aJ() != this.field_71149_ch || this.field_71146_ci != this.field_71100_bB.func_75116_a() || this.field_71100_bB.func_75115_e() == 0.0F != this.field_71147_cj)
              {
--                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(this.func_70630_aN(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
+-                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(this.func_110143_aJ(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
 +                // CraftBukkit - this.getHealth() -> this.getScaledHealth()
 +                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(this.getScaledHealth(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
-                 this.field_71149_ch = this.func_70630_aN();
+                 this.field_71149_ch = this.func_110143_aJ();
                  this.field_71146_ci = this.field_71100_bB.func_75116_a();
                  this.field_71147_cj = this.field_71100_bB.func_75115_e() == 0.0F;
-@@ -294,6 +367,20 @@
+@@ -288,14 +367,8 @@
+             if (this.func_110143_aJ() + this.func_110139_bj() != this.field_130068_bO)
+             {
+                 this.field_130068_bO = this.func_110143_aJ() + this.func_110139_bj();
+-                Collection collection = this.func_96123_co().func_96520_a(ScoreObjectiveCriteria.field_96638_f);
+-                Iterator iterator = collection.iterator();
+-
+-                while (iterator.hasNext())
+-                {
+-                    ScoreObjective scoreobjective = (ScoreObjective)iterator.next();
+-                    this.func_96123_co().func_96529_a(this.func_70023_ak(), scoreobjective).func_96651_a(Arrays.asList(new EntityPlayer[] {this}));
+-                }
++                // CraftBukkit - Update ALL the scores!
++                this.field_70170_p.getServer().getScoreboardManager().updateAllScoresForList(ScoreObjectiveCriteria.field_96638_f, this.func_70023_ak(), com.google.common.collect.ImmutableList.of(this));
+             }
+ 
+             if (this.field_71067_cb != this.field_71144_ck)
+@@ -303,6 +376,20 @@
                  this.field_71144_ck = this.field_71067_cb;
                  this.field_71135_a.func_72567_b(new Packet43Experience(this.field_71106_cc, this.field_71067_cb, this.field_71068_ca));
              }
@@ -210,11 +216,11 @@
          }
          catch (Throwable throwable)
          {
-@@ -306,20 +393,65 @@
+@@ -315,20 +402,74 @@
  
      public void func_70645_a(DamageSource p_70645_1_)
      {
--        this.field_71133_b.func_71203_ab().func_92062_k(this.field_94063_bt.func_94546_b());
+-        this.field_71133_b.func_71203_ab().func_92062_k(this.func_110142_aN().func_94546_b());
 -
 -        if (!this.field_70170_p.func_82736_K().func_82766_b("keepInventory"))
 -        {
@@ -250,12 +256,21 @@
 +            }
 +        }
 +
-+        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, this.field_94063_bt.func_94546_b());
++        ChatMessageComponent chatmessagecomponent = this.func_110142_aN().func_94546_b();
++        String deathmessage = chatmessagecomponent.toString();
++        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage);
 +        String deathMessage = event.getDeathMessage();
 +
 +        if (deathMessage != null && deathMessage.length() > 0)
 +        {
-+            this.field_71133_b.func_71203_ab().func_92062_k(event.getDeathMessage());
++            if (deathMessage.equals(chatmessagecomponent.toString()))
++            {
++                this.field_71133_b.func_71203_ab().func_92062_k(chatmessagecomponent);
++            }
++            else
++            {
++                this.field_71133_b.func_71203_ab().func_92062_k(ChatMessageComponent.func_111066_d(event.getDeathMessage()));
++            }
 +        }
 +
 +        // CraftBukkit - we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
@@ -286,7 +301,7 @@
              score.func_96648_a();
          }
  
-@@ -339,7 +471,8 @@
+@@ -350,7 +491,8 @@
          }
          else
          {
@@ -296,7 +311,7 @@
  
              if (!flag && this.field_71145_cl > 0 && p_70097_1_ != DamageSource.field_76380_i)
              {
-@@ -374,14 +507,15 @@
+@@ -385,14 +527,15 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
@@ -314,9 +329,9 @@
              this.field_70170_p.func_72900_e(this);
              this.field_71136_j = true;
              this.field_71135_a.func_72567_b(new Packet70GameEvent(4, 0));
-@@ -390,22 +524,28 @@
+@@ -401,22 +544,28 @@
          {
-             if (this.field_71093_bK == 1 && p_71027_1_ == 0)
+             if (this.field_71093_bK == 0 && p_71027_1_ == 1)
              {
 -                this.func_71029_a(AchievementList.field_76002_B);
 -                ChunkCoordinates chunkcoordinates = this.field_71133_b.func_71218_a(p_71027_1_).func_73054_j();
@@ -352,9 +367,9 @@
 +            this.field_71133_b.func_71203_ab().changeDimension(this, p_71027_1_, cause);
 +            // CraftBukkit end
              this.field_71144_ck = -1;
-             this.field_71149_ch = -1;
+             this.field_71149_ch = -1.0F;
              this.field_71146_ci = -1;
-@@ -438,7 +578,7 @@
+@@ -449,7 +598,7 @@
          if (enumstatus == EnumStatus.OK)
          {
              Packet17Sleep packet17sleep = new Packet17Sleep(this, 0, p_71018_1_, p_71018_2_, p_71018_3_);
@@ -363,7 +378,7 @@
              this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
              this.field_71135_a.func_72567_b(packet17sleep);
          }
-@@ -448,6 +588,11 @@
+@@ -459,6 +608,11 @@
  
      public void func_70999_a(boolean p_70999_1_, boolean p_70999_2_, boolean p_70999_3_)
      {
@@ -375,7 +390,7 @@
          if (this.func_70608_bn())
          {
              this.func_71121_q().func_73039_n().func_72789_b(this, new Packet18Animation(this, 3));
-@@ -463,7 +608,16 @@
+@@ -474,7 +628,16 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
@@ -390,10 +405,10 @@
 +        // so this method is needed
 +        super.setPassengerOf(entity);
 +        // CraftBukkit end
-         this.field_71135_a.func_72567_b(new Packet39AttachEntity(this, this.field_70154_o));
+         this.field_71135_a.func_72567_b(new Packet39AttachEntity(0, this, this.field_70154_o));
          this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
      }
-@@ -475,34 +629,62 @@
+@@ -486,34 +649,62 @@
          super.func_70064_a(p_71122_1_, p_71122_3_);
      }
  
@@ -463,7 +478,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -514,71 +696,143 @@
+@@ -525,71 +716,143 @@
              this.func_71053_j();
          }
  
@@ -623,7 +638,34 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
          InventoryMerchant inventorymerchant = ((ContainerMerchant)this.field_71070_bA).func_75174_d();
-@@ -622,6 +876,14 @@
+@@ -615,14 +878,24 @@
+ 
+     public void func_110298_a(EntityHorse p_110298_1_, IInventory p_110298_2_)
+     {
++        // CraftBukkit start - Inventory open hook
++        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHorseInventory(this.field_71071_by, p_110298_2_, p_110298_1_));
++
++        if (container == null)
++        {
++            return;
++        }
++
++        // CraftBukkit end
++
+         if (this.field_71070_bA != this.field_71069_bz)
+         {
+             this.func_71053_j();
+         }
+ 
+-        this.func_71117_bO();
++        this.nextContainerCounter();
+         this.field_71135_a.func_72567_b(new Packet100OpenWindow(this.field_71139_cq, 11, p_110298_2_.func_70303_b(), p_110298_2_.func_70302_i_(), p_110298_2_.func_94042_c(), p_110298_1_.field_70157_k));
+-        this.field_71070_bA = new ContainerHorseInventory(this.field_71071_by, p_110298_2_, p_110298_1_);
++        this.field_71070_bA = container; // CraftBukkit - Use container we passed to event
+         this.field_71070_bA.field_75152_c = this.field_71139_cq;
+         this.field_71070_bA.func_75132_a(this);
+     }
+@@ -647,6 +920,14 @@
      {
          this.field_71135_a.func_72567_b(new Packet104WindowItems(p_71110_1_.field_75152_c, p_71110_2_));
          this.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_71071_by.func_70445_o()));
@@ -638,7 +680,7 @@
      }
  
      public void func_71112_a(Container p_71112_1_, int p_71112_2_, int p_71112_3_)
-@@ -631,6 +893,7 @@
+@@ -656,6 +937,7 @@
  
      public void func_71053_j()
      {
@@ -646,7 +688,7 @@
          this.field_71135_a.func_72567_b(new Packet101CloseWindow(this.field_71070_bA.field_75152_c));
          this.func_71128_l();
      }
-@@ -645,7 +908,7 @@
+@@ -670,7 +952,7 @@
  
      public void func_71128_l()
      {
@@ -655,15 +697,15 @@
          this.field_71070_bA = this.field_71069_bz;
      }
  
-@@ -682,6 +945,7 @@
+@@ -720,6 +1002,7 @@
      public void func_71118_n()
      {
-         this.field_71149_ch = -99999999;
+         this.field_71149_ch = -1.0E8F;
 +        this.field_71144_ck = -1; // CraftBukkit - Added to reset
      }
  
      public void func_71035_c(String p_71035_1_)
-@@ -823,7 +1087,7 @@
+@@ -850,7 +1133,7 @@
  
      public void func_71115_a(String p_71115_1_, int p_71115_2_)
      {
@@ -672,7 +714,7 @@
          this.field_71135_a.func_72567_b(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
      }
  
-@@ -831,4 +1095,103 @@
+@@ -858,4 +1141,103 @@
      {
          return new ChunkCoordinates(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u + 0.5D), MathHelper.func_76128_c(this.field_70161_v));
      }
@@ -720,7 +762,7 @@
 +    public void resetPlayerWeather()
 +    {
 +        this.weather = null;
-+        this.setPlayerWeather(this.func_71121_q().func_72912_H().func_76059_o() ? WeatherType.DOWNFALL : WeatherType.CLEAR, false);
++        this.setPlayerWeather(this.field_70170_p.func_72912_H().func_76059_o() ? WeatherType.DOWNFALL : WeatherType.CLEAR, false);
 +    }
 +
 +    @Override
@@ -741,7 +783,7 @@
 +            this.newLevel = this.field_71068_ca;
 +        }
 +
-+        this.field_70734_aK = this.maxHealth;
++        this.func_70606_j(this.maxHealth);
 +        this.field_70151_c = 0;
 +        this.field_70143_R = 0;
 +        this.field_71100_bB = new FoodStats();
@@ -754,7 +796,7 @@
 +        this.field_71070_bA = this.field_71069_bz;
 +        this.field_70717_bb = null;
 +        this.field_70755_b = null;
-+        this.field_94063_bt = new CombatTracker(this); // Should be combatTracker
++        this.field_94063_bt = new CombatTracker(this);
 +        this.field_71144_ck = -1;
 +
 +        if (this.keepLevel || keepInventory)

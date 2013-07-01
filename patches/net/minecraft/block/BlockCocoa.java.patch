@@ -1,6 +1,15 @@
 --- ../net/minecraft/block/BlockCocoa.java
 +++ ../net/minecraft/block/BlockCocoa.java
-@@ -36,7 +36,7 @@
+@@ -13,6 +13,8 @@
+ 
+ public class BlockCocoa extends BlockDirectional
+ {
++    public static final String[] a = new String[] { "cocoa_0", "cocoa_1", "cocoa_2"};
++
+     public BlockCocoa(int p_i2181_1_)
+     {
+         super(p_i2181_1_, Material.field_76254_j);
+@@ -34,7 +36,7 @@
              if (i1 < 2)
              {
                  ++i1;

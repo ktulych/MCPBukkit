@@ -38,12 +38,12 @@
                  }
  
                  return true;
-@@ -97,7 +120,7 @@
+@@ -86,7 +109,7 @@
  
-         if (p_70652_1_ instanceof EntityLiving)
+         if (p_70652_1_ instanceof EntityLivingBase)
          {
--            i += EnchantmentHelper.func_77512_a(this, (EntityLiving)p_70652_1_);
-+            i += EnchantmentHelper.func_77512_a((EntityLiving) this, (EntityLiving) p_70652_1_);
-             j += EnchantmentHelper.func_77507_b(this, (EntityLiving)p_70652_1_);
+-            f += EnchantmentHelper.func_77512_a(this, (EntityLivingBase)p_70652_1_);
++            f += EnchantmentHelper.func_77512_a((EntityLivingBase) this, (EntityLivingBase) p_70652_1_);
+             i += EnchantmentHelper.func_77507_b(this, (EntityLivingBase)p_70652_1_);
          }
  

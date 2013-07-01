@@ -7,7 +7,7 @@
 -    private WorldServer field_72782_b;
 +    public WorldServer field_72782_b; // CraftBukkit - private -> public
  
-     public WorldManager(MinecraftServer p_i3390_1_, WorldServer p_i3390_2_)
+     public WorldManager(MinecraftServer p_i1517_1_, WorldServer p_i1517_2_)
      {
 @@ -34,12 +34,14 @@
  

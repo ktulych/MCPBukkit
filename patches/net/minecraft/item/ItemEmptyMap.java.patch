@@ -10,7 +10,7 @@
 -
  public class ItemEmptyMap extends ItemMapBase
  {
-     protected ItemEmptyMap(int p_i5083_1_)
+     protected ItemEmptyMap(int p_i1858_1_)
 @@ -18,13 +19,14 @@
          ItemStack itemstack1 = new ItemStack(Item.field_77744_bd, 1, p_77659_2_.func_72841_b("map"));
          String s = "map_" + itemstack1.func_77960_j();

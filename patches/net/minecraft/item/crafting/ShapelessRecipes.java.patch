@@ -13,8 +13,8 @@
  public class ShapelessRecipes implements IRecipe
  {
 @@ -17,6 +22,25 @@
-         this.field_77580_a = p_i3701_1_;
-         this.field_77579_b = p_i3701_2_;
+         this.field_77580_a = p_i1918_1_;
+         this.field_77579_b = p_i1918_2_;
      }
 +
 +    // CraftBukkit start

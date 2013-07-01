@@ -15,7 +15,7 @@
  public class ShapedRecipes implements IRecipe
  {
 @@ -23,6 +27,77 @@
-         this.field_77575_e = p_i3700_4_;
+         this.field_77575_e = p_i1917_4_;
      }
  
 +    // CraftBukkit start

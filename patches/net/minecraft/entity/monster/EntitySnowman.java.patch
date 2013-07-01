@@ -8,8 +8,8 @@
 +import org.bukkit.event.block.EntityBlockFormEvent;
  import net.minecraft.block.Block;
  import net.minecraft.entity.EntityLiving;
- import net.minecraft.entity.IRangedAttackMob;
-@@ -14,6 +17,7 @@
+ import net.minecraft.entity.EntityLivingBase;
+@@ -16,6 +19,7 @@
  import net.minecraft.util.DamageSource;
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
@@ -17,16 +17,16 @@
  
  public class EntitySnowman extends EntityGolem implements IRangedAttackMob
  {
-@@ -54,7 +58,7 @@
+@@ -57,7 +61,7 @@
  
          if (this.field_70170_p.func_72807_a(i, j).func_76743_j() > 1.0F)
          {
--            this.func_70097_a(DamageSource.field_76370_b, 1);
-+            this.func_70097_a(CraftEventFactory.MELTING, 1); // CraftBukkit - DamageSource.BURN -> CraftEventFactory.MELTING
+-            this.func_70097_a(DamageSource.field_76370_b, 1.0F);
++            this.func_70097_a(CraftEventFactory.MELTING, 1.0F); // CraftBukkit - DamageSource.BURN -> CraftEventFactory.MELTING
          }
  
          for (i = 0; i < 4; ++i)
-@@ -65,7 +69,18 @@
+@@ -68,7 +72,18 @@
  
              if (this.field_70170_p.func_72798_a(j, k, l) == 0 && this.field_70170_p.func_72807_a(j, l).func_76743_j() < 0.8F && Block.field_72037_aS.func_71930_b(this.field_70170_p, j, k, l))
              {
@@ -46,7 +46,7 @@
              }
          }
      }
-@@ -77,12 +92,17 @@
+@@ -80,12 +95,17 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -65,4 +65,4 @@
 +        // CraftBukkit end
      }
  
-     public void func_82196_d(EntityLiving p_82196_1_, float p_82196_2_)
+     public void func_82196_d(EntityLivingBase p_82196_1_, float p_82196_2_)

@@ -20,7 +20,7 @@
  
  public class BlockMushroom extends BlockFlower
  {
-@@ -19,6 +30,8 @@
+@@ -16,6 +27,8 @@
  
      public void func_71847_b(World p_71847_1_, int p_71847_2_, int p_71847_3_, int p_71847_4_, Random p_71847_5_)
      {
@@ -29,15 +29,15 @@
          if (p_71847_5_.nextInt(25) == 0)
          {
              byte b0 = 4;
-@@ -66,7 +79,19 @@
+@@ -63,7 +76,19 @@
  
              if (p_71847_1_.func_72799_c(i1, j1, k1) && this.func_71854_d(p_71847_1_, i1, j1, k1))
              {
--                p_71847_1_.func_94575_c(i1, j1, k1, this.field_71990_ca);
+-                p_71847_1_.func_72832_d(i1, j1, k1, this.field_71990_ca, 0, 2);
 +                // CraftBukkit start
 +                org.bukkit.World bworld = p_71847_1_.getWorld();
 +                BlockState blockState = bworld.getBlockAt(i1, j1, k1).getState();
-+                blockState.setTypeId(this.field_71990_ca);
++                blockState.setTypeId(this.field_71990_ca); // nms: this.id, 0, 2
 +                BlockSpreadEvent event = new BlockSpreadEvent(blockState.getBlock(), bworld.getBlockAt(sourceX, sourceY, sourceZ), blockState);
 +                p_71847_1_.getServer().getPluginManager().callEvent(event);
 +
@@ -50,7 +50,7 @@
              }
          }
      }
-@@ -94,29 +119,45 @@
+@@ -91,29 +116,45 @@
          }
      }
  

@@ -21,12 +21,12 @@
  
  public abstract class Container
  {
-@@ -17,16 +28,31 @@
-     public int field_75152_c = 0;
-     private short field_75150_e = 0;
+@@ -16,16 +27,31 @@
+     public List field_75151_b = new ArrayList();
+     public int field_75152_c;
      private int field_94535_f = -1;
--    private int field_94536_g = 0;
-+    public int field_94536_g = 0; // CraftBukkit - private -> public
+-    private int field_94536_g;
++    public int field_94536_g; // CraftBukkit - private -> public
      private final Set field_94537_h = new HashSet();
      protected List field_75149_d = new ArrayList();
      private Set field_75148_f = new HashSet();
@@ -55,7 +55,7 @@
          return p_75146_1_;
      }
  
-@@ -157,6 +183,7 @@
+@@ -156,6 +182,7 @@
                      itemstack1 = inventoryplayer.func_70445_o().func_77946_l();
                      l = inventoryplayer.func_70445_o().field_77994_a;
                      Iterator iterator = this.field_94537_h.iterator();
@@ -63,7 +63,7 @@
  
                      while (iterator.hasNext())
                      {
-@@ -179,18 +206,55 @@
+@@ -178,18 +205,55 @@
                              }
  
                              l -= itemstack2.field_77994_a - j1;
@@ -131,7 +131,7 @@
                  }
  
                  this.func_94533_d();
-@@ -224,10 +288,17 @@
+@@ -223,10 +287,17 @@
  
                          if (p_75144_2_ == 1)
                          {
@@ -153,27 +153,12 @@
                                  inventoryplayer.func_70437_b((ItemStack)null);
                              }
                          }
-@@ -288,7 +359,13 @@
-                                     k1 = slot2.func_75219_a();
-                                 }
- 
--                                slot2.func_75215_d(itemstack4.func_77979_a(k1));
-+                                // CraftBukkit start
-+                                if (itemstack4.field_77994_a >= k1)
-+                                {
-+                                    slot2.func_75215_d(itemstack4.func_77979_a(k1));
-+                                }
-+
-+                                // CraftBukkit end
- 
-                                 if (itemstack4.field_77994_a == 0)
-                                 {
-@@ -520,7 +597,7 @@
+@@ -522,7 +593,7 @@
          }
      }
  
 -    public abstract boolean func_75145_c(EntityPlayer entityplayer);
-+    public abstract boolean func_75145_c(EntityPlayer entityhuman);
++    public abstract boolean func_75145_c(EntityPlayer p_75145_1_);
  
      protected boolean func_75135_a(ItemStack p_75135_1_, int p_75135_2_, int p_75135_3_, boolean p_75135_4_)
      {

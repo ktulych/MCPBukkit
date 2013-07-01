@@ -1,5 +1,5 @@
---- ../net/minecraft/inventory/InventoryRepair.java
-+++ ../net/minecraft/inventory/InventoryRepair.java
+--- ../net/minecraft/inventory/ContainerRepairINNER1.java
++++ ../net/minecraft/inventory/ContainerRepairINNER1.java
 @@ -1,21 +1,63 @@
  package net.minecraft.inventory;
  
@@ -10,10 +10,10 @@
  import net.minecraft.item.ItemStack;
 +// CraftBukkit end
  
--class InventoryRepair extends InventoryBasic
-+public class InventoryRepair extends InventoryBasic   // CraftBukkit - public
+-class ContainerRepairINNER1 extends InventoryBasic
++public class ContainerRepairINNER1 extends InventoryBasic   // CraftBukkit - public
  {
-     final ContainerRepair field_82346_a;
+     final ContainerRepair field_135010_a;
 +
 +    // CraftBukkit start
 +    public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
@@ -51,18 +51,18 @@
 +    }
 +    // CraftBukkit end
  
-     InventoryRepair(ContainerRepair p_i9033_1_, String p_i9033_2_, boolean p_i9033_3_, int p_i9033_4_)
+     ContainerRepairINNER1(ContainerRepair p_i1798_1_, String p_i1798_2_, boolean p_i1798_3_, int p_i1798_4_)
      {
-         super(p_i9033_2_, p_i9033_3_, p_i9033_4_);
-         this.field_82346_a = p_i9033_1_;
+         super(p_i1798_2_, p_i1798_3_, p_i1798_4_);
+         this.field_135010_a = p_i1798_1_;
 +        this.setMaxStackSize(1); // CraftBukkit
      }
  
      public void func_70296_d()
      {
          super.func_70296_d();
--        this.field_82346_a.func_75130_a(this);
-+        this.field_82346_a.func_75130_a((IInventory) this);
+-        this.field_135010_a.func_75130_a(this);
++        this.field_135010_a.func_75130_a((IInventory) this);
      }
  
      public boolean func_94041_b(int p_94041_1_, ItemStack p_94041_2_)

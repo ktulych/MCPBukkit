@@ -101,7 +101,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     public Player getPlayer() {
         for (Object obj : server.getHandle().field_72404_b) {
             net.minecraft.entity.player.EntityPlayerMP player = (net.minecraft.entity.player.EntityPlayerMP) obj;
-            if (player.field_71092_bJ.equalsIgnoreCase(getName())) {
+            if (player.func_70005_c_().equalsIgnoreCase(getName())) {
                 return (player.field_71135_a != null) ? player.field_71135_a.getPlayer() : null;
             }
         }

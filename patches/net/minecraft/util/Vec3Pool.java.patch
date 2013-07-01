@@ -13,11 +13,11 @@
 +    private Vec3 alloclisthead = null;
 +    private int total_size = 0;
 +    // CraftBukkit end
-     private int field_72347_d = 0;
-     private int field_72348_e = 0;
-     private int field_72346_f = 0;
+     private int field_72347_d;
+     private int field_72348_e;
+     private int field_72346_f;
 @@ -18,61 +25,113 @@
-         this.field_72349_b = p_i4035_2_;
+         this.field_72349_b = p_i2306_2_;
      }
  
 -    public Vec3 func_72345_a(double p_72345_1_, double p_72345_3_, double p_72345_5_)
@@ -151,8 +151,8 @@
 -
 -            this.field_72347_d = 0;
 -        }
-+        // CraftBukkit end
 +        this.field_72347_d = 0;
++        // CraftBukkit end
      }
  
      public int func_82591_c()

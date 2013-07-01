@@ -38,7 +38,7 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
 
     public void setShooter(LivingEntity shooter) {
         if (shooter instanceof CraftLivingEntity) {
-            getHandle().field_70235_a = (net.minecraft.entity.EntityLiving) ((CraftLivingEntity) shooter).entity;
+            getHandle().field_70235_a = (net.minecraft.entity.EntityLivingBase) ((CraftLivingEntity) shooter).entity;
         }
     }
 

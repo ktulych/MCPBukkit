@@ -21,7 +21,7 @@ public class CraftCreature extends CraftLivingEntity implements Creature {
 
     public CraftLivingEntity getTarget() {
         if (getHandle().field_70789_a == null) return null;
-        if (!(getHandle().field_70789_a instanceof net.minecraft.entity.EntityLiving)) return null;
+        if (!(getHandle().field_70789_a instanceof net.minecraft.entity.EntityLivingBase)) return null;
 
         return (CraftLivingEntity) getHandle().field_70789_a.getBukkitEntity();
     }

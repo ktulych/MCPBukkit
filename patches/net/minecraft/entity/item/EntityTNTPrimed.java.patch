@@ -5,18 +5,18 @@
  
 +import org.bukkit.event.entity.ExplosionPrimeEvent; // CraftBukkit
  import net.minecraft.entity.Entity;
- import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.nbt.NBTTagCompound;
 @@ -9,6 +10,8 @@
  {
      public int field_70516_a;
-     private EntityLiving field_94084_b;
+     private EntityLivingBase field_94084_b;
 +    public float yield = 4; // CraftBukkit
 +    public boolean isIncendiary = false; // CraftBukkit
  
-     public EntityTNTPrimed(World p_i3543_1_)
+     public EntityTNTPrimed(World p_i1729_1_)
      {
-@@ -66,12 +69,14 @@
+@@ -65,12 +68,14 @@
  
          if (this.field_70516_a-- <= 0)
          {
@@ -33,7 +33,7 @@
          }
          else
          {
-@@ -81,8 +86,19 @@
+@@ -80,8 +85,19 @@
  
      private void func_70515_d()
      {

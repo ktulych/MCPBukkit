@@ -70,7 +70,7 @@
 +    }
 +    // CraftBukkit end
  
-     public InventoryCrafting(Container p_i3602_1_, int p_i3602_2_, int p_i3602_3_)
+     public InventoryCrafting(Container p_i1807_1_, int p_i1807_2_, int p_i1807_3_)
      {
 @@ -74,7 +132,7 @@
              {

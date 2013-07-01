@@ -1,13 +1,13 @@
 --- ../net/minecraft/entity/passive/EntityChicken.java
 +++ ../net/minecraft/entity/passive/EntityChicken.java
-@@ -14,7 +14,6 @@
+@@ -15,7 +15,6 @@
  import net.minecraft.item.ItemSeeds;
  import net.minecraft.item.ItemStack;
  import net.minecraft.world.World;
 -
  public class EntityChicken extends EntityAnimal
  {
-     public boolean field_70885_d = false;
+     public float field_70886_e;
 @@ -120,21 +119,26 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)

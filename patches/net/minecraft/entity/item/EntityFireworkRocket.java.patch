@@ -11,5 +11,5 @@
 -    private int field_92055_b;
 +    public int field_92055_b; // CraftBukkit - private -> public
  
-     public EntityFireworkRocket(World p_i8008_1_)
+     public EntityFireworkRocket(World p_i1762_1_)
      {

@@ -52,7 +52,7 @@
 +    public WorldServer field_73251_h;
 +    // CraftBukkit end
  
-     public ChunkProviderServer(WorldServer p_i3393_1_, IChunkLoader p_i3393_2_, IChunkProvider p_i3393_3_)
+     public ChunkProviderServer(WorldServer p_i1520_1_, IChunkLoader p_i1520_2_, IChunkProvider p_i1520_3_)
      {
 @@ -44,7 +54,7 @@
  

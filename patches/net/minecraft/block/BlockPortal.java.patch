@@ -11,7 +11,7 @@
 +
  public class BlockPortal extends BlockBreakable
  {
-     public BlockPortal(int p_i9077_1_)
+     public BlockPortal(int p_i2236_1_)
 @@ -96,6 +101,11 @@
          }
          else

@@ -7,7 +7,7 @@
 -
  public class ItemLilyPad extends ItemColored
  {
-     public ItemLilyPad(int p_i3694_1_)
+     public ItemLilyPad(int p_i1911_1_)
 @@ -29,6 +28,7 @@
                  int i = movingobjectposition.field_72311_b;
                  int j = movingobjectposition.field_72312_c;

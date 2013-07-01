@@ -1,64 +1,64 @@
 --- ../net/minecraft/potion/Potion.java
 +++ ../net/minecraft/potion/Potion.java
-@@ -1,8 +1,13 @@
- package net.minecraft.potion;
- 
-+// CraftBukkit start
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
-+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
- import net.minecraft.entity.EntityLiving;
+@@ -12,7 +12,13 @@
+ import net.minecraft.entity.ai.attributes.AttributeModifier;
+ import net.minecraft.entity.ai.attributes.BaseAttributeMap;
  import net.minecraft.entity.player.EntityPlayer;
 +import net.minecraft.entity.projectile.EntityPotion;
  import net.minecraft.util.DamageSource;
++
++// CraftBukkit start
++import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 +// CraftBukkit end
  
  public class Potion
  {
-@@ -63,6 +68,7 @@
+@@ -74,6 +80,7 @@
          }
  
-         this.field_76414_N = p_i3433_3_;
+         this.field_76414_N = p_i1573_3_;
 +        org.bukkit.potion.PotionEffectType.registerPotionEffectType(new org.bukkit.craftbukkit.potion.CraftPotionEffectType(this)); // CraftBukkit
      }
  
      protected Potion func_76399_b(int p_76399_1_, int p_76399_2_)
-@@ -80,16 +86,16 @@
+@@ -91,16 +98,16 @@
      {
          if (this.field_76415_H == field_76428_l.field_76415_H)
          {
--            if (p_76394_1_.func_70630_aN() < p_76394_1_.func_70667_aM())
+-            if (p_76394_1_.func_110143_aJ() < p_76394_1_.func_110138_aP())
 -            {
--                p_76394_1_.func_70691_i(1);
-+            if (p_76394_1_.func_70630_aN() < p_76394_1_.maxHealth)   // CraftBukkit - .getMaxHealth() -> .maxHealth
+-                p_76394_1_.func_70691_i(1.0F);
++            if (p_76394_1_.func_110143_aJ() < p_76394_1_.maxHealth)   // CraftBukkit - .getMaxHealth() -> .maxHealth
 +            {
-+                p_76394_1_.heal(1, RegainReason.MAGIC_REGEN); // CraftBukkit
++                p_76394_1_.heal(1.0F, RegainReason.MAGIC_REGEN); // CraftBukkit
              }
          }
          else if (this.field_76415_H == field_76436_u.field_76415_H)
          {
-             if (p_76394_1_.func_70630_aN() > 1)
+             if (p_76394_1_.func_110143_aJ() > 1.0F)
              {
--                p_76394_1_.func_70097_a(DamageSource.field_76376_m, 1);
-+                p_76394_1_.func_70097_a(CraftEventFactory.POISON, 1); // CraftBukkit - DamageSource.MAGIC -> CraftEventFactory.POISON
+-                p_76394_1_.func_70097_a(DamageSource.field_76376_m, 1.0F);
++                p_76394_1_.func_70097_a(CraftEventFactory.POISON, 1.0F); // CraftBukkit - DamageSource.MAGIC -> CraftEventFactory.POISON
              }
          }
          else if (this.field_76415_H == field_82731_v.field_76415_H)
-@@ -109,34 +115,42 @@
+@@ -127,34 +134,42 @@
          }
          else
          {
--            p_76394_1_.func_70691_i(6 << p_76394_2_);
-+            p_76394_1_.heal(6 << p_76394_2_, RegainReason.MAGIC); // CraftBukkit
+-            p_76394_1_.func_70691_i((float)Math.max(4 << p_76394_2_, 0));
++            p_76394_1_.heal((float) Math.max(4 << p_76394_2_, 0), RegainReason.MAGIC); // CraftBukkit
          }
      }
  
-     public void func_76402_a(EntityLiving p_76402_1_, EntityLiving p_76402_2_, int p_76402_3_, double p_76402_4_)
+     public void func_76402_a(EntityLivingBase p_76402_1_, EntityLivingBase p_76402_2_, int p_76402_3_, double p_76402_4_)
      {
 +        // CraftBukkit start - Delegate; we need EntityPotion
 +        applyInstantEffect(p_76402_1_, p_76402_2_, p_76402_3_, p_76402_4_, null);
 +    }
 +
-+    public void applyInstantEffect(EntityLiving entityliving, EntityLiving entityliving1, int i, double d0, EntityPotion potion)
++    public void applyInstantEffect(EntityLivingBase entityliving, EntityLivingBase entitylivingbase1, int i, double d0, EntityPotion potion)
 +    {
 +        // CraftBukkit end
          int j;
@@ -70,31 +70,31 @@
 -                j = (int)(p_76402_4_ * (double)(6 << p_76402_3_) + 0.5D);
 -
 -                if (p_76402_1_ == null)
-+        if ((this.field_76415_H != field_76432_h.field_76415_H || entityliving1.func_70662_br()) && (this.field_76415_H != field_76433_i.field_76415_H || !entityliving1.func_70662_br()))
++        if ((this.field_76415_H != field_76432_h.field_76415_H || entitylivingbase1.func_70662_br()) && (this.field_76415_H != field_76433_i.field_76415_H || !entitylivingbase1.func_70662_br()))
 +        {
-+            if (this.field_76415_H == field_76433_i.field_76415_H && !entityliving1.func_70662_br() || this.field_76415_H == field_76432_h.field_76415_H && entityliving1.func_70662_br())
++            if (this.field_76415_H == field_76433_i.field_76415_H && !entitylivingbase1.func_70662_br() || this.field_76415_H == field_76432_h.field_76415_H && entitylivingbase1.func_70662_br())
 +            {
 +                j = (int)(d0 * (double)(6 << i) + 0.5D);
 +
 +                if (entityliving == null)
                  {
--                    p_76402_2_.func_70097_a(DamageSource.field_76376_m, j);
-+                    entityliving1.func_70097_a(DamageSource.field_76376_m, j);
+-                    p_76402_2_.func_70097_a(DamageSource.field_76376_m, (float)j);
++                    entitylivingbase1.func_70097_a(DamageSource.field_76376_m, (float) j);
                  }
                  else
                  {
--                    p_76402_2_.func_70097_a(DamageSource.func_76354_b(p_76402_2_, p_76402_1_), j);
+-                    p_76402_2_.func_70097_a(DamageSource.func_76354_b(p_76402_2_, p_76402_1_), (float)j);
 +                    // CraftBukkit - The "damager" needs to be the potion
-+                    entityliving1.func_70097_a(DamageSource.func_76354_b(potion != null ? potion : entityliving1, entityliving), j);
++                    entitylivingbase1.func_70097_a(DamageSource.func_76354_b(potion != null ? potion : entitylivingbase1, entityliving), (float) j);
                  }
              }
          }
          else
          {
--            j = (int)(p_76402_4_ * (double)(6 << p_76402_3_) + 0.5D);
--            p_76402_2_.func_70691_i(j);
-+            j = (int)(d0 * (double)(6 << i) + 0.5D);
-+            entityliving1.heal(j, RegainReason.MAGIC); // CraftBukkit
+-            j = (int)(p_76402_4_ * (double)(4 << p_76402_3_) + 0.5D);
+-            p_76402_2_.func_70691_i((float)j);
++            j = (int)(d0 * (double)(4 << i) + 0.5D);
++            entitylivingbase1.heal((float) j, RegainReason.MAGIC);
          }
      }
  

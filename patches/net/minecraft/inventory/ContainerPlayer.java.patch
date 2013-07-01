@@ -19,23 +19,23 @@
  {
 @@ -12,12 +18,20 @@
      public IInventory field_75179_f = new InventoryCraftResult();
-     public boolean field_75180_g = false;
+     public boolean field_75180_g;
      private final EntityPlayer field_82862_h;
 +    // CraftBukkit start
 +    private CraftInventoryView bukkitEntity = null;
 +    private InventoryPlayer player;
 +    // CraftBukkit end
  
-     public ContainerPlayer(InventoryPlayer p_i5077_1_, boolean p_i5077_2_, EntityPlayer p_i5077_3_)
+     public ContainerPlayer(InventoryPlayer p_i1819_1_, boolean p_i1819_2_, EntityPlayer p_i1819_3_)
      {
-         this.field_75180_g = p_i5077_2_;
-         this.field_82862_h = p_i5077_3_;
--        this.func_75146_a(new SlotCrafting(p_i5077_1_.field_70458_d, this.field_75181_e, this.field_75179_f, 0, 144, 36));
+         this.field_75180_g = p_i1819_2_;
+         this.field_82862_h = p_i1819_3_;
+-        this.func_75146_a(new SlotCrafting(p_i1819_1_.field_70458_d, this.field_75181_e, this.field_75179_f, 0, 144, 36));
 +        this.field_75179_f = new InventoryCraftResult(); // CraftBukkit - moved to before InventoryCrafting construction
-+        this.field_75181_e = new InventoryCrafting(this, 2, 2, p_i5077_1_.field_70458_d); // CraftBukkit - pass player
++        this.field_75181_e = new InventoryCrafting(this, 2, 2, p_i1819_1_.field_70458_d); // CraftBukkit - pass player
 +        this.field_75181_e.resultInventory = this.field_75179_f; // CraftBukkit - let InventoryCrafting know about its result slot
-+        this.player = p_i5077_1_; // CraftBukkit - save player
-+        this.func_75146_a((Slot)(new SlotCrafting(p_i5077_1_.field_70458_d, this.field_75181_e, this.field_75179_f, 0, 144, 36)));
++        this.player = p_i1819_1_; // CraftBukkit - save player
++        this.func_75146_a((Slot)(new SlotCrafting(p_i1819_1_.field_70458_d, this.field_75181_e, this.field_75179_f, 0, 144, 36)));
          int i;
          int j;
  
@@ -43,13 +43,13 @@
  
          for (i = 0; i < 4; ++i)
          {
--            this.func_75146_a(new SlotArmor(this, p_i5077_1_, p_i5077_1_.func_70302_i_() - 1 - i, 8, 8 + i * 18, i));
-+            this.func_75146_a((Slot)(new SlotArmor(this, p_i5077_1_, p_i5077_1_.func_70302_i_() - 1 - i, 8, 8 + i * 18, i)));
+-            this.func_75146_a(new SlotArmor(this, p_i1819_1_, p_i1819_1_.func_70302_i_() - 1 - i, 8, 8 + i * 18, i));
++            this.func_75146_a((Slot)(new SlotArmor(this, p_i1819_1_, p_i1819_1_.func_70302_i_() - 1 - i, 8, 8 + i * 18, i)));
          }
  
          for (i = 0; i < 3; ++i)
 @@ -47,12 +61,24 @@
-             this.func_75146_a(new Slot(p_i5077_1_, i, 8 + i * 18, 142));
+             this.func_75146_a(new Slot(p_i1819_1_, i, 8 + i * 18, 142));
          }
  
 -        this.func_75130_a(this.field_75181_e);

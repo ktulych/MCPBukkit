@@ -55,9 +55,9 @@
 +    }
 +    // CraftBukkit end
 +
-     public InventoryMerchant(EntityPlayer p_i3612_1_, IMerchant p_i3612_2_)
+     public InventoryMerchant(EntityPlayer p_i1820_1_, IMerchant p_i1820_2_)
      {
-         this.field_70475_c = p_i3612_1_;
+         this.field_70475_c = p_i1820_1_;
 @@ -123,7 +163,7 @@
  
      public int func_70297_j_()

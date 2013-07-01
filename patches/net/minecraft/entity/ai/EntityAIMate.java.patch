@@ -1,19 +1,19 @@
 --- ../net/minecraft/entity/ai/EntityAIMate.java
 +++ ../net/minecraft/entity/ai/EntityAIMate.java
-@@ -4,6 +4,7 @@
+@@ -3,6 +3,7 @@
+ import java.util.Iterator;
  import java.util.List;
  import java.util.Random;
++import net.minecraft.entity.Entity;
  import net.minecraft.entity.EntityAgeable;
-+import net.minecraft.entity.EntityLiving;
  import net.minecraft.entity.item.EntityXPOrb;
  import net.minecraft.entity.passive.EntityAnimal;
- import net.minecraft.world.World;
 @@ -51,7 +52,7 @@
      public void func_75246_d()
      {
          this.field_75390_d.func_70671_ap().func_75651_a(this.field_75391_e, 10.0F, (float)this.field_75390_d.func_70646_bf());
 -        this.field_75390_d.func_70661_as().func_75497_a(this.field_75391_e, this.field_75393_c);
-+        this.field_75390_d.func_70661_as().func_75497_a((EntityLiving) this.field_75391_e, this.field_75393_c);
++        this.field_75390_d.func_70661_as().func_75497_a((Entity) this.field_75391_e, this.field_75393_c);
          ++this.field_75392_b;
  
          if (this.field_75392_b >= 60 && this.field_75390_d.func_70068_e(this.field_75391_e) < 9.0D)

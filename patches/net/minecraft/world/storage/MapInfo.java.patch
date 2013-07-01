@@ -1,6 +1,6 @@
 --- ../net/minecraft/world/storage/MapInfo.java
 +++ ../net/minecraft/world/storage/MapInfo.java
-@@ -48,22 +48,31 @@
+@@ -45,22 +45,31 @@
          {
              int i;
              int j;
@@ -38,7 +38,7 @@
                  boolean flag = !p_76204_1_.func_82839_y();
  
                  if (this.field_76206_g != null && this.field_76206_g.length == abyte.length)
-@@ -104,7 +113,7 @@
+@@ -101,7 +110,7 @@
  
                      for (int i1 = 0; i1 < abyte1.length - 3; ++i1)
                      {

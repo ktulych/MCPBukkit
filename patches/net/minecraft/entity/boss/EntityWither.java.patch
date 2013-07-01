@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/boss/EntityWither.java
 +++ ../net/minecraft/entity/boss/EntityWither.java
-@@ -25,6 +25,11 @@
+@@ -27,6 +27,11 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
  
@@ -12,20 +12,10 @@
  public class EntityWither extends EntityMob implements IRangedAttackMob
  {
      private float[] field_82220_d = new float[2];
-@@ -97,7 +102,7 @@
-     {
-         if (!this.field_70170_p.field_72995_K)
-         {
--            this.field_70180_af.func_75692_b(16, Integer.valueOf(this.field_70734_aK));
-+            this.field_70180_af.func_75692_b(16, Integer.valueOf(this.getScaledHealth())); // CraftBukkit - this.health -> this.getScaledHealth()
-         }
- 
-         this.field_70181_x *= 0.6000000238418579D;
-@@ -214,7 +219,16 @@
+@@ -207,6 +212,16 @@
  
              if (i <= 0)
              {
--                this.field_70170_p.func_72885_a(this, this.field_70165_t, this.field_70163_u + (double)this.func_70047_e(), this.field_70161_v, 7.0F, false, this.field_70170_p.func_82736_K().func_82766_b("mobGriefing"));
 +                // CraftBukkit start
 +                ExplosionPrimeEvent event = new ExplosionPrimeEvent(this.getBukkitEntity(), 7.0F, false);
 +                this.field_70170_p.getServer().getPluginManager().callEvent(event);
@@ -36,19 +26,19 @@
 +                }
 +
 +                // CraftBukkit end
+                 this.field_70170_p.func_72885_a(this, this.field_70165_t, this.field_70163_u + (double)this.func_70047_e(), this.field_70161_v, 7.0F, false, this.field_70170_p.func_82736_K().func_82766_b("mobGriefing"));
                  this.field_70170_p.func_82739_e(1013, (int)this.field_70165_t, (int)this.field_70163_u, (int)this.field_70161_v, 0);
              }
- 
-@@ -222,7 +236,7 @@
+@@ -215,7 +230,7 @@
  
              if (this.field_70173_aa % 10 == 0)
              {
--                this.func_70691_i(10);
-+                this.heal(10, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.WITHER_SPAWN); // CraftBukkit
+-                this.func_70691_i(10.0F);
++                this.heal(10.0F, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.WITHER_SPAWN); // CraftBukkit
              }
          }
          else
-@@ -238,11 +252,11 @@
+@@ -231,11 +246,11 @@
  
                      if (this.field_70170_p.field_73013_u >= 2)
                      {
@@ -65,7 +55,7 @@
                          {
                              float f = 10.0F;
                              float f1 = 5.0F;
-@@ -335,6 +349,13 @@
+@@ -328,6 +343,13 @@
  
                                  if (i3 > 0 && i3 != Block.field_71986_z.field_71990_ca && i3 != Block.field_72102_bH.field_71990_ca && i3 != Block.field_72104_bI.field_71990_ca)
                                  {
@@ -79,7 +69,7 @@
                                      flag = this.field_70170_p.func_94578_a(j2, k2, l2, true) || flag;
                                  }
                              }
-@@ -503,7 +524,11 @@
+@@ -496,7 +518,11 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -92,12 +82,23 @@
      }
  
      protected void func_70623_bb()
-@@ -557,7 +582,7 @@
+@@ -509,7 +535,9 @@
+         return !this.field_70128_L;
+     }
+ 
+-    protected void func_70069_a(float p_70069_1_) {}
++    protected void func_70069_a(float p_70069_1_)
++    {
++    }
+ 
+     public void func_70690_d(PotionEffect p_70690_1_) {}
+ 
+@@ -548,7 +576,7 @@
  
      public boolean func_82205_o()
      {
--        return this.func_70968_i() <= this.func_70667_aM() / 2;
-+        return this.func_70968_i() <= this.maxHealth / 2; // CraftBukkit - this.getMaxHealth() -> this.maxHealth
+-        return this.func_110143_aJ() <= this.func_110138_aP() / 2.0F;
++        return this.func_110143_aJ() <= this.maxHealth / 2.0F; // CraftBukkit - this.getMaxHealth() -> this.maxHealth
      }
  
      public EnumCreatureAttribute func_70668_bt()

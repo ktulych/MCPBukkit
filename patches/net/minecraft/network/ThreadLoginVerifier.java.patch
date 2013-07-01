@@ -15,13 +15,13 @@
  {
      final NetLoginHandler field_72590_a;
  
--    ThreadLoginVerifier(NetLoginHandler p_i3399_1_)
+-    ThreadLoginVerifier(NetLoginHandler p_i1526_1_)
 +    // CraftBukkit start
 +    CraftServer server;
 +
 +    ThreadLoginVerifier(NetLoginHandler pendingconnection, CraftServer server)
      {
--        this.field_72590_a = p_i3399_1_;
+-        this.field_72590_a = p_i1526_1_;
 +        this.server = server;
 +        // CraftBukkit end
 +        this.field_72590_a = pendingconnection;

@@ -88,7 +88,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public boolean isOnline() {
         for (Object obj : server.getHandle().field_72404_b) {
             net.minecraft.entity.player.EntityPlayerMP player = (net.minecraft.entity.player.EntityPlayerMP) obj;
-            if (player.field_71092_bJ.equalsIgnoreCase(getName())) {
+            if (player.func_70005_c_().equalsIgnoreCase(getName())) {
                 return true;
             }
         }
@@ -127,7 +127,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void sendRawMessage(String message) {
         if (getHandle().field_71135_a == null) return;
 
-        getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet3Chat(message));
+        getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet3Chat(net.minecraft.util.ChatMessageComponent.func_111066_d(message)));
     }
 
     public void sendMessage(String message) {
@@ -858,10 +858,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
     }
 
+    @Override
     public EntityType getType() {
         return EntityType.PLAYER;
     }
 
+    @Override
     public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
         server.getPlayerMetadata().setMetadata(this, metadataKey, newMetadataValue);
     }
@@ -966,11 +968,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
     }
 
-    public void setMaxHealth(int amount) {
+    @Override
+    public void setMaxHealth(double amount) {
         super.setMaxHealth(amount);
         getHandle().func_71118_n();
     }
 
+    @Override
     public void resetMaxHealth() {
         super.resetMaxHealth();
         getHandle().func_71118_n();

@@ -15,12 +15,12 @@
 -    private int field_75127_a = 20;
 -    private float field_75125_b = 5.0F;
 -    private float field_75126_c;
--    private int field_75123_d = 0;
+-    private int field_75123_d;
 +    // CraftBukkit start - All made public
 +    public int field_75127_a = 20;
 +    public float field_75125_b = 5.0F;
 +    public float field_75126_c;
-+    public int field_75123_d = 0;
++    public int field_75123_d;
 +    // CraftBukkit end
      private int field_75124_e = 20;
 +
@@ -41,18 +41,19 @@
 +                    this.field_75127_a = event.getFoodLevel();
 +                }
 +
-+                ((EntityPlayerMP) p_75118_1_).field_71135_a.func_72567_b(new Packet8UpdateHealth(p_75118_1_.func_70630_aN(), this.field_75127_a, this.field_75125_b));
++                ((EntityPlayerMP) p_75118_1_).field_71135_a.func_72567_b(new Packet8UpdateHealth(p_75118_1_.func_110143_aJ(), this.field_75127_a, this.field_75125_b));
 +                // CraftBukkit end
              }
          }
  
-@@ -48,7 +64,8 @@
+@@ -48,8 +64,8 @@
  
              if (this.field_75123_d >= 80)
              {
--                p_75118_1_.func_70691_i(1);
+-                p_75118_1_.func_70691_i(1.0F);
+-                this.func_75113_a(3.0F);
 +                // CraftBukkit - added RegainReason
-+                p_75118_1_.heal(1, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.SATIATED);
++                p_75118_1_.heal(1.0F, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.SATIATED);
                  this.field_75123_d = 0;
              }
          }

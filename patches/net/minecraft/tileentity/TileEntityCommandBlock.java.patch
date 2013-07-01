@@ -1,6 +1,6 @@
 --- ../net/minecraft/tileentity/TileEntityCommandBlock.java
 +++ ../net/minecraft/tileentity/TileEntityCommandBlock.java
-@@ -1,19 +1,32 @@
+@@ -1,7 +1,11 @@
  package net.minecraft.tileentity;
  
 -import net.minecraft.command.ICommandManager;
@@ -13,14 +13,15 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.network.packet.Packet;
  import net.minecraft.network.packet.Packet132TileEntityData;
- import net.minecraft.server.MinecraftServer;
+@@ -9,12 +13,21 @@
+ import net.minecraft.util.ChatMessageComponent;
  import net.minecraft.util.ChunkCoordinates;
  import net.minecraft.world.World;
 +// CraftBukkit end
  
  public class TileEntityCommandBlock extends TileEntity implements ICommandSender
  {
-     private int field_96106_a = 0;
+     private int field_96106_a;
 -    private String field_82354_a = "";
 +    public String field_82354_a = ""; // CraftBukkit - private -> public
      private String field_96105_c = "@";
@@ -35,7 +36,7 @@
  
      public void func_82352_b(String p_82352_1_)
      {
-@@ -33,8 +46,108 @@
+@@ -34,8 +47,108 @@
  
              if (minecraftserver != null && minecraftserver.func_82356_Z())
              {
@@ -146,7 +147,7 @@
              }
              else
              {
-@@ -43,6 +156,31 @@
+@@ -44,6 +157,31 @@
          }
      }
  

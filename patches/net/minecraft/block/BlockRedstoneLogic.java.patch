@@ -50,3 +50,12 @@
          {
              boolean flag = this.func_94478_d(p_94479_1_, p_94479_2_, p_94479_3_, p_94479_4_, i1);
  
+@@ -289,7 +305,7 @@
+         return this.func_94481_j_(p_94486_1_);
+     }
+ 
+-    protected abstract int func_94481_j_(int i);
++    protected abstract int func_94481_j_(int p_94481_1_);
+ 
+     protected abstract BlockRedstoneLogic func_94485_e();
+ 

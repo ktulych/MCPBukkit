@@ -9,8 +9,8 @@
 +import org.bukkit.event.entity.EntityTargetEvent;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.EntityFlying;
- import net.minecraft.entity.player.EntityPlayer;
-@@ -7,11 +11,13 @@
+ import net.minecraft.entity.SharedMonsterAttributes;
+@@ -8,11 +12,13 @@
  import net.minecraft.item.Item;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.stats.AchievementList;
@@ -27,13 +27,13 @@
 @@ -43,7 +49,7 @@
          else if ("fireball".equals(p_70097_1_.func_76355_l()) && p_70097_1_.func_76346_g() instanceof EntityPlayer)
          {
-             super.func_70097_a(p_70097_1_, 1000);
+             super.func_70097_a(p_70097_1_, 1000.0F);
 -            ((EntityPlayer)p_70097_1_.func_76346_g()).func_71029_a(AchievementList.field_76028_y);
 +            ((EntityPlayer) p_70097_1_.func_76346_g()).func_71029_a((StatBase) AchievementList.field_76028_y);
              return true;
          }
          else
-@@ -112,12 +118,49 @@
+@@ -106,12 +112,49 @@
  
          if (this.field_70792_g != null && this.field_70792_g.field_70128_L)
          {
@@ -85,7 +85,7 @@
  
              if (this.field_70792_g != null)
              {
-@@ -127,7 +170,7 @@
+@@ -121,7 +164,7 @@
  
          double d4 = 64.0D;
  
@@ -94,7 +94,7 @@
          {
              double d5 = this.field_70792_g.field_70165_t - this.field_70165_t;
              double d6 = this.field_70792_g.field_70121_D.field_72338_b + (double)(this.field_70792_g.field_70131_O / 2.0F) - (this.field_70163_u + (double)(this.field_70131_O / 2.0F));
-@@ -147,7 +190,8 @@
+@@ -141,7 +184,8 @@
                  {
                      this.field_70170_p.func_72889_a((EntityPlayer)null, 1008, (int)this.field_70165_t, (int)this.field_70163_u, (int)this.field_70161_v, 0);
                      EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.field_70170_p, this, d5, d6, d7);
@@ -104,7 +104,7 @@
                      double d8 = 4.0D;
                      Vec3 vec3 = this.func_70676_i(1.0F);
                      entitylargefireball.field_70165_t = this.field_70165_t + vec3.field_72450_a * d8;
-@@ -226,20 +270,25 @@
+@@ -220,20 +264,25 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {

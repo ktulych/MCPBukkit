@@ -7,7 +7,7 @@
 -
  public class EntityExpBottle extends EntityThrowable
  {
-     public EntityExpBottle(World p_i3592_1_)
+     public EntityExpBottle(World p_i1785_1_)
 @@ -41,8 +40,19 @@
      {
          if (!this.field_70170_p.field_72995_K)

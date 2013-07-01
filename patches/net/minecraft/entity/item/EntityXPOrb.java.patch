@@ -18,7 +18,7 @@
  public class EntityXPOrb extends Entity
  {
 @@ -15,7 +19,7 @@
-     public int field_70531_b = 0;
+     public int field_70531_b;
      public int field_70532_c;
      private int field_70529_d = 5;
 -    private int field_70530_e;

@@ -16,8 +16,8 @@
  public class ContainerFurnace extends Container
  {
 @@ -13,12 +17,30 @@
-     private int field_75157_g = 0;
-     private int field_75159_h = 0;
+     private int field_75157_g;
+     private int field_75159_h;
  
 +    // CraftBukkit start
 +    private CraftInventoryView bukkitEntity = null;
@@ -36,13 +36,13 @@
 +    }
 +    // CraftBukkit end
 +
-     public ContainerFurnace(InventoryPlayer p_i3607_1_, TileEntityFurnace p_i3607_2_)
+     public ContainerFurnace(InventoryPlayer p_i1812_1_, TileEntityFurnace p_i1812_2_)
      {
-         this.field_75158_e = p_i3607_2_;
-         this.func_75146_a(new Slot(p_i3607_2_, 0, 56, 17));
-         this.func_75146_a(new Slot(p_i3607_2_, 1, 56, 53));
-         this.func_75146_a(new SlotFurnace(p_i3607_1_.field_70458_d, p_i3607_2_, 2, 116, 35));
-+        this.player = p_i3607_1_; // CraftBukkit - save player
+         this.field_75158_e = p_i1812_2_;
+         this.func_75146_a(new Slot(p_i1812_2_, 0, 56, 17));
+         this.func_75146_a(new Slot(p_i1812_2_, 1, 56, 53));
+         this.func_75146_a(new SlotFurnace(p_i1812_1_.field_70458_d, p_i1812_2_, 2, 116, 35));
++        this.player = p_i1812_1_; // CraftBukkit - save player
          int i;
  
          for (i = 0; i < 3; ++i)

@@ -33,12 +33,12 @@
      private boolean field_71338_p;
      private EnumGameType field_71337_q;
      private NetworkListenThread field_71336_r;
-     private boolean field_71335_s = false;
+     private boolean field_71335_s;
  
--    public DedicatedServer(File p_i3382_1_)
+-    public DedicatedServer(File p_i1508_1_)
 -    {
--        super(p_i3382_1_);
--        this.field_98131_l = new LogAgent("Minecraft-Server", (String)null, (new File(p_i3382_1_, "server.log")).getAbsolutePath());
+-        super(p_i1508_1_);
+-        this.field_98131_l = new LogAgent("Minecraft-Server", (String)null, (new File(p_i1508_1_, "server.log")).getAbsolutePath());
 +    // CraftBukkit start - Signature changed
 +    public DedicatedServer(joptsimple.OptionSet options)
 +    {
@@ -55,10 +55,10 @@
          dedicatedservercommandthread.setDaemon(true);
          dedicatedservercommandthread.start();
 +        // CraftBukkit start
-+        System.setOut(new PrintStream(new LoggerOutputStream(this.func_98033_al().func_98076_a(), Level.INFO), true));
-+        System.setErr(new PrintStream(new LoggerOutputStream(this.func_98033_al().func_98076_a(), Level.SEVERE), true));
++        System.setOut(new PrintStream(new LoggerOutputStream(this.func_98033_al().func_120013_a(), Level.INFO), true));
++        System.setErr(new PrintStream(new LoggerOutputStream(this.func_98033_al().func_120013_a(), Level.SEVERE), true));
 +        // CraftBukkit end
-         this.func_98033_al().func_98233_a("Starting minecraft server version 1.5.2");
+         this.func_98033_al().func_98233_a("Starting minecraft server version 1.6.1");
  
          if (Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
 @@ -61,7 +77,7 @@

@@ -21,12 +21,12 @@
 +    private InventoryPlayer player;
 +    // CraftBukkit end
  
-     public ContainerDispenser(IInventory p_i3617_1_, TileEntityDispenser p_i3617_2_)
+     public ContainerDispenser(IInventory p_i1825_1_, TileEntityDispenser p_i1825_2_)
      {
-         this.field_75182_e = p_i3617_2_;
+         this.field_75182_e = p_i1825_2_;
 +        // CraftBukkit start - Save player
 +        // TODO: Should we check to make sure it really is an InventoryPlayer?
-+        this.player = (InventoryPlayer)p_i3617_1_;
++        this.player = (InventoryPlayer)p_i1825_1_;
 +        // CraftBukkit end
          int i;
          int j;

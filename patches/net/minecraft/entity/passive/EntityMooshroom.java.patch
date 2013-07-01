@@ -7,7 +7,7 @@
  import net.minecraft.block.Block;
  import net.minecraft.entity.EntityAgeable;
  import net.minecraft.entity.item.EntityItem;
-@@ -38,6 +39,16 @@
+@@ -37,6 +38,16 @@
  
          if (itemstack != null && itemstack.field_77993_c == Item.field_77745_be.field_77779_bT && this.func_70874_b() >= 0)
          {

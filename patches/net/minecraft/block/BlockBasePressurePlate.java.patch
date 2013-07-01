@@ -29,3 +29,18 @@
  
          if (p_72193_5_ != i1)
          {
+@@ -191,9 +206,9 @@
+         return 1;
+     }
+ 
+-    protected abstract int func_94351_d(World world, int i, int j, int k);
+-
+-    protected abstract int func_94350_c(int i);
+-
+-    protected abstract int func_94355_d(int i);
++    protected abstract int func_94351_d(World p_94351_1_, int p_94351_2_, int p_94351_3_, int p_94351_4_);
++
++    protected abstract int func_94350_c(int p_94350_1_);
++
++    protected abstract int func_94355_d(int p_94355_1_);
+ }

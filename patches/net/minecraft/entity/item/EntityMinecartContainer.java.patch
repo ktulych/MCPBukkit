@@ -65,7 +65,7 @@
 +    }
 +    // CraftBukkit end
  
-     public EntityMinecartContainer(World p_i10051_1_)
+     public EntityMinecartContainer(World p_i1716_1_)
      {
 @@ -243,7 +292,7 @@
  

@@ -22,24 +22,24 @@
      public float field_70290_d;
 +    private int lastTick = MinecraftServer.currentTick; // CraftBukkit
  
-     public EntityItem(World p_i8007_1_, double p_i8007_2_, double p_i8007_4_, double p_i8007_6_)
+     public EntityItem(World p_i1709_1_, double p_i1709_2_, double p_i1709_4_, double p_i1709_6_)
      {
-@@ -39,6 +44,14 @@
-     public EntityItem(World p_i3539_1_, double p_i3539_2_, double p_i3539_4_, double p_i3539_6_, ItemStack p_i3539_8_)
+@@ -38,6 +43,14 @@
+     public EntityItem(World p_i1710_1_, double p_i1710_2_, double p_i1710_4_, double p_i1710_6_, ItemStack p_i1710_8_)
      {
-         this(p_i3539_1_, p_i3539_2_, p_i3539_4_, p_i3539_6_);
+         this(p_i1710_1_, p_i1710_2_, p_i1710_4_, p_i1710_6_);
 +
 +        // CraftBukkit start - Can't set null items in the datawatcher
-+        if (p_i3539_8_ == null || p_i3539_8_.func_77973_b() == null)
++        if (p_i1710_8_ == null || p_i1710_8_.func_77973_b() == null)
 +        {
 +            return;
 +        }
 +
 +        // CraftBukkit end
-         this.func_92058_a(p_i3539_8_);
+         this.func_92058_a(p_i1710_8_);
      }
  
-@@ -65,12 +78,12 @@
+@@ -63,12 +76,12 @@
      public void func_70071_h_()
      {
          super.func_70071_h_();
@@ -58,7 +58,7 @@
          this.field_70169_q = this.field_70165_t;
          this.field_70167_r = this.field_70163_u;
          this.field_70166_s = this.field_70161_v;
-@@ -117,10 +130,17 @@
+@@ -115,10 +128,17 @@
              this.field_70181_x *= -0.5D;
          }
  
@@ -78,7 +78,7 @@
              this.func_70106_y();
          }
      }
-@@ -194,7 +214,7 @@
+@@ -192,7 +212,7 @@
  
      public boolean func_70072_I()
      {
@@ -87,7 +87,7 @@
      }
  
      protected void func_70081_e(int p_70081_1_)
-@@ -242,8 +262,27 @@
+@@ -240,8 +260,27 @@
          this.field_70291_e = p_70037_1_.func_74765_d("Health") & 255;
          this.field_70292_b = p_70037_1_.func_74765_d("Age");
          NBTTagCompound nbttagcompound1 = p_70037_1_.func_74775_l("Item");
@@ -117,7 +117,7 @@
          if (this.func_92059_d() == null)
          {
              this.func_70106_y();
-@@ -256,27 +295,49 @@
+@@ -254,27 +293,49 @@
          {
              ItemStack itemstack = this.func_92059_d();
              int i = itemstack.field_77994_a;
@@ -129,7 +129,7 @@
 +            {
 +                itemstack.field_77994_a = canHold;
 +                PlayerPickupItemEvent event = new PlayerPickupItemEvent((org.bukkit.entity.Player) p_70100_1_.getBukkitEntity(), (org.bukkit.entity.Item) this.getBukkitEntity(), remaining);
-+                event.setCancelled(!p_70100_1_.field_82172_bs);
++                // event.setCancelled(!entityhuman.canPickUpLoot); TODO
 +                this.field_70170_p.getServer().getPluginManager().callEvent(event);
 +                itemstack.field_77994_a = canHold + remaining;
 +

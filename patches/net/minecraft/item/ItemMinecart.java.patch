@@ -1,13 +1,6 @@
 --- ../net/minecraft/item/ItemMinecart.java
 +++ ../net/minecraft/item/ItemMinecart.java
-@@ -1,13 +1,12 @@
- package net.minecraft.item;
- 
- import net.minecraft.block.BlockDispenser;
--import net.minecraft.block.BlockRailBase;
-+import net.minecraft.block.BlockRail;
- import net.minecraft.creativetab.CreativeTabs;
- import net.minecraft.dispenser.IBehaviorDispenseItem;
+@@ -7,7 +7,6 @@
  import net.minecraft.entity.item.EntityMinecart;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.world.World;
@@ -15,12 +8,7 @@
  public class ItemMinecart extends Item
  {
      private static final IBehaviorDispenseItem field_96602_b = new BehaviorDispenseMinecart();
-@@ -26,10 +25,19 @@
-     {
-         int i1 = p_77648_3_.func_72798_a(p_77648_4_, p_77648_5_, p_77648_6_);
- 
--        if (BlockRailBase.func_72184_d(i1))
-+        if (BlockRail.func_72184_d(i1))
+@@ -30,6 +29,15 @@
          {
              if (!p_77648_3_.field_72995_K)
              {

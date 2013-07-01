@@ -15,8 +15,8 @@ public class ServerCommandListener implements net.minecraft.command.ICommandSend
         this.prefix = parts[parts.length - 1];
     }
 
-    public void func_70006_a(String msg) {
-        this.commandSender.sendMessage(msg);
+    public void func_70006_a(net.minecraft.util.ChatMessageComponent chatmessage) {
+        this.commandSender.sendMessage(chatmessage.toString());
     }
 
     public CommandSender getSender() {
@@ -33,15 +33,15 @@ public class ServerCommandListener implements net.minecraft.command.ICommandSend
         return this.prefix;
     }
 
-    public String func_70004_a(String s, Object... aobject) {
-        return net.minecraft.util.StringTranslate.func_74808_a().func_74803_a(s, aobject);
-    }
-
     public boolean func_70003_b(int i, String s) {
         return true;
     }
 
     public net.minecraft.util.ChunkCoordinates func_82114_b() {
         return new net.minecraft.util.ChunkCoordinates(0, 0, 0);
+    }
+
+    public net.minecraft.world.World func_130014_f_() {
+        return null;
     }
 }

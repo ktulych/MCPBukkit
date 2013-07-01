@@ -8,7 +8,7 @@
  import java.util.HashSet;
  import java.util.Iterator;
  import java.util.List;
-@@ -8,6 +9,7 @@
+@@ -8,16 +9,14 @@
  import java.util.Set;
  import java.util.TreeSet;
  import net.minecraft.block.Block;
@@ -16,16 +16,17 @@
  import net.minecraft.block.BlockEventData;
  import net.minecraft.crash.CrashReport;
  import net.minecraft.crash.CrashReportCategory;
-@@ -16,8 +18,6 @@
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityTracker;
  import net.minecraft.entity.EnumCreatureType;
- import net.minecraft.entity.INpc;
+-import net.minecraft.entity.INpc;
  import net.minecraft.entity.effect.EntityLightningBolt;
 -import net.minecraft.entity.passive.EntityAnimal;
 -import net.minecraft.entity.passive.EntityWaterMob;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.EntityPlayerMP;
  import net.minecraft.item.Item;
-@@ -25,7 +25,6 @@
+@@ -25,7 +24,6 @@
  import net.minecraft.network.packet.Packet38EntityStatus;
  import net.minecraft.network.packet.Packet54PlayNoteBlock;
  import net.minecraft.network.packet.Packet60Explosion;
@@ -33,7 +34,7 @@
  import net.minecraft.network.packet.Packet71Weather;
  import net.minecraft.profiler.Profiler;
  import net.minecraft.scoreboard.ScoreboardSaveData;
-@@ -33,6 +32,18 @@
+@@ -33,6 +31,18 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.management.PlayerManager;
  import net.minecraft.tileentity.TileEntity;
@@ -52,7 +53,7 @@
  import net.minecraft.util.ChunkCoordinates;
  import net.minecraft.util.IProgressUpdate;
  import net.minecraft.util.IntHashMap;
-@@ -51,10 +62,22 @@
+@@ -51,10 +61,22 @@
  import net.minecraft.world.gen.feature.WorldGeneratorBonusChest;
  import net.minecraft.world.storage.ISaveHandler;
  
@@ -77,14 +78,14 @@
      private final PlayerManager field_73063_M;
      private Set field_73064_N;
      private TreeSet field_73065_O;
-@@ -69,12 +92,18 @@
-     private ArrayList field_94579_S = new ArrayList();
+@@ -70,12 +92,18 @@
+     private List field_94579_S = new ArrayList();
      private IntHashMap field_73066_T;
  
--    public WorldServer(MinecraftServer p_i11031_1_, ISaveHandler p_i11031_2_, String p_i11031_3_, int p_i11031_4_, WorldSettings p_i11031_5_, Profiler p_i11031_6_, ILogAgent p_i11031_7_)
+-    public WorldServer(MinecraftServer p_i1522_1_, ISaveHandler p_i1522_2_, String p_i1522_3_, int p_i1522_4_, WorldSettings p_i1522_5_, Profiler p_i1522_6_, ILogAgent p_i1522_7_)
 -    {
--        super(p_i11031_2_, p_i11031_3_, p_i11031_5_, WorldProvider.func_76570_a(p_i11031_4_), p_i11031_6_, p_i11031_7_);
--        this.field_73061_a = p_i11031_1_;
+-        super(p_i1522_2_, p_i1522_3_, p_i1522_5_, WorldProvider.func_76570_a(p_i1522_4_), p_i1522_6_, p_i1522_7_);
+-        this.field_73061_a = p_i1522_1_;
 +    // CraftBukkit start
 +    public final int dimension;
 +
@@ -96,27 +97,26 @@
 +        // CraftBukkit end
 +        this.field_73061_a = minecraftserver;
          this.field_73062_L = new EntityTracker(this);
--        this.field_73063_M = new PlayerManager(this, p_i11031_1_.func_71203_ab().func_72395_o());
+-        this.field_73063_M = new PlayerManager(this, p_i1522_1_.func_71203_ab().func_72395_o());
 +        this.field_73063_M = new PlayerManager(this, minecraftserver.func_71203_ab().func_72395_o());
  
          if (this.field_73066_T == null)
          {
-@@ -91,8 +120,8 @@
+@@ -92,8 +120,8 @@
              this.field_73065_O = new TreeSet();
          }
  
 -        this.field_85177_Q = new Teleporter(this);
--        this.field_96442_D = new ServerScoreboard(p_i11031_1_);
+-        this.field_96442_D = new ServerScoreboard(p_i1522_1_);
 +        this.field_85177_Q = new org.bukkit.craftbukkit.CraftTravelAgent(this); // CraftBukkit
 +        this.field_96442_D = new ServerScoreboard(minecraftserver);
          ScoreboardSaveData scoreboardsavedata = (ScoreboardSaveData)this.field_72988_C.func_75742_a(ScoreboardSaveData.class, "scoreboard");
  
          if (scoreboardsavedata == null)
-@@ -104,6 +133,133 @@
-         scoreboardsavedata.func_96499_a(this.field_96442_D);
+@@ -106,6 +134,133 @@
          ((ServerScoreboard)this.field_96442_D).func_96547_a(scoreboardsavedata);
      }
-+
+ 
 +    // CraftBukkit start
 +    @Override
 +    public TileEntity func_72796_p(int i, int j, int k)
@@ -215,7 +215,7 @@
 +    private TileEntity fixTileEntity(int x, int y, int z, int type, TileEntity found)
 +    {
 +        this.getServer().getLogger().severe("Block at " + x + "," + y + "," + z + " is " + org.bukkit.Material.getMaterial(type).toString() + " but has " + found + ". "
-+                + "Bukkit will attempt to fix this, but there may be additional damage that we cannot recover.");
++                                            + "Bukkit will attempt to fix this, but there may be additional damage that we cannot recover.");
 +
 +        if (Block.field_71973_m[type] instanceof BlockContainer)
 +        {
@@ -243,17 +243,18 @@
 +        }
 +    }
 +    // CraftBukkit end
- 
++
      public void func_72835_b()
      {
-@@ -134,12 +290,15 @@
+         super.func_72835_b();
+@@ -129,12 +284,15 @@
          }
  
          this.field_72984_F.func_76320_a("mobSpawner");
 -
 -        if (this.func_82736_K().func_82766_b("doMobSpawning"))
 -        {
--            SpawnerAnimals.func_77192_a(this, this.field_72985_G, this.field_72992_H, this.field_72986_A.func_82573_f() % 400L == 0L);
+-            this.field_135059_Q.func_77192_a(this, this.field_72985_G, this.field_72992_H, this.field_72986_A.func_82573_f() % 400L == 0L);
 -        }
 -
 +        // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
@@ -261,14 +262,14 @@
 +
 +        if (this.func_82736_K().func_82766_b("doMobSpawning") && (this.field_72985_G || this.field_72992_H) && (this instanceof WorldServer && this.field_73010_i.size() > 0))
 +        {
-+            SpawnerAnimals.func_77192_a(this, this.field_72985_G && (this.ticksPerMonsterSpawns != 0 && time % this.ticksPerMonsterSpawns == 0L), this.field_72992_H && (this.ticksPerAnimalSpawns != 0 && time % this.ticksPerAnimalSpawns == 0L), this.field_72986_A.func_82573_f() % 400L == 0L);
++            this.field_135059_Q.func_77192_a(this, this.field_72985_G && (this.ticksPerMonsterSpawns != 0 && time % this.ticksPerMonsterSpawns == 0L), this.field_72992_H && (this.ticksPerAnimalSpawns != 0 && time % this.ticksPerAnimalSpawns == 0L), this.field_72986_A.func_82573_f() % 400L == 0L);
 +        }
 +
 +        // CraftBukkit end
          this.field_72984_F.func_76318_c("chunkSource");
          this.field_73020_y.func_73156_b();
          int j = this.func_72967_a(1.0F);
-@@ -164,12 +323,13 @@
+@@ -164,12 +322,13 @@
          this.field_85177_Q.func_85189_a(this.func_82737_E());
          this.field_72984_F.func_76319_b();
          this.func_73055_Q();
@@ -283,7 +284,7 @@
      }
  
      public void func_72854_c()
-@@ -181,7 +341,7 @@
+@@ -181,7 +340,7 @@
          {
              EntityPlayer entityplayer = (EntityPlayer)iterator.next();
  
@@ -292,7 +293,7 @@
              {
                  this.field_73068_P = false;
                  break;
-@@ -209,10 +369,25 @@
+@@ -209,10 +368,25 @@
  
      private void func_73051_P()
      {
@@ -322,7 +323,7 @@
      }
  
      public boolean func_73056_e()
-@@ -220,19 +395,28 @@
+@@ -220,19 +394,28 @@
          if (this.field_73068_P && !this.field_72995_K)
          {
              Iterator iterator = this.field_73010_i.iterator();
@@ -355,7 +356,7 @@
              return false;
          }
          else
-@@ -246,15 +430,19 @@
+@@ -246,15 +429,19 @@
          super.func_72893_g();
          int i = 0;
          int j = 0;
@@ -383,7 +384,7 @@
              this.func_72941_a(k, l, chunk);
              this.field_72984_F.func_76318_c("tickChunk");
              chunk.func_76586_k();
-@@ -291,12 +479,34 @@
+@@ -291,12 +478,34 @@
  
                  if (this.func_72850_v(j1 + k, l1 - 1, k1 + l))
                  {
@@ -420,7 +421,7 @@
                  }
  
                  if (this.func_72896_J())
-@@ -420,7 +630,7 @@
+@@ -422,7 +631,7 @@
  
      public void func_72939_s()
      {
@@ -429,7 +430,7 @@
          {
              if (this.field_80004_Q++ >= 1200)
              {
-@@ -452,7 +662,17 @@
+@@ -454,7 +663,17 @@
          {
              if (i > 1000)
              {
@@ -448,7 +449,7 @@
              }
  
              this.field_72984_F.func_76320_a("cleaning");
-@@ -544,11 +764,11 @@
+@@ -546,11 +765,11 @@
              else
              {
                  iterator = this.field_94579_S.iterator();
@@ -458,37 +459,53 @@
 -                    System.out.println(this.field_94579_S.size());
 -                }
 +                /* CraftBukkit start - Comment out debug spam
-+                if (!this.T.isEmpty()) {
-+                    System.out.println(this.T.size());
++                if (!this.U.isEmpty()) {
++                    System.out.println(this.U.size());
 +                }
 +                // CraftBukkit end */
              }
  
              while (iterator.hasNext())
-@@ -578,16 +798,16 @@
+@@ -578,23 +797,21 @@
+         return arraylist;
+     }
  
-     public void func_72866_a(Entity p_72866_1_, boolean p_72866_2_)
-     {
+-    public void func_72866_a(Entity p_72866_1_, boolean p_72866_2_)
+-    {
 -        if (!this.field_73061_a.func_71268_U() && (p_72866_1_ instanceof EntityAnimal || p_72866_1_ instanceof EntityWaterMob))
-+        /* CraftBukkit start - We prevent spawning in general, so this butchering is not needed
-+        if (!this.server.getSpawnAnimals() && (entity instanceof EntityAnimal || entity instanceof EntityWaterAnimal)) {
-+            entity.die();
-+        }
-+        // CraftBukkit end */
-+        if (!this.field_73061_a.func_71220_V() && p_72866_1_ instanceof INpc)
-         {
-             p_72866_1_.func_70106_y();
-         }
- 
+-        {
+-            p_72866_1_.func_70106_y();
+-        }
+-
 -        if (!this.field_73061_a.func_71220_V() && p_72866_1_ instanceof INpc)
 -        {
 -            p_72866_1_.func_70106_y();
 -        }
 -
-         if (!(p_72866_1_.field_70153_n instanceof EntityPlayer))
-         {
-             super.func_72866_a(p_72866_1_, p_72866_2_);
-@@ -602,7 +822,28 @@
+-        if (!(p_72866_1_.field_70153_n instanceof EntityPlayer))
+-        {
+-            super.func_72866_a(p_72866_1_, p_72866_2_);
+-        }
+-    }
++    /* CraftBukkit start - We prevent spawning in general, so this butchering is not needed
++    public void entityJoinedWorld(Entity entity, boolean flag) {
++        if (!this.server.getSpawnAnimals() && (entity instanceof EntityAnimal || entity instanceof EntityWaterAnimal)) {
++            entity.die();
++        }
++
++        if (!this.server.getSpawnNPCs() && entity instanceof NPC) {
++            entity.die();
++        }
++
++        if (!(entity.passenger instanceof EntityHuman)) {
++            super.entityJoinedWorld(entity, flag);
++        }
++    }
++    // CraftBukkit end */
+ 
+     public void func_73050_b(Entity p_73050_1_, boolean p_73050_2_)
+     {
+@@ -614,7 +831,28 @@
      protected IChunkProvider func_72970_h()
      {
          IChunkLoader ichunkloader = this.field_73019_z.func_75763_a(this.field_73011_w);
@@ -518,7 +535,7 @@
          return this.field_73059_b;
      }
  
-@@ -610,16 +851,31 @@
+@@ -622,16 +860,31 @@
      {
          ArrayList arraylist = new ArrayList();
  
@@ -560,7 +577,7 @@
          return arraylist;
      }
  
-@@ -666,6 +922,29 @@
+@@ -678,6 +931,29 @@
              int j = this.field_73011_w.func_76557_i();
              int k = 0;
  
@@ -590,7 +607,7 @@
              if (chunkposition != null)
              {
                  i = chunkposition.field_76930_a;
-@@ -678,7 +957,7 @@
+@@ -690,7 +966,7 @@
  
              int l = 0;
  
@@ -599,7 +616,7 @@
              {
                  i += random.nextInt(64) - random.nextInt(64);
                  k += random.nextInt(64) - random.nextInt(64);
-@@ -722,7 +1001,7 @@
+@@ -734,7 +1010,7 @@
          return this.field_73011_w.func_76554_h();
      }
  
@@ -608,7 +625,7 @@
      {
          if (this.field_73020_y.func_73157_c())
          {
-@@ -750,7 +1029,7 @@
+@@ -762,7 +1038,7 @@
          }
      }
  
@@ -617,7 +634,7 @@
      {
          this.func_72906_B();
          this.field_73019_z.func_75755_a(this.field_72986_A, this.field_73061_a.func_71203_ab().func_72378_q());
-@@ -794,9 +1073,19 @@
+@@ -806,9 +1082,19 @@
  
      public boolean func_72942_c(Entity p_72942_1_)
      {
@@ -638,7 +655,7 @@
              return true;
          }
          else
-@@ -813,11 +1102,21 @@
+@@ -825,11 +1111,21 @@
  
      public Explosion func_72885_a(Entity p_72885_1_, double p_72885_2_, double p_72885_4_, double p_72885_6_, float p_72885_8_, boolean p_72885_9_, boolean p_72885_10_)
      {
@@ -665,7 +682,7 @@
  
          if (!p_72885_10_)
          {
-@@ -872,7 +1171,8 @@
+@@ -884,7 +1180,8 @@
  
                  if (this.func_73043_a(blockeventdata))
                  {
@@ -675,7 +692,7 @@
                  }
              }
  
-@@ -898,14 +1198,16 @@
+@@ -910,14 +1207,16 @@
  
          if (flag != this.func_72896_J())
          {
@@ -700,7 +717,7 @@
          }
      }
  
-@@ -928,4 +1230,35 @@
+@@ -940,4 +1239,35 @@
      {
          return this.field_85177_Q;
      }

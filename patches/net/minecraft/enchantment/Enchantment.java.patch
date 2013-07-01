@@ -10,7 +10,7 @@
      public static final Enchantment field_77332_c = new EnchantmentProtection(0, 10, 0);
 @@ -51,6 +52,8 @@
          {
-             field_77331_b[p_i3709_1_] = this;
+             field_77331_b[p_i1926_1_] = this;
          }
 +
 +        org.bukkit.enchantments.Enchantment.registerEnchantment(new org.bukkit.craftbukkit.enchantments.CraftEnchantment(this)); // CraftBukkit

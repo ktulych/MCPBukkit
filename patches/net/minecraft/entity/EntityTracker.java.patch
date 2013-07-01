@@ -8,7 +8,7 @@
  import net.minecraft.crash.CrashReport;
  import net.minecraft.crash.CrashReportCategory;
  import net.minecraft.entity.boss.EntityDragon;
-@@ -42,7 +43,7 @@
+@@ -40,7 +41,7 @@
  {
      private final WorldServer field_72795_a;
      private Set field_72793_b = new HashSet();
@@ -16,8 +16,8 @@
 +    public IntHashMap field_72794_c = new IntHashMap(); // CraftBukkit - private -> public
      private int field_72792_d;
  
-     public EntityTracker(WorldServer p_i3389_1_)
-@@ -119,11 +120,11 @@
+     public EntityTracker(WorldServer p_i1516_1_)
+@@ -117,11 +118,11 @@
          }
          else if (p_72786_1_ instanceof EntityMinecart)
          {
@@ -31,7 +31,7 @@
          }
          else if (p_72786_1_ instanceof EntitySquid)
          {
-@@ -199,8 +200,8 @@
+@@ -193,8 +194,8 @@
          {
              CrashReport crashreport = CrashReport.func_85055_a(throwable, "Adding entity to track");
              CrashReportCategory crashreportcategory = crashreport.func_85058_a("Entity To Track");

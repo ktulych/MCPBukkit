@@ -1,6 +1,6 @@
 --- ../net/minecraft/world/chunk/storage/RegionFile.java
 +++ ../net/minecraft/world/chunk/storage/RegionFile.java
-@@ -101,6 +101,61 @@
+@@ -102,6 +102,61 @@
          }
      }
  
@@ -62,7 +62,7 @@
      public synchronized DataInputStream func_76704_a(int p_76704_1_, int p_76704_2_)
      {
          if (this.func_76705_d(p_76704_1_, p_76704_2_))
-@@ -272,7 +327,7 @@
+@@ -273,7 +328,7 @@
          }
      }
  
@@ -71,7 +71,7 @@
      {
          this.field_76719_c.seek((long)(p_76712_1_ * 4096));
          this.field_76719_c.writeInt(p_76712_3_ + 1);
-@@ -295,21 +350,21 @@
+@@ -296,21 +351,21 @@
          return this.func_76707_e(p_76709_1_, p_76709_2_) != 0;
      }
  

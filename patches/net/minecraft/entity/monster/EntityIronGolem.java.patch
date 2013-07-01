@@ -7,7 +7,7 @@
  import net.minecraft.block.Block;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.EntityLiving;
-@@ -194,20 +195,25 @@
+@@ -197,20 +198,25 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {

@@ -812,7 +812,7 @@ public final class CraftServer implements Server {
     }
 
     public Logger getLogger() {
-        return console.func_98033_al().func_98076_a();
+        return console.func_98033_al().func_120013_a();
     }
 
     public ConsoleReader getReader() {

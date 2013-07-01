@@ -30,7 +30,7 @@
 +
                  if (movingobjectposition.field_72308_g != null)
                  {
-                     if (movingobjectposition.field_72308_g.func_70097_a(DamageSource.func_76356_a(this, this.field_70204_b), 0))
+                     if (movingobjectposition.field_72308_g.func_70097_a(DamageSource.func_76356_a(this, this.field_70204_b), 0.0F))
 @@ -280,21 +288,14 @@
                      }
                      else

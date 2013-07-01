@@ -7,22 +7,36 @@
 +    public float yield = 1; // CraftBukkit
 +    public boolean isIncendiary = true; // CraftBukkit
  
-     public EntityFireball(World p_i3571_1_)
+     public EntityFireball(World p_i1759_1_)
      {
-@@ -56,6 +58,13 @@
+@@ -56,13 +58,20 @@
          this.func_70107_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
          this.field_70129_M = 0.0F;
          this.field_70159_w = this.field_70181_x = this.field_70179_y = 0.0D;
+-        p_i1761_3_ += this.field_70146_Z.nextGaussian() * 0.4D;
+-        p_i1761_5_ += this.field_70146_Z.nextGaussian() * 0.4D;
+-        p_i1761_7_ += this.field_70146_Z.nextGaussian() * 0.4D;
+-        double d3 = (double)MathHelper.func_76133_a(p_i1761_3_ * p_i1761_3_ + p_i1761_5_ * p_i1761_5_ + p_i1761_7_ * p_i1761_7_);
+-        this.field_70232_b = p_i1761_3_ / d3 * 0.1D;
+-        this.field_70233_c = p_i1761_5_ / d3 * 0.1D;
+-        this.field_70230_d = p_i1761_7_ / d3 * 0.1D;
 +        // CraftBukkit start - Added setDirection method
-+        this.setDirection(p_i3573_3_, p_i3573_5_, p_i3573_7_);
++        this.setDirection(p_i1761_3_, p_i1761_5_, p_i1761_7_);
 +    }
 +
 +    public void setDirection(double p_i3573_3_, double p_i3573_5_, double p_i3573_7_)
 +    {
 +        // CraftBukkit end
-         p_i3573_3_ += this.field_70146_Z.nextGaussian() * 0.4D;
-         p_i3573_5_ += this.field_70146_Z.nextGaussian() * 0.4D;
-         p_i3573_7_ += this.field_70146_Z.nextGaussian() * 0.4D;
++        p_i3573_3_ += this.field_70146_Z.nextGaussian() * 0.4D;
++        p_i3573_5_ += this.field_70146_Z.nextGaussian() * 0.4D;
++        p_i3573_7_ += this.field_70146_Z.nextGaussian() * 0.4D;
++        double d3 = (double) MathHelper.func_76133_a(p_i3573_3_ * p_i3573_3_ + p_i3573_5_ * p_i3573_5_ + p_i3573_7_ * p_i3573_7_);
++        this.field_70232_b = p_i3573_3_ / d3 * 0.1D;
++        this.field_70233_c = p_i3573_5_ / d3 * 0.1D;
++        this.field_70230_d = p_i3573_7_ / d3 * 0.1D;
+     }
+ 
+     public void func_70071_h_()
 @@ -131,7 +140,7 @@
  
                      if (movingobjectposition1 != null)
@@ -47,6 +61,15 @@
              }
  
              this.field_70165_t += this.field_70159_w;
+@@ -209,7 +226,7 @@
+         return 0.95F;
+     }
+ 
+-    protected abstract void func_70227_a(MovingObjectPosition movingobjectposition);
++    protected abstract void func_70227_a(MovingObjectPosition p_70227_1_);
+ 
+     public void func_70014_b(NBTTagCompound p_70014_1_)
+     {
 @@ -218,7 +235,8 @@
          p_70014_1_.func_74777_a("zTile", (short)this.field_70229_g);
          p_70014_1_.func_74774_a("inTile", (byte)this.field_70237_h);

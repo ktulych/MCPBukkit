@@ -15,7 +15,7 @@
 +    private List field_75780_b = new UnsafeList();
 +    // CraftBukkit end
      private final Profiler field_75781_c;
-     private int field_75778_d = 0;
+     private int field_75778_d;
      private int field_75779_e = 3;
 @@ -47,7 +51,7 @@
  

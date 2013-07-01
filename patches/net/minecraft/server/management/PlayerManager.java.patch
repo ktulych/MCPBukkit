@@ -1,6 +1,6 @@
 --- ../net/minecraft/server/management/PlayerManager.java
 +++ ../net/minecraft/server/management/PlayerManager.java
-@@ -8,14 +8,21 @@
+@@ -8,16 +8,23 @@
  import net.minecraft.world.WorldProvider;
  import net.minecraft.world.WorldServer;
  
@@ -16,35 +16,54 @@
      private final List field_72699_b = new ArrayList();
      private final LongHashMap field_72700_c = new LongHashMap();
 -    private final List field_72697_d = new ArrayList();
+-    private final List field_111193_e = new ArrayList();
 +    private final Queue field_72697_d = new java.util.concurrent.ConcurrentLinkedQueue(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
++    private final Queue field_111193_e = new java.util.concurrent.ConcurrentLinkedQueue(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
      private final int field_72698_e;
+     private long field_111192_g;
      private final int[][] field_72696_f = new int[][] {{1, 0}, {0, 1}, { -1, 0}, {0, -1}};
 +    private boolean wasNotEmpty; // CraftBukkit
  
-     public PlayerManager(WorldServer p_i3392_1_, int p_i3392_2_)
+     public PlayerManager(WorldServer p_i1519_1_, int p_i1519_2_)
      {
-@@ -41,22 +48,42 @@
- 
-     public void func_72693_b()
-     {
--        for (int i = 0; i < this.field_72697_d.size(); ++i)
--        {
--            ((PlayerInstance)this.field_72697_d.get(i)).func_73254_a();
+@@ -50,34 +57,53 @@
+         if (i - this.field_111192_g > 8000L)
+         {
+             this.field_111192_g = i;
+-
+-            for (j = 0; j < this.field_111193_e.size(); ++j)
+-            {
+-                playerinstance = (PlayerInstance)this.field_111193_e.get(j);
++            // CraftBukkit start - Use iterator
++            java.util.Iterator iterator = this.field_111193_e.iterator();
++
++            while (iterator.hasNext())
++            {
++                playerinstance = (PlayerInstance) iterator.next();
+                 playerinstance.func_73254_a();
+                 playerinstance.func_111194_a();
+             }
+         }
+         else
+         {
+-            for (j = 0; j < this.field_72697_d.size(); ++j)
+-            {
+-                playerinstance = (PlayerInstance)this.field_72697_d.get(j);
++            java.util.Iterator iterator = this.field_72697_d.iterator();
++
++            while (iterator.hasNext())
++            {
++                playerinstance = (PlayerInstance) iterator.next();
+                 playerinstance.func_73254_a();
+-            }
 -        }
 -
 -        this.field_72697_d.clear();
 -
-+        // CraftBukkit start - Use iterator
-+        java.util.Iterator iterator = this.field_72697_d.iterator();
-+
-+        while (iterator.hasNext())
-+        {
-+            PlayerInstance playerinstance = (PlayerInstance) iterator.next();
-+            playerinstance.func_73254_a();
-+            iterator.remove();
++                iterator.remove();
++                // CraftBukkit end
++            }
 +        }
-+
-+        // CraftBukkit end
 +
 +        // this.d.clear(); // CraftBukkit - Removals are already covered
          if (this.field_72699_b.isEmpty())
@@ -74,7 +93,7 @@
      }
  
      private PlayerInstance func_72690_a(int p_72690_1_, int p_72690_2_, boolean p_72690_3_)
-@@ -72,6 +99,19 @@
+@@ -94,6 +120,19 @@
  
          return playerinstance;
      }
@@ -94,7 +113,7 @@
  
      public void func_72687_a(int p_72687_1_, int p_72687_2_, int p_72687_3_)
      {
-@@ -91,15 +131,25 @@
+@@ -113,15 +152,25 @@
          int j = (int)p_72683_1_.field_70161_v >> 4;
          p_72683_1_.field_71131_d = p_72683_1_.field_70165_t;
          p_72683_1_.field_71132_e = p_72683_1_.field_70161_v;
@@ -124,7 +143,7 @@
          this.field_72699_b.add(p_72683_1_);
          this.func_72691_b(p_72683_1_);
      }
-@@ -201,6 +251,7 @@
+@@ -223,6 +272,7 @@
              int i1 = this.field_72698_e;
              int j1 = i - k;
              int k1 = j - l;
@@ -132,7 +151,7 @@
  
              if (j1 != 0 || k1 != 0)
              {
-@@ -210,7 +261,7 @@
+@@ -232,7 +282,7 @@
                      {
                          if (!this.func_72684_a(l1, i2, k, l, i1))
                          {
@@ -141,7 +160,7 @@
                          }
  
                          if (!this.func_72684_a(l1 - j1, i2 - k1, i, j, i1))
-@@ -228,6 +279,20 @@
+@@ -250,6 +300,20 @@
                  this.func_72691_b(p_72685_1_);
                  p_72685_1_.field_71131_d = p_72685_1_.field_70165_t;
                  p_72685_1_.field_71132_e = p_72685_1_.field_70161_v;
@@ -162,15 +181,25 @@
              }
          }
      }
-@@ -253,8 +318,65 @@
+@@ -275,13 +339,70 @@
          return p_72689_0_.field_72700_c;
      }
  
+-    static List func_111191_d(PlayerManager p_111191_0_)
+-    {
+-        return p_111191_0_.field_111193_e;
+-    }
+-
 -    static List func_72682_c(PlayerManager p_72682_0_)
 -    {
 -        return p_72682_0_.field_72697_d;
 -    }
 +    static Queue c(PlayerManager playermanager)   // CraftBukkit List -> Queue
++    {
++        return playermanager.field_111193_e;
++    }
++
++    static Queue d(PlayerManager playermanager)   // CraftBukkit List -> Queue
 +    {
 +        return playermanager.field_72697_d;
 +    }

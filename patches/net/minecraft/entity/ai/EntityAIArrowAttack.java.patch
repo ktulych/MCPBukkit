@@ -6,8 +6,8 @@
 +import org.bukkit.event.entity.EntityTargetEvent; // CraftBukkit
 +import net.minecraft.entity.Entity;
  import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.entity.IRangedAttackMob;
- import net.minecraft.util.MathHelper;
 @@ -66,6 +68,10 @@
  
      public void func_75251_c()
@@ -19,3 +19,12 @@
          this.field_75323_c = null;
          this.field_75318_f = 0;
          this.field_75320_d = -1;
+@@ -91,7 +97,7 @@
+         }
+         else
+         {
+-            this.field_75322_b.func_70661_as().func_75497_a(this.field_75323_c, this.field_75321_e);
++            this.field_75322_b.func_70661_as().func_75497_a((Entity) this.field_75323_c, this.field_75321_e);
+         }
+ 
+         this.field_75322_b.func_70671_ap().func_75651_a(this.field_75323_c, 30.0F, 30.0F);

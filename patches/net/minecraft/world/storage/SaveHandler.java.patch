@@ -26,11 +26,11 @@
  {
 @@ -21,6 +31,7 @@
      private final File field_75768_d;
-     private final long field_75769_e = System.currentTimeMillis();
+     private final long field_75769_e = MinecraftServer.func_130071_aq();
      private final String field_75767_f;
 +    private UUID uuid = null; // CraftBukkit
  
-     public SaveHandler(File p_i3912_1_, String p_i3912_2_, boolean p_i3912_3_)
+     public SaveHandler(File p_i2146_1_, String p_i2146_2_, boolean p_i2146_3_)
      {
 @@ -62,12 +73,12 @@
          }
@@ -85,8 +85,8 @@
              {
 @@ -220,7 +231,7 @@
              p_75753_1_.func_70109_d(nbttagcompound);
-             File file1 = new File(this.field_75771_c, p_75753_1_.field_71092_bJ + ".dat.tmp");
-             File file2 = new File(this.field_75771_c, p_75753_1_.field_71092_bJ + ".dat");
+             File file1 = new File(this.field_75771_c, p_75753_1_.func_70005_c_() + ".dat.tmp");
+             File file2 = new File(this.field_75771_c, p_75753_1_.func_70005_c_() + ".dat");
 -            CompressedStreamTools.func_74799_a(nbttagcompound, new FileOutputStream(file1));
 +            CompressedStreamTools.func_74799_a(nbttagcompound, (OutputStream)(new FileOutputStream(file1)));
  

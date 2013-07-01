@@ -3,7 +3,7 @@
 @@ -3,6 +3,7 @@
  import java.util.Iterator;
  import java.util.List;
- import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLivingBase;
 +import net.minecraft.entity.player.EntityPlayerMP;
  import net.minecraft.item.Item;
  import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@
 -    private ItemStack field_70197_d;
 +    public ItemStack field_70197_d; // CraftBukkit private --> public
  
-     public EntityPotion(World p_i3595_1_)
+     public EntityPotion(World p_i1788_1_)
      {
 @@ -79,14 +87,16 @@
          {
@@ -34,7 +34,7 @@
 +            if (true || list != null && !list.isEmpty())   // CraftBukkit - Call event even if no effects to apply
              {
                  AxisAlignedBB axisalignedbb = this.field_70121_D.func_72314_b(4.0D, 2.0D, 4.0D);
-                 List list1 = this.field_70170_p.func_72872_a(EntityLiving.class, axisalignedbb);
+                 List list1 = this.field_70170_p.func_72872_a(EntityLivingBase.class, axisalignedbb);
  
 -                if (list1 != null && !list1.isEmpty())
 +                if (list1 != null)   // CraftBukkit - Run code even if there are no entities around
@@ -50,7 +50,7 @@
                              }
  
 +                            // CraftBukkit start
-+                            affected.put((LivingEntity) entityliving.getBukkitEntity(), d1);
++                            affected.put((LivingEntity) entitylivingbase.getBukkitEntity(), d1);
 +                        }
 +                    }
 +
@@ -65,7 +65,7 @@
 +                                continue;
 +                            }
 +
-+                            EntityLiving entityliving = ((CraftLivingEntity) victim).getHandle();
++                            EntityLivingBase entitylivingbase = ((CraftLivingEntity) victim).getHandle();
 +                            double d1 = event.getIntensity(victim);
 +                            // CraftBukkit end
                              Iterator iterator1 = list.iterator();
@@ -76,7 +76,7 @@
                                  int i = potioneffect.func_76456_a();
  
 +                                // CraftBukkit start - Abide by PVP settings - for players only!
-+                                if (!this.field_70170_p.pvpMode && this.func_85052_h() instanceof EntityPlayerMP && entityliving instanceof EntityPlayerMP && entityliving != this.func_85052_h())
++                                if (!this.field_70170_p.pvpMode && this.func_85052_h() instanceof EntityPlayerMP && entitylivingbase instanceof EntityPlayerMP && entitylivingbase != this.func_85052_h())
 +                                {
 +                                    // Block SLOWER_MOVEMENT, SLOWER_DIG, HARM, BLINDNESS, HUNGER, WEAKNESS and POISON potions
 +                                    if (i == 2 || i == 4 || i == 7 || i == 15 || i == 17 || i == 18 || i == 19)
@@ -89,9 +89,9 @@
 +
                                  if (Potion.field_76425_a[i].func_76403_b())
                                  {
--                                    Potion.field_76425_a[i].func_76402_a(this.func_85052_h(), entityliving, potioneffect.func_76458_c(), d1);
+-                                    Potion.field_76425_a[i].func_76402_a(this.func_85052_h(), entitylivingbase, potioneffect.func_76458_c(), d1);
 +                                    // CraftBukkit - Added 'this'
-+                                    Potion.field_76425_a[i].applyInstantEffect(this.func_85052_h(), entityliving, potioneffect.func_76458_c(), d1, this);
++                                    Potion.field_76425_a[i].applyInstantEffect(this.func_85052_h(), entitylivingbase, potioneffect.func_76458_c(), d1, this);
                                  }
                                  else
                                  {

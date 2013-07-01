@@ -1,14 +1,14 @@
 --- ../net/minecraft/entity/monster/EntitySkeleton.java
 +++ ../net/minecraft/entity/monster/EntitySkeleton.java
-@@ -10,6 +10,7 @@
- import net.minecraft.entity.IRangedAttackMob;
+@@ -13,6 +13,7 @@
+ import net.minecraft.entity.SharedMonsterAttributes;
  import net.minecraft.entity.ai.EntityAIArrowAttack;
  import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 +import net.minecraft.entity.ai.EntityAIBase;
  import net.minecraft.entity.ai.EntityAIFleeSun;
  import net.minecraft.entity.ai.EntityAIHurtByTarget;
  import net.minecraft.entity.ai.EntityAILookIdle;
-@@ -26,10 +27,13 @@
+@@ -29,10 +30,13 @@
  import net.minecraft.potion.Potion;
  import net.minecraft.potion.PotionEffect;
  import net.minecraft.stats.AchievementList;
@@ -22,16 +22,7 @@
  
  public class EntitySkeleton extends EntityMob implements IRangedAttackMob
  {
-@@ -118,7 +122,7 @@
- 
-             if (itemstack != null)
-             {
--                i += itemstack.func_77971_a(this);
-+                i += itemstack.func_77971_a((Entity) this);
-             }
- 
-             return i;
-@@ -163,7 +167,16 @@
+@@ -145,7 +149,16 @@
  
                  if (flag)
                  {
@@ -49,7 +40,7 @@
                  }
              }
          }
-@@ -188,7 +201,7 @@
+@@ -181,7 +194,7 @@
  
              if (d0 * d0 + d1 * d1 >= 2500.0D)
              {
@@ -58,7 +49,7 @@
              }
          }
      }
-@@ -200,42 +213,64 @@
+@@ -193,42 +206,64 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -74,10 +65,15 @@
 -            for (k = 0; k < j; ++k)
 -            {
 -                this.func_70025_b(Item.field_77705_m.field_77779_bT, 1);
--            }
--        }
--        else
--        {
++            int count = this.field_70146_Z.nextInt(3 + p_70628_2_) - 1;
++
++            if (count > 0)
++            {
++                loot.add(new org.bukkit.inventory.ItemStack(org.bukkit.Material.COAL, count));
+             }
+         }
+         else
+         {
 -            j = this.field_70146_Z.nextInt(3 + p_70628_2_);
 -
 -            for (k = 0; k < j; ++k)
@@ -95,15 +91,6 @@
 -    }
 -
 -    protected void func_70600_l(int p_70600_1_)
-+            int count = this.field_70146_Z.nextInt(3 + p_70628_2_) - 1;
-+
-+            if (count > 0)
-+            {
-+                loot.add(new org.bukkit.inventory.ItemStack(org.bukkit.Material.COAL, count));
-+            }
-+        }
-+        else
-+        {
 +            int count = this.field_70146_Z.nextInt(3 + p_70628_2_);
 +
 +            if (count > 0)
@@ -149,11 +136,11 @@
 +            return new ItemStack(Item.field_82799_bQ.field_77779_bT, 1, 1); // CraftBukkit
 +        }
 +
-+        return null;
++        return null; // CraftBukkit
      }
  
      protected void func_82164_bB()
-@@ -275,8 +310,8 @@
+@@ -273,8 +308,8 @@
  
      public void func_85036_m()
      {

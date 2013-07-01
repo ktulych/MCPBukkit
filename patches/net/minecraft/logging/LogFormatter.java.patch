@@ -20,9 +20,9 @@
 +    private boolean strip = false;
 +    // CraftBukkit end
  
-     private LogFormatter(LogAgent p_i11034_1_)
+     private LogFormatter(LogAgent p_i1548_1_)
      {
-         this.field_98229_a = p_i11034_1_;
+         this.field_98229_a = p_i1548_1_;
          this.field_98228_b = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 +        this.strip = MinecraftServer.func_71276_C().options.has("log-strip-color"); // CraftBukkit
      }
@@ -46,4 +46,4 @@
 +        // CraftBukkit end
      }
  
-     LogFormatter(LogAgent p_i11035_1_, LogAgentINNER1 p_i11035_2_)
+     LogFormatter(LogAgent p_i1549_1_, LogAgentEmptyAnon p_i1549_2_)

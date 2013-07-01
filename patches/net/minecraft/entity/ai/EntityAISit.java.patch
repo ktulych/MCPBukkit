@@ -2,7 +2,7 @@
 +++ ../net/minecraft/entity/ai/EntityAISit.java
 @@ -2,7 +2,6 @@
  
- import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.entity.passive.EntityTameable;
 -
  public class EntityAISit extends EntityAIBase
@@ -17,3 +17,18 @@
          }
          else if (this.field_75272_a.func_70090_H())
          {
+@@ -30,7 +29,7 @@
+         }
+         else
+         {
+-            EntityLivingBase entitylivingbase = this.field_75272_a.func_130012_q();
++            EntityLivingBase entitylivingbase = (net.minecraft.entity.EntityLivingBase)this.field_75272_a.func_70902_q();
+             return entitylivingbase == null ? true : (this.field_75272_a.func_70068_e(entitylivingbase) < 144.0D && entitylivingbase.func_70643_av() != null ? false : this.field_75271_b);
+         }
+     }
+@@ -50,4 +49,4 @@
+     {
+         this.field_75271_b = p_75270_1_;
+     }
+-}
++}

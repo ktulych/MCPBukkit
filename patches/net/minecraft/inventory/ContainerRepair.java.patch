@@ -1,16 +1,18 @@
 --- ../net/minecraft/inventory/ContainerRepair.java
 +++ ../net/minecraft/inventory/ContainerRepair.java
-@@ -11,6 +11,8 @@
+@@ -11,7 +11,10 @@
  import net.minecraft.item.ItemEnchantedBook;
  import net.minecraft.item.ItemStack;
  import net.minecraft.world.World;
++
+ import org.apache.commons.lang3.StringUtils;
 +
 +import org.bukkit.craftbukkit.inventory.CraftInventoryView; // CraftBukkit
  
  public class ContainerRepair extends Container
  {
-@@ -24,9 +26,14 @@
-     private int field_82856_l = 0;
+@@ -25,9 +28,14 @@
+     private int field_82856_l;
      private String field_82857_m;
      private final EntityPlayer field_82855_n;
 +    // CraftBukkit start
@@ -18,31 +20,22 @@
 +    private InventoryPlayer player;
 +    // CraftBukkit end
  
-     public ContainerRepair(InventoryPlayer p_i5080_1_, World p_i5080_2_, int p_i5080_3_, int p_i5080_4_, int p_i5080_5_, EntityPlayer p_i5080_6_)
+     public ContainerRepair(InventoryPlayer p_i1800_1_, World p_i1800_2_, int p_i1800_3_, int p_i1800_4_, int p_i1800_5_, EntityPlayer p_i1800_6_)
      {
-+        this.player = p_i5080_1_; // CraftBukkit
-         this.field_82860_h = p_i5080_2_;
-         this.field_82861_i = p_i5080_3_;
-         this.field_82858_j = p_i5080_4_;
-@@ -34,7 +41,7 @@
-         this.field_82855_n = p_i5080_6_;
++        this.player = p_i1800_1_; // CraftBukkit
+         this.field_82860_h = p_i1800_2_;
+         this.field_82861_i = p_i1800_3_;
+         this.field_82858_j = p_i1800_4_;
+@@ -35,7 +43,7 @@
+         this.field_82855_n = p_i1800_6_;
          this.func_75146_a(new Slot(this.field_82853_g, 0, 27, 47));
          this.func_75146_a(new Slot(this.field_82853_g, 1, 76, 47));
--        this.func_75146_a(new SlotRepair(this, this.field_82852_f, 2, 134, 47, p_i5080_2_, p_i5080_3_, p_i5080_4_, p_i5080_5_));
-+        this.func_75146_a((Slot)(new SlotRepair(this, this.field_82852_f, 2, 134, 47, p_i5080_2_, p_i5080_3_, p_i5080_4_, p_i5080_5_)));
+-        this.func_75146_a(new ContainerRepairINNER2(this, this.field_82852_f, 2, 134, 47, p_i1800_2_, p_i1800_3_, p_i1800_4_, p_i1800_5_));
++        this.func_75146_a((Slot)(new ContainerRepairINNER2(this, this.field_82852_f, 2, 134, 47, p_i1800_2_, p_i1800_3_, p_i1800_4_, p_i1800_5_)));
          int l;
  
          for (l = 0; l < 3; ++l)
-@@ -295,7 +302,7 @@
- 
-             if (j == i && j > 0 && this.field_82854_e >= 40)
-             {
--                this.field_82860_h.func_98180_V().func_98233_a("Naming an item only, cost too high; giving discount to cap cost to 39 levels");
-+                // this.h.getLogger().info("Naming an item only, cost too high; giving discount to cap cost to 39 levels"); // CraftBukkit - remove debug
-                 this.field_82854_e = 39;
-             }
- 
-@@ -359,6 +366,11 @@
+@@ -368,6 +376,11 @@
  
      public boolean func_75145_c(EntityPlayer p_75145_1_)
      {
@@ -54,7 +47,7 @@
          return this.field_82860_h.func_72798_a(this.field_82861_i, this.field_82858_j, this.field_82859_k) != Block.field_82510_ck.field_71990_ca ? false : p_75145_1_.func_70092_e((double)this.field_82861_i + 0.5D, (double)this.field_82858_j + 0.5D, (double)this.field_82859_k + 0.5D) <= 64.0D;
      }
  
-@@ -434,4 +446,18 @@
+@@ -452,4 +465,18 @@
      {
          return p_82849_0_.field_82856_l;
      }

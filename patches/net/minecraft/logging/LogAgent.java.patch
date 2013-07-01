@@ -16,12 +16,12 @@
      private final String field_98239_d;
 +    public static Logger global = Logger.getLogger(""); // CraftBukkit
  
-     public LogAgent(String p_i11036_1_, String p_i11036_2_, String p_i11036_3_)
+     public LogAgent(String p_i1550_1_, String p_i1550_2_, String p_i1550_3_)
      {
 @@ -35,15 +39,105 @@
          }
  
-         LogFormatter logformatter = new LogFormatter(this, (LogAgentINNER1)null);
+         LogFormatter logformatter = new LogFormatter(this, (LogAgentEmptyAnon)null);
 -        ConsoleHandler consolehandler = new ConsoleHandler();
 +        // CraftBukkit start
 +        MinecraftServer server = MinecraftServer.func_71276_C();

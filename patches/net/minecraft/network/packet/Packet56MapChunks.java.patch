@@ -46,7 +46,7 @@
 +        */
      }
  
--    public void func_73267_a(DataInputStream p_73267_1_) throws IOException
+-    public void func_73267_a(DataInput p_73267_1_) throws IOException
 +    // Add compression method
 +    public void compress()
 +    {
@@ -64,7 +64,7 @@
 +    }
 +    // CraftBukkit end
 +
-+    public void func_73267_a(DataInputStream p_73267_1_) throws IOException   // CraftBukkit - throws IOException
++    public void func_73267_a(DataInput p_73267_1_) throws IOException   // CraftBukkit - throws IOException
      {
          short short1 = p_73267_1_.readShort();
          this.field_73585_g = p_73267_1_.readInt();
@@ -72,8 +72,8 @@
          }
      }
  
--    public void func_73273_a(DataOutputStream p_73273_1_) throws IOException
-+    public void func_73273_a(DataOutputStream p_73273_1_) throws IOException   // CraftBukkit - throws IOException
+-    public void func_73273_a(DataOutput p_73273_1_) throws IOException
++    public void func_73273_a(DataOutput p_73273_1_) throws IOException   // CraftBukkit - throws IOException
      {
 +        compress(); // CraftBukkit
          p_73273_1_.writeShort(this.field_73589_c.length);

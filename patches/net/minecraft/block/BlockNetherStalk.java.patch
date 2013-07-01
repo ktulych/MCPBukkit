@@ -1,6 +1,6 @@
 --- ../net/minecraft/block/BlockNetherStalk.java
 +++ ../net/minecraft/block/BlockNetherStalk.java
-@@ -35,8 +35,7 @@
+@@ -33,8 +33,7 @@
  
          if (l < 3 && p_71847_5_.nextInt(10) == 0)
          {

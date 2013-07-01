@@ -6,7 +6,7 @@
 +import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
  import net.minecraft.block.material.Material;
  import net.minecraft.creativetab.CreativeTabs;
- import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLivingBase;
 @@ -254,6 +255,19 @@
              int i1 = p_71903_1_.func_72805_g(p_71903_2_, p_71903_3_, p_71903_4_);
              int j1 = i1 & 7;

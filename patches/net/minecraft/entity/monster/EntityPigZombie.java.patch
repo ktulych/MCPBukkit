@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/monster/EntityPigZombie.java
 +++ ../net/minecraft/entity/monster/EntityPigZombie.java
-@@ -9,9 +9,14 @@
+@@ -14,11 +14,16 @@
  import net.minecraft.util.DamageSource;
  import net.minecraft.world.World;
  
@@ -11,12 +11,14 @@
 +
  public class EntityPigZombie extends EntityZombie
  {
--    private int field_70837_d = 0;
-+    public int field_70837_d = 0; // CraftBukkit - private -> public
-     private int field_70838_e = 0;
+     private static final UUID field_110189_bq = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
+     private static final AttributeModifier field_110190_br = (new AttributeModifier(field_110189_bq, "Attacking speed boost", 0.45D, 0)).func_111168_a(false);
+-    private int field_70837_d;
++    public int field_70837_d; // CraftBukkit - private -> public
+     private int field_70838_e;
+     private Entity field_110191_bu;
  
-     public EntityPigZombie(World p_i3553_1_)
-@@ -95,6 +100,24 @@
+@@ -120,6 +125,24 @@
  
      private void func_70835_c(Entity p_70835_1_)
      {
@@ -41,7 +43,7 @@
          this.field_70789_a = p_70835_1_;
          this.field_70837_d = 400 + this.field_70146_Z.nextInt(400);
          this.field_70838_e = this.field_70146_Z.nextInt(40);
-@@ -117,20 +140,40 @@
+@@ -142,20 +165,40 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -91,7 +93,7 @@
      }
  
      public boolean func_70085_c(EntityPlayer p_70085_1_)
-@@ -138,10 +181,12 @@
+@@ -163,10 +206,12 @@
          return false;
      }
  
@@ -108,12 +110,3 @@
  
      protected int func_70633_aT()
      {
-@@ -166,7 +211,7 @@
- 
-         if (itemstack != null)
-         {
--            i += itemstack.func_77971_a(this);
-+            i += itemstack.func_77971_a((Entity) this);
-         }
- 
-         return i;

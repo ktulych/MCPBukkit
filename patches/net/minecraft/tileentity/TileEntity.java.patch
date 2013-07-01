@@ -34,26 +34,6 @@
      {
          if (field_70326_a.containsKey(p_70306_1_))
          {
-@@ -34,14 +39,14 @@
-         }
-     }
- 
-+    public void func_70308_a(World p_70308_1_)
-+    {
-+        this.field_70331_k = p_70308_1_;
-+    }
-+
-     public World func_70314_l()
-     {
-         return this.field_70331_k;
--    }
--
--    public void func_70308_a(World p_70308_1_)
--    {
--        this.field_70331_k = p_70308_1_;
-     }
- 
-     public boolean func_70309_m()
 @@ -172,10 +177,10 @@
  
      public void func_85027_a(CrashReportCategory p_85027_1_)

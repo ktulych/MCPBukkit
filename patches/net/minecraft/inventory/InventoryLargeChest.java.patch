@@ -66,7 +66,7 @@
 +    }
 +    // CraftBukkit end
  
-     public InventoryLargeChest(String p_i3425_1_, IInventory p_i3425_2_, IInventory p_i3425_3_)
+     public InventoryLargeChest(String p_i1559_1_, IInventory p_i1559_2_, IInventory p_i1559_3_)
      {
 @@ -76,7 +128,7 @@
  

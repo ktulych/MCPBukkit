@@ -4,13 +4,13 @@
      private final InetAddress field_71772_g;
      private final int field_71778_h;
  
--    public ServerListenThread(NetworkListenThread p_i3384_1_, InetAddress p_i3384_2_, int p_i3384_3_) throws IOException
+-    public ServerListenThread(NetworkListenThread p_i1510_1_, InetAddress p_i1510_2_, int p_i1510_3_) throws IOException
 +    long connectionThrottle; // CraftBukkit
 +
-+    public ServerListenThread(NetworkListenThread p_i3384_1_, InetAddress p_i3384_2_, int p_i3384_3_) throws IOException   // CraftBukkit - added throws
++    public ServerListenThread(NetworkListenThread p_i1510_1_, InetAddress p_i1510_2_, int p_i1510_3_) throws IOException   // CraftBukkit - added throws
      {
          super("Listen thread");
-         this.field_71771_f = p_i3384_1_;
+         this.field_71771_f = p_i1510_1_;
 @@ -48,7 +50,7 @@
                  catch (Exception exception)
                  {

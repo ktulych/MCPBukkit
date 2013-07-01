@@ -25,9 +25,9 @@
 +    private UUID uniqueId = null;
 +    // CraftBukkit end
 +
-     public MapData(String p_i3906_1_)
+     public MapData(String p_i2140_1_)
      {
-         super(p_i3906_1_);
+         super(p_i2140_1_);
 +        // CraftBukkit start
 +        mapView = new CraftMapView(this);
 +        server = (CraftServer) org.bukkit.Bukkit.getServer();

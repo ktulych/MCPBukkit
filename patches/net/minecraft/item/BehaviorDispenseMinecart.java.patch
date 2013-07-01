@@ -24,7 +24,7 @@
  
      public ItemStack func_82487_b(IBlockSource p_82487_1_, ItemStack p_82487_2_)
      {
-@@ -39,9 +46,42 @@
+@@ -39,7 +46,40 @@
              d3 = -1.0D;
          }
  
@@ -63,6 +63,12 @@
 +        itemstack1 = CraftItemStack.asNMSCopy(event.getItem());
 +        EntityMinecart entityminecart = EntityMinecart.func_94090_a(world, event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), ((ItemMinecart) itemstack1.func_77973_b()).field_77841_a);
 +        // CraftBukkit end
+ 
+         if (p_82487_2_.func_82837_s())
+         {
+@@ -47,7 +87,7 @@
+         }
+ 
          world.func_72838_d(entityminecart);
 -        p_82487_2_.func_77979_a(1);
 +        // itemstack.a(1); // CraftBukkit - handled during event processing

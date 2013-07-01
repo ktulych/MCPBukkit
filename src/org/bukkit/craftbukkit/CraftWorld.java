@@ -442,7 +442,7 @@ public class CraftWorld implements World {
             CraftPlayer cp = (CraftPlayer) p;
             if (cp.getHandle().field_71135_a == null) continue;
 
-            cp.getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet4UpdateTime(cp.getHandle().field_70170_p.func_82737_E(), cp.getHandle().getPlayerTime()));
+            cp.getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet4UpdateTime(cp.getHandle().field_70170_p.func_82737_E(), cp.getHandle().getPlayerTime(), cp.getHandle().field_70170_p.func_82736_K().func_82766_b("doDaylightCycle")));
         }
     }
 

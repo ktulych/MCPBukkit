@@ -8,7 +8,7 @@ public class CraftRemoteConsoleCommandSender extends ServerCommandSender impleme
     }
 
     public void sendMessage(String message) {
-        net.minecraft.network.rcon.RConConsoleSource.field_70010_a.func_70006_a(message + "\n"); // Send a newline after each message, to preserve formatting.
+        net.minecraft.network.rcon.RConConsoleSource.field_70010_a.func_70006_a(net.minecraft.util.ChatMessageComponent.func_111066_d(message + "\n")); // Send a newline after each message, to preserve formatting.
     }
 
     public void sendMessage(String[] messages) {

@@ -1,15 +1,17 @@
 --- ../net/minecraft/network/TcpConnection.java
 +++ ../net/minecraft/network/TcpConnection.java
-@@ -3,7 +3,6 @@
+@@ -2,8 +2,8 @@
+ 
  import java.io.BufferedOutputStream;
  import java.io.DataInputStream;
++import java.io.DataOutput;
  import java.io.DataOutputStream;
 -import java.io.IOException;
  import java.io.InputStream;
  import java.net.Socket;
  import java.net.SocketAddress;
-@@ -21,19 +20,21 @@
- import net.minecraft.network.packet.Packet252SharedKey;
+@@ -22,19 +22,21 @@
+ import net.minecraft.server.MinecraftServer;
  import net.minecraft.util.CryptManager;
  
 +import java.io.IOException; // CraftBukkit
@@ -26,32 +28,48 @@
      private volatile DataInputStream field_74477_k;
      private volatile DataOutputStream field_74474_l;
      private volatile boolean field_74475_m = true;
-     private volatile boolean field_74472_n = false;
+     private volatile boolean field_74472_n;
 -    private List field_74473_o = Collections.synchronizedList(new ArrayList());
 +    private java.util.Queue field_74473_o = new java.util.concurrent.ConcurrentLinkedQueue(); // CraftBukkit - Concurrent linked queue
      private List field_74487_p = Collections.synchronizedList(new ArrayList());
      private List field_74486_q = Collections.synchronizedList(new ArrayList());
      private NetHandler field_74485_r;
-@@ -53,7 +54,7 @@
-     private PrivateKey field_74463_A = null;
+@@ -54,7 +56,7 @@
+     private PrivateKey field_74463_A;
      private int field_74464_B = 50;
  
--    public TcpConnection(ILogAgent p_i11027_1_, Socket p_i11027_2_, String p_i11027_3_, NetHandler p_i11027_4_, PrivateKey p_i11027_5_) throws IOException
-+    public TcpConnection(ILogAgent p_i11027_1_, Socket p_i11027_2_, String p_i11027_3_, NetHandler p_i11027_4_, PrivateKey p_i11027_5_) throws IOException   // CraftBukkit - throws IOException
+-    public TcpConnection(ILogAgent p_i1398_1_, Socket p_i1398_2_, String p_i1398_3_, NetHandler p_i1398_4_, PrivateKey p_i1398_5_) throws IOException
++    public TcpConnection(ILogAgent p_i1398_1_, Socket p_i1398_2_, String p_i1398_3_, NetHandler p_i1398_4_, PrivateKey p_i1398_5_) throws IOException   // CraftBukkit - throws IOException
      {
-         this.field_74463_A = p_i11027_5_;
-         this.field_74479_i = p_i11027_2_;
-@@ -133,7 +134,8 @@
+         this.field_74463_A = p_i1398_5_;
+         this.field_74479_i = p_i1398_2_;
+@@ -115,7 +117,7 @@
+ 
+                 if (packet != null)
+                 {
+-                    Packet.func_73266_a(packet, this.field_74474_l);
++                    Packet.func_73266_a(packet, (DataOutput) this.field_74474_l);
+ 
+                     if (packet instanceof Packet252SharedKey && !this.field_74466_g)
+                     {
+@@ -134,13 +136,14 @@
                  }
              }
  
--            if (this.field_74464_B-- <= 0 && (this.field_74468_e == 0 || !this.field_74486_q.isEmpty() && System.currentTimeMillis() - ((Packet)this.field_74486_q.get(0)).field_73295_m >= (long)this.field_74468_e))
+-            if (this.field_74464_B-- <= 0 && (this.field_74468_e == 0 || !this.field_74486_q.isEmpty() && MinecraftServer.func_130071_aq() - ((Packet)this.field_74486_q.get(0)).field_73295_m >= (long)this.field_74468_e))
 +            // CraftBukkit - don't allow low priority packet to be sent unless it was placed in the queue before the first packet on the high priority queue TODO: is this still right?
 +            if ((flag || this.field_74464_B-- <= 0) && !this.field_74486_q.isEmpty() && (this.field_74487_p.isEmpty() || ((Packet) this.field_74487_p.get(0)).field_73295_m > ((Packet) this.field_74486_q.get(0)).field_73295_m))
              {
                  packet = this.func_74460_a(true);
  
-@@ -283,7 +285,7 @@
+                 if (packet != null)
+                 {
+-                    Packet.func_73266_a(packet, this.field_74474_l);
++                    Packet.func_73266_a(packet, (DataOutput) this.field_74474_l);
+                     aint = field_74467_d;
+                     i = packet.func_73281_k();
+                     aint[i] += packet.func_73284_a() + 1;
+@@ -284,7 +287,7 @@
  
      private void func_74455_a(Exception p_74455_1_)
      {
@@ -60,7 +78,7 @@
          this.func_74424_a("disconnect.genericReason", new Object[] {"Internal exception: " + p_74455_1_.toString()});
      }
  
-@@ -353,7 +355,15 @@
+@@ -354,7 +357,15 @@
  
          while (!this.field_74473_o.isEmpty() && i-- >= 0)
          {
@@ -77,7 +95,7 @@
              packet.func_73279_a(this.field_74485_r);
          }
  
-@@ -381,14 +391,14 @@
+@@ -382,14 +393,14 @@
          }
      }
  

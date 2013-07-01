@@ -7,10 +7,10 @@
 -
  public class PlayerCapabilities
  {
-     public boolean field_75102_a = false;
+     public boolean field_75102_a;
 @@ -9,8 +8,10 @@
-     public boolean field_75101_c = false;
-     public boolean field_75098_d = false;
+     public boolean field_75101_c;
+     public boolean field_75098_d;
      public boolean field_75099_e = true;
 -    private float field_75096_f = 0.05F;
 -    private float field_75097_g = 0.1F;

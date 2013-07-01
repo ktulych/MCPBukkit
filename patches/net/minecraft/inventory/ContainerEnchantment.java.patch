@@ -40,12 +40,12 @@
 +    private Player player;
 +    // CraftBukkit end
  
-     public ContainerEnchantment(InventoryPlayer p_i3606_1_, World p_i3606_2_, int p_i3606_3_, int p_i3606_4_, int p_i3606_5_)
+     public ContainerEnchantment(InventoryPlayer p_i1811_1_, World p_i1811_2_, int p_i1811_3_, int p_i1811_4_, int p_i1811_5_)
      {
 @@ -28,7 +45,7 @@
-         this.field_75173_i = p_i3606_3_;
-         this.field_75170_j = p_i3606_4_;
-         this.field_75171_k = p_i3606_5_;
+         this.field_75173_i = p_i1811_3_;
+         this.field_75170_j = p_i1811_4_;
+         this.field_75171_k = p_i1811_5_;
 -        this.func_75146_a(new SlotEnchantment(this, this.field_75168_e, 0, 25, 47));
 +        this.func_75146_a((Slot)(new SlotEnchantment(this, this.field_75168_e, 0, 25, 47)));
          int l;
@@ -53,11 +53,11 @@
          for (l = 0; l < 3; ++l)
 @@ -43,6 +60,11 @@
          {
-             this.func_75146_a(new Slot(p_i3606_1_, l, 8 + l * 18, 142));
+             this.func_75146_a(new Slot(p_i1811_1_, l, 8 + l * 18, 142));
          }
 +
 +        // CraftBukkit start
-+        player = (Player) p_i3606_1_.field_70458_d.getBukkitEntity();
++        player = (Player) p_i1811_1_.field_70458_d.getBukkitEntity();
 +        field_75168_e.player = player;
 +        // CraftBukkit end
      }

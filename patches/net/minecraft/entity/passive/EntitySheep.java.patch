@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/passive/EntitySheep.java
 +++ ../net/minecraft/entity/passive/EntitySheep.java
-@@ -14,12 +14,18 @@
+@@ -16,12 +16,18 @@
  import net.minecraft.entity.ai.EntityAIWatchClosest;
  import net.minecraft.entity.item.EntityItem;
  import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +27,7 @@
      }
  
      protected boolean func_70650_aV()
-@@ -82,10 +89,16 @@
+@@ -84,10 +91,16 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -46,7 +46,7 @@
      }
  
      protected int func_70633_aT()
-@@ -101,6 +114,16 @@
+@@ -103,6 +116,16 @@
          {
              if (!this.field_70170_p.field_72995_K)
              {
@@ -63,7 +63,7 @@
                  this.func_70893_e(true);
                  int i = 1 + this.field_70146_Z.nextInt(3);
  
-@@ -201,7 +224,16 @@
+@@ -203,7 +226,16 @@
  
      public void func_70615_aA()
      {

@@ -42,7 +42,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     }
 
     public String getName() {
-        return getHandle().field_71092_bJ;
+        return getHandle().func_70005_c_();
     }
 
     public PlayerInventory getInventory() {

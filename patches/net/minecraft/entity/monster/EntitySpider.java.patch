@@ -5,9 +5,9 @@
  
 +import org.bukkit.event.entity.EntityTargetEvent; // CraftBukkit
  import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityLivingData;
  import net.minecraft.entity.EnumCreatureAttribute;
- import net.minecraft.item.Item;
-@@ -85,7 +86,25 @@
+@@ -83,7 +84,25 @@
  
          if (f1 > 0.5F && this.field_70146_Z.nextInt(100) == 0)
          {
@@ -34,7 +34,7 @@
          }
          else
          {
-@@ -115,12 +134,27 @@
+@@ -113,12 +132,27 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -65,3 +65,50 @@
      }
  
      public boolean func_70617_f_()
+@@ -161,7 +195,7 @@
+ 
+     public EntityLivingData func_110161_a(EntityLivingData p_110161_1_)
+     {
+-        Object p_110161_1_1 = super.func_110161_a(p_110161_1_);
++        Object object = super.func_110161_a(p_110161_1_);
+ 
+         if (this.field_70170_p.field_73012_v.nextInt(100) == 0)
+         {
+@@ -172,19 +206,19 @@
+             entityskeleton.func_70078_a(this);
+         }
+ 
+-        if (p_110161_1_1 == null)
+-        {
+-            p_110161_1_1 = new SpiderEffectsGroupData();
++        if (object == null)
++        {
++            object = new SpiderEffectsGroupData();
+ 
+             if (this.field_70170_p.field_73013_u > 2 && this.field_70170_p.field_73012_v.nextFloat() < 0.1F * this.field_70170_p.func_110746_b(this.field_70165_t, this.field_70163_u, this.field_70161_v))
+             {
+-                ((SpiderEffectsGroupData)p_110161_1_1).func_111104_a(this.field_70170_p.field_73012_v);
+-            }
+-        }
+-
+-        if (p_110161_1_1 instanceof SpiderEffectsGroupData)
+-        {
+-            int i = ((SpiderEffectsGroupData)p_110161_1_1).field_111105_a;
++                ((SpiderEffectsGroupData) object).func_111104_a(this.field_70170_p.field_73012_v);
++            }
++        }
++
++        if (object instanceof SpiderEffectsGroupData)
++        {
++            int i = ((SpiderEffectsGroupData) object).field_111105_a;
+ 
+             if (i > 0 && Potion.field_76425_a[i] != null)
+             {
+@@ -192,6 +226,6 @@
+             }
+         }
+ 
+-        return (EntityLivingData)p_110161_1_1;
++        return (EntityLivingData) object;
+     }
+ }

@@ -22,7 +22,7 @@
      private List field_75828_a = new ArrayList();
      private Set field_75826_b = new HashSet();
 @@ -36,10 +37,50 @@
-         this.field_75825_d = p_i3779_1_;
+         this.field_75825_d = p_i2003_1_;
      }
  
 -    public Chunk func_75815_a(World p_75815_1_, int p_75815_2_, int p_75815_3_) throws IOException
@@ -202,7 +202,7 @@
          dataoutputstream.close();
      }
  
-@@ -341,14 +413,21 @@
+@@ -343,14 +415,21 @@
              chunk.func_76616_a(p_75823_2_.func_74770_j("Biomes"));
          }
  
@@ -226,7 +226,7 @@
                  chunk.field_76644_m = true;
  
                  if (entity != null)
-@@ -358,7 +437,7 @@
+@@ -360,7 +439,7 @@
  
                      for (NBTTagCompound nbttagcompound3 = nbttagcompound2; nbttagcompound3.func_74764_b("Riding"); nbttagcompound3 = nbttagcompound3.func_74775_l("Riding"))
                      {
@@ -235,7 +235,7 @@
  
                          if (entity2 != null)
                          {
-@@ -372,7 +451,7 @@
+@@ -374,7 +453,7 @@
              }
          }
  
@@ -244,7 +244,7 @@
  
          if (nbttaglist2 != null)
          {
-@@ -388,20 +467,20 @@
+@@ -390,20 +469,20 @@
              }
          }
  

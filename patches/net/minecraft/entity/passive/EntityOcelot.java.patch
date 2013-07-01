@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/passive/EntityOcelot.java
 +++ ../net/minecraft/entity/passive/EntityOcelot.java
-@@ -21,7 +21,6 @@
+@@ -23,7 +23,6 @@
  import net.minecraft.util.DamageSource;
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
@@ -8,7 +8,7 @@
  public class EntityOcelot extends EntityTameable
  {
      private EntityAITempt field_70914_e;
-@@ -153,7 +152,10 @@
+@@ -156,7 +155,10 @@
          }
      }
  
@@ -20,7 +20,7 @@
  
      public boolean func_70085_c(EntityPlayer p_70085_1_)
      {
-@@ -180,7 +182,8 @@
+@@ -183,7 +185,8 @@
  
              if (!this.field_70170_p.field_72995_K)
              {
@@ -30,3 +30,12 @@
                  {
                      this.func_70903_f(true);
                      this.func_70912_b(1 + this.field_70170_p.field_73012_v.nextInt(3));
+@@ -313,4 +316,7 @@
+     {
+         return this.func_70879_a(p_90011_1_);
+     }
+-}
++    public net.minecraft.entity.Entity func_70902_q(){
++        return func_130012_q();
++    }
++}

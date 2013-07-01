@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/EntityAgeable.java
 +++ ../net/minecraft/entity/EntityAgeable.java
-@@ -5,11 +5,11 @@
+@@ -5,18 +5,18 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.world.World;
@@ -11,27 +11,35 @@
      private float field_98057_e;
 +    public boolean ageLocked = false; // CraftBukkit
  
-     public EntityAgeable(World p_i3436_1_)
+     public EntityAgeable(World p_i1578_1_)
      {
-@@ -34,7 +34,7 @@
-                 {
-                     entityageable.func_70873_a(-24000);
-                     entityageable.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
--                    this.field_70170_p.func_72838_d(entityageable);
-+                    this.field_70170_p.addEntity(entityageable, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG); // CraftBukkit
+         super(p_i1578_1_);
+     }
  
-                     if (itemstack.func_82837_s())
-                     {
-@@ -45,7 +45,7 @@
-                     {
-                         --itemstack.field_77994_a;
+-    public abstract EntityAgeable func_90011_a(EntityAgeable entityageable);
++    public abstract EntityAgeable func_90011_a(EntityAgeable p_90011_1_);
  
--                        if (itemstack.field_77994_a <= 0)
-+                        if (itemstack.field_77994_a == 0)   // CraftBukkit - allow less than 0 stacks as "infinite"
+     public boolean func_70085_c(EntityPlayer p_70085_1_)
+     {
+@@ -36,7 +36,7 @@
+                     {
+                         entityageable.func_70873_a(-24000);
+                         entityageable.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
+-                        this.field_70170_p.func_72838_d(entityageable);
++                        this.field_70170_p.addEntity(entityageable, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG); // CraftBukkit
+ 
+                         if (itemstack.func_82837_s())
                          {
-                             p_70085_1_.field_71071_by.func_70299_a(p_70085_1_.field_71071_by.field_70461_c, (ItemStack)null);
-                         }
-@@ -78,19 +78,21 @@
+@@ -47,7 +47,7 @@
+                         {
+                             --itemstack.field_77994_a;
+ 
+-                            if (itemstack.field_77994_a <= 0)
++                            if (itemstack.field_77994_a == 0)    // CraftBukkit - allow less than 0 stacks as "infinite"
+                             {
+                                 p_70085_1_.field_71071_by.func_70299_a(p_70085_1_.field_71071_by.field_70461_c, (ItemStack)null);
+                             }
+@@ -98,19 +98,21 @@
      {
          super.func_70014_b(p_70014_1_);
          p_70014_1_.func_74768_a("Age", this.func_70874_b());

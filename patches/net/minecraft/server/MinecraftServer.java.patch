@@ -1,13 +1,14 @@
 --- ../net/minecraft/server/MinecraftServer.java
 +++ ../net/minecraft/server/MinecraftServer.java
-@@ -2,22 +2,23 @@
+@@ -2,7 +2,6 @@
  
  import java.awt.GraphicsEnvironment;
  import java.io.File;
 -import java.io.IOException;
+ import java.net.Proxy;
  import java.security.KeyPair;
  import java.text.SimpleDateFormat;
- import java.util.ArrayList;
+@@ -10,15 +9,17 @@
  import java.util.Date;
  import java.util.Iterator;
  import java.util.List;
@@ -26,7 +27,7 @@
  import net.minecraft.logging.ILogAgent;
  import net.minecraft.network.NetworkListenThread;
  import net.minecraft.network.packet.Packet;
-@@ -27,6 +28,7 @@
+@@ -28,6 +29,7 @@
  import net.minecraft.profiler.PlayerUsageSnooper;
  import net.minecraft.profiler.Profiler;
  import net.minecraft.server.dedicated.DedicatedServer;
@@ -59,20 +60,20 @@
 +
  public abstract class MinecraftServer implements ICommandSender, Runnable, IPlayerUsage
  {
-     private static MinecraftServer field_71309_l = null;
+     private static MinecraftServer field_71309_l;
 -    private final ISaveFormat field_71310_m;
 +    public ISaveFormat field_71310_m; // CraftBukkit - private final -> public
-     private final PlayerUsageSnooper field_71307_n = new PlayerUsageSnooper("server", this);
+     private final PlayerUsageSnooper field_71307_n = new PlayerUsageSnooper("server", this, func_130071_aq());
 -    private final File field_71308_o;
 +    public File field_71308_o; // CraftBukkit - private final -> public
      private final List field_71322_p = new ArrayList();
      private final ICommandManager field_71321_q;
      public final Profiler field_71304_b = new Profiler();
-@@ -99,21 +113,64 @@
+@@ -100,7 +114,20 @@
      private boolean field_71295_T;
-     private boolean field_104057_T = false;
+     private boolean field_104057_T;
  
--    public MinecraftServer(File p_i3375_1_)
+-    public MinecraftServer(File p_i1498_1_)
 +    // CraftBukkit start
 +    public List<WorldServer> worlds = new ArrayList<WorldServer>();
 +    public org.bukkit.craftbukkit.CraftServer server;
@@ -88,11 +89,16 @@
 +
 +    public MinecraftServer(OptionSet options)   // CraftBukkit - signature file -> OptionSet
      {
+         this.field_110456_c = Proxy.NO_PROXY;
+         this.field_71300_f = new long[100];
+@@ -110,18 +137,48 @@
+         this.field_71311_j = new long[100];
+         this.field_71297_P = "";
          field_71309_l = this;
--        this.field_71308_o = p_i3375_1_;
+-        this.field_71308_o = p_i1498_1_;
 +        // this.universe = file1; // CraftBukkit
          this.field_71321_q = new ServerCommandManager();
--        this.field_71310_m = new AnvilSaveConverter(p_i3375_1_);
+-        this.field_71310_m = new AnvilSaveConverter(p_i1498_1_);
 +        // this.convertable = new WorldLoaderServer(server.getWorldContainer()); // CraftBukkit - moved to DedicatedServer.init
          this.func_82355_al();
 -    }
@@ -138,7 +144,7 @@
  
      protected void func_71237_c(String p_71237_1_)
      {
-@@ -135,64 +192,132 @@
+@@ -143,64 +200,132 @@
          this.func_71237_c(p_71247_1_);
          this.func_71192_d("menu.loadingLevel");
          this.field_71305_c = new WorldServer[3];
@@ -284,7 +290,7 @@
 +                    }
 +                }
 +
-+                this.func_71192_d(name);
++                this.func_71189_e(name);
 +                // CraftBukkit
 +                world = new WorldServerMulti(this, new AnvilSaveHandler(server.getWorldContainer(), name, true), name, dimension, worldsettings, this.worlds.get(0), this.field_71304_b, this.func_98033_al(), Environment.getEnvironment(dimension), gen);
 +            }
@@ -313,24 +319,20 @@
          }
  
          this.func_71226_c(this.func_71232_g());
-@@ -201,31 +326,48 @@
- 
-     protected void func_71222_d()
-     {
--        int i = 0;
-+        long i = System.currentTimeMillis(); // CraftBukkit - current time
+@@ -216,28 +341,40 @@
+         int i = 0;
          this.func_71192_d("menu.generatingTerrain");
          byte b0 = 0;
 -        this.func_98033_al().func_98233_a("Preparing start region for level " + b0);
 -        WorldServer worldserver = this.field_71305_c[b0];
 -        ChunkCoordinates chunkcoordinates = worldserver.func_72861_E();
--        long j = System.currentTimeMillis();
+-        long j = func_130071_aq();
 -
 -        for (int k = -192; k <= 192 && this.func_71278_l(); k += 16)
 -        {
 -            for (int l = -192; l <= 192 && this.func_71278_l(); l += 16)
 -            {
--                long i1 = System.currentTimeMillis();
+-                long i1 = func_130071_aq();
 -
 -                if (i1 - j > 1000L)
 -                {
@@ -345,10 +347,10 @@
 -
 +
 +        // CraftBukkit start
-+        for (int j = 0; j < this.worlds.size(); ++j)
++        for (int m = 0; m < this.worlds.size(); ++m)
 +        {
-+            WorldServer worldserver = this.worlds.get(j);
-+            this.func_98033_al().func_98233_a("Preparing start region for level " + j + " (Seed: " + worldserver.func_72905_C() + ")");
++            WorldServer worldserver = this.worlds.get(m);
++            this.func_98033_al().func_98233_a("Preparing start region for level " + b0 + " (Seed: " + worldserver.func_72905_C() + ")");
 +
 +            if (!worldserver.getWorld().getKeepSpawnInMemory())
 +            {
@@ -356,26 +358,21 @@
 +            }
 +
 +            ChunkCoordinates chunkcoordinates = worldserver.func_72861_E();
++            long j = func_130071_aq();
 +
 +            for (int k = -192; k <= 192 && this.func_71278_l(); k += 16)
 +            {
 +                for (int l = -192; l <= 192 && this.func_71278_l(); l += 16)
 +                {
-+                    long i1 = System.currentTimeMillis();
++                    long i1 = func_130071_aq();
 +
-+                    if (i1 < i)
++                    if (i1 - j > 1000L)
 +                    {
-+                        i = i1;
++                        this.func_71216_a_("Preparing spawn area", i * 100 / 625);
++                        j = i1;
 +                    }
 +
-+                    if (i1 > i + 1000L)
-+                    {
-+                        int j1 = (192 * 2 + 1) * (192 * 2 + 1);
-+                        int k1 = (k + 192) * (192 * 2 + 1) + l + 1;
-+                        this.func_71216_a_("Preparing spawn area", k1 * 100 / j1);
-+                        i = i1;
-+                    }
-+
++                    ++i;
 +                    worldserver.field_73059_b.func_73158_c(chunkcoordinates.field_71574_a + k >> 4, chunkcoordinates.field_71573_c + l >> 4);
 +                }
 +            }
@@ -385,7 +382,7 @@
          this.func_71243_i();
      }
  
-@@ -248,18 +390,17 @@
+@@ -262,18 +399,17 @@
      {
          this.field_71302_d = null;
          this.field_71303_e = 0;
@@ -412,7 +409,7 @@
  
                  if (worldserver != null)
                  {
-@@ -268,24 +409,30 @@
+@@ -282,24 +418,30 @@
                          this.func_98033_al().func_98233_a("Saving chunks for level \'" + worldserver.func_72912_H().func_76065_j() + "\'/" + worldserver.field_73011_w.func_80007_l());
                      }
  
@@ -457,7 +454,7 @@
  
              if (this.func_71212_ac() != null)
              {
-@@ -302,12 +449,13 @@
+@@ -316,12 +458,13 @@
              this.func_98033_al().func_98233_a("Saving worlds");
              this.func_71267_a(false);
  
@@ -477,7 +474,7 @@
              if (this.field_71307_n != null && this.field_71307_n.func_76468_d())
              {
                  this.field_71307_n.func_76470_e();
-@@ -350,7 +498,11 @@
+@@ -364,7 +507,11 @@
  
                      if (l > 2000L && i - this.field_71299_R >= 15000L)
                      {
@@ -490,7 +487,7 @@
                          l = 2000L;
                          this.field_71299_R = i;
                      }
-@@ -364,7 +516,7 @@
+@@ -378,7 +525,7 @@
                      j += l;
                      i = k;
  
@@ -499,7 +496,7 @@
                      {
                          this.func_71217_p();
                          j = 0L;
-@@ -373,6 +525,7 @@
+@@ -387,6 +534,7 @@
                      {
                          while (j > 50L)
                          {
@@ -507,7 +504,7 @@
                              j -= 50L;
                              this.func_71217_p();
                          }
-@@ -427,6 +580,16 @@
+@@ -441,6 +589,16 @@
              }
              finally
              {
@@ -524,7 +521,7 @@
                  this.func_71240_o();
              }
          }
-@@ -441,7 +604,7 @@
+@@ -455,7 +613,7 @@
  
      protected void func_71240_o() {}
  
@@ -533,7 +530,7 @@
      {
          long i = System.nanoTime();
          AxisAlignedBB.func_72332_a().func_72298_a();
-@@ -457,7 +620,7 @@
+@@ -471,7 +629,7 @@
          this.field_71304_b.func_76320_a("root");
          this.func_71190_q();
  
@@ -542,7 +539,7 @@
          {
              this.field_71304_b.func_76320_a("save");
              this.field_71318_t.func_72389_g();
-@@ -495,60 +658,77 @@
+@@ -509,60 +667,77 @@
      public void func_71190_q()
      {
          this.field_71304_b.func_76320_a("levels");
@@ -563,7 +560,7 @@
 +            for (int i = 0; i < this.func_71203_ab().field_72404_b.size(); ++i)
 +            {
 +                EntityPlayerMP entityplayermp = (EntityPlayerMP) this.func_71203_ab().field_72404_b.get(i);
-+                entityplayermp.field_71135_a.func_72567_b(new Packet4UpdateTime(entityplayermp.field_70170_p.func_82737_E(), entityplayermp.getPlayerTime())); // Add support for per player time
++                entityplayermp.field_71135_a.func_72567_b(new Packet4UpdateTime(entityplayermp.field_70170_p.func_82737_E(), entityplayermp.getPlayerTime(), entityplayermp.field_70170_p.func_82736_K().func_82766_b("doDaylightCycle"))); // Add support for per player time
 +            }
 +        }
 +
@@ -585,7 +582,7 @@
 -                if (this.field_71315_w % 20 == 0)
 -                {
 -                    this.field_71304_b.func_76320_a("timeSync");
--                    this.field_71318_t.func_72396_a(new Packet4UpdateTime(worldserver.func_82737_E(), worldserver.func_72820_D()), worldserver.field_73011_w.field_76574_g);
+-                    this.field_71318_t.func_72396_a(new Packet4UpdateTime(worldserver.func_82737_E(), worldserver.func_72820_D(), worldserver.func_82736_K().func_82766_b("doDaylightCycle")), worldserver.field_73011_w.field_76574_g);
 -                    this.field_71304_b.func_76319_b();
 -                }
 -
@@ -631,7 +628,7 @@
 +            /* Drop global time updates
 +            if (this.ticks % 20 == 0) {
 +                this.methodProfiler.a("timeSync");
-+                this.s.a(new Packet4UpdateTime(worldserver.getTime(), worldserver.getDayTime()), worldserver.worldProvider.dimension);
++                this.t.a(new Packet4UpdateTime(worldserver.getTime(), worldserver.getDayTime(), worldserver.getGameRules().getBoolean("doDaylightCycle")), worldserver.worldProvider.dimension);
 +                this.methodProfiler.b();
 +            }
 +            // CraftBukkit end */
@@ -666,11 +663,11 @@
 +            this.field_71304_b.func_76319_b();
 +            this.field_71304_b.func_76319_b();
 +            // } // CraftBukkit
-+            // this.j[i][this.ticks % 100] = System.nanoTime() - j; // CraftBukkit
++            // this.k[i][this.ticks % 100] = System.nanoTime() - j; // CraftBukkit
          }
  
          this.field_71304_b.func_76318_c("connection");
-@@ -575,14 +755,15 @@
+@@ -589,13 +764,14 @@
          this.field_71322_p.add(p_82010_1_);
      }
  
@@ -682,13 +679,11 @@
  
          try
          {
--            boolean flag = !GraphicsEnvironment.isHeadless();
 +            /* CraftBukkit start - Replace everything
-+            boolean flag = false;
+             boolean flag = !GraphicsEnvironment.isHeadless();
              String s = null;
              String s1 = ".";
-             String s2 = null;
-@@ -590,97 +771,94 @@
+@@ -604,97 +780,94 @@
              boolean flag2 = false;
              int i = -1;
  
@@ -794,7 +789,7 @@
 -
 -            if (flag)
 -            {
--                dedicatedserver.func_82011_an();
+-                dedicatedserver.func_120011_ar();
 -            }
 -
 -            dedicatedserver.func_71256_s();
@@ -816,16 +811,16 @@
 +
 +            if (options.has("world"))
 +            {
-+                dedicatedserver.func_71261_m((String) options.valueOf("world"));
++                dedicatedserver.func_71224_l((String) options.valueOf("world"));
 +            }
 +
 +            /*
 +            if (s != null) {
-+                dedicatedserver.k(s);
++                dedicatedserver.j(s);
 +            }
 +
 +            if (s2 != null) {
-+                dedicatedserver.l(s2);
++                dedicatedserver.k(s2);
 +            }
 +
 +            if (i >= 0) {
@@ -841,7 +836,7 @@
 +            }
 +
 +            if (flag) {
-+                dedicatedserver.ap();
++                dedicatedserver.at();
 +            }
 +            */
 +            dedicatedserver.primaryThread.start();
@@ -850,7 +845,7 @@
          }
          catch (Exception exception)
          {
-@@ -697,7 +875,7 @@
+@@ -711,7 +884,7 @@
  
      public void func_71256_s()
      {
@@ -859,7 +854,7 @@
      }
  
      public File func_71209_f(String p_71209_1_)
-@@ -717,7 +895,17 @@
+@@ -731,7 +904,17 @@
  
      public WorldServer func_71218_a(int p_71218_1_)
      {
@@ -878,7 +873,7 @@
      }
  
      public String func_71277_t()
-@@ -757,19 +945,75 @@
+@@ -771,19 +954,75 @@
  
      public String func_71258_A()
      {
@@ -963,7 +958,7 @@
      }
  
      public void func_71201_j(String p_71201_1_)
-@@ -787,21 +1031,21 @@
+@@ -801,21 +1040,21 @@
  
      public String getServerModName()
      {
@@ -980,7 +975,7 @@
 -            p_71230_1_.func_85056_g().func_71500_a("Vec3 Pool Size", new CallableServerProfiler(this));
 +        p_71230_1_.func_85056_g().func_71500_a("Profiler Position", (Callable)(new CallableIsServerModded(this)));
 +
-+        if (this.worlds != null && this.worlds.size() > 0 && this.worlds.get(0) != null)
++        if (this.worlds != null && this.worlds.size() > 0 && this.worlds.get(0) != null)   // CraftBukkit
 +        {
 +            p_71230_1_.func_85056_g().func_71500_a("Vec3 Pool Size", (Callable)(new CallableServerProfiler(this)));
          }
@@ -992,7 +987,7 @@
          }
  
          return p_71230_1_;
-@@ -809,54 +1053,49 @@
+@@ -823,54 +1062,49 @@
  
      public List func_71248_a(ICommandSender p_71248_1_, String p_71248_2_)
      {
@@ -1066,7 +1061,7 @@
      }
  
      public static MinecraftServer func_71276_C()
-@@ -936,9 +1175,11 @@
+@@ -945,9 +1179,11 @@
  
      public void func_71226_c(int p_71226_1_)
      {
@@ -1081,7 +1076,7 @@
  
              if (worldserver != null)
              {
-@@ -991,9 +1232,11 @@
+@@ -1000,9 +1236,11 @@
          this.field_71290_O = true;
          this.func_71254_M().func_75800_d();
  
@@ -1096,7 +1091,7 @@
  
              if (worldserver != null)
              {
-@@ -1001,7 +1244,7 @@
+@@ -1010,7 +1248,7 @@
              }
          }
  
@@ -1105,7 +1100,7 @@
          this.func_71263_m();
      }
  
-@@ -1031,22 +1274,23 @@
+@@ -1041,22 +1279,23 @@
          p_70000_1_.func_76472_a("avg_rec_packet_size", Integer.valueOf((int)MathHelper.func_76127_a(this.field_71314_i)));
          int i = 0;
  
@@ -1145,7 +1140,7 @@
          }
  
          p_70000_1_.func_76472_a("worlds", Integer.valueOf(i));
-@@ -1074,7 +1318,7 @@
+@@ -1084,7 +1323,7 @@
  
      public boolean func_71266_T()
      {
@@ -1154,7 +1149,7 @@
      }
  
      public void func_71229_d(boolean p_71229_1_)
-@@ -1161,9 +1405,11 @@
+@@ -1171,9 +1410,11 @@
  
      public void func_71235_a(EnumGameType p_71235_1_)
      {
@@ -1169,12 +1164,21 @@
          }
      }
  
-@@ -1174,7 +1420,7 @@
+@@ -1184,7 +1425,7 @@
          return false;
      }
  
 -    public abstract String func_71206_a(EnumGameType enumgametype, boolean flag);
-+    public abstract String func_71206_a(EnumGameType enumgamemode, boolean flag);
++    public abstract String func_71206_a(EnumGameType p_71206_1_, boolean p_71206_2_);
  
      public int func_71259_af()
      {
+@@ -1203,7 +1444,7 @@
+ 
+     public World func_130014_f_()
+     {
+-        return this.field_71305_c[0];
++        return this.worlds.get(0); // CraftBukkit
+     }
+ 
+     public int func_82357_ak()

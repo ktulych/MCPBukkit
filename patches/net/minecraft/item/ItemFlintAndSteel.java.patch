@@ -27,6 +27,7 @@
  
              if (i1 == 0)
              {
+-                p_77648_3_.func_72908_a((double)p_77648_4_ + 0.5D, (double)p_77648_5_ + 0.5D, (double)p_77648_6_ + 0.5D, "fire.ignite", 1.0F, field_77697_d.nextFloat() * 0.4F + 0.8F);
 +                // CraftBukkit start - Store the clicked block
 +                if (CraftEventFactory.callBlockIgniteEvent(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, org.bukkit.event.block.BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p_77648_2_).isCancelled())
 +                {
@@ -36,7 +37,7 @@
 +
 +                CraftBlockState blockState = CraftBlockState.getBlockState(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_);
 +                // CraftBukkit end
-                 p_77648_3_.func_72908_a((double)p_77648_4_ + 0.5D, (double)p_77648_5_ + 0.5D, (double)p_77648_6_ + 0.5D, "fire.ignite", 1.0F, field_77697_d.nextFloat() * 0.4F + 0.8F);
++                p_77648_3_.func_72908_a((double) p_77648_4_ + 0.5D, (double) p_77648_5_ + 0.5D, (double) p_77648_6_ + 0.5D, "fire.ignite", 1.0F, Item.field_77697_d.nextFloat() * 0.4F + 0.8F); // CraftBukkit - fix compilation
                  p_77648_3_.func_94575_c(p_77648_4_, p_77648_5_, p_77648_6_, Block.field_72067_ar.field_71990_ca);
 +                // CraftBukkit start
 +                org.bukkit.event.block.BlockPlaceEvent placeEvent = CraftEventFactory.callBlockPlaceEvent(p_77648_3_, p_77648_2_, blockState, clickedX, clickedY, clickedZ);

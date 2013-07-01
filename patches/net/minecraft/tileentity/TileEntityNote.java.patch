@@ -7,8 +7,8 @@
 -
  public class TileEntityNote extends TileEntity
  {
-     public byte field_70416_a = 0;
-     public boolean field_70415_b = false;
+     public byte field_70416_a;
+     public boolean field_70415_b;
 +
 +    public TileEntityNote() {}
  

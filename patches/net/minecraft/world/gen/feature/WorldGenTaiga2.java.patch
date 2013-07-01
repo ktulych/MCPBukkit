@@ -12,7 +12,7 @@
 +
 +public class WorldGenTaiga2 extends WorldGenerator implements TreeGenerator   // CraftBukkit add interface
  {
-     public WorldGenTaiga2(boolean p_i3800_1_)
+     public WorldGenTaiga2(boolean p_i2025_1_)
      {
 @@ -13,6 +16,13 @@
  

@@ -7,8 +7,8 @@
 -
  public class ItemBow extends Item
  {
-     public static final String[] field_94601_a = new String[] {"bow_pull_0", "bow_pull_1", "bow_pull_2"};
-@@ -65,6 +64,21 @@
+     public static final String[] field_94601_a = new String[] {"pulling_0", "pulling_1", "pulling_2"};
+@@ -65,8 +64,23 @@
                  entityarrow.func_70015_d(100);
              }
  
@@ -28,8 +28,11 @@
 +
 +            // CraftBukkit end
              p_77615_1_.func_77972_a(1, p_77615_3_);
-             p_77615_2_.func_72956_a(p_77615_3_, "random.bow", 1.0F, 1.0F / (field_77697_d.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+-            p_77615_2_.func_72956_a(p_77615_3_, "random.bow", 1.0F, 1.0F / (field_77697_d.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
++            p_77615_2_.func_72956_a(p_77615_3_, "random.bow", 1.0F, 1.0F / (Item.field_77697_d.nextFloat() * 0.4F + 1.2F) + f * 0.5F); // CraftBukkit - Fix compilation
  
+             if (flag)
+             {
 @@ -77,10 +91,7 @@
                  p_77615_3_.field_71071_by.func_70435_d(Item.field_77704_l.field_77779_bT);
              }

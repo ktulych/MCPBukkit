@@ -1,14 +1,5 @@
 --- ../net/minecraft/block/BlockCrops.java
 +++ ../net/minecraft/block/BlockCrops.java
-@@ -17,7 +17,7 @@
-         this.func_71905_a(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
-         this.func_71849_a((CreativeTabs)null);
-         this.func_71848_c(0.0F);
--        this.func_71884_a(field_71965_g);
-+        this.func_71884_a(Block.field_71965_g); // CraftBukkit - i -> Block.i, decompile error
-         this.func_71896_v();
-     }
- 
 @@ -40,8 +40,7 @@
  
                  if (p_71847_5_.nextInt((int)(25.0F / f) + 1) == 0)

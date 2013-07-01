@@ -19,7 +19,7 @@ public abstract class CraftProjectile extends AbstractProjectile implements Proj
 
     public void setShooter(LivingEntity shooter) {
         if (shooter instanceof CraftLivingEntity) {
-            getHandle().field_70192_c = (net.minecraft.entity.EntityLiving) ((CraftLivingEntity) shooter).entity;
+            getHandle().field_70192_c = (net.minecraft.entity.EntityLivingBase) ((CraftLivingEntity) shooter).entity;
             if (shooter instanceof CraftHumanEntity) {
                 getHandle().field_85053_h = ((CraftHumanEntity) shooter).getName();
             }

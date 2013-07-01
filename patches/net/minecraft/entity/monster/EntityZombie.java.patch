@@ -1,10 +1,11 @@
 --- ../net/minecraft/entity/monster/EntityZombie.java
 +++ ../net/minecraft/entity/monster/EntityZombie.java
-@@ -22,12 +22,20 @@
+@@ -29,9 +29,16 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.potion.Potion;
  import net.minecraft.potion.PotionEffect;
 +import net.minecraft.server.MinecraftServer;
+ import net.minecraft.util.DamageSource;
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
 +
@@ -16,21 +17,15 @@
  
  public class EntityZombie extends EntityMob
  {
-     private int field_82234_d = 0;
+@@ -39,6 +46,7 @@
+     private static final UUID field_110187_bq = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
+     private static final AttributeModifier field_110188_br = new AttributeModifier(field_110187_bq, "Baby speed boost", 0.5D, 0);
+     private int field_82234_d;
 +    private int lastTick = MinecraftServer.currentTick; // CraftBukkit
  
-     public EntityZombie(World p_i3558_1_)
+     public EntityZombie(World p_i1745_1_)
      {
-@@ -96,7 +104,7 @@
- 
-     public void func_82227_f(boolean p_82227_1_)
-     {
--        this.func_70096_w().func_75692_b(12, Byte.valueOf((byte)1));
-+        this.func_70096_w().func_75692_b(12, Byte.valueOf((byte)(p_82227_1_ ? 1 : 0)));  // CraftBukkit - added flag
-     }
- 
-     public boolean func_82231_m()
-@@ -138,7 +146,16 @@
+@@ -152,7 +160,16 @@
  
                  if (flag)
                  {
@@ -48,7 +43,7 @@
                  }
              }
          }
-@@ -151,6 +168,11 @@
+@@ -219,6 +236,11 @@
          if (!this.field_70170_p.field_72995_K && this.func_82230_o())
          {
              int i = this.func_82233_q();
@@ -60,7 +55,7 @@
              this.field_82234_d -= i;
  
              if (this.field_82234_d <= 0)
-@@ -168,7 +190,16 @@
+@@ -236,7 +258,16 @@
  
          if (flag && this.func_70694_bm() == null && this.func_70027_ad() && this.field_70146_Z.nextFloat() < (float)this.field_70170_p.field_73013_u * 0.3F)
          {
@@ -78,23 +73,7 @@
          }
  
          return flag;
-@@ -177,12 +208,13 @@
-     public int func_82193_c(Entity p_82193_1_)
-     {
-         ItemStack itemstack = this.func_70694_bm();
--        float f = (float)(this.func_70667_aM() - this.func_70630_aN()) / (float)this.func_70667_aM();
-+        // CraftBukkit - getMaxHealth() -> ((CraftLivingEntity) this.bukkitEntity).getMaxHealth()
-+        float f = (float)(((CraftLivingEntity) this.bukkitEntity).getMaxHealth() - this.func_70630_aN()) / (float)((CraftLivingEntity) this.bukkitEntity).getMaxHealth();
-         int i = 3 + MathHelper.func_76141_d(f * 4.0F);
- 
-         if (itemstack != null)
-         {
--            i += itemstack.func_77971_a(this);
-+            i += itemstack.func_77971_a((Entity) this);
-         }
- 
-         return i;
-@@ -218,20 +250,22 @@
+@@ -272,20 +303,22 @@
          return EnumCreatureAttribute.UNDEAD;
      }
  

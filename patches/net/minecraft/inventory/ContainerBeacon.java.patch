@@ -16,13 +16,13 @@
 +    private InventoryPlayer player;
 +    // CraftBukkit end
  
-     public ContainerBeacon(InventoryPlayer p_i5076_1_, TileEntityBeacon p_i5076_2_)
+     public ContainerBeacon(InventoryPlayer p_i1802_1_, TileEntityBeacon p_i1802_2_)
      {
-+        player = p_i5076_1_; // CraftBukkit
-         this.field_82866_e = p_i5076_2_;
-         this.func_75146_a(this.field_82864_f = new SlotBeacon(this, p_i5076_2_, 0, 136, 110));
++        player = p_i1802_1_; // CraftBukkit
+         this.field_82866_e = p_i1802_2_;
+         this.func_75146_a(this.field_82864_f = new SlotBeacon(this, p_i1802_2_, 0, 136, 110));
          byte b0 = 36;
-@@ -59,6 +65,11 @@
+@@ -54,6 +60,11 @@
  
      public boolean func_75145_c(EntityPlayer p_75145_1_)
      {
@@ -34,7 +34,7 @@
          return this.field_82866_e.func_70300_a(p_75145_1_);
      }
  
-@@ -126,4 +137,18 @@
+@@ -121,4 +132,18 @@
  
          return itemstack;
      }

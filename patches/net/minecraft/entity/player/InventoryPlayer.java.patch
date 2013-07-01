@@ -7,7 +7,7 @@
  import net.minecraft.block.Block;
  import net.minecraft.crash.CrashReport;
  import net.minecraft.crash.CrashReportCategory;
-@@ -11,6 +12,13 @@
+@@ -10,6 +11,13 @@
  import net.minecraft.nbt.NBTTagList;
  import net.minecraft.util.ReportedException;
  
@@ -21,9 +21,9 @@
  public class InventoryPlayer implements IInventory
  {
      public ItemStack[] field_70462_a = new ItemStack[36];
-@@ -20,6 +28,46 @@
+@@ -19,6 +27,46 @@
      private ItemStack field_70457_g;
-     public boolean field_70459_e = false;
+     public boolean field_70459_e;
  
 +    // CraftBukkit start
 +    public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
@@ -65,10 +65,10 @@
 +    }
 +    // CraftBukkit end
 +
-     public InventoryPlayer(EntityPlayer p_i3562_1_)
+     public InventoryPlayer(EntityPlayer p_i1750_1_)
      {
-         this.field_70458_d = p_i3562_1_;
-@@ -60,6 +108,34 @@
+         this.field_70458_d = p_i1750_1_;
+@@ -59,6 +107,34 @@
  
          return -1;
      }
@@ -103,7 +103,7 @@
  
      public int func_70447_i()
      {
-@@ -276,7 +352,7 @@
+@@ -295,7 +371,7 @@
                  CrashReportCategory crashreportcategory = crashreport.func_85058_a("Item being added");
                  crashreportcategory.func_71507_a("Item ID", Integer.valueOf(p_70441_1_.field_77993_c));
                  crashreportcategory.func_71507_a("Item data", Integer.valueOf(p_70441_1_.func_77960_j()));
@@ -112,7 +112,7 @@
                  throw new ReportedException(crashreport);
              }
          }
-@@ -453,7 +529,7 @@
+@@ -472,7 +548,7 @@
  
      public int func_70297_j_()
      {
@@ -120,8 +120,8 @@
 +        return maxStack;
      }
  
-     public int func_70444_a(Entity p_70444_1_)
-@@ -554,6 +630,13 @@
+     public boolean func_70454_b(Block p_70454_1_)
+@@ -567,6 +643,13 @@
  
      public ItemStack func_70445_o()
      {

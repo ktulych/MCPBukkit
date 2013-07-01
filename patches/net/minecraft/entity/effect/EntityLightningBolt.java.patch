@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/effect/EntityLightningBolt.java
 +++ ../net/minecraft/entity/effect/EntityLightningBolt.java
-@@ -8,21 +8,36 @@
+@@ -8,40 +8,67 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.World;
  
@@ -9,40 +9,46 @@
  public class EntityLightningBolt extends EntityWeatherEffect
  {
      private int field_70262_b;
-     public long field_70264_a = 0L;
+     public long field_70264_a;
      private int field_70263_c;
  
 +    // CraftBukkit start
 +    public boolean isEffect = false;
 +
-     public EntityLightningBolt(World p_i3533_1_, double p_i3533_2_, double p_i3533_4_, double p_i3533_6_)
+     public EntityLightningBolt(World p_i1703_1_, double p_i1703_2_, double p_i1703_4_, double p_i1703_6_)
      {
-+        this(p_i3533_1_, p_i3533_2_, p_i3533_4_, p_i3533_6_, false);
+-        super(p_i1703_1_);
+-        this.func_70012_b(p_i1703_2_, p_i1703_4_, p_i1703_6_, 0.0F, 0.0F);
++        this(p_i1703_1_, p_i1703_2_, p_i1703_4_, p_i1703_6_, false);
 +    }
 +
 +    public EntityLightningBolt(World p_i3533_1_, double p_i3533_2_, double p_i3533_4_, double p_i3533_6_, boolean isEffect)
 +    {
 +        // CraftBukkit end
-         super(p_i3533_1_);
++        super(p_i3533_1_);
 +        // CraftBukkit start
 +        this.isEffect = isEffect;
 +        // CraftBukkit end
-         this.func_70012_b(p_i3533_2_, p_i3533_4_, p_i3533_6_, 0.0F, 0.0F);
++        this.func_70012_b(p_i3533_2_, p_i3533_4_, p_i3533_6_, 0.0F, 0.0F);
          this.field_70262_b = 2;
          this.field_70264_a = this.field_70146_Z.nextLong();
          this.field_70263_c = this.field_70146_Z.nextInt(3) + 1;
  
--        if (!p_i3533_1_.field_72995_K && p_i3533_1_.field_73013_u >= 2 && p_i3533_1_.func_72873_a(MathHelper.func_76128_c(p_i3533_2_), MathHelper.func_76128_c(p_i3533_4_), MathHelper.func_76128_c(p_i3533_6_), 10))
+-        if (!p_i1703_1_.field_72995_K && p_i1703_1_.func_82736_K().func_82766_b("doFireTick") && p_i1703_1_.field_73013_u >= 2 && p_i1703_1_.func_72873_a(MathHelper.func_76128_c(p_i1703_2_), MathHelper.func_76128_c(p_i1703_4_), MathHelper.func_76128_c(p_i1703_6_), 10))
 +        // CraftBukkit
-+        if (!isEffect && !p_i3533_1_.field_72995_K && p_i3533_1_.field_73013_u >= 2 && p_i3533_1_.func_72873_a(MathHelper.func_76128_c(p_i3533_2_), MathHelper.func_76128_c(p_i3533_4_), MathHelper.func_76128_c(p_i3533_6_), 10))
++        if (!isEffect && !p_i3533_1_.field_72995_K && p_i3533_1_.func_82736_K().func_82766_b("doFireTick") && p_i3533_1_.field_73013_u >= 2 && p_i3533_1_.func_72873_a(MathHelper.func_76128_c(p_i3533_2_), MathHelper.func_76128_c(p_i3533_4_), MathHelper.func_76128_c(p_i3533_6_), 10))
          {
-             int i = MathHelper.func_76128_c(p_i3533_2_);
-             int j = MathHelper.func_76128_c(p_i3533_4_);
-@@ -30,7 +45,13 @@
+-            int i = MathHelper.func_76128_c(p_i1703_2_);
+-            int j = MathHelper.func_76128_c(p_i1703_4_);
+-            int k = MathHelper.func_76128_c(p_i1703_6_);
++            int i = MathHelper.func_76128_c(p_i3533_2_);
++            int j = MathHelper.func_76128_c(p_i3533_4_);
++            int k = MathHelper.func_76128_c(p_i3533_6_);
  
-             if (p_i3533_1_.func_72798_a(i, j, k) == 0 && Block.field_72067_ar.func_71930_b(p_i3533_1_, i, j, k))
+-            if (p_i1703_1_.func_72798_a(i, j, k) == 0 && Block.field_72067_ar.func_71930_b(p_i1703_1_, i, j, k))
++            if (p_i3533_1_.func_72798_a(i, j, k) == 0 && Block.field_72067_ar.func_71930_b(p_i3533_1_, i, j, k))
              {
--                p_i3533_1_.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
+-                p_i1703_1_.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
 +                // CraftBukkit start
 +                if (!CraftEventFactory.callBlockIgniteEvent(p_i3533_1_, i, j, k, this).isCancelled())
 +                {
@@ -53,11 +59,18 @@
              }
  
              for (i = 0; i < 4; ++i)
-@@ -41,7 +62,13 @@
+             {
+-                j = MathHelper.func_76128_c(p_i1703_2_) + this.field_70146_Z.nextInt(3) - 1;
+-                k = MathHelper.func_76128_c(p_i1703_4_) + this.field_70146_Z.nextInt(3) - 1;
+-                int l = MathHelper.func_76128_c(p_i1703_6_) + this.field_70146_Z.nextInt(3) - 1;
++                j = MathHelper.func_76128_c(p_i3533_2_) + this.field_70146_Z.nextInt(3) - 1;
++                k = MathHelper.func_76128_c(p_i3533_4_) + this.field_70146_Z.nextInt(3) - 1;
++                int l = MathHelper.func_76128_c(p_i3533_6_) + this.field_70146_Z.nextInt(3) - 1;
  
-                 if (p_i3533_1_.func_72798_a(j, k, l) == 0 && Block.field_72067_ar.func_71930_b(p_i3533_1_, j, k, l))
+-                if (p_i1703_1_.func_72798_a(j, k, l) == 0 && Block.field_72067_ar.func_71930_b(p_i1703_1_, j, k, l))
++                if (p_i3533_1_.func_72798_a(j, k, l) == 0 && Block.field_72067_ar.func_71930_b(p_i3533_1_, j, k, l))
                  {
--                    p_i3533_1_.func_94575_c(j, k, l, Block.field_72067_ar.field_71990_ca);
+-                    p_i1703_1_.func_94575_c(j, k, l, Block.field_72067_ar.field_71990_ca);
 +                    // CraftBukkit start
 +                    if (!CraftEventFactory.callBlockIgniteEvent(p_i3533_1_, j, k, l, this).isCancelled())
 +                    {
@@ -72,9 +85,9 @@
                  this.field_70262_b = 1;
                  this.field_70264_a = this.field_70146_Z.nextLong();
  
--                if (!this.field_70170_p.field_72995_K && this.field_70170_p.func_72873_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v), 10))
+-                if (!this.field_70170_p.field_72995_K && this.field_70170_p.func_82736_K().func_82766_b("doFireTick") && this.field_70170_p.func_72873_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v), 10))
 +                // CraftBukkit
-+                if (!this.isEffect && !this.field_70170_p.field_72995_K && this.field_70170_p.func_72873_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v), 10))
++                if (!isEffect && !this.field_70170_p.field_72995_K && this.field_70170_p.func_82736_K().func_82766_b("doFireTick") && this.field_70170_p.func_72873_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v), 10))
                  {
                      int i = MathHelper.func_76128_c(this.field_70165_t);
                      int j = MathHelper.func_76128_c(this.field_70163_u);

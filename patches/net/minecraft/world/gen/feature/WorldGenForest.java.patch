@@ -12,7 +12,7 @@
 +
 +public class WorldGenForest extends WorldGenerator implements TreeGenerator   // CraftBukkit add interface
  {
-     public WorldGenForest(boolean p_i3785_1_)
+     public WorldGenForest(boolean p_i2009_1_)
      {
 @@ -13,6 +16,13 @@
  

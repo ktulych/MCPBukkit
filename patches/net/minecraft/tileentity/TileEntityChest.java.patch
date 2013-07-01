@@ -13,7 +13,7 @@
  {
 -    private ItemStack[] field_70428_i = new ItemStack[36];
 +    private ItemStack[] field_70428_i = new ItemStack[27]; // CraftBukkit - 36 -> 27
-     public boolean field_70425_a = false;
+     public boolean field_70425_a;
      public TileEntityChest field_70423_b;
      public TileEntityChest field_70424_c;
 @@ -28,6 +33,38 @@

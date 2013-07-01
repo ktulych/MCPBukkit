@@ -24,7 +24,7 @@
  public class TileEntityFurnace extends TileEntity implements ISidedInventory
  {
 @@ -25,6 +35,39 @@
-     public int field_70406_c = 0;
+     public int field_70406_c;
      private String field_94130_e;
  
 +    // CraftBukkit start

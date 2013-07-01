@@ -2,7 +2,7 @@
 +++ ../net/minecraft/entity/projectile/EntityArrow.java
 @@ -6,6 +6,7 @@
  import net.minecraft.entity.Entity;
- import net.minecraft.entity.EntityLiving;
+ import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.entity.IProjectile;
 +import net.minecraft.entity.item.EntityItem;
  import net.minecraft.entity.monster.EntityEnderman;
@@ -47,9 +47,11 @@
 -                        movingobjectposition.field_72308_g.func_70015_d(5);
 -                    }
 -
+-                    if (movingobjectposition.field_72308_g.func_70097_a(damagesource, (float)i1))
+-                    {
 +                    // CraftBukkit start - Moved damage call
-                     if (movingobjectposition.field_72308_g.func_70097_a(damagesource, i1))
-                     {
++                    if (movingobjectposition.field_72308_g.func_70097_a(damagesource, i1))
++                    {
 +                        if (this.func_70027_ad() && !(movingobjectposition.field_72308_g instanceof EntityEnderman) && (!(movingobjectposition.field_72308_g instanceof EntityPlayerMP) || !(this.field_70250_c instanceof EntityPlayerMP) || this.field_70170_p.pvpMode))   // CraftBukkit - abide by pvp setting if destination is a player
 +                        {
 +                            EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), 5);
@@ -63,10 +65,10 @@
 +                            // CraftBukkit end
 +                        }
 +
-+                        // if (movingobjectposition.entity.damageEntity(damagesource, i1)) { // CraftBukkit - moved up
-                         if (movingobjectposition.field_72308_g instanceof EntityLiving)
++                        // if (movingobjectposition.entity.damageEntity(damagesource, (float) i1)) { // CraftBukkit - moved up
+                         if (movingobjectposition.field_72308_g instanceof EntityLivingBase)
                          {
-                             EntityLiving entityliving = (EntityLiving)movingobjectposition.field_72308_g;
+                             EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.field_72308_g;
 @@ -344,7 +362,7 @@
  
                      if (this.field_70246_g != 0)
@@ -87,7 +89,7 @@
 +            {
 +                EntityItem item = new EntityItem(this.field_70170_p, this.field_70165_t, this.field_70163_u, this.field_70161_v, itemstack);
 +                PlayerPickupItemEvent event = new PlayerPickupItemEvent((org.bukkit.entity.Player) p_70100_1_.getBukkitEntity(), new org.bukkit.craftbukkit.entity.CraftItem(this.field_70170_p.getServer(), this, item), 0);
-+                event.setCancelled(!p_70100_1_.field_82172_bs);
++                // event.setCancelled(!entityplayer.canPickUpLoot); TODO
 +                this.field_70170_p.getServer().getPluginManager().callEvent(event);
 +
 +                if (event.isCancelled())

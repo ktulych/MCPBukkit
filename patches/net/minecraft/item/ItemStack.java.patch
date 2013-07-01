@@ -1,17 +1,18 @@
 --- ../net/minecraft/item/ItemStack.java
 +++ ../net/minecraft/item/ItemStack.java
-@@ -60,12 +60,12 @@
-         this.field_82843_f = null;
-         this.field_77993_c = p_i3666_1_;
-         this.field_77994_a = p_i3666_2_;
--        this.field_77991_e = p_i3666_3_;
+@@ -64,12 +64,13 @@
+     {
+         this.field_77993_c = p_i1882_1_;
+         this.field_77994_a = p_i1882_2_;
+-        this.field_77991_e = p_i1882_3_;
 -
 -        if (this.field_77991_e < 0)
 -        {
 -            this.field_77991_e = 0;
 -        }
 +        // CraftBukkit start - Pass to setData to do filtering
-+        this.func_77964_b(p_i3666_3_);
++        this.func_77964_b(p_i1882_3_);
++        //this.damage = k;
 +        //if (this.damage < 0) {
 +        //    this.damage = 0;
 +        //}
@@ -19,7 +20,7 @@
      }
  
      public static ItemStack func_77949_a(NBTTagCompound p_77949_0_)
-@@ -134,7 +134,7 @@
+@@ -134,7 +135,7 @@
  
          if (this.field_77990_d != null)
          {
@@ -28,7 +29,7 @@
          }
  
          return p_77955_1_;
-@@ -153,7 +153,8 @@
+@@ -153,7 +154,8 @@
  
          if (p_77963_1_.func_74764_b("tag"))
          {
@@ -38,7 +39,7 @@
          }
      }
  
-@@ -194,9 +195,29 @@
+@@ -194,9 +196,29 @@
  
      public void func_77964_b(int p_77964_1_)
      {
@@ -69,7 +70,7 @@
          {
              this.field_77991_e = 0;
          }
-@@ -263,6 +284,13 @@
+@@ -268,6 +290,13 @@
                          this.field_77994_a = 0;
                      }
  
@@ -83,12 +84,12 @@
                      this.field_77991_e = 0;
                  }
              }
-@@ -271,7 +299,7 @@
+@@ -276,7 +305,7 @@
  
-     public void func_77961_a(EntityLiving p_77961_1_, EntityPlayer p_77961_2_)
+     public void func_77961_a(EntityLivingBase p_77961_1_, EntityPlayer p_77961_2_)
      {
 -        boolean flag = Item.field_77698_e[this.field_77993_c].func_77644_a(this, p_77961_1_, p_77961_2_);
-+        boolean flag = Item.field_77698_e[this.field_77993_c].func_77644_a(this, p_77961_1_, (EntityLiving) p_77961_2_);
++        boolean flag = Item.field_77698_e[this.field_77993_c].func_77644_a(this, p_77961_1_, (EntityLivingBase) p_77961_2_);
  
          if (flag)
          {

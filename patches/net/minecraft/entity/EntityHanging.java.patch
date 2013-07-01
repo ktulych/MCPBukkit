@@ -21,7 +21,7 @@
  
  public abstract class EntityHanging extends Entity
  {
-@@ -122,6 +130,38 @@
+@@ -124,6 +132,38 @@
  
              if (!this.field_70128_L && !this.func_70518_d())
              {
@@ -58,9 +58,9 @@
 +
 +                // CraftBukkit end
                  this.func_70106_y();
-                 this.func_82331_h();
+                 this.func_110128_b((Entity)null);
              }
-@@ -225,6 +265,39 @@
+@@ -227,6 +267,39 @@
          {
              if (!this.field_70128_L && !this.field_70170_p.field_72995_K)
              {
@@ -99,8 +99,8 @@
 +                // CraftBukkit end
                  this.func_70106_y();
                  this.func_70018_K();
-                 EntityPlayer entityplayer = null;
-@@ -250,6 +323,11 @@
+                 this.func_110128_b(p_70097_1_.func_76346_g());
+@@ -240,6 +313,11 @@
      {
          if (!this.field_70170_p.field_72995_K && !this.field_70128_L && p_70091_1_ * p_70091_1_ + p_70091_3_ * p_70091_3_ + p_70091_5_ * p_70091_5_ > 0.0D)
          {
@@ -110,9 +110,9 @@
 +            }
 +
              this.func_70106_y();
-             this.func_82331_h();
+             this.func_110128_b((Entity)null);
          }
-@@ -257,7 +335,7 @@
+@@ -247,7 +325,7 @@
  
      public void func_70024_g(double p_70024_1_, double p_70024_3_, double p_70024_5_)
      {
@@ -120,4 +120,11 @@
 +        if (false && !this.field_70170_p.field_72995_K && !this.field_70128_L && p_70024_1_ * p_70024_1_ + p_70024_3_ * p_70024_3_ + p_70024_5_ * p_70024_5_ > 0.0D)   // CraftBukkit - not needed
          {
              this.func_70106_y();
-             this.func_82331_h();
+             this.func_110128_b((Entity)null);
+@@ -311,5 +389,5 @@
+ 
+     public abstract int func_82330_g();
+ 
+-    public abstract void func_110128_b(Entity entity);
++    public abstract void func_110128_b(Entity p_110128_1_);
+ }

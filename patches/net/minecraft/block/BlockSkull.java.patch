@@ -11,7 +11,7 @@
 +
  public class BlockSkull extends BlockContainer
  {
-     protected BlockSkull(int p_i5106_1_)
+     protected BlockSkull(int p_i2254_1_)
 @@ -90,7 +95,24 @@
          return p_71899_1_;
      }

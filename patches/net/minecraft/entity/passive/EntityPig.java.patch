@@ -5,9 +5,9 @@
  
 +import org.bukkit.craftbukkit.event.CraftEventFactory; // CraftBukkit
  import net.minecraft.entity.EntityAgeable;
+ import net.minecraft.entity.SharedMonsterAttributes;
  import net.minecraft.entity.ai.EntityAIControlledByPlayer;
- import net.minecraft.entity.ai.EntityAIFollowParent;
-@@ -17,6 +18,7 @@
+@@ -18,6 +19,7 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.stats.AchievementList;
@@ -15,7 +15,7 @@
  import net.minecraft.world.World;
  
  public class EntityPig extends EntityAnimal
-@@ -125,24 +127,29 @@
+@@ -126,24 +128,29 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -50,7 +50,7 @@
      }
  
      public boolean func_70901_n()
-@@ -167,8 +174,17 @@
+@@ -168,8 +175,17 @@
          if (!this.field_70170_p.field_72995_K)
          {
              EntityPigZombie entitypigzombie = new EntityPigZombie(this.field_70170_p);
@@ -69,7 +69,7 @@
              this.func_70106_y();
          }
      }
-@@ -179,7 +195,7 @@
+@@ -180,7 +196,7 @@
  
          if (p_70069_1_ > 5.0F && this.field_70153_n instanceof EntityPlayer)
          {

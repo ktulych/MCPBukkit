@@ -52,10 +52,10 @@
 +    }
 +    // CraftBukkit end
  
-     SlotEnchantmentTable(ContainerEnchantment p_i9031_1_, String p_i9031_2_, boolean p_i9031_3_, int p_i9031_4_)
+     SlotEnchantmentTable(ContainerEnchantment p_i1809_1_, String p_i1809_2_, boolean p_i1809_3_, int p_i1809_4_)
      {
-         super(p_i9031_2_, p_i9031_3_, p_i9031_4_);
-         this.field_70484_a = p_i9031_1_;
+         super(p_i1809_2_, p_i1809_3_, p_i1809_4_);
+         this.field_70484_a = p_i1809_1_;
 +        this.setMaxStackSize(1); // CraftBukkit
      }
  

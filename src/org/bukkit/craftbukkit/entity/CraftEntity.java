@@ -30,7 +30,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         /**
          * Order is *EXTREMELY* important -- keep it right! =D
          */
-        if (entity instanceof net.minecraft.entity.EntityLiving) {
+        if (entity instanceof net.minecraft.entity.EntityLivingBase) {
             // Players
             if (entity instanceof net.minecraft.entity.player.EntityPlayer) {
                 if (entity instanceof net.minecraft.entity.player.EntityPlayerMP) { return new CraftPlayer(server, (net.minecraft.entity.player.EntityPlayerMP) entity); }
@@ -103,7 +103,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                 if (entity instanceof net.minecraft.entity.passive.EntityBat) { return new CraftBat(server, (net.minecraft.entity.passive.EntityBat) entity); }
                 else { return new CraftAmbient(server, (net.minecraft.entity.passive.EntityAmbientCreature) entity); }
             }
-            else  { return new CraftLivingEntity(server, (net.minecraft.entity.EntityLiving) entity); }
+            else  { return new CraftLivingEntity(server, (net.minecraft.entity.EntityLivingBase) entity); }
         }
         else if (entity instanceof net.minecraft.entity.boss.EntityDragonPart) {
             net.minecraft.entity.boss.EntityDragonPart part = (net.minecraft.entity.boss.EntityDragonPart) entity;

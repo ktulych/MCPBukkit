@@ -80,22 +80,22 @@
  
 -            if (aboolean[0])
 -            {
--                this.func_72210_i(p_71847_1_, p_71847_2_ - 1, p_71847_3_, p_71847_4_, i1);
+-                this.func_72210_i(p_71847_1_, p_71847_2_ - 1, p_71847_3_, p_71847_4_, j1);
 -            }
 -
 -            if (aboolean[1])
 -            {
--                this.func_72210_i(p_71847_1_, p_71847_2_ + 1, p_71847_3_, p_71847_4_, i1);
+-                this.func_72210_i(p_71847_1_, p_71847_2_ + 1, p_71847_3_, p_71847_4_, j1);
 -            }
 -
 -            if (aboolean[2])
 -            {
--                this.func_72210_i(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ - 1, i1);
+-                this.func_72210_i(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ - 1, j1);
 -            }
 -
 -            if (aboolean[3])
 -            {
--                this.func_72210_i(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ + 1, i1);
+-                this.func_72210_i(p_71847_1_, p_71847_2_, p_71847_3_, p_71847_4_ + 1, j1);
 -            }
 +            // CraftBukkit start - All four cardinal directions. Do not change the order!
 +            BlockFace[] faces = new BlockFace[] { BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH };
@@ -114,7 +114,7 @@
 +
 +                    if (!event.isCancelled())
 +                    {
-+                        this.func_72210_i(p_71847_1_, p_71847_2_ + currentFace.getModX(), p_71847_3_, p_71847_4_ + currentFace.getModZ(), i1);
++                        this.func_72210_i(p_71847_1_, p_71847_2_ + currentFace.getModX(), p_71847_3_, p_71847_4_ + currentFace.getModZ(), j1);
 +                    }
 +                }
 +

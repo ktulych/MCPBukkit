@@ -18,7 +18,7 @@
 -    World field_76506_c;
 +    BlockChangeDelegate field_76506_c; // CraftBukkit
      int[] field_76503_d = new int[] {0, 0, 0};
-     int field_76504_e = 0;
+     int field_76504_e;
      int field_76501_f;
 @@ -137,7 +140,7 @@
                  else

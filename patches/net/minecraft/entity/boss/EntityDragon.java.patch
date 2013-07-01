@@ -1,8 +1,8 @@
 --- ../net/minecraft/entity/boss/EntityDragon.java
 +++ ../net/minecraft/entity/boss/EntityDragon.java
-@@ -10,12 +10,23 @@
- import net.minecraft.entity.item.EntityEnderCrystal;
+@@ -13,12 +13,23 @@
  import net.minecraft.entity.item.EntityXPOrb;
+ import net.minecraft.entity.monster.IMob;
  import net.minecraft.entity.player.EntityPlayer;
 +import net.minecraft.entity.player.EntityPlayerMP;
 +import net.minecraft.network.packet.Packet53BlockChange;
@@ -22,26 +22,17 @@
 +import org.bukkit.Bukkit;
 +// CraftBukkit end
  
- public class EntityDragon extends EntityLiving implements IEntityMultiPart
+ public class EntityDragon extends EntityLiving implements IEntityMultiPart, IMob
  {
-@@ -39,6 +50,7 @@
+@@ -42,6 +53,7 @@
      private Entity field_70993_bI;
-     public int field_70995_bG = 0;
-     public EntityEnderCrystal field_70992_bH = null;
+     public int field_70995_bG;
+     public EntityEnderCrystal field_70992_bH;
 +    private Explosion explosionSource = new Explosion(null, this, Double.NaN, Double.NaN, Double.NaN, Float.NaN); // CraftBukkit - reusable source for CraftTNTPrimed.getSource()
  
-     public EntityDragon(World p_i3531_1_)
+     public EntityDragon(World p_i1700_1_)
      {
-@@ -92,7 +104,7 @@
- 
-         if (!this.field_70170_p.field_72995_K)
-         {
--            this.field_70180_af.func_75692_b(16, Integer.valueOf(this.field_70734_aK));
-+            this.field_70180_af.func_75692_b(16, Integer.valueOf(this.getScaledHealth())); // CraftBukkit - this.health -> this.getScaledHealth()
-         }
-         else
-         {
-@@ -134,10 +146,10 @@
+@@ -132,10 +144,10 @@
  
              if (this.field_70976_f < 0)
              {
@@ -56,18 +47,18 @@
                  }
              }
  
-@@ -158,23 +170,23 @@
+@@ -156,23 +168,23 @@
              {
                  if (this.field_70716_bi > 0)
                  {
 -                    d3 = this.field_70165_t + (this.field_70709_bj - this.field_70165_t) / (double)this.field_70716_bi;
 -                    d0 = this.field_70163_u + (this.field_70710_bk - this.field_70163_u) / (double)this.field_70716_bi;
--                    d1 = this.field_70161_v + (this.field_70711_bl - this.field_70161_v) / (double)this.field_70716_bi;
+-                    d1 = this.field_70161_v + (this.field_110152_bk - this.field_70161_v) / (double)this.field_70716_bi;
 -                    d2 = MathHelper.func_76138_g(this.field_70712_bm - (double)this.field_70177_z);
 -                    this.field_70177_z = (float)((double)this.field_70177_z + d2 / (double)this.field_70716_bi);
 +                    d0 = this.field_70165_t + (this.field_70709_bj - this.field_70165_t) / (double) this.field_70716_bi;
 +                    d1 = this.field_70163_u + (this.field_70710_bk - this.field_70163_u) / (double) this.field_70716_bi;
-+                    d2 = this.field_70161_v + (this.field_70711_bl - this.field_70161_v) / (double) this.field_70716_bi;
++                    d2 = this.field_70161_v + (this.field_110152_bk - this.field_70161_v) / (double) this.field_70716_bi;
 +                    d3 = MathHelper.func_76138_g(this.field_70712_bm - (double) this.field_70177_z);
 +                    this.field_70177_z = (float)((double) this.field_70177_z + d3 / (double) this.field_70716_bi);
                      this.field_70125_A = (float)((double)this.field_70125_A + (this.field_70705_bn - (double)this.field_70125_A) / (double)this.field_70716_bi);
@@ -90,7 +81,7 @@
  
                  if (this.field_70993_bI != null)
                  {
-@@ -198,27 +210,27 @@
+@@ -196,27 +208,27 @@
                      this.field_70978_d += this.field_70146_Z.nextGaussian() * 2.0D;
                  }
  
@@ -132,29 +123,29 @@
                  double d9 = MathHelper.func_76138_g(d8 - (double)this.field_70177_z);
  
                  if (d9 > 50.0D)
-@@ -359,9 +371,18 @@
+@@ -357,9 +369,18 @@
  
                  this.field_70992_bH = null;
              }
--            else if (this.field_70173_aa % 10 == 0 && this.func_70630_aN() < this.func_70667_aM())
+-            else if (this.field_70173_aa % 10 == 0 && this.func_110143_aJ() < this.func_110138_aP())
 -            {
--                this.func_70606_j(this.func_70630_aN() + 1);
-+            else if (this.field_70173_aa % 10 == 0 && this.field_70734_aK < this.maxHealth)     // CraftBukkit - this.getMaxHealth() -> this.maxHealth
+-                this.func_70606_j(this.func_110143_aJ() + 1.0F);
++            else if (this.field_70173_aa % 10 == 0 && this.func_110143_aJ() < this.maxHealth)     // CraftBukkit - this.getMaxHealth() -> this.maxHealth
 +            {
 +                // CraftBukkit start
-+                EntityRegainHealthEvent event = new EntityRegainHealthEvent(this.getBukkitEntity(), 1, EntityRegainHealthEvent.RegainReason.ENDER_CRYSTAL);
++                EntityRegainHealthEvent event = new EntityRegainHealthEvent(this.getBukkitEntity(), 1.0D, EntityRegainHealthEvent.RegainReason.ENDER_CRYSTAL);
 +                this.field_70170_p.getServer().getPluginManager().callEvent(event);
 +
 +                if (!event.isCancelled())
 +                {
-+                    this.func_70606_j(this.func_70630_aN() + event.getAmount());
++                    this.func_70606_j((float)(this.func_110143_aJ() + event.getAmount()));
 +                }
 +
 +                // CraftBukkit end
              }
          }
  
-@@ -467,6 +488,10 @@
+@@ -465,6 +486,10 @@
          int j1 = MathHelper.func_76128_c(p_70972_1_.field_72334_f);
          boolean flag = false;
          boolean flag1 = false;
@@ -165,7 +156,7 @@
  
          for (int k1 = i; k1 <= l; ++k1)
          {
-@@ -480,7 +505,11 @@
+@@ -478,7 +503,11 @@
                      {
                          if (j2 != Block.field_72089_ap.field_71990_ca && j2 != Block.field_72082_bJ.field_71990_ca && j2 != Block.field_71986_z.field_71990_ca && this.field_70170_p.func_82736_K().func_82766_b("mobGriefing"))
                          {
@@ -178,7 +169,7 @@
                          }
                          else
                          {
-@@ -493,6 +522,51 @@
+@@ -491,6 +520,51 @@
  
          if (flag1)
          {
@@ -230,16 +221,16 @@
              double d0 = p_70972_1_.field_72340_a + (p_70972_1_.field_72336_d - p_70972_1_.field_72340_a) * (double)this.field_70146_Z.nextFloat();
              double d1 = p_70972_1_.field_72338_b + (p_70972_1_.field_72337_e - p_70972_1_.field_72338_b) * (double)this.field_70146_Z.nextFloat();
              double d2 = p_70972_1_.field_72339_c + (p_70972_1_.field_72334_f - p_70972_1_.field_72339_c) * (double)this.field_70146_Z.nextFloat();
-@@ -530,7 +604,7 @@
+@@ -528,7 +602,7 @@
          return false;
      }
  
--    protected boolean func_82195_e(DamageSource p_82195_1_, int p_82195_2_)
-+    public boolean func_82195_e(DamageSource p_82195_1_, int p_82195_2_)   // CraftBukkit - protected -> public
+-    protected boolean func_82195_e(DamageSource p_82195_1_, float p_82195_2_)
++    public boolean func_82195_e(DamageSource p_82195_1_, float p_82195_2_)   // CraftBukkit - protected -> public
      {
          return super.func_70097_a(p_82195_1_, p_82195_2_);
      }
-@@ -554,7 +628,7 @@
+@@ -552,7 +626,7 @@
          {
              if (this.field_70995_bG > 150 && this.field_70995_bG % 5 == 0)
              {
@@ -248,7 +239,7 @@
  
                  while (i > 0)
                  {
-@@ -575,7 +649,7 @@
+@@ -573,7 +647,7 @@
  
          if (this.field_70995_bG == 200 && !this.field_70170_p.field_72995_K)
          {
@@ -257,7 +248,7 @@
  
              while (i > 0)
              {
-@@ -594,6 +668,8 @@
+@@ -592,6 +666,8 @@
          byte b0 = 64;
          BlockEndPortal.field_72275_a = true;
          byte b1 = 4;
@@ -266,7 +257,7 @@
  
          for (int k = b0 - 1; k <= b0 + 32; ++k)
          {
-@@ -611,35 +687,64 @@
+@@ -609,35 +685,64 @@
                          {
                              if (d2 <= ((double)(b1 - 1) - 0.5D) * ((double)(b1 - 1) - 0.5D))
                              {
@@ -344,7 +335,7 @@
          BlockEndPortal.field_72275_a = false;
      }
  
-@@ -674,4 +779,13 @@
+@@ -672,4 +777,13 @@
      {
          return 5.0F;
      }

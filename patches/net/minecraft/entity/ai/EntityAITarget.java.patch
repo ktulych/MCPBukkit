@@ -1,23 +1,26 @@
 --- ../net/minecraft/entity/ai/EntityAITarget.java
 +++ ../net/minecraft/entity/ai/EntityAITarget.java
-@@ -1,11 +1,16 @@
+@@ -1,5 +1,6 @@
  package net.minecraft.entity.ai;
  
-+// CraftBukkit start
-+import org.bukkit.craftbukkit.entity.CraftEntity;
-+import org.bukkit.event.entity.EntityTargetEvent;
-+import net.minecraft.entity.EntityCreature;
- import net.minecraft.entity.EntityLiving;
- import net.minecraft.entity.passive.EntityTameable;
- import net.minecraft.entity.player.EntityPlayer;
++import org.apache.commons.lang3.StringUtils;
+ import net.minecraft.entity.EntityCreature;
+ import net.minecraft.entity.EntityLivingBase;
+ import net.minecraft.entity.EntityOwnable;
+@@ -9,7 +10,11 @@
  import net.minecraft.pathfinding.PathEntity;
  import net.minecraft.pathfinding.PathPoint;
  import net.minecraft.util.MathHelper;
+-import org.apache.commons.lang3.StringUtils;
++
++// CraftBukkit start
++import org.bukkit.craftbukkit.entity.CraftEntity;
++import org.bukkit.event.entity.EntityTargetEvent;
 +// CraftBukkit end
  
  public abstract class EntityAITarget extends EntityAIBase
  {
-@@ -144,6 +149,51 @@
+@@ -154,6 +159,51 @@
                      }
                  }
  
@@ -57,7 +60,7 @@
 +                }
 +                else if (p_75296_1_.getBukkitEntity() != event.getTarget())
 +                {
-+                    this.field_75299_d.func_70624_b((EntityLiving)((CraftEntity) event.getTarget()).getHandle());
++                    this.field_75299_d.func_70624_b((EntityLivingBase)((CraftEntity) event.getTarget()).getHandle());
 +                }
 +
 +                if (this.field_75299_d instanceof EntityCreature)
