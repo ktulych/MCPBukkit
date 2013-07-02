@@ -422,7 +422,7 @@
              this.field_70169_q = this.field_70142_S = this.field_70165_t = ((NBTTagDouble)nbttaglist.func_74743_b(0)).field_74755_a;
              this.field_70167_r = this.field_70137_T = this.field_70163_u = ((NBTTagDouble)nbttaglist.func_74743_b(1)).field_74755_a;
              this.field_70166_s = this.field_70136_U = this.field_70161_v = ((NBTTagDouble)nbttaglist.func_74743_b(2)).field_74755_a;
-@@ -1232,6 +1413,77 @@
+@@ -1232,6 +1413,71 @@
              this.func_70107_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
              this.func_70101_b(this.field_70177_z, this.field_70125_A);
              this.func_70037_a(p_70020_1_);
@@ -431,12 +431,6 @@
 +            if (this instanceof EntityLivingBase)
 +            {
 +                EntityLivingBase entity = (EntityLivingBase) this;
-+
-+                // If the entity does not have a max health set yet, update it (it may have changed after loading the entity)
-+                if (!p_70020_1_.func_74764_b("Bukkit.MaxHealth"))
-+                {
-+                    entity.maxHealth = entity.func_110138_aP();
-+                }
 +
 +                // Reset the persistence for tamed animals
 +                if (entity instanceof EntityTameable && !isLevelAtLeast(p_70020_1_, 2) && !p_70020_1_.func_74767_n("PersistenceRequired"))
@@ -500,7 +494,7 @@
          }
          catch (Throwable throwable)
          {
-@@ -1247,22 +1499,22 @@
+@@ -1247,22 +1493,22 @@
          return EntityList.func_75621_b(this);
      }
  
@@ -529,7 +523,7 @@
          }
  
          return nbttaglist;
-@@ -1271,13 +1523,13 @@
+@@ -1271,13 +1517,13 @@
      protected NBTTagList func_70049_a(float ... p_70049_1_)
      {
          NBTTagList nbttaglist = new NBTTagList();
@@ -546,7 +540,7 @@
          }
  
          return nbttaglist;
-@@ -1433,13 +1685,44 @@
+@@ -1433,13 +1679,44 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
@@ -592,7 +586,7 @@
                  this.func_70012_b(this.field_70154_o.field_70165_t, this.field_70154_o.field_70121_D.field_72338_b + (double)this.field_70154_o.field_70131_O, this.field_70154_o.field_70161_v, this.field_70177_z, this.field_70125_A);
                  this.field_70154_o.field_70153_n = null;
              }
-@@ -1448,13 +1731,27 @@
+@@ -1448,13 +1725,27 @@
          }
          else
          {
@@ -622,7 +616,7 @@
          }
      }
  
-@@ -1576,12 +1873,45 @@
+@@ -1576,12 +1867,45 @@
  
      public void func_70077_a(EntityLightningBolt p_70077_1_)
      {
@@ -670,7 +664,7 @@
          }
      }
  
-@@ -1751,36 +2081,84 @@
+@@ -1751,36 +2075,84 @@
          {
              this.field_70170_p.field_72984_F.func_76320_a("changeDimension");
              MinecraftServer minecraftserver = MinecraftServer.func_71276_C();
@@ -775,7 +769,7 @@
              }
  
              this.field_70128_L = true;
-@@ -1818,9 +2196,9 @@
+@@ -1818,9 +2190,9 @@
  
      public void func_85029_a(CrashReportCategory p_85029_1_)
      {
@@ -787,7 +781,7 @@
          p_85029_1_.func_71507_a("Entity\'s Exact location", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.field_70165_t), Double.valueOf(this.field_70163_u), Double.valueOf(this.field_70161_v)}));
          p_85029_1_.func_71507_a("Entity\'s Block location", CrashReportCategory.func_85071_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v)));
          p_85029_1_.func_71507_a("Entity\'s Momentum", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.field_70159_w), Double.valueOf(this.field_70181_x), Double.valueOf(this.field_70179_y)}));
-@@ -1840,4 +2218,4 @@
+@@ -1840,4 +2212,4 @@
      {
          return this.func_70023_ak();
      }

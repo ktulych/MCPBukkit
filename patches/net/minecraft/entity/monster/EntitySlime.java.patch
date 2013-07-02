@@ -28,34 +28,17 @@
  
      public EntitySlime(World p_i1742_1_)
      {
-@@ -34,13 +42,23 @@
+@@ -34,7 +42,8 @@
          this.field_70180_af.func_75682_a(16, new Byte((byte)1));
      }
  
 -    protected void func_70799_a(int p_70799_1_)
--    {
 +    // CraftBukkit - protected -> public
 +    public void func_70799_a(int p_70799_1_)
-+    {
-+        boolean updateMaxHealth = this.func_110138_aP() == this.maxHealth; // CraftBukkit
+     {
          this.field_70180_af.func_75692_b(16, new Byte((byte)p_70799_1_));
          this.func_70105_a(0.6F * (float)p_70799_1_, 0.6F * (float)p_70799_1_);
-         this.func_70107_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
-         this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a((double)(p_70799_1_ * p_70799_1_));
--        this.func_70606_j(this.func_110138_aP());
-+
-+        // CraftBukkit start
-+        if (updateMaxHealth)
-+        {
-+            this.maxHealth = this.func_110138_aP();
-+        }
-+
-+        this.func_70606_j(this.maxHealth);
-+        // CraftBukkit end
-         this.field_70728_aV = p_70799_1_;
-     }
- 
-@@ -121,18 +139,37 @@
+@@ -121,18 +130,37 @@
      protected void func_70626_be()
      {
          this.func_70623_bb();
@@ -99,7 +82,7 @@
              {
                  this.field_70810_d /= 3;
              }
-@@ -180,6 +217,21 @@
+@@ -180,6 +208,21 @@
          if (!this.field_70170_p.field_72995_K && i > 1 && this.func_110143_aJ() <= 0.0F)
          {
              int j = 2 + this.field_70146_Z.nextInt(3);
@@ -121,7 +104,7 @@
  
              for (int k = 0; k < j; ++k)
              {
-@@ -188,7 +240,7 @@
+@@ -188,7 +231,7 @@
                  EntitySlime entityslime = this.func_70802_j();
                  entityslime.func_70799_a(i / 2);
                  entityslime.func_70012_b(this.field_70165_t + (double)f, this.field_70163_u + 0.5D, this.field_70161_v + (double)f1, this.field_70146_Z.nextFloat() * 360.0F, 0.0F);

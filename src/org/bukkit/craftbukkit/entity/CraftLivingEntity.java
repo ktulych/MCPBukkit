@@ -67,13 +67,13 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     public double getMaxHealth() {
-        return getHandle().maxHealth;
+        return getHandle().func_110138_aP();
     }
 
     public void setMaxHealth(double amount) {
         Validate.isTrue(amount > 0, "Max health must be greater than 0");
 
-        getHandle().maxHealth = (float) amount;
+        getHandle().func_110148_a(net.minecraft.entity.SharedMonsterAttributes.field_111267_a).func_111128_a(amount);
 
         if (getHealth() > amount) {
             setHealth(amount);

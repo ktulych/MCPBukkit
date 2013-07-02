@@ -130,7 +130,7 @@
 -            else if (this.field_70173_aa % 10 == 0 && this.func_110143_aJ() < this.func_110138_aP())
 -            {
 -                this.func_70606_j(this.func_110143_aJ() + 1.0F);
-+            else if (this.field_70173_aa % 10 == 0 && this.func_110143_aJ() < this.maxHealth)     // CraftBukkit - this.getMaxHealth() -> this.maxHealth
++            else if (this.field_70173_aa % 10 == 0 && this.func_110143_aJ() < this.func_110138_aP())     // CraftBukkit - this.getMaxHealth() -> this.maxHealth
 +            {
 +                // CraftBukkit start
 +                EntityRegainHealthEvent event = new EntityRegainHealthEvent(this.getBukkitEntity(), 1.0D, EntityRegainHealthEvent.RegainReason.ENDER_CRYSTAL);

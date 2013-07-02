@@ -141,22 +141,17 @@
          }
      }
  
-@@ -420,9 +483,11 @@
-             --this.field_71101_bC;
-         }
+@@ -422,7 +485,8 @@
  
--        if (this.field_70170_p.field_73013_u == 0 && this.func_110143_aJ() < this.func_110138_aP() && this.field_70170_p.func_82736_K().func_82766_b("naturalRegeneration") && this.field_70173_aa % 20 * 12 == 0)
--        {
+         if (this.field_70170_p.field_73013_u == 0 && this.func_110143_aJ() < this.func_110138_aP() && this.field_70170_p.func_82736_K().func_82766_b("naturalRegeneration") && this.field_70173_aa % 20 * 12 == 0)
+         {
 -            this.func_70691_i(1.0F);
-+        // CraftBukkit - this.getMaxHealth() -> this.maxHealth
-+        if (this.field_70170_p.field_73013_u == 0 && this.func_110143_aJ() < this.maxHealth && this.field_70170_p.func_82736_K().func_82766_b("naturalRegeneration") && this.field_70173_aa % 20 * 12 == 0)
-+        {
 +            // CraftBukkit - added regain reason of "REGEN" for filtering purposes.
 +            this.heal(1.0F, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.REGEN);
          }
  
          this.field_71071_by.func_70429_k();
-@@ -444,7 +509,8 @@
+@@ -444,7 +508,8 @@
  
          this.func_70659_e((float)attributeinstance.func_111126_e());
          float f = MathHelper.func_76133_a(this.field_70159_w * this.field_70159_w + this.field_70179_y * this.field_70179_y);
@@ -166,7 +161,7 @@
  
          if (f > 0.1F)
          {
-@@ -549,12 +615,14 @@
+@@ -549,12 +614,14 @@
      public void func_70084_c(Entity p_70084_1_, int p_70084_2_)
      {
          this.func_85039_t(p_70084_2_);
@@ -183,7 +178,7 @@
          }
          else
          {
-@@ -565,8 +633,7 @@
+@@ -565,8 +632,7 @@
  
          while (iterator.hasNext())
          {
@@ -193,7 +188,7 @@
              score.func_96648_a();
          }
      }
-@@ -620,6 +687,19 @@
+@@ -620,6 +686,19 @@
                  entityitem.field_70179_y += Math.sin((double)f1) * (double)f;
              }
  
@@ -213,7 +208,7 @@
              this.func_71012_a(entityitem);
              this.func_71064_a(StatList.field_75952_v, 1);
              return entityitem;
-@@ -702,6 +782,16 @@
+@@ -702,6 +781,16 @@
              this.func_70999_a(true, true, false);
          }
  
@@ -230,7 +225,7 @@
          if (p_70037_1_.func_74764_b("SpawnX") && p_70037_1_.func_74764_b("SpawnY") && p_70037_1_.func_74764_b("SpawnZ"))
          {
              this.field_71077_c = new ChunkCoordinates(p_70037_1_.func_74762_e("SpawnX"), p_70037_1_.func_74762_e("SpawnY"), p_70037_1_.func_74762_e("SpawnZ"));
-@@ -736,6 +826,7 @@
+@@ -736,6 +825,7 @@
              p_70014_1_.func_74768_a("SpawnY", this.field_71077_c.field_71572_b);
              p_70014_1_.func_74768_a("SpawnZ", this.field_71077_c.field_71573_c);
              p_70014_1_.func_74757_a("SpawnForced", this.field_82248_d);
@@ -238,7 +233,7 @@
          }
  
          this.field_71100_bB.func_75117_b(p_70014_1_);
-@@ -796,7 +887,7 @@
+@@ -796,7 +886,7 @@
                  {
                      if (this.field_70170_p.field_73013_u == 0)
                      {
@@ -247,7 +242,7 @@
                      }
  
                      if (this.field_70170_p.field_73013_u == 1)
-@@ -810,7 +901,7 @@
+@@ -810,7 +900,7 @@
                      }
                  }
  
@@ -256,7 +251,7 @@
                  {
                      return false;
                  }
-@@ -837,9 +928,39 @@
+@@ -837,9 +927,39 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
@@ -299,7 +294,7 @@
      }
  
      protected void func_71022_a(EntityLivingBase p_71022_1_, boolean p_71022_2_)
-@@ -962,7 +1083,8 @@
+@@ -962,7 +1082,8 @@
  
                  if (itemstack.func_111282_a(this, (EntityLivingBase)p_70998_1_))
                  {
@@ -309,7 +304,7 @@
                      {
                          this.func_71028_bD();
                      }
-@@ -1018,7 +1140,7 @@
+@@ -1018,7 +1139,7 @@
  
                  if (p_71059_1_ instanceof EntityLivingBase)
                  {
@@ -318,7 +313,7 @@
                      i += EnchantmentHelper.func_77507_b(this, (EntityLivingBase)p_71059_1_);
                  }
  
-@@ -1047,6 +1169,19 @@
+@@ -1047,6 +1168,19 @@
                      }
  
                      boolean flag2 = p_71059_1_.func_70097_a(DamageSource.func_76365_a(this), f);
@@ -338,7 +333,7 @@
  
                      if (flag2)
                      {
-@@ -1070,7 +1205,7 @@
+@@ -1070,7 +1204,7 @@
  
                          if (f >= 18.0F)
                          {
@@ -347,7 +342,7 @@
                          }
  
                          this.func_130011_c(p_71059_1_);
-@@ -1098,7 +1233,8 @@
+@@ -1098,7 +1232,8 @@
                      {
                          itemstack.func_77961_a((EntityLivingBase)object, this);
  
@@ -357,7 +352,7 @@
                          {
                              this.func_71028_bD();
                          }
-@@ -1115,7 +1251,16 @@
+@@ -1115,7 +1250,16 @@
  
                          if (j > 0 && flag2)
                          {
@@ -375,7 +370,7 @@
                          }
                          else if (flag1)
                          {
-@@ -1188,6 +1333,21 @@
+@@ -1188,6 +1332,21 @@
              this.func_70078_a((Entity)null);
          }
  
@@ -397,7 +392,7 @@
          this.func_70105_a(0.2F, 0.2F);
          this.field_70129_M = 0.2F;
  
-@@ -1282,6 +1442,27 @@
+@@ -1282,6 +1441,27 @@
              this.field_70170_p.func_72854_c();
          }
  
@@ -425,7 +420,7 @@
          if (p_70999_1_)
          {
              this.field_71076_b = 0;
-@@ -1367,11 +1548,13 @@
+@@ -1367,11 +1547,13 @@
          {
              this.field_71077_c = new ChunkCoordinates(p_71063_1_);
              this.field_82248_d = p_71063_2_;
@@ -439,7 +434,7 @@
          }
      }
  
-@@ -1506,7 +1689,7 @@
+@@ -1506,7 +1688,7 @@
                      }
                      else if ((double)this.field_71073_d.func_71569_e(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v)) >= 1000000.0D)
                      {
@@ -448,7 +443,7 @@
                      }
                  }
                  else if (this.field_70154_o instanceof EntityBoat)
-@@ -1538,7 +1721,7 @@
+@@ -1538,7 +1720,7 @@
      {
          if (p_70074_1_ instanceof IMob)
          {
@@ -457,16 +452,7 @@
          }
      }
  
-@@ -1621,7 +1804,7 @@
- 
-     public boolean func_70996_bM()
-     {
--        return this.func_110143_aJ() > 0.0F && this.func_110143_aJ() < this.func_110138_aP();
-+        return this.func_110143_aJ() > 0.0F && this.func_110143_aJ() < this.maxHealth; // CraftBukkit - this.getMaxHealth() -> this.maxHealth
-     }
- 
-     public void func_71008_a(ItemStack p_71008_1_, int p_71008_2_)
-@@ -1786,6 +1969,7 @@
+@@ -1786,6 +1968,7 @@
  
      public String func_96090_ax()
      {
@@ -474,7 +460,7 @@
          return ScorePlayerTeam.func_96667_a(this.func_96124_cp(), this.field_71092_bJ);
      }
  
-@@ -1803,4 +1987,4 @@
+@@ -1803,4 +1986,4 @@
      {
          return this.func_70096_w().func_111145_d(17);
      }

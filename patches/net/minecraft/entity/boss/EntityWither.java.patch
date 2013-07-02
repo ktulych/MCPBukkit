@@ -93,12 +93,3 @@
  
      public void func_70690_d(PotionEffect p_70690_1_) {}
  
-@@ -548,7 +576,7 @@
- 
-     public boolean func_82205_o()
-     {
--        return this.func_110143_aJ() <= this.func_110138_aP() / 2.0F;
-+        return this.func_110143_aJ() <= this.maxHealth / 2.0F; // CraftBukkit - this.getMaxHealth() -> this.maxHealth
-     }
- 
-     public EnumCreatureAttribute func_70668_bt()

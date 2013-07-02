@@ -1,25 +1,16 @@
 --- ../net/minecraft/entity/passive/EntityWolf.java
 +++ ../net/minecraft/entity/passive/EntityWolf.java
-@@ -116,7 +116,7 @@
- 
-     protected void func_70629_bd()
-     {
--        this.field_70180_af.func_75692_b(18, Float.valueOf(this.func_110143_aJ()));
-+        this.field_70180_af.func_75692_b(18, Float.valueOf(this.getScaledHealth())); // CraftBukkit - this.getHealth() -> this.getScaledHealth()
-     }
- 
-     protected void func_70088_a()
 @@ -152,7 +152,8 @@
  
      protected String func_70639_aQ()
      {
 -        return this.func_70919_bu() ? "mob.wolf.growl" : (this.field_70146_Z.nextInt(3) == 0 ? (this.func_70909_n() && this.field_70180_af.func_111145_d(18) < 10.0F ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
-+        // CraftBukkit - getInt(18) < 10 -> < this.maxHealth / 2
-+        return this.func_70919_bu() ? "mob.wolf.growl" : (this.field_70146_Z.nextInt(3) == 0 ? (this.func_70909_n() && this.field_70180_af.func_111145_d(18) < this.maxHealth / 2 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
++        // CraftBukkit - (getInt(18) < 10) -> (getInt(18) < this.getMaxHealth() / 2)
++        return this.func_70919_bu() ? "mob.wolf.growl" : (this.field_70146_Z.nextInt(3) == 0 ? (this.func_70909_n() && this.field_70180_af.func_111145_d(18) < (this.func_110138_aP() / 2) ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
      }
  
      protected String func_70621_aR()
-@@ -365,13 +366,23 @@
+@@ -365,13 +366,14 @@
  
              if (!this.field_70170_p.field_72995_K)
              {
@@ -27,25 +18,16 @@
 +                // CraftBukkit - added event call and isCancelled check.
 +                if (this.field_70146_Z.nextInt(3) == 0 && !org.bukkit.craftbukkit.event.CraftEventFactory.callEntityTameEvent(this, p_70085_1_).isCancelled())
                  {
-+                    boolean updateMaxHealth = this.func_110138_aP() == this.maxHealth; // CraftBukkit
                      this.func_70903_f(true);
                      this.func_70778_a((PathEntity)null);
                      this.func_70624_b((EntityLivingBase)null);
                      this.field_70911_d.func_75270_a(true);
 -                    this.func_70606_j(20.0F);
-+
-+                    // CraftBukkit start
-+                    if (updateMaxHealth)
-+                    {
-+                        this.maxHealth = this.func_110138_aP();
-+                    }
-+
-+                    this.func_70606_j(this.maxHealth);
-+                    // CraftBukkit end
++                    this.func_70606_j(this.func_110138_aP()); // CraftBukkit - 20.0 -> getMaxHealth()
                      this.func_70910_a(p_70085_1_.func_70005_c_());
                      this.func_70908_e(true);
                      this.field_70170_p.func_72960_a(this, (byte)7);
-@@ -489,4 +500,7 @@
+@@ -489,4 +491,7 @@
      {
          return this.func_70879_a(p_90011_1_);
      }

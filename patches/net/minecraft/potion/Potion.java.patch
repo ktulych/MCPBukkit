@@ -22,15 +22,11 @@
      }
  
      protected Potion func_76399_b(int p_76399_1_, int p_76399_2_)
-@@ -91,16 +98,16 @@
-     {
-         if (this.field_76415_H == field_76428_l.field_76415_H)
+@@ -93,14 +100,14 @@
          {
--            if (p_76394_1_.func_110143_aJ() < p_76394_1_.func_110138_aP())
--            {
+             if (p_76394_1_.func_110143_aJ() < p_76394_1_.func_110138_aP())
+             {
 -                p_76394_1_.func_70691_i(1.0F);
-+            if (p_76394_1_.func_110143_aJ() < p_76394_1_.maxHealth)   // CraftBukkit - .getMaxHealth() -> .maxHealth
-+            {
 +                p_76394_1_.heal(1.0F, RegainReason.MAGIC_REGEN); // CraftBukkit
              }
          }

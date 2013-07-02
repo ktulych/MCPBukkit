@@ -1,14 +1,5 @@
 --- ../net/minecraft/entity/monster/EntityWitch.java
 +++ ../net/minecraft/entity/monster/EntityWitch.java
-@@ -126,7 +126,7 @@
-                 {
-                     short1 = 16307;
-                 }
--                else if (this.field_70146_Z.nextFloat() < 0.05F && this.func_110143_aJ() < this.func_110138_aP())
-+                else if (this.field_70146_Z.nextFloat() < 0.05F && this.func_110143_aJ() < this.maxHealth)     // CraftBukkit - this.getMaxHealth() -> this.maxHealth
-                 {
-                     short1 = 16341;
-                 }
 @@ -178,6 +178,8 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
