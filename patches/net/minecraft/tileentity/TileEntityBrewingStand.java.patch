@@ -81,17 +81,7 @@
                  this.func_70353_r();
                  this.func_70296_d();
              }
-@@ -114,7 +159,8 @@
-                         List list = Item.field_77726_bs.func_77834_f(j);
-                         List list1 = Item.field_77726_bs.func_77834_f(k);
- 
--                        if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null) && j != k)
-+                        // CraftBukkit - list != -> !list.equals
-+                        if ((j <= 0 || !list.equals(list1)) && (list == null || !list.equals(list1) && list1 != null) && j != k)
-                         {
-                             flag = true;
-                             break;
-@@ -136,6 +182,20 @@
+@@ -136,6 +181,20 @@
          if (this.func_70350_k())
          {
              ItemStack itemstack = this.field_70359_a[3];
@@ -112,7 +102,7 @@
  
              for (int i = 0; i < 3; ++i)
              {
-@@ -274,7 +334,7 @@
+@@ -274,7 +333,7 @@
  
      public int func_70297_j_()
      {
