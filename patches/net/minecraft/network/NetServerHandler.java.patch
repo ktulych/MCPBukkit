@@ -1,6 +1,6 @@
 --- ../net/minecraft/network/NetServerHandler.java
 +++ ../net/minecraft/network/NetServerHandler.java
-@@ -1,28 +1,33 @@
+@@ -1,28 +1,34 @@
  package net.minecraft.network;
  
  import java.io.ByteArrayInputStream;
@@ -14,6 +14,7 @@
  import net.minecraft.crash.CrashReport;
  import net.minecraft.crash.CrashReportCategory;
  import net.minecraft.entity.Entity;
++import net.minecraft.entity.EntityLiving;
  import net.minecraft.entity.item.EntityItem;
 +import net.minecraft.entity.item.EntityXPOrb;
  import net.minecraft.entity.passive.EntityHorse;
@@ -35,15 +36,18 @@
  import net.minecraft.network.packet.NetHandler;
  import net.minecraft.network.packet.Packet;
  import net.minecraft.network.packet.Packet0KeepAlive;
-@@ -49,6 +54,7 @@
+@@ -47,8 +53,10 @@
+ import net.minecraft.network.packet.Packet250CustomPayload;
+ import net.minecraft.network.packet.Packet255KickDisconnect;
  import net.minecraft.network.packet.Packet27PlayerInput;
++import net.minecraft.network.packet.Packet39AttachEntity;
  import net.minecraft.network.packet.Packet3Chat;
  import net.minecraft.network.packet.Packet53BlockChange;
 +import net.minecraft.network.packet.Packet6SpawnPosition;
  import net.minecraft.network.packet.Packet7UseEntity;
  import net.minecraft.network.packet.Packet9Respawn;
  import net.minecraft.server.MinecraftServer;
-@@ -61,10 +67,57 @@
+@@ -61,10 +69,57 @@
  import net.minecraft.util.ChatAllowedCharacters;
  import net.minecraft.util.ChatMessageComponent;
  import net.minecraft.util.EnumChatFormatting;
@@ -101,7 +105,7 @@
  
  public class NetServerHandler extends NetHandler
  {
-@@ -79,12 +132,13 @@
+@@ -79,12 +134,13 @@
      private long field_72582_j;
      private static Random field_72583_k = new Random();
      private long field_72580_l;
@@ -118,7 +122,7 @@
      private IntHashMap field_72586_s = new IntHashMap();
  
      public NetServerHandler(MinecraftServer p_i1530_1_, INetworkManager p_i1530_2_, EntityPlayerMP p_i1530_3_)
-@@ -94,7 +148,36 @@
+@@ -94,7 +150,36 @@
          p_i1530_2_.func_74425_a(this);
          this.field_72574_e = p_i1530_3_;
          p_i1530_3_.field_71135_a = this;
@@ -156,7 +160,7 @@
  
      public void func_72570_d()
      {
-@@ -112,10 +195,15 @@
+@@ -112,10 +197,15 @@
              this.func_72567_b(new Packet0KeepAlive(this.field_72585_i));
          }
  
@@ -176,7 +180,7 @@
  
          if (this.field_72578_n > 0)
          {
-@@ -130,11 +218,37 @@
+@@ -130,11 +220,37 @@
      {
          if (!this.field_72576_c)
          {
@@ -216,7 +220,7 @@
              this.field_72576_c = true;
          }
      }
-@@ -163,8 +277,81 @@
+@@ -163,8 +279,81 @@
                  }
              }
  
@@ -300,7 +304,7 @@
                  double d1;
                  double d2;
                  double d3;
-@@ -209,7 +396,7 @@
+@@ -209,7 +398,7 @@
  
                      if (this.field_72574_e.field_70154_o != null)
                      {
@@ -309,7 +313,7 @@
                      }
  
                      if (this.field_72574_e.field_70154_o != null)
-@@ -269,7 +456,8 @@
+@@ -269,7 +458,8 @@
  
                      if (Math.abs(p_72498_1_.field_73545_a) > 3.2E7D || Math.abs(p_72498_1_.field_73544_c) > 3.2E7D)
                      {
@@ -319,7 +323,7 @@
                          return;
                      }
                  }
-@@ -292,12 +480,14 @@
+@@ -292,12 +482,14 @@
                  d4 = d1 - this.field_72574_e.field_70165_t;
                  double d6 = d2 - this.field_72574_e.field_70163_u;
                  double d7 = d3 - this.field_72574_e.field_70161_v;
@@ -338,7 +342,7 @@
                  {
                      this.field_72573_d.func_98033_al().func_98236_b(this.field_72574_e.func_70005_c_() + " moved too quickly! " + d4 + "," + d6 + "," + d7 + " (" + d8 + ", " + d9 + ", " + d10 + ")");
                      this.func_72569_a(this.field_72579_o, this.field_72589_p, this.field_72588_q, this.field_72574_e.field_70177_z, this.field_72574_e.field_70125_A);
-@@ -345,7 +535,7 @@
+@@ -345,7 +537,7 @@
  
                  AxisAlignedBB axisalignedbb = this.field_72574_e.field_70121_D.func_72329_c().func_72314_b((double)f4, (double)f4, (double)f4).func_72321_a(0.0D, -0.55D, 0.0D);
  
@@ -347,7 +351,7 @@
                  {
                      if (d12 >= -0.03125D)
                      {
-@@ -366,6 +556,12 @@
+@@ -366,6 +558,12 @@
  
                  this.field_72574_e.field_70122_E = p_72498_1_.field_73540_g;
                  this.field_72573_d.func_71203_ab().func_72358_d(this.field_72574_e);
@@ -360,7 +364,7 @@
                  this.field_72574_e.func_71122_b(this.field_72574_e.field_70163_u - d0, p_72498_1_.field_73540_g);
              }
              else if (this.field_72571_f % 20 == 0)
-@@ -377,20 +573,85 @@
+@@ -377,20 +575,85 @@
  
      public void func_72569_a(double p_72569_1_, double p_72569_3_, double p_72569_5_, float p_72569_7_, float p_72569_8_)
      {
@@ -451,7 +455,7 @@
              this.field_72574_e.func_71040_bB(false);
          }
          else if (p_72510_1_.field_73342_e == 3)
-@@ -444,13 +705,24 @@
+@@ -444,13 +707,24 @@
  
              if (p_72510_1_.field_73342_e == 0)
              {
@@ -476,7 +480,7 @@
                  }
              }
              else if (p_72510_1_.field_73342_e == 2)
-@@ -477,6 +749,40 @@
+@@ -477,6 +751,40 @@
      public void func_72472_a(Packet15Place p_72472_1_)
      {
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
@@ -517,7 +521,7 @@
          ItemStack itemstack = this.field_72574_e.field_71071_by.func_70448_g();
          boolean flag = false;
          int i = p_72472_1_.func_73403_d();
-@@ -491,7 +797,20 @@
+@@ -491,7 +799,20 @@
                  return;
              }
  
@@ -539,7 +543,7 @@
          }
          else if (p_72472_1_.func_73402_f() >= this.field_72573_d.func_71207_Z() - 1 && (p_72472_1_.func_73401_h() == 1 || p_72472_1_.func_73402_f() >= this.field_72573_d.func_71207_Z()))
          {
-@@ -500,11 +819,16 @@
+@@ -500,11 +821,16 @@
          }
          else
          {
@@ -561,7 +565,7 @@
              flag = true;
          }
  
-@@ -557,11 +881,12 @@
+@@ -557,11 +883,12 @@
          {
              this.field_72574_e.field_71137_h = true;
              this.field_72574_e.field_71071_by.field_70462_a[this.field_72574_e.field_71071_by.field_70461_c] = ItemStack.func_77944_b(this.field_72574_e.field_71071_by.field_70462_a[this.field_72574_e.field_71071_by.field_70461_c]);
@@ -576,7 +580,7 @@
              {
                  this.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71070_bA.field_75152_c, slot.field_75222_d, this.field_72574_e.field_71071_by.func_70448_g()));
              }
-@@ -570,9 +895,21 @@
+@@ -570,9 +897,21 @@
  
      public void func_72515_a(String p_72515_1_, Object[] p_72515_2_)
      {
@@ -600,7 +604,7 @@
          this.field_72576_c = true;
  
          if (this.field_72573_d.func_71264_H() && this.field_72574_e.func_70005_c_().equals(this.field_72573_d.func_71214_G()))
-@@ -584,6 +921,11 @@
+@@ -584,6 +923,11 @@
  
      public void func_72509_a(Packet p_72509_1_)
      {
@@ -612,7 +616,7 @@
          this.field_72573_d.func_98033_al().func_98236_b(this.getClass() + " wasn\'t prepared to deal with a " + p_72509_1_.getClass());
          this.func_72565_c("Protocol error, unexpected packet");
      }
-@@ -604,7 +946,31 @@
+@@ -604,7 +948,31 @@
              {
                  return;
              }
@@ -645,7 +649,7 @@
  
          try
          {
-@@ -614,21 +980,38 @@
+@@ -614,21 +982,38 @@
          {
              CrashReport crashreport = CrashReport.func_85055_a(throwable, "Sending packet");
              CrashReportCategory crashreportcategory = crashreport.func_85058_a("Packet being sent");
@@ -686,7 +690,7 @@
          }
      }
  
-@@ -644,7 +1027,39 @@
+@@ -644,7 +1029,39 @@
  
              if (s.length() > 100)
              {
@@ -727,7 +731,7 @@
              }
              else
              {
-@@ -654,52 +1069,322 @@
+@@ -654,52 +1071,322 @@
                  {
                      if (!ChatAllowedCharacters.func_71566_a(s.charAt(i)))
                      {
@@ -1071,7 +1075,7 @@
          if (p_72473_1_.field_73366_b == 1)
          {
              this.field_72574_e.func_70095_a(true);
-@@ -719,7 +1404,7 @@
+@@ -719,7 +1406,7 @@
          else if (p_72473_1_.field_73366_b == 3)
          {
              this.field_72574_e.func_70999_a(false, true, true);
@@ -1080,7 +1084,7 @@
          }
          else if (p_72473_1_.field_73366_b == 6)
          {
-@@ -746,6 +1431,11 @@
+@@ -746,6 +1433,11 @@
  
      public void func_72507_a(Packet7UseEntity p_72507_1_)
      {
@@ -1092,7 +1096,7 @@
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
          Entity entity = worldserver.func_73045_a(p_72507_1_.field_73604_b);
  
-@@ -761,13 +1451,47 @@
+@@ -761,13 +1453,53 @@
  
              if (this.field_72574_e.func_70068_e(entity) < d0)
              {
@@ -1106,6 +1110,12 @@
 +
 +                    if (event.isCancelled())
 +                    {
++                        if (itemInHand != null && itemInHand.field_77993_c == Item.field_111214_ch.field_77779_bT && entity instanceof EntityLiving)
++                        {
++                            // Refresh the current leash state
++                            this.func_72567_b(new Packet39AttachEntity(1, entity, ((EntityLiving) entity).func_110166_bE()));
++                        }
++
 +                        return;
 +                    }
 +
@@ -1140,7 +1150,7 @@
                  }
              }
          }
-@@ -779,7 +1503,7 @@
+@@ -779,7 +1511,7 @@
          {
              if (this.field_72574_e.field_71136_j)
              {
@@ -1149,7 +1159,7 @@
              }
              else if (this.field_72574_e.func_71121_q().func_72912_H().func_76093_s())
              {
-@@ -817,14 +1541,411 @@
+@@ -817,14 +1549,411 @@
  
      public void func_72474_a(Packet101CloseWindow p_72474_1_)
      {
@@ -1562,7 +1572,7 @@
  
              if (ItemStack.func_77989_b(p_72523_1_.field_73441_e, itemstack))
              {
-@@ -847,6 +1968,14 @@
+@@ -847,6 +1976,14 @@
                  }
  
                  this.field_72574_e.func_71110_a(this.field_72574_e.field_71070_bA, arraylist);
@@ -1577,7 +1587,7 @@
              }
          }
      }
-@@ -855,7 +1984,7 @@
+@@ -855,7 +1992,7 @@
      {
          if (this.field_72574_e.field_71070_bA.field_75152_c == p_72479_1_.field_73446_a && this.field_72574_e.field_71070_bA.func_75129_b(this.field_72574_e))
          {
@@ -1586,7 +1596,7 @@
              this.field_72574_e.field_71070_bA.func_75142_b();
          }
      }
-@@ -867,8 +1996,59 @@
+@@ -867,8 +2004,59 @@
              boolean flag = p_72464_1_.field_73385_a < 0;
              ItemStack itemstack = p_72464_1_.field_73384_b;
              boolean flag1 = p_72464_1_.field_73385_a >= 1 && p_72464_1_.field_73385_a < 36 + InventoryPlayer.func_70451_h();
@@ -1647,7 +1657,7 @@
  
              if (flag1 && flag2 && flag3)
              {
-@@ -898,6 +2078,11 @@
+@@ -898,6 +2086,11 @@
  
      public void func_72476_a(Packet106Transaction p_72476_1_)
      {
@@ -1659,7 +1669,7 @@
          Short oshort = (Short)this.field_72586_s.func_76041_a(this.field_72574_e.field_71070_bA.field_75152_c);
  
          if (oshort != null && p_72476_1_.field_73433_b == oshort.shortValue() && this.field_72574_e.field_71070_bA.field_75152_c == p_72476_1_.field_73435_a && !this.field_72574_e.field_71070_bA.func_75129_b(this.field_72574_e))
-@@ -908,6 +2093,11 @@
+@@ -908,6 +2101,11 @@
  
      public void func_72487_a(Packet130UpdateSign p_72487_1_)
      {
@@ -1671,7 +1681,7 @@
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
  
          if (worldserver.func_72899_e(p_72487_1_.field_73311_a, p_72487_1_.field_73309_b, p_72487_1_.field_73310_c))
-@@ -921,6 +2111,7 @@
+@@ -921,6 +2119,7 @@
                  if (!tileentitysign.func_70409_a())
                  {
                      this.field_72573_d.func_71236_h("Player " + this.field_72574_e.func_70005_c_() + " just tried to change non-editable sign");
@@ -1679,7 +1689,7 @@
                      return;
                  }
              }
-@@ -959,7 +2150,27 @@
+@@ -959,7 +2158,27 @@
                  int k = p_72487_1_.field_73309_b;
                  i = p_72487_1_.field_73310_c;
                  TileEntitySign tileentitysign1 = (TileEntitySign)tileentity;
@@ -1708,7 +1718,7 @@
                  tileentitysign1.func_70296_d();
                  worldserver.func_72845_h(j, k, i);
              }
-@@ -982,7 +2193,23 @@
+@@ -982,7 +2201,23 @@
  
      public void func_72471_a(Packet202PlayerAbilities p_72471_1_)
      {
@@ -1733,7 +1743,7 @@
      }
  
      public void func_72461_a(Packet203AutoComplete p_72461_1_)
-@@ -996,7 +2223,7 @@
+@@ -996,7 +2231,7 @@
  
              if (stringbuilder.length() > 0)
              {
@@ -1742,7 +1752,7 @@
              }
          }
  
-@@ -1014,6 +2241,14 @@
+@@ -1014,6 +2249,14 @@
          ItemStack itemstack;
          ItemStack itemstack1;
  
@@ -1757,7 +1767,7 @@
          if ("MC|BEdit".equals(p_72501_1_.field_73630_a))
          {
              try
-@@ -1030,12 +2265,16 @@
+@@ -1030,12 +2273,16 @@
  
                  if (itemstack != null && itemstack.field_77993_c == Item.field_77821_bF.field_77779_bT && itemstack.field_77993_c == itemstack1.field_77993_c)
                  {
@@ -1780,7 +1790,7 @@
              }
          }
          else if ("MC|BSign".equals(p_72501_1_.field_73630_a))
-@@ -1054,15 +2293,16 @@
+@@ -1054,15 +2301,16 @@
  
                  if (itemstack != null && itemstack.field_77993_c == Item.field_77823_bG.field_77779_bT && itemstack1.field_77993_c == Item.field_77821_bF.field_77779_bT)
                  {
@@ -1806,7 +1816,7 @@
              }
          }
          else
-@@ -1084,7 +2324,10 @@
+@@ -1084,7 +2332,10 @@
                  }
                  catch (Exception exception2)
                  {
@@ -1818,7 +1828,7 @@
                  }
              }
              else
-@@ -1105,7 +2348,7 @@
+@@ -1105,7 +2356,7 @@
                              i = datainputstream.readInt();
                              j = datainputstream.readInt();
                              int k = datainputstream.readInt();
@@ -1827,7 +1837,7 @@
                              TileEntity tileentity = this.field_72574_e.field_70170_p.func_72796_p(i, j, k);
  
                              if (tileentity != null && tileentity instanceof TileEntityCommandBlock)
-@@ -1117,7 +2360,10 @@
+@@ -1117,7 +2368,10 @@
                          }
                          catch (Exception exception3)
                          {
@@ -1839,7 +1849,7 @@
                          }
                      }
                      else
-@@ -1148,7 +2394,10 @@
+@@ -1148,7 +2402,10 @@
                          }
                          catch (Exception exception4)
                          {
@@ -1851,7 +1861,7 @@
                          }
                      }
                  }
-@@ -1170,6 +2419,45 @@
+@@ -1170,6 +2427,45 @@
                          containerrepair.func_82850_a("");
                      }
                  }
