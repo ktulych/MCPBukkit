@@ -144,7 +144,7 @@
  
      protected void func_71237_c(String p_71237_1_)
      {
-@@ -143,64 +200,132 @@
+@@ -143,64 +200,131 @@
          this.func_71237_c(p_71247_1_);
          this.func_71192_d("menu.loadingLevel");
          this.field_71305_c = new WorldServer[3];
@@ -290,7 +290,6 @@
 +                    }
 +                }
 +
-+                this.func_71189_e(name);
 +                // CraftBukkit
 +                world = new WorldServerMulti(this, new AnvilSaveHandler(server.getWorldContainer(), name, true), name, dimension, worldsettings, this.worlds.get(0), this.field_71304_b, this.func_98033_al(), Environment.getEnvironment(dimension), gen);
 +            }
@@ -319,7 +318,7 @@
          }
  
          this.func_71226_c(this.func_71232_g());
-@@ -216,28 +341,40 @@
+@@ -216,28 +340,41 @@
          int i = 0;
          this.func_71192_d("menu.generatingTerrain");
          byte b0 = 0;
@@ -350,7 +349,7 @@
 +        for (int m = 0; m < this.worlds.size(); ++m)
 +        {
 +            WorldServer worldserver = this.worlds.get(m);
-+            this.func_98033_al().func_98233_a("Preparing start region for level " + b0 + " (Seed: " + worldserver.func_72905_C() + ")");
++            this.func_98033_al().func_98233_a("Preparing start region for level " + m + " (Seed: " + worldserver.func_72905_C() + ")");
 +
 +            if (!worldserver.getWorld().getKeepSpawnInMemory())
 +            {
@@ -359,6 +358,7 @@
 +
 +            ChunkCoordinates chunkcoordinates = worldserver.func_72861_E();
 +            long j = func_130071_aq();
++            i = 0;
 +
 +            for (int k = -192; k <= 192 && this.func_71278_l(); k += 16)
 +            {
