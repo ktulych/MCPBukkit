@@ -31,7 +31,7 @@
 -    private boolean field_82179_bU;
 +    public float[] field_82174_bp = new float[5]; // CraftBukkit - protected -> public
 +    public boolean field_82172_bs; // CraftBukkit - private -> public
-+    public boolean field_82179_bU; // CraftBukkit - private -> public
++    public boolean field_82179_bU = !func_70692_ba(); // CraftBukkit - private -> public
      protected float field_70698_bv;
      private Entity field_70776_bF;
      protected int field_70700_bx;
