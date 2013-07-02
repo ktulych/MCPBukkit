@@ -87,7 +87,7 @@
              }
          }
  
-@@ -179,31 +192,39 @@
+@@ -179,33 +192,45 @@
  
      public void func_72467_a(Packet254ServerPing p_72467_1_)
      {
@@ -111,27 +111,39 @@
              }
              else
              {
-                 List list = Arrays.asList(new Serializable[] {Integer.valueOf(1), Integer.valueOf(73), this.field_72534_f.func_71249_w(), this.field_72534_f.func_71273_Y(), Integer.valueOf(serverconfigurationmanager.func_72394_k()), Integer.valueOf(serverconfigurationmanager.func_72352_l())});
-                 Object object;
- 
+-                List list = Arrays.asList(new Serializable[] {Integer.valueOf(1), Integer.valueOf(73), this.field_72534_f.func_71249_w(), this.field_72534_f.func_71273_Y(), Integer.valueOf(serverconfigurationmanager.func_72394_k()), Integer.valueOf(serverconfigurationmanager.func_72352_l())});
+-                Object object;
+-
 -                for (Iterator iterator = list.iterator(); iterator.hasNext(); s = s + object.toString().replaceAll("\u0000", ""))
-+                for (Iterator iterator = list.iterator(); iterator.hasNext(); s = s + object.toString().replaceAll("\0", ""))
++                // CraftBukkit start - Don't create a list from an array
++                Object[] list = new Object[] { 1, 73, this.field_72534_f.func_71249_w(), pingEvent.getMotd(), serverconfigurationmanager.func_72394_k(), pingEvent.getMaxPlayers() };
++                StringBuilder builder = new StringBuilder();
++
++                for (Object object : list)
                  {
-                     object = iterator.next();
- 
-                     if (s == null)
+-                    object = iterator.next();
+-
+-                    if (s == null)
++                    if (builder.length() == 0)
                      {
 -                        s = "\u00a7";
-+                        s = "\u00A7";
++                        builder.append('\u00A7');
                      }
                      else
                      {
 -                        s = s + "\u0000";
-+                        s = s + '\0';
++                        builder.append('\0');
                      }
++
++                    builder.append(org.apache.commons.lang.StringUtils.replace(object.toString(), "\0", ""));
                  }
++
++                s = builder.toString();
++                // CraftBukkit end
              }
-@@ -266,7 +287,7 @@
+ 
+             InetAddress inetaddress = null;
+@@ -266,7 +291,7 @@
          return p_72533_0_.field_72543_h;
      }
  
