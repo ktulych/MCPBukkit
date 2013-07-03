@@ -41,3 +41,12 @@
          this.field_111243_a = p_i1817_2_;
          this.field_111242_f = p_i1817_3_;
          byte b0 = 3;
+@@ -48,7 +72,7 @@
+ 
+     public boolean func_75145_c(EntityPlayer p_75145_1_)
+     {
+-        return this.field_111243_a.func_70300_a(p_75145_1_) && this.field_111242_f.func_70032_d(p_75145_1_) < 8.0F;
++        return this.field_111243_a.func_70300_a(p_75145_1_) && this.field_111242_f.func_70089_S() && this.field_111242_f.func_70032_d(p_75145_1_) < 8.0F; // CraftBukkit - add isAlive as a validator
+     }
+ 
+     public ItemStack func_82846_b(EntityPlayer p_82846_1_, int p_82846_2_)

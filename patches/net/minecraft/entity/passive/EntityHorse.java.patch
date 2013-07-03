@@ -18,6 +18,27 @@
                  {
                      return true;
                  }
+@@ -1030,13 +1030,13 @@
+         return this.field_70153_n == null && this.field_70154_o == null && this.func_110248_bS() && this.func_110228_bR() && !this.func_110222_cv() && this.func_110143_aJ() >= this.func_110138_aP();
+     }
+ 
+-    public void func_70106_y()
+-    {
+-        if (this.field_70170_p.field_72995_K || !this.func_110248_bS() && !this.func_110205_ce() || this.func_110143_aJ() <= 0.0F)
+-        {
+-            super.func_70106_y();
+-        }
+-    }
++    /* CraftBukkit start - don't treat horses differently
++    public void die() {
++        if (this.world.isStatic || !this.bS() && !this.ce() || this.getHealth() <= 0.0F) {
++            super.die();
++        }
++    }
++    // CraftBukkit end */
+ 
+     public void func_70019_c(boolean p_70019_1_)
+     {
 @@ -1389,15 +1389,15 @@
  
      public EntityLivingData func_110161_a(EntityLivingData p_110161_1_)
