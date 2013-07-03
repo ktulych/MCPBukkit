@@ -799,7 +799,7 @@
 +        this.field_71067_cb = this.newTotalExp;
 +        this.field_71106_cc = 0;
 +        this.field_70725_aQ = 0;
-+        this.field_70713_bf.clear();
++        this.func_70674_bp(); // Should be removeAllEffects.
 +        this.field_70752_e = true;
 +        this.field_71070_bA = this.field_71069_bz;
 +        this.field_70717_bb = null;

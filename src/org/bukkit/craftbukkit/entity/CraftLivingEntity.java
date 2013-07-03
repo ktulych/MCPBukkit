@@ -258,12 +258,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     public void removePotionEffect(PotionEffectType type) {
-        getHandle().field_70713_bf.remove(type.getId());
-        getHandle().field_70752_e = true;
-        if (getHandle() instanceof net.minecraft.entity.player.EntityPlayerMP) {
-            if (((net.minecraft.entity.player.EntityPlayerMP) getHandle()).field_71135_a == null) return;
-            ((net.minecraft.entity.player.EntityPlayerMP) getHandle()).field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet42RemoveEntityEffect(getHandle().field_70157_k, new net.minecraft.potion.PotionEffect(type.getId(), 0, 0)));
-        }
+        getHandle().func_82170_o(type.getId()); // Should be removeEffect.
     }
 
     public Collection<PotionEffect> getActivePotionEffects() {
