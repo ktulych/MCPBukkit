@@ -1,0 +1,59 @@
+--- ../net/minecraft/entity/passive/EntityHorse.java
++++ ../net/minecraft/entity/passive/EntityHorse.java
+@@ -760,7 +760,7 @@
+ 
+                 if (!this.func_110248_bS() && !flag)
+                 {
+-                    if (itemstack != null && itemstack.func_111282_a(p_70085_1_, this))
++                    if (itemstack != null && itemstack.func_111282_a(p_70085_1_, (EntityLivingBase) this))
+                     {
+                         return true;
+                     }
+@@ -796,7 +796,7 @@
+ 
+             if (this.func_110253_bW() && this.field_70153_n == null)
+             {
+-                if (itemstack != null && itemstack.func_111282_a(p_70085_1_, this))
++                if (itemstack != null && itemstack.func_111282_a(p_70085_1_, (EntityLivingBase) this))
+                 {
+                     return true;
+                 }
+@@ -1389,15 +1389,15 @@
+ 
+     public EntityLivingData func_110161_a(EntityLivingData p_110161_1_)
+     {
+-        Object p_110161_1_1 = super.func_110161_a(p_110161_1_);
++        Object object = super.func_110161_a(p_110161_1_);
+         boolean flag = false;
+         int i = 0;
+         int j;
+ 
+-        if (p_110161_1_1 instanceof EntityHorseGroupData)
+-        {
+-            j = ((EntityHorseGroupData)p_110161_1_1).field_111107_a;
+-            i = ((EntityHorseGroupData)p_110161_1_1).field_111106_b & 255 | this.field_70146_Z.nextInt(5) << 8;
++        if (object instanceof EntityHorseGroupData)
++        {
++            j = ((EntityHorseGroupData) object).field_111107_a;
++            i = ((EntityHorseGroupData) object).field_111106_b & 255 | this.field_70146_Z.nextInt(5) << 8;
+         }
+         else
+         {
+@@ -1413,7 +1413,7 @@
+                 i = k | l << 8;
+             }
+ 
+-            p_110161_1_1 = new EntityHorseGroupData(j, i);
++            object = new EntityHorseGroupData(j, i);
+         }
+ 
+         this.func_110214_p(j);
+@@ -1453,7 +1453,7 @@
+         }
+ 
+         this.func_70606_j(this.func_110138_aP());
+-        return (EntityLivingData)p_110161_1_1;
++        return (EntityLivingData) object;
+     }
+ 
+     protected boolean func_70650_aV()
