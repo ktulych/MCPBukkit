@@ -181,8 +181,8 @@
              if (this.func_110143_aJ() != this.field_71149_ch || this.field_71146_ci != this.field_71100_bB.func_75116_a() || this.field_71100_bB.func_75115_e() == 0.0F != this.field_71147_cj)
              {
 -                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(this.func_110143_aJ(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
-+                // CraftBukkit - this.getHealth() -> this.getScaledHealth() - Magic number 20 -> original max health
-+                this.field_71135_a.func_72567_b(new Packet8UpdateHealth((float)(this.func_110143_aJ() * this.func_110138_aP() / 20.0D), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
++                // CraftBukkit - Optionally scale health
++                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(getBukkitEntity().getScaledHealth(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
                  this.field_71149_ch = this.func_110143_aJ();
                  this.field_71146_ci = this.field_71100_bB.func_75116_a();
                  this.field_71147_cj = this.field_71100_bB.func_75115_e() == 0.0F;
