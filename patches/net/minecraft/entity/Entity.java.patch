@@ -67,7 +67,7 @@
      private static int field_70152_a;
      public int field_70157_k;
      public double field_70155_l;
-@@ -81,7 +115,7 @@
+@@ -81,12 +115,12 @@
      protected Random field_70146_Z;
      public int field_70173_aa;
      public int field_70174_ab;
@@ -76,6 +76,12 @@
      protected boolean field_70171_ac;
      public int field_70172_ad;
      private boolean field_70148_d;
+     protected boolean field_70178_ae;
+-    protected DataWatcher field_70180_af;
++    public DataWatcher field_70180_af;
+     private double field_70149_e;
+     private double field_70147_f;
+     public boolean field_70175_ag;
 @@ -101,8 +135,9 @@
      public int field_71093_bK;
      protected int field_82152_aq;
