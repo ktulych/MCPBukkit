@@ -1,14 +1,6 @@
 --- ../net/minecraft/server/management/PlayerInstance.java
 +++ ../net/minecraft/server/management/PlayerInstance.java
-@@ -6,7 +6,6 @@
- import net.minecraft.network.packet.Packet;
- import net.minecraft.network.packet.Packet51MapChunk;
- import net.minecraft.network.packet.Packet52MultiBlockChange;
--import net.minecraft.network.packet.Packet53BlockChange;
- import net.minecraft.tileentity.TileEntity;
- import net.minecraft.world.ChunkCoordIntPair;
- import net.minecraft.world.chunk.Chunk;
-@@ -19,6 +18,7 @@
+@@ -19,6 +19,7 @@
      private int field_73262_e;
      private int field_73260_f;
      private long field_111198_g;
@@ -16,7 +8,7 @@
  
      final PlayerManager field_73265_a;
  
-@@ -28,10 +28,18 @@
+@@ -28,10 +29,18 @@
          this.field_73263_b = new ArrayList();
          this.field_73261_d = new short[64];
          this.field_73264_c = new ChunkCoordIntPair(p_i1518_2_, p_i1518_3_);
@@ -39,7 +31,7 @@
      {
          if (this.field_73263_b.contains(p_73255_1_))
          {
-@@ -45,7 +53,25 @@
+@@ -45,7 +54,25 @@
              }
  
              this.field_73263_b.add(p_73255_1_);
@@ -66,7 +58,7 @@
          }
      }
  
-@@ -63,11 +89,11 @@
+@@ -63,11 +90,11 @@
                  long i = (long)this.field_73264_c.field_77276_a + 2147483647L | (long)this.field_73264_c.field_77275_b + 2147483647L << 32;
                  this.func_111196_a(chunk);
                  PlayerManager.func_72689_b(this.field_73265_a).func_76159_d(i);
@@ -80,7 +72,7 @@
                  }
  
                  this.field_73265_a.func_72688_a().field_73059_b.func_73241_b(this.field_73264_c.field_77276_a, this.field_73264_c.field_77275_b);
-@@ -90,7 +116,7 @@
+@@ -90,7 +117,7 @@
      {
          if (this.field_73262_e == 0)
          {
@@ -89,12 +81,12 @@
          }
  
          this.field_73260_f |= 1 << (p_73259_2_ >> 4);
-@@ -137,7 +163,7 @@
-                 i = this.field_73264_c.field_77276_a * 16 + (this.field_73261_d[0] >> 12 & 15);
-                 j = this.field_73261_d[0] & 255;
-                 k = this.field_73264_c.field_77275_b * 16 + (this.field_73261_d[0] >> 8 & 15);
--                this.func_73256_a(new Packet53BlockChange(i, j, k, PlayerManager.func_72692_a(this.field_73265_a)));
-+                this.func_73256_a(new Packet51MapChunk(PlayerManager.func_72692_a(this.field_73265_a).func_72964_e(this.field_73264_c.field_77276_a, this.field_73264_c.field_77275_b), (this.field_73260_f == 0xFFFF), this.field_73260_f)); // CraftBukkit - send everything (including biome) if all sections flagged
- 
-                 if (PlayerManager.func_72692_a(this.field_73265_a).func_72927_d(i, j, k))
+@@ -152,7 +179,7 @@
                  {
+                     i = this.field_73264_c.field_77276_a * 16;
+                     j = this.field_73264_c.field_77275_b * 16;
+-                    this.func_73256_a(new Packet51MapChunk(PlayerManager.func_72692_a(this.field_73265_a).func_72964_e(this.field_73264_c.field_77276_a, this.field_73264_c.field_77275_b), false, this.field_73260_f));
++                    this.func_73256_a(new Packet51MapChunk(PlayerManager.func_72692_a(this.field_73265_a).func_72964_e(this.field_73264_c.field_77276_a, this.field_73264_c.field_77275_b), (this.field_73260_f == 0xFFFF), this.field_73260_f)); // CraftBukkit - send everything (including biome) if all sections flagged
+ 
+                     for (k = 0; k < 16; ++k)
+                     {

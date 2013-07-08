@@ -111,12 +111,12 @@
              }
              else
              {
--                List list = Arrays.asList(new Serializable[] {Integer.valueOf(1), Integer.valueOf(73), this.field_72534_f.func_71249_w(), this.field_72534_f.func_71273_Y(), Integer.valueOf(serverconfigurationmanager.func_72394_k()), Integer.valueOf(serverconfigurationmanager.func_72352_l())});
+-                List list = Arrays.asList(new Serializable[] {Integer.valueOf(1), Integer.valueOf(74), this.field_72534_f.func_71249_w(), this.field_72534_f.func_71273_Y(), Integer.valueOf(serverconfigurationmanager.func_72394_k()), Integer.valueOf(serverconfigurationmanager.func_72352_l())});
 -                Object object;
 -
 -                for (Iterator iterator = list.iterator(); iterator.hasNext(); s = s + object.toString().replaceAll("\u0000", ""))
 +                // CraftBukkit start - Don't create a list from an array
-+                Object[] list = new Object[] { 1, 73, this.field_72534_f.func_71249_w(), pingEvent.getMotd(), serverconfigurationmanager.func_72394_k(), pingEvent.getMaxPlayers() };
++                Object[] list = new Object[] { 1, 74, this.field_72534_f.func_71249_w(), pingEvent.getMotd(), serverconfigurationmanager.func_72394_k(), pingEvent.getMaxPlayers() };
 +                StringBuilder builder = new StringBuilder();
 +
 +                for (Object object : list)
@@ -143,7 +143,7 @@
              }
  
              InetAddress inetaddress = null;
-@@ -266,7 +291,7 @@
+@@ -271,7 +296,7 @@
          return p_72533_0_.field_72543_h;
      }
  

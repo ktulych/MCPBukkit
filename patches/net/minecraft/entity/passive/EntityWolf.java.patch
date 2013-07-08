@@ -1,6 +1,14 @@
 --- ../net/minecraft/entity/passive/EntityWolf.java
 +++ ../net/minecraft/entity/passive/EntityWolf.java
-@@ -152,7 +152,8 @@
+@@ -30,7 +30,6 @@
+ import net.minecraft.util.DamageSource;
+ import net.minecraft.util.MathHelper;
+ import net.minecraft.world.World;
+-
+ public class EntityWolf extends EntityTameable
+ {
+     private float field_70926_e;
+@@ -134,7 +133,8 @@
  
      protected String func_70639_aQ()
      {
@@ -10,7 +18,7 @@
      }
  
      protected String func_70621_aR()
-@@ -365,13 +366,14 @@
+@@ -349,13 +349,14 @@
  
              if (!this.field_70170_p.field_72995_K)
              {
@@ -27,7 +35,16 @@
                      this.func_70910_a(p_70085_1_.func_70005_c_());
                      this.func_70908_e(true);
                      this.field_70170_p.func_72960_a(this, (byte)7);
-@@ -489,4 +491,7 @@
+@@ -477,7 +478,7 @@
+             {
+                 EntityWolf entitywolf = (EntityWolf)p_142018_1_;
+ 
+-                if (entitywolf.func_70909_n() && entitywolf.func_130012_q() == p_142018_2_)
++                if (entitywolf.func_70909_n() && entitywolf.func_70902_q() == p_142018_2_)
+                 {
+                     return false;
+                 }
+@@ -495,4 +496,7 @@
      {
          return this.func_70879_a(p_90011_1_);
      }

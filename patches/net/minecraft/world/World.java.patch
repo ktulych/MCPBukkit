@@ -471,7 +471,7 @@
                          }
                      }
  
-@@ -1839,6 +2027,7 @@
+@@ -1840,6 +2028,7 @@
                  p_72918_3_.field_70179_y += vec3.field_72449_c * d1;
              }
  
@@ -479,7 +479,7 @@
              return flag;
          }
      }
-@@ -1932,6 +2121,7 @@
+@@ -1933,6 +2122,7 @@
          double d2 = 1.0D / ((p_72842_2_.field_72334_f - p_72842_2_.field_72339_c) * 2.0D + 1.0D);
          int i = 0;
          int j = 0;
@@ -487,7 +487,7 @@
  
          for (float f = 0.0F; f <= 1.0F; f = (float)((double)f + d0))
          {
-@@ -1943,7 +2133,7 @@
+@@ -1944,7 +2134,7 @@
                      double d4 = p_72842_2_.field_72338_b + (p_72842_2_.field_72337_e - p_72842_2_.field_72338_b) * (double)f1;
                      double d5 = p_72842_2_.field_72339_c + (p_72842_2_.field_72334_f - p_72842_2_.field_72339_c) * (double)f2;
  
@@ -496,7 +496,7 @@
                      {
                          ++i;
                      }
-@@ -1953,6 +2143,7 @@
+@@ -1954,6 +2144,7 @@
              }
          }
  
@@ -504,7 +504,7 @@
          return (float)i / (float)j;
      }
  
-@@ -2239,7 +2430,16 @@
+@@ -2240,7 +2431,16 @@
  
                  if (i <= 0)
                  {
@@ -522,7 +522,7 @@
                  }
              }
  
-@@ -2263,7 +2463,16 @@
+@@ -2264,7 +2464,16 @@
  
                  if (j <= 0)
                  {
@@ -540,7 +540,7 @@
                  }
              }
  
-@@ -2318,7 +2527,7 @@
+@@ -2319,7 +2528,7 @@
  
      protected void func_72903_x()
      {
@@ -549,7 +549,7 @@
          this.field_72984_F.func_76320_a("buildList");
          int i;
          EntityPlayer entityplayer;
-@@ -2336,7 +2545,16 @@
+@@ -2337,7 +2546,16 @@
              {
                  for (int i1 = -b0; i1 <= b0; ++i1)
                  {
@@ -567,7 +567,7 @@
                  }
              }
          }
-@@ -2373,7 +2591,7 @@
+@@ -2374,7 +2592,7 @@
              int k = this.field_73005_l >> 2;
              int l = k & 15;
              int i1 = k >> 8 & 15;
@@ -576,7 +576,7 @@
              int k1 = p_72941_3_.func_76610_a(l, j1, i1);
              l += p_72941_1_;
              i1 += p_72941_2_;
-@@ -2776,7 +2994,7 @@
+@@ -2777,7 +2995,7 @@
          return entity1;
      }
  
@@ -585,7 +585,7 @@
  
      public void func_72944_b(int p_72944_1_, int p_72944_2_, int p_72944_3_, TileEntity p_72944_4_)
      {
-@@ -2794,10 +3012,23 @@
+@@ -2795,10 +3013,23 @@
          {
              Entity entity = (Entity)this.field_72996_f.get(j);
  
@@ -595,7 +595,7 @@
 +            {
 +                EntityLiving entityliving = (EntityLiving) entity;
 +
-+                if (entityliving.func_70692_ba_CodeFix_Public() && entityliving.func_104002_bU())   // Should be isPersistent
++                if (entityliving.func_70692_ba_CodeFix_Public() && entityliving.func_104002_bU())
 +                {
 +                    continue;
 +                }
@@ -610,7 +610,7 @@
          }
  
          return i;
-@@ -2805,10 +3036,20 @@
+@@ -2806,10 +3037,20 @@
  
      public void func_72868_a(List p_72868_1_)
      {
@@ -632,7 +632,7 @@
              this.func_72923_a((Entity)p_72868_1_.get(i));
          }
      }
-@@ -2830,9 +3071,10 @@
+@@ -2831,9 +3072,10 @@
              axisalignedbb = null;
          }
  
@@ -644,7 +644,7 @@
          }
          else
          {
-@@ -2841,8 +3083,15 @@
+@@ -2842,8 +3084,15 @@
                  block = null;
              }
  
@@ -662,7 +662,7 @@
      }
  
      public PathEntity func_72865_a(Entity p_72865_1_, Entity p_72865_2_, float p_72865_3_, boolean p_72865_4_, boolean p_72865_5_, boolean p_72865_6_, boolean p_72865_7_)
-@@ -2999,6 +3248,14 @@
+@@ -3000,6 +3249,14 @@
          for (int i = 0; i < this.field_73010_i.size(); ++i)
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
@@ -677,7 +677,7 @@
              double d5 = entityplayer1.func_70092_e(p_72977_1_, p_72977_3_, p_72977_5_);
  
              if ((p_72977_7_ < 0.0D || d5 < p_72977_7_ * p_72977_7_) && (d4 == -1.0D || d5 < d4))
-@@ -3025,6 +3282,14 @@
+@@ -3026,6 +3283,14 @@
          {
              EntityPlayer entityplayer1 = (EntityPlayer)this.field_73010_i.get(i);
  
@@ -692,7 +692,7 @@
              if (!entityplayer1.field_71075_bZ.field_75102_a && entityplayer1.func_70089_S())
              {
                  double d5 = entityplayer1.func_70092_e(p_72846_1_, p_72846_3_, p_72846_5_);
-@@ -3071,7 +3336,7 @@
+@@ -3072,7 +3337,7 @@
          return null;
      }
  
@@ -701,7 +701,7 @@
      {
          this.field_73019_z.func_75762_c();
      }
-@@ -3137,6 +3402,18 @@
+@@ -3138,6 +3403,18 @@
      }
  
      public void func_72854_c() {}
@@ -720,7 +720,7 @@
  
      public float func_72819_i(float p_72819_1_)
      {
-@@ -3264,9 +3541,9 @@
+@@ -3265,9 +3542,9 @@
      public CrashReportCategory func_72914_a(CrashReport p_72914_1_)
      {
          CrashReportCategory crashreportcategory = p_72914_1_.func_85057_a("Affected level", 1);
@@ -733,7 +733,7 @@
  
          try
          {
-@@ -3370,4 +3647,7 @@
+@@ -3371,4 +3648,7 @@
  
          return MathHelper.func_76131_a(f, 0.0F, flag ? 1.5F : 1.0F);
      }

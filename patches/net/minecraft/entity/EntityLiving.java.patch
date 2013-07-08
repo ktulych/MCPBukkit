@@ -80,10 +80,12 @@
      }
  
      public void func_70014_b(NBTTagCompound p_70014_1_)
-@@ -303,6 +328,22 @@
+@@ -301,8 +326,22 @@
+     public void func_70037_a(NBTTagCompound p_70037_1_)
+     {
          super.func_70037_a(p_70037_1_);
-         this.func_98053_h(p_70037_1_.func_74767_n("CanPickUpLoot"));
-         this.field_82179_bU = p_70037_1_.func_74767_n("PersistenceRequired");
+-        this.func_98053_h(p_70037_1_.func_74767_n("CanPickUpLoot"));
+-        this.field_82179_bU = p_70037_1_.func_74767_n("PersistenceRequired");
 +        // CraftBukkit start - If looting or persistence is false only use it if it was set after we started using it
 +        boolean data = p_70037_1_.func_74767_n("CanPickUpLoot");
 +
@@ -103,7 +105,7 @@
  
          if (p_70037_1_.func_74764_b("CustomName") && p_70037_1_.func_74779_i("CustomName").length() > 0)
          {
-@@ -475,12 +516,12 @@
+@@ -475,12 +514,12 @@
                  double d2 = entityplayer.field_70161_v - this.field_70161_v;
                  double d3 = d0 * d0 + d1 * d1 + d2 * d2;
  
@@ -118,7 +120,7 @@
                  {
                      this.func_70106_y();
                  }
-@@ -551,7 +592,7 @@
+@@ -551,7 +590,7 @@
          {
              this.func_70625_a(this.field_70776_bF, 10.0F, (float)this.func_70646_bf());
  
@@ -127,7 +129,7 @@
              {
                  this.field_70776_bF = null;
              }
-@@ -1025,7 +1066,7 @@
+@@ -1025,7 +1064,7 @@
  
              if (!this.field_70170_p.field_72995_K && p_110160_1_ && this.field_70170_p instanceof WorldServer)
              {
@@ -136,7 +138,7 @@
              }
          }
      }
-@@ -1052,7 +1093,7 @@
+@@ -1052,7 +1091,7 @@
  
          if (!this.field_70170_p.field_72995_K && p_110162_2_ && this.field_70170_p instanceof WorldServer)
          {
@@ -145,7 +147,7 @@
          }
      }
  
-@@ -1099,4 +1140,7 @@
+@@ -1099,4 +1138,7 @@
  
          this.field_110170_bx = null;
      }

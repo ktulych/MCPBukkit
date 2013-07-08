@@ -466,7 +466,7 @@
              }
  
              while (iterator.hasNext())
-@@ -578,23 +797,21 @@
+@@ -578,25 +797,45 @@
          return arraylist;
      }
  
@@ -482,10 +482,7 @@
 -            p_72866_1_.func_70106_y();
 -        }
 -
--        if (!(p_72866_1_.field_70153_n instanceof EntityPlayer))
--        {
--            super.func_72866_a(p_72866_1_, p_72866_2_);
--        }
+-        super.func_72866_a(p_72866_1_, p_72866_2_);
 -    }
 +    /* CraftBukkit start - We prevent spawning in general, so this butchering is not needed
 +    public void entityJoinedWorld(Entity entity, boolean flag) {
@@ -497,15 +494,10 @@
 +            entity.die();
 +        }
 +
-+        if (!(entity.passenger instanceof EntityHuman)) {
-+            super.entityJoinedWorld(entity, flag);
-+        }
++        super.entityJoinedWorld(entity, flag);
 +    }
 +    // CraftBukkit end */
  
-     public void func_73050_b(Entity p_73050_1_, boolean p_73050_2_)
-     {
-@@ -614,7 +831,28 @@
      protected IChunkProvider func_72970_h()
      {
          IChunkLoader ichunkloader = this.field_73019_z.func_75763_a(this.field_73011_w);
@@ -535,7 +527,7 @@
          return this.field_73059_b;
      }
  
-@@ -622,16 +860,31 @@
+@@ -604,16 +843,31 @@
      {
          ArrayList arraylist = new ArrayList();
  
@@ -577,7 +569,7 @@
          return arraylist;
      }
  
-@@ -678,6 +931,29 @@
+@@ -660,6 +914,29 @@
              int j = this.field_73011_w.func_76557_i();
              int k = 0;
  
@@ -607,7 +599,7 @@
              if (chunkposition != null)
              {
                  i = chunkposition.field_76930_a;
-@@ -690,7 +966,7 @@
+@@ -672,7 +949,7 @@
  
              int l = 0;
  
@@ -616,7 +608,7 @@
              {
                  i += random.nextInt(64) - random.nextInt(64);
                  k += random.nextInt(64) - random.nextInt(64);
-@@ -734,7 +1010,7 @@
+@@ -716,7 +993,7 @@
          return this.field_73011_w.func_76554_h();
      }
  
@@ -625,7 +617,7 @@
      {
          if (this.field_73020_y.func_73157_c())
          {
-@@ -762,7 +1038,7 @@
+@@ -744,7 +1021,7 @@
          }
      }
  
@@ -634,7 +626,7 @@
      {
          this.func_72906_B();
          this.field_73019_z.func_75755_a(this.field_72986_A, this.field_73061_a.func_71203_ab().func_72378_q());
-@@ -806,9 +1082,19 @@
+@@ -788,9 +1065,19 @@
  
      public boolean func_72942_c(Entity p_72942_1_)
      {
@@ -655,7 +647,7 @@
              return true;
          }
          else
-@@ -825,11 +1111,21 @@
+@@ -807,11 +1094,21 @@
  
      public Explosion func_72885_a(Entity p_72885_1_, double p_72885_2_, double p_72885_4_, double p_72885_6_, float p_72885_8_, boolean p_72885_9_, boolean p_72885_10_)
      {
@@ -682,7 +674,7 @@
  
          if (!p_72885_10_)
          {
-@@ -884,7 +1180,8 @@
+@@ -866,7 +1163,8 @@
  
                  if (this.func_73043_a(blockeventdata))
                  {
@@ -692,7 +684,7 @@
                  }
              }
  
-@@ -910,14 +1207,16 @@
+@@ -892,14 +1190,16 @@
  
          if (flag != this.func_72896_J())
          {
@@ -717,7 +709,7 @@
          }
      }
  
-@@ -940,4 +1239,35 @@
+@@ -922,4 +1222,35 @@
      {
          return this.field_85177_Q;
      }

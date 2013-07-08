@@ -121,10 +121,16 @@
          {
              this.func_70106_y();
              this.func_110128_b((Entity)null);
-@@ -311,5 +389,5 @@
+@@ -311,10 +389,10 @@
  
      public abstract int func_82330_g();
  
 -    public abstract void func_110128_b(Entity entity);
+-
+     protected boolean func_142008_O()
+     {
+         return false;
+     }
++
 +    public abstract void func_110128_b(Entity p_110128_1_);
  }

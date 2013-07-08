@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/player/EntityPlayer.java
 +++ ../net/minecraft/entity/player/EntityPlayer.java
-@@ -38,9 +38,9 @@
+@@ -35,9 +35,9 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagList;
@@ -11,7 +11,7 @@
  import net.minecraft.scoreboard.ScoreObjectiveCriteria;
  import net.minecraft.scoreboard.ScorePlayerTeam;
  import net.minecraft.scoreboard.Scoreboard;
-@@ -63,6 +63,18 @@
+@@ -61,6 +61,18 @@
  import net.minecraft.world.World;
  import net.minecraft.world.chunk.IChunkProvider;
  
@@ -30,7 +30,7 @@
  public abstract class EntityPlayer extends EntityLivingBase implements ICommandSender
  {
      public InventoryPlayer field_71071_by = new InventoryPlayer(this);
-@@ -73,7 +85,7 @@
+@@ -71,7 +83,7 @@
      protected int field_71101_bC;
      public float field_71107_bF;
      public float field_71109_bG;
@@ -39,7 +39,7 @@
      public int field_71090_bL;
      public double field_71091_bM;
      public double field_71096_bN;
-@@ -81,15 +93,27 @@
+@@ -79,15 +91,27 @@
      public double field_71094_bP;
      public double field_71095_bQ;
      public double field_71085_bR;
@@ -69,7 +69,7 @@
      public int field_71068_ca;
      public int field_71067_cb;
      public float field_71106_cc;
-@@ -331,6 +355,37 @@
+@@ -329,6 +353,37 @@
          {
              this.func_71010_c(this.field_71074_e, 16);
              int i = this.field_71074_e.field_77994_a;
@@ -107,7 +107,7 @@
              ItemStack itemstack = this.field_71074_e.func_77950_b(this.field_70170_p, this);
  
              if (itemstack != this.field_71074_e || itemstack != null && itemstack.field_77994_a != i)
-@@ -352,14 +407,22 @@
+@@ -350,14 +405,22 @@
          return this.func_110143_aJ() <= 0.0F || this.func_70608_bn();
      }
  
@@ -132,7 +132,7 @@
          {
              if (!this.field_70170_p.field_72995_K)
              {
-@@ -375,7 +438,7 @@
+@@ -373,7 +436,7 @@
          }
          else
          {
@@ -141,7 +141,7 @@
          }
      }
  
-@@ -422,7 +485,8 @@
+@@ -420,7 +483,8 @@
  
          if (this.field_70170_p.field_73013_u == 0 && this.func_110143_aJ() < this.func_110138_aP() && this.field_70170_p.func_82736_K().func_82766_b("naturalRegeneration") && this.field_70173_aa % 20 * 12 == 0)
          {
@@ -151,7 +151,7 @@
          }
  
          this.field_71071_by.func_70429_k();
-@@ -444,7 +508,8 @@
+@@ -442,7 +506,8 @@
  
          this.func_70659_e((float)attributeinstance.func_111126_e());
          float f = MathHelper.func_76133_a(this.field_70159_w * this.field_70159_w + this.field_70179_y * this.field_70179_y);
@@ -161,7 +161,7 @@
  
          if (f > 0.1F)
          {
-@@ -549,12 +614,14 @@
+@@ -547,12 +612,14 @@
      public void func_70084_c(Entity p_70084_1_, int p_70084_2_)
      {
          this.func_85039_t(p_70084_2_);
@@ -178,7 +178,7 @@
          }
          else
          {
-@@ -565,8 +632,7 @@
+@@ -563,8 +630,7 @@
  
          while (iterator.hasNext())
          {
@@ -188,7 +188,7 @@
              score.func_96648_a();
          }
      }
-@@ -620,6 +686,19 @@
+@@ -618,6 +684,19 @@
                  entityitem.field_70179_y += Math.sin((double)f1) * (double)f;
              }
  
@@ -208,7 +208,7 @@
              this.func_71012_a(entityitem);
              this.func_71064_a(StatList.field_75952_v, 1);
              return entityitem;
-@@ -702,6 +781,16 @@
+@@ -700,6 +779,16 @@
              this.func_70999_a(true, true, false);
          }
  
@@ -225,7 +225,7 @@
          if (p_70037_1_.func_74764_b("SpawnX") && p_70037_1_.func_74764_b("SpawnY") && p_70037_1_.func_74764_b("SpawnZ"))
          {
              this.field_71077_c = new ChunkCoordinates(p_70037_1_.func_74762_e("SpawnX"), p_70037_1_.func_74762_e("SpawnY"), p_70037_1_.func_74762_e("SpawnZ"));
-@@ -736,6 +825,7 @@
+@@ -734,6 +823,7 @@
              p_70014_1_.func_74768_a("SpawnY", this.field_71077_c.field_71572_b);
              p_70014_1_.func_74768_a("SpawnZ", this.field_71077_c.field_71573_c);
              p_70014_1_.func_74757_a("SpawnForced", this.field_82248_d);
@@ -233,7 +233,7 @@
          }
  
          this.field_71100_bB.func_75117_b(p_70014_1_);
-@@ -796,7 +886,7 @@
+@@ -794,7 +884,7 @@
                  {
                      if (this.field_70170_p.field_73013_u == 0)
                      {
@@ -242,7 +242,7 @@
                      }
  
                      if (this.field_70170_p.field_73013_u == 1)
-@@ -810,7 +900,7 @@
+@@ -808,7 +898,7 @@
                      }
                  }
  
@@ -251,13 +251,13 @@
                  {
                      return false;
                  }
-@@ -837,9 +927,39 @@
+@@ -830,9 +920,39 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
--        ScorePlayerTeam scoreplayerteam = this.func_96124_cp();
--        ScorePlayerTeam scoreplayerteam1 = p_96122_1_.func_96124_cp();
--        return scoreplayerteam != scoreplayerteam1 ? true : (scoreplayerteam != null ? scoreplayerteam.func_96665_g() : true);
+-        Team team = this.func_96124_cp();
+-        Team team1 = p_96122_1_.func_96124_cp();
+-        return team == null ? true : (!team.func_142054_a(team1) ? true : team.func_96665_g());
 +        // CraftBukkit start - Change to check OTHER player's scoreboard team according to API
 +        // To summarize this method's logic, it's "Can parameter hurt this"
 +        org.bukkit.scoreboard.Team team;
@@ -293,8 +293,8 @@
 +        // CraftBukkit end
      }
  
-     protected void func_71022_a(EntityLivingBase p_71022_1_, boolean p_71022_2_)
-@@ -962,7 +1082,8 @@
+     protected void func_70675_k(float p_70675_1_)
+@@ -919,7 +1039,8 @@
  
                  if (itemstack.func_111282_a(this, (EntityLivingBase)p_70998_1_))
                  {
@@ -304,7 +304,7 @@
                      {
                          this.func_71028_bD();
                      }
-@@ -1018,7 +1139,7 @@
+@@ -975,7 +1096,7 @@
  
                  if (p_71059_1_ instanceof EntityLivingBase)
                  {
@@ -313,7 +313,7 @@
                      i += EnchantmentHelper.func_77507_b(this, (EntityLivingBase)p_71059_1_);
                  }
  
-@@ -1047,6 +1168,19 @@
+@@ -1004,6 +1125,19 @@
                      }
  
                      boolean flag2 = p_71059_1_.func_70097_a(DamageSource.func_76365_a(this), f);
@@ -333,7 +333,7 @@
  
                      if (flag2)
                      {
-@@ -1070,7 +1204,7 @@
+@@ -1027,7 +1161,7 @@
  
                          if (f >= 18.0F)
                          {
@@ -342,7 +342,7 @@
                          }
  
                          this.func_130011_c(p_71059_1_);
-@@ -1098,7 +1232,8 @@
+@@ -1055,7 +1189,8 @@
                      {
                          itemstack.func_77961_a((EntityLivingBase)object, this);
  
@@ -352,7 +352,7 @@
                          {
                              this.func_71028_bD();
                          }
-@@ -1115,7 +1250,16 @@
+@@ -1067,7 +1202,16 @@
  
                          if (j > 0 && flag2)
                          {
@@ -370,7 +370,7 @@
                          }
                          else if (flag1)
                          {
-@@ -1188,6 +1332,21 @@
+@@ -1140,6 +1284,21 @@
              this.func_70078_a((Entity)null);
          }
  
@@ -392,7 +392,7 @@
          this.func_70105_a(0.2F, 0.2F);
          this.field_70129_M = 0.2F;
  
-@@ -1282,6 +1441,27 @@
+@@ -1234,6 +1393,27 @@
              this.field_70170_p.func_72854_c();
          }
  
@@ -420,7 +420,7 @@
          if (p_70999_1_)
          {
              this.field_71076_b = 0;
-@@ -1367,11 +1547,13 @@
+@@ -1319,11 +1499,13 @@
          {
              this.field_71077_c = new ChunkCoordinates(p_71063_1_);
              this.field_82248_d = p_71063_2_;
@@ -434,7 +434,7 @@
          }
      }
  
-@@ -1506,7 +1688,7 @@
+@@ -1458,7 +1640,7 @@
                      }
                      else if ((double)this.field_71073_d.func_71569_e(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v)) >= 1000000.0D)
                      {
@@ -443,7 +443,7 @@
                      }
                  }
                  else if (this.field_70154_o instanceof EntityBoat)
-@@ -1538,7 +1720,7 @@
+@@ -1490,7 +1672,7 @@
      {
          if (p_70074_1_ instanceof IMob)
          {
@@ -452,7 +452,7 @@
          }
      }
  
-@@ -1786,6 +1968,7 @@
+@@ -1738,6 +1920,7 @@
  
      public String func_96090_ax()
      {
@@ -460,7 +460,7 @@
          return ScorePlayerTeam.func_96667_a(this.func_96124_cp(), this.field_71092_bJ);
      }
  
-@@ -1803,4 +1986,4 @@
+@@ -1755,4 +1938,4 @@
      {
          return this.func_70096_w().func_111145_d(17);
      }

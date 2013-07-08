@@ -1,0 +1,11 @@
+--- ../net/minecraft/entity/monster/EntityZombieGroupData.java
++++ ../net/minecraft/entity/monster/EntityZombieGroupData.java
+@@ -1,7 +1,7 @@
+ package net.minecraft.entity.monster;
+ 
+ import net.minecraft.entity.EntityLivingData;
+-
++// CraftBukkit - package-private import
+ class EntityZombieGroupData implements EntityLivingData
+ {
+     public boolean field_142048_a;

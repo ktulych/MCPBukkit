@@ -19,7 +19,7 @@
  {
 @@ -39,6 +46,7 @@
      private static final UUID field_110187_bq = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
-     private static final AttributeModifier field_110188_br = new AttributeModifier(field_110187_bq, "Baby speed boost", 0.5D, 0);
+     private static final AttributeModifier field_110188_br = new AttributeModifier(field_110187_bq, "Baby speed boost", 0.5D, 1);
      private int field_82234_d;
 +    private int lastTick = MinecraftServer.currentTick; // CraftBukkit
  
@@ -104,3 +104,40 @@
  
      protected void func_82164_bB()
      {
+@@ -372,18 +405,18 @@
+ 
+     public EntityLivingData func_110161_a(EntityLivingData p_110161_1_)
+     {
+-        Object p_110161_1_1 = super.func_110161_a(p_110161_1_);
++        Object object = super.func_110161_a(p_110161_1_);
+         float f = this.field_70170_p.func_110746_b(this.field_70165_t, this.field_70163_u, this.field_70161_v);
+         this.func_98053_h(this.field_70146_Z.nextFloat() < 0.55F * f);
+ 
+-        if (p_110161_1_1 == null)
+-        {
+-            p_110161_1_1 = new EntityZombieGroupData(this, this.field_70170_p.field_73012_v.nextFloat() < 0.05F, this.field_70170_p.field_73012_v.nextFloat() < 0.05F, (EntityZombieINNER1)null);
+-        }
+-
+-        if (p_110161_1_1 instanceof EntityZombieGroupData)
+-        {
+-            EntityZombieGroupData entityzombiegroupdata = (EntityZombieGroupData)p_110161_1_1;
++        if (object == null)
++        {
++            object = new EntityZombieGroupData(this, this.field_70170_p.field_73012_v.nextFloat() < 0.05F, this.field_70170_p.field_73012_v.nextFloat() < 0.05F, (EntityZombieINNER1) null);
++        }
++
++        if (object instanceof EntityZombieGroupData)
++        {
++            EntityZombieGroupData entityzombiegroupdata = (EntityZombieGroupData) object;
+ 
+             if (entityzombiegroupdata.field_142046_b)
+             {
+@@ -419,7 +452,7 @@
+             this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111121_a(new AttributeModifier("Leader zombie bonus", this.field_70146_Z.nextDouble() * 3.0D + 1.0D, 2));
+         }
+ 
+-        return (EntityLivingData)p_110161_1_1;
++        return (EntityLivingData) object;
+     }
+ 
+     public boolean func_70085_c(EntityPlayer p_70085_1_)

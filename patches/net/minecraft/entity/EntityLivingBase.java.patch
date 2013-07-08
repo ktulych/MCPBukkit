@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/EntityLivingBase.java
 +++ ../net/minecraft/entity/EntityLivingBase.java
-@@ -21,14 +21,17 @@
+@@ -20,14 +20,17 @@
  import net.minecraft.entity.monster.EntityZombie;
  import net.minecraft.entity.passive.EntityWolf;
  import net.minecraft.entity.player.EntityPlayer;
@@ -58,7 +58,7 @@
      protected boolean field_70703_bu;
      public float field_70702_br;
      public float field_70701_bs;
-@@ -96,13 +105,17 @@
+@@ -96,14 +105,18 @@
      protected double field_110152_bk;
      protected double field_70712_bm;
      protected double field_70705_bn;
@@ -68,6 +68,7 @@
 +    public EntityLivingBase field_70755_b; // CraftBukkit - private -> public
      private int field_70756_c;
      private EntityLivingBase field_110150_bn;
+     private int field_142016_bo;
      private float field_70746_aG;
      private int field_70773_bE;
      private float field_110151_bq;
@@ -78,7 +79,7 @@
  
      public EntityLivingBase(World p_i1594_1_)
      {
-@@ -225,7 +238,13 @@
+@@ -226,7 +239,13 @@
          }
          else
          {
@@ -93,7 +94,7 @@
          }
  
          this.field_70727_aS = this.field_70726_aT;
-@@ -289,6 +308,22 @@
+@@ -279,6 +298,22 @@
          this.field_70170_p.field_72984_F.func_76319_b();
      }
  
@@ -116,7 +117,7 @@
      public boolean func_70631_g_()
      {
          return false;
-@@ -298,22 +333,21 @@
+@@ -288,22 +323,21 @@
      {
          ++this.field_70725_aQ;
  
@@ -152,7 +153,7 @@
              this.func_70106_y();
  
              for (i = 0; i < 20; ++i)
-@@ -449,6 +483,23 @@
+@@ -455,6 +489,23 @@
              }
          }
  
@@ -176,7 +177,7 @@
          if (p_70037_1_.func_74764_b("HealF"))
          {
              this.func_70606_j(p_70037_1_.func_74760_g("HealF"));
-@@ -578,12 +629,14 @@
+@@ -584,12 +635,14 @@
  
      public boolean func_82165_m(int p_82165_1_)
      {
@@ -193,7 +194,7 @@
      }
  
      public PotionEffect func_70660_b(Potion p_70660_1_)
-@@ -673,13 +726,25 @@
+@@ -675,13 +728,25 @@
          }
      }
  
@@ -220,7 +221,7 @@
          }
      }
  
-@@ -725,6 +790,20 @@
+@@ -727,6 +792,20 @@
  
                  this.field_70721_aZ = 1.5F;
                  boolean flag = true;
@@ -241,7 +242,7 @@
  
                  if ((float)this.field_70172_ad > (float)this.field_70771_an / 2.0F)
                  {
-@@ -868,7 +947,7 @@
+@@ -870,7 +949,7 @@
                  this.func_70628_a(this.field_70718_bc > 0, i);
                  this.func_82160_b(this.field_70718_bc > 0, i);
  
@@ -250,7 +251,7 @@
                  {
                      int j = this.field_70146_Z.nextInt(200) - i;
  
-@@ -877,6 +956,10 @@
+@@ -879,6 +958,10 @@
                          this.func_70600_l(j <= 0 ? 1 : 0);
                      }
                  }
@@ -261,7 +262,7 @@
              }
          }
  
-@@ -916,7 +999,12 @@
+@@ -918,7 +1001,12 @@
          return "damage.hit";
      }
  
@@ -275,7 +276,7 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_) {}
  
-@@ -939,7 +1027,27 @@
+@@ -941,7 +1029,27 @@
          super.func_70069_a(p_70069_1_);
          PotionEffect potioneffect = this.func_70660_b(Potion.field_76430_j);
          float f1 = potioneffect != null ? (float)(potioneffect.func_76458_c() + 1) : 0.0F;
@@ -304,7 +305,7 @@
  
          if (i > 0)
          {
-@@ -1100,7 +1208,7 @@
+@@ -1102,7 +1210,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {
@@ -313,7 +314,7 @@
              }
          }
      }
-@@ -1161,9 +1269,9 @@
+@@ -1156,9 +1264,9 @@
  
      public abstract ItemStack func_70694_bm();
  
@@ -326,7 +327,7 @@
  
      public void func_70031_b(boolean p_70031_1_)
      {
-@@ -1472,7 +1580,7 @@
+@@ -1467,7 +1575,7 @@
  
                  if (!ItemStack.func_77989_b(itemstack1, itemstack))
                  {
@@ -335,7 +336,7 @@
  
                      if (itemstack != null)
                      {
-@@ -1502,7 +1610,8 @@
+@@ -1497,7 +1605,8 @@
          {
              f3 = 1.0F;
              f2 = (float)Math.sqrt((double)f) * 3.0F;
@@ -345,7 +346,7 @@
          }
  
          if (this.field_70733_aJ > 0.0F)
-@@ -1716,6 +1825,15 @@
+@@ -1711,6 +1820,15 @@
              {
                  Entity entity = (Entity)list.get(i);
  
@@ -361,7 +362,7 @@
                  if (entity.func_70104_M())
                  {
                      this.func_82167_n(entity);
-@@ -1757,17 +1875,17 @@
+@@ -1752,17 +1870,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {

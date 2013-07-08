@@ -1,6 +1,6 @@
 --- ../net/minecraft/tileentity/TileEntitySign.java
 +++ ../net/minecraft/tileentity/TileEntitySign.java
-@@ -3,12 +3,13 @@
+@@ -4,13 +4,14 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.network.packet.Packet;
  import net.minecraft.network.packet.Packet130UpdateSign;
@@ -11,12 +11,13 @@
      public int field_70410_b = -1;
 -    private boolean field_70411_c = true;
 +    public boolean field_70411_c = true; // CraftBukkit - private -> public
+     private EntityPlayer field_142011_d;
 +
 +    public TileEntitySign() {}
  
      public void func_70310_b(NBTTagCompound p_70310_1_)
      {
-@@ -38,7 +39,19 @@
+@@ -40,7 +41,19 @@
      public Packet func_70319_e()
      {
          String[] astring = new String[4];

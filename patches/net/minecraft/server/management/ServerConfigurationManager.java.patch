@@ -1,6 +1,6 @@
 --- ../net/minecraft/server/management/ServerConfigurationManager.java
 +++ ../net/minecraft/server/management/ServerConfigurationManager.java
-@@ -18,6 +18,7 @@
+@@ -19,6 +19,7 @@
  import net.minecraft.item.ItemInWorldManager;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.network.INetworkManager;
@@ -8,7 +8,7 @@
  import net.minecraft.network.NetServerHandler;
  import net.minecraft.network.packet.Packet;
  import net.minecraft.network.packet.Packet16BlockItemSwitch;
-@@ -41,7 +42,6 @@
+@@ -44,7 +45,6 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.util.ChatMessageComponent;
  import net.minecraft.util.ChunkCoordinates;
@@ -16,7 +16,7 @@
  import net.minecraft.util.MathHelper;
  import net.minecraft.world.EnumGameType;
  import net.minecraft.world.World;
-@@ -49,25 +49,51 @@
+@@ -52,25 +52,51 @@
  import net.minecraft.world.demo.DemoWorldManager;
  import net.minecraft.world.storage.IPlayerFileData;
  
@@ -72,7 +72,7 @@
          this.field_72400_f = p_i1500_1_;
          this.field_72401_g.func_73708_a(false);
          this.field_72413_h.func_73708_a(false);
-@@ -86,18 +112,29 @@
+@@ -89,19 +115,30 @@
              s = p_72355_1_.func_74430_c().toString();
          }
  
@@ -95,6 +95,7 @@
 +        netserverhandler.func_72567_b(new Packet1Login(p_72355_2_.field_70157_k, worldserver.func_72912_H().func_76067_t(), p_72355_2_.field_71134_c.func_73081_b(), worldserver.func_72912_H().func_76093_s(), worldserver.field_73011_w.field_76574_g, worldserver.field_73013_u, worldserver.func_72800_K(), maxPlayers));
 +        p_72355_2_.getBukkitEntity().sendSupportedChannels();
 +        // CraftBukkit end
+         netserverhandler.func_72567_b(new Packet250CustomPayload("MC|Brand", this.func_72365_p().getServerModName().getBytes(Charsets.UTF_8)));
          netserverhandler.func_72567_b(new Packet6SpawnPosition(chunkcoordinates.field_71574_a, chunkcoordinates.field_71572_b, chunkcoordinates.field_71573_c));
          netserverhandler.func_72567_b(new Packet202PlayerAbilities(p_72355_2_.field_71075_bZ));
          netserverhandler.func_72567_b(new Packet16BlockItemSwitch(p_72355_2_.field_71071_by.field_70461_c));
@@ -105,7 +106,7 @@
          this.func_72377_c(p_72355_2_);
          netserverhandler.func_72569_a(p_72355_2_.field_70165_t, p_72355_2_.field_70163_u, p_72355_2_.field_70161_v, p_72355_2_.field_70177_z, p_72355_2_.field_70125_A);
          this.field_72400_f.func_71212_ac().func_71745_a(netserverhandler);
-@@ -132,7 +169,7 @@
+@@ -136,7 +173,7 @@
          }
      }
  
@@ -114,7 +115,7 @@
      {
          HashSet hashset = new HashSet();
          Iterator iterator = p_96456_1_.func_96525_g().iterator();
-@@ -165,6 +202,11 @@
+@@ -169,6 +206,11 @@
  
      public void func_72364_a(WorldServer[] p_72364_1_)
      {
@@ -126,7 +127,7 @@
          this.field_72412_k = p_72364_1_[0].func_72860_G().func_75756_e();
      }
  
-@@ -188,7 +230,7 @@
+@@ -192,7 +234,7 @@
  
      public NBTTagCompound func_72380_a(EntityPlayerMP p_72380_1_)
      {
@@ -135,7 +136,7 @@
          NBTTagCompound nbttagcompound1;
  
          if (p_72380_1_.func_70005_c_().equals(this.field_72400_f.func_71214_G()) && nbttagcompound != null)
-@@ -212,16 +254,58 @@
+@@ -216,16 +258,58 @@
  
      public void func_72377_c(EntityPlayerMP p_72377_1_)
      {
@@ -198,7 +199,7 @@
          }
      }
  
-@@ -230,28 +314,65 @@
+@@ -234,28 +318,65 @@
          p_72358_1_.func_71121_q().func_73040_p().func_72685_d(p_72358_1_);
      }
  
@@ -210,6 +211,20 @@
 -        if (p_72367_1_.field_70154_o != null)
 -        {
 -            worldserver.func_72973_f(p_72367_1_.field_70154_o);
+-            System.out.println("removing player mount");
+-        }
+-
+-        worldserver.func_72900_e(p_72367_1_);
+-        worldserver.func_73040_p().func_72695_c(p_72367_1_);
+-        this.field_72404_b.remove(p_72367_1_);
+-        this.func_72384_a(new Packet201PlayerInfo(p_72367_1_.func_70005_c_(), false, 9999));
+-    }
+-
+-    public String func_72399_a(SocketAddress p_72399_1_, String p_72399_2_)
+-    {
+-        if (this.field_72401_g.func_73704_a(p_72399_2_))
+-        {
+-            BanEntry banentry = (BanEntry)this.field_72401_g.func_73712_c().get(p_72399_2_);
 +    public String disconnect(EntityPlayerMP entityplayermp)   // CraftBukkit - return string
 +    {
 +        if (entityplayermp.field_71135_a.field_72576_c)
@@ -226,23 +241,12 @@
 +        this.func_72391_b(entityplayermp);
 +        WorldServer worldserver = entityplayermp.func_71121_q();
 +
-+        if (entityplayermp.field_70154_o != null)
++        if (entityplayermp.field_70154_o != null && !(entityplayermp.field_70154_o instanceof EntityPlayerMP))   // CraftBukkit - Don't remove players
 +        {
 +            worldserver.func_72973_f(entityplayermp.field_70154_o);
-             System.out.println("removing player mount");
-         }
- 
--        worldserver.func_72900_e(p_72367_1_);
--        worldserver.func_73040_p().func_72695_c(p_72367_1_);
--        this.field_72404_b.remove(p_72367_1_);
--        this.func_72384_a(new Packet201PlayerInfo(p_72367_1_.func_70005_c_(), false, 9999));
--    }
--
--    public String func_72399_a(SocketAddress p_72399_1_, String p_72399_2_)
--    {
--        if (this.field_72401_g.func_73704_a(p_72399_2_))
--        {
--            BanEntry banentry = (BanEntry)this.field_72401_g.func_73712_c().get(p_72399_2_);
++            // System.out.println("removing player mount"); // CraftBukkit - Removed debug message
++        }
++
 +        worldserver.func_72900_e(entityplayermp);
 +        worldserver.func_73040_p().func_72695_c(entityplayermp);
 +        this.field_72404_b.remove(entityplayermp);
@@ -283,7 +287,7 @@
              String s1 = "You are banned from this server!\nReason: " + banentry.func_73686_f();
  
              if (banentry.func_73680_d() != null)
-@@ -259,15 +380,15 @@
+@@ -263,15 +384,15 @@
                  s1 = s1 + "\nYour ban will be removed on " + field_72403_e.format(banentry.func_73680_d());
              }
  
@@ -305,7 +309,7 @@
              s2 = s2.substring(s2.indexOf("/") + 1);
              s2 = s2.substring(0, s2.indexOf(":"));
  
-@@ -281,17 +402,33 @@
+@@ -285,17 +406,33 @@
                      s3 = s3 + "\nYour ban will be removed on " + field_72403_e.format(banentry1.func_73680_d());
                  }
  
@@ -347,7 +351,7 @@
          ArrayList arraylist = new ArrayList();
          EntityPlayerMP entityplayermp;
  
-@@ -299,7 +436,7 @@
+@@ -303,7 +440,7 @@
          {
              entityplayermp = (EntityPlayerMP)this.field_72404_b.get(i);
  
@@ -356,7 +360,7 @@
              {
                  arraylist.add(entityplayermp);
              }
-@@ -313,186 +450,401 @@
+@@ -317,186 +454,401 @@
              entityplayermp.field_71135_a.func_72565_c("You logged in from another location");
          }
  
@@ -891,7 +895,7 @@
      }
  
      public void func_72374_b()
-@@ -502,11 +854,13 @@
+@@ -506,11 +858,13 @@
              this.field_72408_o = 0;
          }
  
@@ -910,7 +914,7 @@
      }
  
      public void func_72384_a(Packet p_72384_1_)
-@@ -572,11 +926,29 @@
+@@ -576,11 +930,29 @@
      public void func_72386_b(String p_72386_1_)
      {
          this.field_72414_i.add(p_72386_1_.toLowerCase());
@@ -940,7 +944,7 @@
      }
  
      public boolean func_72370_d(String p_72370_1_)
-@@ -587,7 +959,8 @@
+@@ -591,7 +963,8 @@
  
      public boolean func_72353_e(String p_72353_1_)
      {
@@ -950,7 +954,7 @@
      }
  
      public EntityPlayerMP func_72361_f(String p_72361_1_)
-@@ -662,7 +1035,7 @@
+@@ -666,7 +1039,7 @@
                          }
                      }
  
@@ -959,7 +963,7 @@
                      {
                          ((List)object).add(entityplayermp);
                      }
-@@ -751,6 +1124,13 @@
+@@ -755,6 +1128,13 @@
          {
              EntityPlayerMP entityplayermp = (EntityPlayerMP)this.field_72404_b.get(j);
  
@@ -973,7 +977,7 @@
              if (entityplayermp != p_72397_1_ && entityplayermp.field_71093_bK == p_72397_10_)
              {
                  double d4 = p_72397_2_ - entityplayermp.field_70165_t;
-@@ -801,7 +1181,7 @@
+@@ -805,7 +1185,7 @@
  
          if (p_72354_2_.func_72896_J())
          {
@@ -982,7 +986,7 @@
          }
      }
  
-@@ -824,7 +1204,7 @@
+@@ -828,7 +1208,7 @@
  
      public String[] func_72373_m()
      {
@@ -991,7 +995,7 @@
      }
  
      public boolean func_72383_n()
-@@ -888,7 +1268,7 @@
+@@ -892,7 +1272,7 @@
      {
          while (!this.field_72404_b.isEmpty())
          {

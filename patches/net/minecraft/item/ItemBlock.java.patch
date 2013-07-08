@@ -19,7 +19,7 @@
          int i1 = p_77648_3_.func_72798_a(p_77648_4_, p_77648_5_, p_77648_6_);
  
          if (i1 == Block.field_72037_aS.field_71990_ca && (p_77648_3_.func_72805_g(p_77648_4_, p_77648_5_, p_77648_6_) & 7) < 1)
-@@ -77,26 +78,72 @@
+@@ -77,26 +78,74 @@
              Block block = Block.field_71973_m[this.field_77885_a];
              int j1 = this.func_77647_b(p_77648_1_.func_77960_j());
              int k1 = Block.field_71973_m[this.field_77885_a].func_85104_a(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, j1);
@@ -60,7 +60,9 @@
 +    {
 +        org.bukkit.block.BlockState blockstate = org.bukkit.craftbukkit.block.CraftBlockState.getBlockState(world, x, y, z);
 +        world.callingPlaceEvent = true;
-+        world.func_72832_d(x, y, z, id, data, 2);
++        // Sign is now 3 not 2.
++        int flag = (id == Block.field_72053_aD.field_71990_ca || id == Block.field_72042_aI.field_71990_ca) ? 3 : 2;
++        world.func_72832_d(x, y, z, id, data, flag);
 +        org.bukkit.event.block.BlockPlaceEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callBlockPlaceEvent(world, entityplayer, blockstate, clickedX, clickedY, clickedZ);
 +
 +        if (event.isCancelled() || !event.canBuild())

@@ -10,7 +10,7 @@
  import java.io.InputStream;
  import java.net.Socket;
  import java.net.SocketAddress;
-@@ -22,19 +22,21 @@
+@@ -24,13 +24,15 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.util.CryptManager;
  
@@ -27,14 +27,7 @@
      private final SocketAddress field_74476_j;
      private volatile DataInputStream field_74477_k;
      private volatile DataOutputStream field_74474_l;
-     private volatile boolean field_74475_m = true;
-     private volatile boolean field_74472_n;
--    private List field_74473_o = Collections.synchronizedList(new ArrayList());
-+    private java.util.Queue field_74473_o = new java.util.concurrent.ConcurrentLinkedQueue(); // CraftBukkit - Concurrent linked queue
-     private List field_74487_p = Collections.synchronizedList(new ArrayList());
-     private List field_74486_q = Collections.synchronizedList(new ArrayList());
-     private NetHandler field_74485_r;
-@@ -54,7 +56,7 @@
+@@ -56,7 +58,7 @@
      private PrivateKey field_74463_A;
      private int field_74464_B = 50;
  
@@ -43,7 +36,7 @@
      {
          this.field_74463_A = p_i1398_5_;
          this.field_74479_i = p_i1398_2_;
-@@ -115,7 +117,7 @@
+@@ -117,7 +119,7 @@
  
                  if (packet != null)
                  {
@@ -52,7 +45,7 @@
  
                      if (packet instanceof Packet252SharedKey && !this.field_74466_g)
                      {
-@@ -134,13 +136,14 @@
+@@ -136,13 +138,14 @@
                  }
              }
  
@@ -69,7 +62,7 @@
                      aint = field_74467_d;
                      i = packet.func_73281_k();
                      aint[i] += packet.func_73284_a() + 1;
-@@ -284,7 +287,7 @@
+@@ -286,7 +289,7 @@
  
      private void func_74455_a(Exception p_74455_1_)
      {
@@ -78,12 +71,14 @@
          this.func_74424_a("disconnect.genericReason", new Object[] {"Internal exception: " + p_74455_1_.toString()});
      }
  
-@@ -354,7 +357,15 @@
+@@ -354,9 +357,17 @@
  
-         while (!this.field_74473_o.isEmpty() && i-- >= 0)
+         int i = 1000;
+ 
+-        while (i-- >= 0)
++        while (!this.field_74473_o.isEmpty() && i-- >= 0)
          {
--            Packet packet = (Packet)this.field_74473_o.remove(0);
-+            Packet packet = (Packet) this.field_74473_o.poll(); // CraftBukkit - remove -> poll
+             Packet packet = (Packet)this.field_74473_o.poll();
 +
 +            // CraftBukkit start
 +            if (this.field_74485_r instanceof NetLoginHandler ? ((NetLoginHandler) this.field_74485_r).field_72539_c : ((NetServerHandler) this.field_74485_r).field_72576_c)
@@ -92,10 +87,10 @@
 +            }
 +
 +            // CraftBukkit end
-             packet.func_73279_a(this.field_74485_r);
-         }
  
-@@ -382,14 +393,14 @@
+             if (packet != null && !this.field_74485_r.func_142032_c())
+             {
+@@ -388,14 +399,14 @@
          }
      }
  

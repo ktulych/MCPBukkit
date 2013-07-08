@@ -27,7 +27,7 @@
      {
          (new RecipesTools()).func_77586_a(this);
          (new RecipesWeapons()).func_77583_a(this);
-@@ -142,9 +149,18 @@
+@@ -141,9 +148,18 @@
          this.func_77596_b(new ItemStack(Item.field_77811_bE, 3), new Object[] {Item.field_77677_M, Item.field_77722_bw, new ItemStack(Item.field_77705_m, 1, 1)});
          this.func_92103_a(new ItemStack(Block.field_94344_cp), new Object[] {"GGG", "QQQ", "WWW", 'G', Block.field_71946_M, 'Q', Item.field_94583_ca, 'W', Block.field_72092_bO});
          this.func_92103_a(new ItemStack(Block.field_94340_cs), new Object[] {"I I", "ICI", " I ", 'I', Item.field_77703_o, 'C', Block.field_72077_au});
@@ -47,7 +47,7 @@
      public ShapedRecipes func_92103_a(ItemStack p_92103_1_, Object ... p_92103_2_)
      {
          String s = "";
-@@ -219,32 +235,33 @@
+@@ -218,32 +234,33 @@
          return shapedrecipes;
      }
  
@@ -93,7 +93,7 @@
              }
          }
  
-@@ -291,7 +308,16 @@
+@@ -290,7 +307,16 @@
                  j1 = 0;
              }
  
@@ -111,7 +111,7 @@
          }
          else
          {
-@@ -301,7 +327,11 @@
+@@ -300,7 +326,11 @@
  
                  if (irecipe.func_77569_a(p_82787_1_, p_82787_2_))
                  {
