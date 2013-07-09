@@ -1,6 +1,14 @@
 --- ../net/minecraft/entity/EntityLiving.java
 +++ ../net/minecraft/entity/EntityLiving.java
-@@ -24,11 +24,15 @@
+@@ -15,6 +15,7 @@
+ import net.minecraft.entity.monster.EntityCreeper;
+ import net.minecraft.entity.monster.EntityGhast;
+ import net.minecraft.entity.monster.IMob;
++import net.minecraft.entity.passive.EntityOcelot;
+ import net.minecraft.entity.passive.EntityTameable;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.item.Item;
+@@ -24,11 +25,15 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagFloat;
  import net.minecraft.nbt.NBTTagList;
@@ -16,7 +24,7 @@
  
  public abstract class EntityLiving extends EntityLivingBase
  {
-@@ -39,14 +43,14 @@
+@@ -39,14 +44,14 @@
      private EntityJumpHelper field_70767_i;
      private EntityBodyHelper field_70762_j;
      private PathNavigate field_70699_by;
@@ -35,7 +43,7 @@
      protected float field_70698_bv;
      private Entity field_70776_bF;
      protected int field_70700_bx;
-@@ -226,6 +230,8 @@
+@@ -226,6 +231,8 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_)
      {
@@ -44,7 +52,7 @@
          int j = this.func_70633_aT();
  
          if (j > 0)
-@@ -237,11 +243,30 @@
+@@ -237,11 +244,30 @@
                  k += this.field_70146_Z.nextInt(p_70628_2_ + 1);
              }
  
@@ -80,7 +88,7 @@
      }
  
      public void func_70014_b(NBTTagCompound p_70014_1_)
-@@ -301,8 +326,22 @@
+@@ -301,8 +327,22 @@
      public void func_70037_a(NBTTagCompound p_70037_1_)
      {
          super.func_70037_a(p_70037_1_);
@@ -105,7 +113,21 @@
  
          if (p_70037_1_.func_74764_b("CustomName") && p_70037_1_.func_74779_i("CustomName").length() > 0)
          {
-@@ -475,12 +514,12 @@
+@@ -460,11 +500,8 @@
+ 
+     protected void func_70623_bb()
+     {
+-        if (this.field_82179_bU)
+-        {
+-            this.field_70708_bq = 0;
+-        }
+-        else
++        // CraftBukkit - temporary hack to handle Ocelot despawning
++        if ((this instanceof EntityOcelot && this.func_70692_ba()) || (!this.field_82179_bU))
+         {
+             EntityPlayer entityplayer = this.field_70170_p.func_72890_a(this, -1.0D);
+ 
+@@ -475,12 +512,12 @@
                  double d2 = entityplayer.field_70161_v - this.field_70161_v;
                  double d3 = d0 * d0 + d1 * d1 + d2 * d2;
  
@@ -120,7 +142,24 @@
                  {
                      this.func_70106_y();
                  }
-@@ -551,7 +590,7 @@
+@@ -489,7 +526,15 @@
+                     this.field_70708_bq = 0;
+                 }
+             }
+-        }
++
++            // CraftBukkit start
++        }
++        else
++        {
++            this.field_70708_bq = 0;
++        }
++
++        // CraftBukkit end
+     }
+ 
+     protected void func_70619_bc()
+@@ -551,7 +596,7 @@
          {
              this.func_70625_a(this.field_70776_bF, 10.0F, (float)this.func_70646_bf());
  
@@ -129,7 +168,7 @@
              {
                  this.field_70776_bF = null;
              }
-@@ -1025,7 +1064,7 @@
+@@ -1025,7 +1070,7 @@
  
              if (!this.field_70170_p.field_72995_K && p_110160_1_ && this.field_70170_p instanceof WorldServer)
              {
@@ -138,7 +177,7 @@
              }
          }
      }
-@@ -1052,7 +1091,7 @@
+@@ -1052,7 +1097,7 @@
  
          if (!this.field_70170_p.field_72995_K && p_110162_2_ && this.field_70170_p instanceof WorldServer)
          {
@@ -147,7 +186,7 @@
          }
      }
  
-@@ -1099,4 +1138,7 @@
+@@ -1099,4 +1144,7 @@
  
          this.field_110170_bx = null;
      }
