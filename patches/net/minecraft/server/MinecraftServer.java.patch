@@ -811,7 +811,7 @@
 +
 +            if (options.has("world"))
 +            {
-+                dedicatedserver.func_71224_l((String) options.valueOf("world"));
++                dedicatedserver.func_71261_m((String) options.valueOf("world"));
 +            }
 +
 +            /*
