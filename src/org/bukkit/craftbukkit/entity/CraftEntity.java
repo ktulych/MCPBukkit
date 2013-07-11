@@ -183,6 +183,9 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     }
 
     public boolean isOnGround() {
+        if (entity instanceof net.minecraft.entity.projectile.EntityArrow) {
+            return ((net.minecraft.entity.projectile.EntityArrow) entity).isInGround();
+        }
         return entity.field_70122_E;
     }
 

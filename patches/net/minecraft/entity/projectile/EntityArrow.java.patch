@@ -102,3 +102,15 @@
              boolean flag = this.field_70251_a == 1 || this.field_70251_a == 2 && p_70100_1_.field_71075_bZ.field_75098_d;
  
              if (this.field_70251_a == 1 && !p_70100_1_.field_71071_by.func_70441_a(new ItemStack(Item.field_77704_l, 1)))
+@@ -510,4 +545,11 @@
+         byte b0 = this.field_70180_af.func_75683_a(16);
+         return (b0 & 1) != 0;
+     }
++
++    // CraftBukkit start
++    public boolean isInGround()
++    {
++        return field_70254_i;
++    }
++    // CraftBukkit end
+ }
