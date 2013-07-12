@@ -312,9 +312,10 @@
                      ++this.field_70151_c;
  
 -                    if (this.field_70151_c == 0)
+-                    {
 +                    // CraftBukkit start - Not on fire yet
 +                    if (this.field_70151_c <= 0)   // Only throw events on the first combust, otherwise it spams
-                     {
++                    {
 +                        EntityCombustEvent event = new EntityCombustEvent(this.getBukkitEntity(), 8);
 +                        this.field_70170_p.getServer().getPluginManager().callEvent(event);
 +
@@ -546,7 +547,7 @@
          }
  
          return nbttaglist;
-@@ -1449,13 +1695,44 @@
+@@ -1449,13 +1695,51 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
@@ -570,6 +571,8 @@
 +    {
 +        // b(null) doesn't really fly for overloaded methods,
 +        // so this method is needed
++        Entity originalVehicle = this.field_70154_o;
++        Entity originalPassenger = this.field_70154_o == null ? null : this.field_70154_o.field_70153_n;
 +        PluginManager pluginManager = Bukkit.getPluginManager();
 +        this.getBukkitEntity(); // make sure bukkitEntity is initialised
 +        // CraftBukkit end
@@ -586,24 +589,52 @@
 +                {
 +                    VehicleExitEvent event = new VehicleExitEvent((Vehicle) this.field_70154_o.getBukkitEntity(), (LivingEntity) this.bukkitEntity);
 +                    pluginManager.callEvent(event);
++
++                    if (event.isCancelled() || this.field_70154_o != originalVehicle)
++                    {
++                        return;
++                    }
 +                }
 +
 +                // CraftBukkit end
                  this.func_70012_b(this.field_70154_o.field_70165_t, this.field_70154_o.field_70121_D.field_72338_b + (double)this.field_70154_o.field_70131_O, this.field_70154_o.field_70161_v, this.field_70177_z, this.field_70125_A);
                  this.field_70154_o.field_70153_n = null;
              }
-@@ -1464,13 +1741,27 @@
+@@ -1464,13 +1748,50 @@
          }
          else
          {
 +            // CraftBukkit start
 +            if ((this.bukkitEntity instanceof LivingEntity) && (entity.getBukkitEntity() instanceof Vehicle) && entity.field_70170_p.func_72916_c_CodeFix_Public((int) entity.field_70165_t >> 4, (int) entity.field_70161_v >> 4))
 +            {
++                // It's possible to move from one vehicle to another.  We need to check if they're already in a vehicle, and fire an exit event if they are.
++                VehicleExitEvent exitEvent = null;
++
++                if (this.field_70154_o != null)
++                {
++                    exitEvent = new VehicleExitEvent((Vehicle) this.field_70154_o.getBukkitEntity(), (LivingEntity) this.bukkitEntity);
++                    pluginManager.callEvent(exitEvent);
++
++                    if (exitEvent.isCancelled() || this.field_70154_o != originalVehicle || (this.field_70154_o != null && this.field_70154_o.field_70153_n != originalPassenger))
++                    {
++                        return;
++                    }
++                }
++
 +                VehicleEnterEvent event = new VehicleEnterEvent((Vehicle) entity.getBukkitEntity(), this.bukkitEntity);
 +                pluginManager.callEvent(event);
 +
-+                if (event.isCancelled())
++                // If a plugin messes with the vehicle or the vehicle's passenger
++                if (event.isCancelled() || this.field_70154_o != originalVehicle || (this.field_70154_o != null && this.field_70154_o.field_70153_n != originalPassenger))
 +                {
++                    // If we only cancelled the enterevent then we need to put the player in a decent position.
++                    if (exitEvent != null && this.field_70154_o == originalVehicle && this.field_70154_o != null && this.field_70154_o.field_70153_n == originalPassenger)
++                    {
++                        this.func_70012_b(this.field_70154_o.field_70165_t, this.field_70154_o.field_70121_D.field_72338_b + (double) this.field_70154_o.field_70131_O, this.field_70154_o.field_70161_v, this.field_70177_z, this.field_70125_A);
++                        this.field_70154_o.field_70153_n = null;
++                        this.field_70154_o = null;
++                    }
++
 +                    return;
 +                }
 +            }
@@ -622,7 +653,7 @@
          }
      }
  
-@@ -1592,12 +1883,45 @@
+@@ -1592,12 +1913,45 @@
  
      public void func_70077_a(EntityLightningBolt p_70077_1_)
      {
@@ -670,7 +701,7 @@
          }
      }
  
-@@ -1767,36 +2091,84 @@
+@@ -1767,36 +2121,84 @@
          {
              this.field_70170_p.field_72984_F.func_76320_a("changeDimension");
              MinecraftServer minecraftserver = MinecraftServer.func_71276_C();
@@ -775,7 +806,7 @@
              }
  
              this.field_70128_L = true;
-@@ -1834,9 +2206,9 @@
+@@ -1834,9 +2236,9 @@
  
      public void func_85029_a(CrashReportCategory p_85029_1_)
      {
@@ -787,7 +818,7 @@
          p_85029_1_.func_71507_a("Entity\'s Exact location", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.field_70165_t), Double.valueOf(this.field_70163_u), Double.valueOf(this.field_70161_v)}));
          p_85029_1_.func_71507_a("Entity\'s Block location", CrashReportCategory.func_85071_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u), MathHelper.func_76128_c(this.field_70161_v)));
          p_85029_1_.func_71507_a("Entity\'s Momentum", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.field_70159_w), Double.valueOf(this.field_70181_x), Double.valueOf(this.field_70179_y)}));
-@@ -1856,4 +2228,4 @@
+@@ -1856,4 +2258,4 @@
      {
          return this.func_70023_ak();
      }

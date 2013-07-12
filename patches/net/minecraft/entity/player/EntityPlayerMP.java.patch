@@ -398,11 +398,13 @@
          if (this.func_70608_bn())
          {
              this.func_71121_q().func_73039_n().func_72789_b(this, new Packet18Animation(this, 3));
-@@ -476,7 +629,16 @@
+@@ -476,9 +629,25 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
 -        super.func_70078_a(p_70078_1_);
+-        this.field_71135_a.func_72567_b(new Packet39AttachEntity(0, this, this.field_70154_o));
+-        this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
 +        // CraftBukkit start
 +        this.setPassengerOf(p_70078_1_);
 +    }
@@ -411,12 +413,21 @@
 +    {
 +        // mount(null) doesn't really fly for overloaded methods,
 +        // so this method is needed
++        Entity currentVehicle = this.field_70154_o;
 +        super.setPassengerOf(entity);
++
++        // Check if the vehicle actually changed.
++        if (currentVehicle != this.field_70154_o)
++        {
++            this.field_71135_a.func_72567_b(new Packet39AttachEntity(0, this, this.field_70154_o));
++            this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
++        }
++
 +        // CraftBukkit end
-         this.field_71135_a.func_72567_b(new Packet39AttachEntity(0, this, this.field_70154_o));
-         this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
      }
-@@ -492,39 +654,67 @@
+ 
+     protected void func_70064_a(double p_70064_1_, boolean p_70064_3_) {}
+@@ -492,39 +661,67 @@
      {
          if (p_71014_1_ instanceof TileEntitySign)
          {
@@ -492,7 +503,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -536,71 +726,143 @@
+@@ -536,71 +733,143 @@
              this.func_71053_j();
          }
  
@@ -652,7 +663,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
          InventoryMerchant inventorymerchant = ((ContainerMerchant)this.field_71070_bA).func_75174_d();
-@@ -626,14 +888,24 @@
+@@ -626,14 +895,24 @@
  
      public void func_110298_a(EntityHorse p_110298_1_, IInventory p_110298_2_)
      {
@@ -679,7 +690,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -658,6 +930,14 @@
+@@ -658,6 +937,14 @@
      {
          this.field_71135_a.func_72567_b(new Packet104WindowItems(p_71110_1_.field_75152_c, p_71110_2_));
          this.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_71071_by.func_70445_o()));
@@ -694,7 +705,7 @@
      }
  
      public void func_71112_a(Container p_71112_1_, int p_71112_2_, int p_71112_3_)
-@@ -667,6 +947,7 @@
+@@ -667,6 +954,7 @@
  
      public void func_71053_j()
      {
@@ -702,7 +713,7 @@
          this.field_71135_a.func_72567_b(new Packet101CloseWindow(this.field_71070_bA.field_75152_c));
          this.func_71128_l();
      }
-@@ -681,7 +962,7 @@
+@@ -681,7 +969,7 @@
  
      public void func_71128_l()
      {
@@ -711,7 +722,7 @@
          this.field_71070_bA = this.field_71069_bz;
      }
  
-@@ -731,6 +1012,7 @@
+@@ -731,6 +1019,7 @@
      public void func_71118_n()
      {
          this.field_71149_ch = -1.0E8F;
@@ -719,7 +730,7 @@
      }
  
      public void func_71035_c(String p_71035_1_)
-@@ -861,7 +1143,7 @@
+@@ -861,7 +1150,7 @@
  
      public void func_71115_a(String p_71115_1_, int p_71115_2_)
      {
@@ -728,7 +739,7 @@
          this.field_71135_a.func_72567_b(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
      }
  
-@@ -869,4 +1151,103 @@
+@@ -869,4 +1158,103 @@
      {
          return new ChunkCoordinates(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u + 0.5D), MathHelper.func_76128_c(this.field_70161_v));
      }

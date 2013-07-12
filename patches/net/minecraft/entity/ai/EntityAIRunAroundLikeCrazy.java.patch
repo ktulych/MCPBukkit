@@ -18,16 +18,26 @@
                  {
                      this.field_111180_a.func_110263_g((EntityPlayer)this.field_111180_a.field_70153_n);
                      this.field_111180_a.field_70170_p.func_72960_a(this.field_111180_a, (byte)7);
-@@ -73,7 +73,11 @@
+@@ -73,8 +73,20 @@
                  this.field_111180_a.func_110198_t(5);
              }
  
 -            this.field_111180_a.field_70153_n.func_70078_a((Entity)null);
+-            this.field_111180_a.field_70153_n = null;
++            // CraftBukkit start - Handle dismounting to account for VehicleExitEvent being fired.
 +            if (this.field_111180_a.field_70153_n != null)
 +            {
-+                this.field_111180_a.field_70153_n.func_70078_a((Entity) null);    // CraftBukkit - Check for null
++                this.field_111180_a.field_70153_n.func_70078_a((Entity) null);
++
++                // If the entity still has a passenger, then a plugin cancelled the event.
++                if (this.field_111180_a.field_70153_n != null)
++                {
++                    return;
++                }
 +            }
 +
-             this.field_111180_a.field_70153_n = null;
++            // this.entity.passenger = null;
++            // CraftBukkit end
              this.field_111180_a.func_110231_cz();
              this.field_111180_a.field_70170_p.func_72960_a(this.field_111180_a, (byte)6);
+         }
