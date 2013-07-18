@@ -20,6 +20,15 @@
  
  public class ItemDye extends Item
  {
+@@ -46,7 +51,7 @@
+         {
+             if (p_77648_1_.func_77960_j() == 15)
+             {
+-                if (func_96604_a(p_77648_1_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_))
++                if (a(p_77648_1_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_2_))   // CraftBukkit - pass entity for StructureGrowEvent
+                 {
+                     if (!p_77648_3_.field_72995_K)
+                     {
 @@ -112,20 +117,30 @@
          }
      }
