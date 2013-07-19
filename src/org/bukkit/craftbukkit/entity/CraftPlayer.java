@@ -258,13 +258,17 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     public void playSound(Location loc, Sound sound, float volume, float pitch) {
+        playSound(loc, CraftSound.getSound(sound), volume, pitch);
+    }
+
+    public void playSound(Location loc, String sound, float volume, float pitch) {
         if (loc == null || sound == null || getHandle().field_71135_a == null) return;
 
         double x = loc.getBlockX() + 0.5;
         double y = loc.getBlockY() + 0.5;
         double z = loc.getBlockZ() + 0.5;
 
-        net.minecraft.network.packet.Packet62LevelSound packet = new net.minecraft.network.packet.Packet62LevelSound(CraftSound.getSound(sound), x, y, z, volume, pitch);
+        net.minecraft.network.packet.Packet62LevelSound packet = new net.minecraft.network.packet.Packet62LevelSound(sound, x, y, z, volume, pitch);
         getHandle().field_71135_a.func_72567_b(packet);
     }
 
