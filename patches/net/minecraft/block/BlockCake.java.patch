@@ -1,0 +1,30 @@
+--- ../net/minecraft/block/BlockCake.java
++++ ../net/minecraft/block/BlockCake.java
+@@ -3,6 +3,8 @@
+ import java.util.Random;
+ import net.minecraft.block.material.Material;
+ import net.minecraft.entity.player.EntityPlayer;
++import net.minecraft.entity.player.EntityPlayerMP;
++import net.minecraft.network.packet.Packet8UpdateHealth;
+ import net.minecraft.util.AxisAlignedBB;
+ import net.minecraft.world.IBlockAccess;
+ import net.minecraft.world.World;
+@@ -65,7 +67,17 @@
+     {
+         if (p_72259_5_.func_71043_e(false))
+         {
+-            p_72259_5_.func_71024_bL().func_75122_a(2, 0.1F);
++            // CraftBukkit start
++            int oldFoodLevel = p_72259_5_.func_71024_bL().field_75127_a;
++            org.bukkit.event.entity.FoodLevelChangeEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callFoodLevelChangeEvent(p_72259_5_, 2 + oldFoodLevel);
++
++            if (!event.isCancelled())
++            {
++                p_72259_5_.func_71024_bL().func_75122_a(event.getFoodLevel() - oldFoodLevel, 0.1F);
++            }
++
++            ((EntityPlayerMP) p_72259_5_).field_71135_a.func_72567_b(new Packet8UpdateHealth(((EntityPlayerMP) p_72259_5_).getBukkitEntity().getScaledHealth(), p_72259_5_.func_71024_bL().field_75127_a, p_72259_5_.func_71024_bL().field_75125_b));
++            // CraftBukkit end
+             int l = p_72259_1_.func_72805_g(p_72259_2_, p_72259_3_, p_72259_4_) + 1;
+ 
+             if (l >= 6)
