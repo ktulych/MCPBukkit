@@ -177,7 +177,21 @@
              this.field_73132_a.field_70133_I = false;
          }
      }
-@@ -354,6 +406,19 @@
+@@ -295,6 +347,13 @@
+ 
+             if (!set.isEmpty())
+             {
++                // CraftBukkit start - Send scaled max health
++                if (this.field_73132_a instanceof EntityPlayerMP)
++                {
++                    ((EntityPlayerMP) this.field_73132_a).getBukkitEntity().injectScaledMaxHealth(set, false);
++                }
++
++                // CraftBukkit end
+                 this.func_73116_b(new Packet44UpdateAttributes(this.field_73132_a.field_70157_k, set));
+             }
+ 
+@@ -354,6 +413,19 @@
              {
                  if (!this.field_73134_o.contains(p_73117_1_) && (this.func_73121_d(p_73117_1_) || this.field_73132_a.field_98038_p))
                  {
@@ -197,7 +211,21 @@
                      this.field_73134_o.add(p_73117_1_);
                      Packet packet = this.func_73124_b();
                      p_73117_1_.field_71135_a.func_72567_b(packet);
-@@ -383,15 +448,22 @@
+@@ -368,6 +440,13 @@
+                         ServersideAttributeMap serversideattributemap = (ServersideAttributeMap)((EntityLivingBase)this.field_73132_a).func_110140_aT();
+                         Collection collection = serversideattributemap.func_111160_c();
+ 
++                        // CraftBukkit start - If sending own attributes send scaled health instead of current maximum health
++                        if (this.field_73132_a.field_70157_k == p_73117_1_.field_70157_k)
++                        {
++                            ((EntityPlayerMP) this.field_73132_a).getBukkitEntity().injectScaledMaxHealth(collection, false);
++                        }
++
++                        // CraftBukkit end
+                         if (!collection.isEmpty())
+                         {
+                             p_73117_1_.field_71135_a.func_72567_b(new Packet44UpdateAttributes(this.field_73132_a.field_70157_k, collection));
+@@ -383,15 +462,22 @@
                          p_73117_1_.field_71135_a.func_72567_b(new Packet28EntityVelocity(this.field_73132_a.field_70157_k, this.field_73132_a.field_70159_w, this.field_73132_a.field_70181_x, this.field_73132_a.field_70179_y));
                      }
  
@@ -221,7 +249,7 @@
  
                      if (this.field_73132_a instanceof EntityLivingBase)
                      {
-@@ -416,6 +488,11 @@
+@@ -416,6 +502,11 @@
                          }
                      }
  
@@ -233,7 +261,7 @@
                      if (this.field_73132_a instanceof EntityLivingBase)
                      {
                          EntityLivingBase entitylivingbase = (EntityLivingBase)this.field_73132_a;
-@@ -454,7 +531,10 @@
+@@ -454,7 +545,10 @@
      {
          if (this.field_73132_a.field_70128_L)
          {

@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,7 +61,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     private final Set<String> channels = new HashSet<String>();
     private final Map<String, Player> hiddenPlayers = new MapMaker().softValues().makeMap();
     private int hash = 0;
-    private boolean scaledHealth;
+    private double health = 20;
+    private boolean scaledHealth = false;
+    private double healthScale = 20;
 
     public CraftPlayer(CraftServer server, net.minecraft.entity.player.EntityPlayerMP entity) {
         super(server, entity);
@@ -972,6 +975,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setMaxHealth(double amount) {
         super.setMaxHealth(amount);
+        this.health = Math.min(this.health, health);
         getHandle().func_71118_n();
     }
 
@@ -998,15 +1002,66 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         this.server.getScoreboardManager().setPlayerBoard(this, scoreboard);
     }
 
+    public void setHealthScale(double value) {
+        Validate.isTrue((float) value > 0F, "Must be greater than 0");
+        healthScale = value;
+        scaledHealth = true;
+        updateScaledHealth();
+    }
+
+    public double getHealthScale() {
+        return healthScale;
+    }
+
+    public void setHealthScaled(boolean scale) {
+        if (scaledHealth != (scaledHealth = scale)) {
+            updateScaledHealth();
+        }
+    }
+
+    public boolean isHealthScaled() {
+        return scaledHealth;
+    }
+
     public float getScaledHealth() {
-        return (float) (this.scaledHealth ? getHealth() / getMaxHealth() * 20.0D : getHealth());
+        return (float) (isHealthScaled() ? getHealth() * getHealthScale() / getMaxHealth() : getHealth());
     }
 
-    public void setScaleHealth(boolean scale) {
-        this.scaledHealth = scale;
+    @Override
+    public double getHealth() {
+        return health;
     }
 
-    public boolean isScaledHealth() {
-        return this.scaledHealth;
+    public void setRealHealth(double health) {
+        this.health = health;
+    }
+
+    public void updateScaledHealth() {
+        net.minecraft.entity.ai.attributes.ServersideAttributeMap attributemapserver = (net.minecraft.entity.ai.attributes.ServersideAttributeMap) getHandle().func_110140_aT();
+        Set set = attributemapserver.func_111161_b();
+
+        injectScaledMaxHealth(set, true);
+
+        getHandle().func_70096_w().func_75692_b(6, (float) getScaledHealth());
+        getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet8UpdateHealth(getScaledHealth(), getHandle().func_71024_bL().func_75116_a(), getHandle().func_71024_bL().func_75115_e()));
+        getHandle().field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet44UpdateAttributes(getHandle().field_70157_k, set));
+
+        set.clear();
+        getHandle().maxHealthCache = getMaxHealth();
+    }
+
+    public void injectScaledMaxHealth(Collection collection, boolean force) {
+        if (!scaledHealth && !force) {
+            return;
+        }
+        for (Object genericInstance : collection) {
+            net.minecraft.entity.ai.attributes.Attribute attribute = ((net.minecraft.entity.ai.attributes.AttributeInstance) genericInstance).func_111123_a();
+            if (attribute.func_111108_a().equals("generic.maxHealth")) {
+                collection.remove(genericInstance);
+                break;
+            }
+            continue;
+        }
+        collection.add(new net.minecraft.entity.ai.attributes.ModifiableAttributeInstance(getHandle().func_110140_aT(), (new net.minecraft.entity.ai.attributes.RangedAttribute("generic.maxHealth", scaledHealth ? healthScale : getMaxHealth(), 0.0D, Float.MAX_VALUE)).func_111117_a("Max Health").func_111112_a(true)));
     }
 }

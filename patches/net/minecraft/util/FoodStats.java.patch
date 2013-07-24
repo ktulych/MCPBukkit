@@ -41,7 +41,7 @@
 +                    this.field_75127_a = event.getFoodLevel();
 +                }
 +
-+                ((EntityPlayerMP) p_75118_1_).field_71135_a.func_72567_b(new Packet8UpdateHealth(p_75118_1_.func_110143_aJ(), this.field_75127_a, this.field_75125_b));
++                ((EntityPlayerMP) p_75118_1_).field_71135_a.func_72567_b(new Packet8UpdateHealth(((EntityPlayerMP) p_75118_1_).getBukkitEntity().getScaledHealth(), this.field_75127_a, this.field_75125_b));
 +                // CraftBukkit end
              }
          }

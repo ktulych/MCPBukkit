@@ -45,7 +45,7 @@
  
  public class EntityPlayerMP extends EntityPlayer implements ICrafting
  {
-@@ -106,15 +117,24 @@
+@@ -106,15 +117,25 @@
      private float field_71149_ch = -1.0E8F;
      private int field_71146_ci = -99999999;
      private boolean field_71147_cj = true;
@@ -69,11 +69,12 @@
 +    public int newLevel = 0;
 +    public int newTotalExp = 0;
 +    public boolean keepLevel = false;
++    public double maxHealthCache;
 +    // CraftBukkit end
  
      public EntityPlayerMP(MinecraftServer p_i1523_1_, World p_i1523_2_, String p_i1523_3_, ItemInWorldManager p_i1523_4_)
      {
-@@ -144,6 +164,12 @@
+@@ -144,6 +165,13 @@
          {
              this.func_70107_b(this.field_70165_t, this.field_70163_u + 1.0D, this.field_70161_v);
          }
@@ -82,11 +83,12 @@
 +        this.displayName = this.field_71092_bJ;
 +        this.listName = this.field_71092_bJ;
 +        // this.canPickUpLoot = true; TODO
++        this.maxHealthCache = this.func_110138_aP();
 +        // CraftBukkit end
      }
  
      public void func_70037_a(NBTTagCompound p_70037_1_)
-@@ -161,13 +187,52 @@
+@@ -161,13 +189,52 @@
                  this.field_71134_c.func_73076_a(EnumGameType.func_77146_a(p_70037_1_.func_74762_e("playerGameType")));
              }
          }
@@ -140,7 +142,7 @@
  
      public void func_82242_a(int p_82242_1_)
      {
-@@ -196,11 +261,20 @@
+@@ -196,11 +263,20 @@
          --this.field_71145_cl;
          this.field_71070_bA.func_75142_b();
  
@@ -162,7 +164,7 @@
  
          while (!this.field_71130_g.isEmpty())
          {
-@@ -231,8 +305,11 @@
+@@ -231,8 +307,11 @@
  
                  if (chunkcoordintpair != null && this.field_70170_p.func_72899_e(chunkcoordintpair.field_77276_a << 4, 0, chunkcoordintpair.field_77275_b << 4))
                  {
@@ -176,17 +178,17 @@
                  }
              }
  
-@@ -281,7 +358,8 @@
+@@ -281,7 +360,8 @@
  
              if (this.func_110143_aJ() != this.field_71149_ch || this.field_71146_ci != this.field_71100_bB.func_75116_a() || this.field_71100_bB.func_75115_e() == 0.0F != this.field_71147_cj)
              {
 -                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(this.func_110143_aJ(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
 +                // CraftBukkit - Optionally scale health
-+                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(getBukkitEntity().getScaledHealth(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
++                this.field_71135_a.func_72567_b(new Packet8UpdateHealth(this.getBukkitEntity().getScaledHealth(), this.field_71100_bB.func_75116_a(), this.field_71100_bB.func_75115_e()));
                  this.field_71149_ch = this.func_110143_aJ();
                  this.field_71146_ci = this.field_71100_bB.func_75116_a();
                  this.field_71147_cj = this.field_71100_bB.func_75115_e() == 0.0F;
-@@ -290,14 +368,8 @@
+@@ -290,21 +370,37 @@
              if (this.func_110143_aJ() + this.func_110139_bj() != this.field_130068_bO)
              {
                  this.field_130068_bO = this.func_110143_aJ() + this.func_110139_bj();
@@ -198,12 +200,21 @@
 -                    ScoreObjective scoreobjective = (ScoreObjective)iterator.next();
 -                    this.func_96123_co().func_96529_a(this.func_70023_ak(), scoreobjective).func_96651_a(Arrays.asList(new EntityPlayer[] {this}));
 -                }
+-            }
 +                // CraftBukkit - Update ALL the scores!
 +                this.field_70170_p.getServer().getScoreboardManager().updateAllScoresForList(ScoreObjectiveCriteria.field_96638_f, this.func_70023_ak(), com.google.common.collect.ImmutableList.of(this));
-             }
++            }
++
++            // CraftBukkit start - Force max health updates
++            if (this.maxHealthCache != this.func_110138_aP())
++            {
++                this.getBukkitEntity().updateScaledHealth();
++            }
++
++            // CraftBukkit end
  
              if (this.field_71067_cb != this.field_71144_ck)
-@@ -305,6 +377,20 @@
+             {
                  this.field_71144_ck = this.field_71067_cb;
                  this.field_71135_a.func_72567_b(new Packet43Experience(this.field_71106_cc, this.field_71067_cb, this.field_71068_ca));
              }
@@ -224,7 +235,7 @@
          }
          catch (Throwable throwable)
          {
-@@ -317,20 +403,74 @@
+@@ -317,20 +413,74 @@
  
      public void func_70645_a(DamageSource p_70645_1_)
      {
@@ -309,7 +320,7 @@
              score.func_96648_a();
          }
  
-@@ -352,7 +492,8 @@
+@@ -352,7 +502,8 @@
          }
          else
          {
@@ -319,7 +330,7 @@
  
              if (!flag && this.field_71145_cl > 0 && p_70097_1_ != DamageSource.field_76380_i)
              {
-@@ -387,14 +528,15 @@
+@@ -387,14 +538,15 @@
  
      public boolean func_96122_a(EntityPlayer p_96122_1_)
      {
@@ -337,7 +348,7 @@
              this.field_70170_p.func_72900_e(this);
              this.field_71136_j = true;
              this.field_71135_a.func_72567_b(new Packet70GameEvent(4, 0));
-@@ -403,22 +545,28 @@
+@@ -403,22 +555,28 @@
          {
              if (this.field_71093_bK == 0 && p_71027_1_ == 1)
              {
@@ -377,7 +388,7 @@
              this.field_71144_ck = -1;
              this.field_71149_ch = -1.0F;
              this.field_71146_ci = -1;
-@@ -451,7 +599,7 @@
+@@ -451,7 +609,7 @@
          if (enumstatus == EnumStatus.OK)
          {
              Packet17Sleep packet17sleep = new Packet17Sleep(this, 0, p_71018_1_, p_71018_2_, p_71018_3_);
@@ -386,7 +397,7 @@
              this.field_71135_a.func_72569_a(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, this.field_70125_A);
              this.field_71135_a.func_72567_b(packet17sleep);
          }
-@@ -461,6 +609,11 @@
+@@ -461,6 +619,11 @@
  
      public void func_70999_a(boolean p_70999_1_, boolean p_70999_2_, boolean p_70999_3_)
      {
@@ -398,7 +409,7 @@
          if (this.func_70608_bn())
          {
              this.func_71121_q().func_73039_n().func_72789_b(this, new Packet18Animation(this, 3));
-@@ -476,9 +629,25 @@
+@@ -476,9 +639,25 @@
  
      public void func_70078_a(Entity p_70078_1_)
      {
@@ -427,7 +438,7 @@
      }
  
      protected void func_70064_a(double p_70064_1_, boolean p_70064_3_) {}
-@@ -492,39 +661,67 @@
+@@ -492,39 +671,67 @@
      {
          if (p_71014_1_ instanceof TileEntitySign)
          {
@@ -503,7 +514,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -536,71 +733,143 @@
+@@ -536,71 +743,143 @@
              this.func_71053_j();
          }
  
@@ -663,7 +674,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
          InventoryMerchant inventorymerchant = ((ContainerMerchant)this.field_71070_bA).func_75174_d();
-@@ -626,14 +895,24 @@
+@@ -626,14 +905,24 @@
  
      public void func_110298_a(EntityHorse p_110298_1_, IInventory p_110298_2_)
      {
@@ -690,7 +701,7 @@
          this.field_71070_bA.field_75152_c = this.field_71139_cq;
          this.field_71070_bA.func_75132_a(this);
      }
-@@ -658,6 +937,14 @@
+@@ -658,6 +947,14 @@
      {
          this.field_71135_a.func_72567_b(new Packet104WindowItems(p_71110_1_.field_75152_c, p_71110_2_));
          this.field_71135_a.func_72567_b(new Packet103SetSlot(-1, -1, this.field_71071_by.func_70445_o()));
@@ -705,7 +716,7 @@
      }
  
      public void func_71112_a(Container p_71112_1_, int p_71112_2_, int p_71112_3_)
-@@ -667,6 +954,7 @@
+@@ -667,6 +964,7 @@
  
      public void func_71053_j()
      {
@@ -713,7 +724,7 @@
          this.field_71135_a.func_72567_b(new Packet101CloseWindow(this.field_71070_bA.field_75152_c));
          this.func_71128_l();
      }
-@@ -681,7 +969,7 @@
+@@ -681,7 +979,7 @@
  
      public void func_71128_l()
      {
@@ -722,7 +733,7 @@
          this.field_71070_bA = this.field_71069_bz;
      }
  
-@@ -731,6 +1019,7 @@
+@@ -731,6 +1029,7 @@
      public void func_71118_n()
      {
          this.field_71149_ch = -1.0E8F;
@@ -730,7 +741,7 @@
      }
  
      public void func_71035_c(String p_71035_1_)
-@@ -861,7 +1150,7 @@
+@@ -861,7 +1160,7 @@
  
      public void func_71115_a(String p_71115_1_, int p_71115_2_)
      {
@@ -739,7 +750,7 @@
          this.field_71135_a.func_72567_b(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
      }
  
-@@ -869,4 +1158,103 @@
+@@ -869,4 +1168,103 @@
      {
          return new ChunkCoordinates(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u + 0.5D), MathHelper.func_76128_c(this.field_70161_v));
      }

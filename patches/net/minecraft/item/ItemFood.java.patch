@@ -26,7 +26,7 @@
 +            p_77654_3_.func_71024_bL().func_75122_a(event.getFoodLevel() - oldFoodLevel, this.func_77846_g());
 +        }
 +
-+        ((EntityPlayerMP) p_77654_3_).field_71135_a.func_72567_b(new Packet8UpdateHealth(p_77654_3_.func_110143_aJ(), p_77654_3_.func_71024_bL().field_75127_a, p_77654_3_.func_71024_bL().field_75125_b));
++        ((EntityPlayerMP) p_77654_3_).field_71135_a.func_72567_b(new Packet8UpdateHealth(((EntityPlayerMP) p_77654_3_).getBukkitEntity().getScaledHealth(), p_77654_3_.func_71024_bL().field_75127_a, p_77654_3_.func_71024_bL().field_75125_b));
 +        // CraftBukkit end
          p_77654_2_.func_72956_a(p_77654_3_, "random.burp", 0.5F, p_77654_2_.field_73012_v.nextFloat() * 0.1F + 0.9F);
          this.func_77849_c(p_77654_1_, p_77654_2_, p_77654_3_);

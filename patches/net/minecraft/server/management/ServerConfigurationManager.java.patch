@@ -977,13 +977,21 @@
              if (entityplayermp != p_72397_1_ && entityplayermp.field_71093_bK == p_72397_10_)
              {
                  double d4 = p_72397_2_ - entityplayermp.field_70165_t;
-@@ -805,7 +1185,7 @@
+@@ -805,14 +1185,14 @@
  
          if (p_72354_2_.func_72896_J())
          {
 -            p_72354_1_.field_71135_a.func_72567_b(new Packet70GameEvent(1, 0));
 +            p_72354_1_.setPlayerWeather(org.bukkit.WeatherType.DOWNFALL, false); // CraftBukkit - handle player specific weather
          }
+     }
+ 
+     public void func_72385_f(EntityPlayerMP p_72385_1_)
+     {
+         p_72385_1_.func_71120_a(p_72385_1_.field_71069_bz);
+-        p_72385_1_.func_71118_n();
++        p_72385_1_.getBukkitEntity().updateScaledHealth(); // CraftBukkit - Update scaled health on respawn and worldchange
+         p_72385_1_.field_71135_a.func_72567_b(new Packet16BlockItemSwitch(p_72385_1_.field_71071_by.field_70461_c));
      }
  
 @@ -828,7 +1208,7 @@
