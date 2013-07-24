@@ -174,14 +174,28 @@ class CraftMetaItem implements ItemMeta, Repairable {
     @Specific(Specific.To.NBT)
     static final ItemMetaKey ENCHANTMENTS_LVL = new ItemMetaKey("lvl");
     static final ItemMetaKey REPAIR = new ItemMetaKey("RepairCost", "repair-cost");
+    @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES = new ItemMetaKey("AttributeModifiers");
+    @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES_NAME = new ItemMetaKey("Name");
+    @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES_VALUE = new ItemMetaKey("Amount");
+    @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES_TYPE = new ItemMetaKey("Operation");
+    @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES_UUID_HIGH = new ItemMetaKey("UUIDMost");
+    @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES_UUID_LOW = new ItemMetaKey("UUIDLeast");
 
     private String displayName;
     private List<String> lore;
     private Map<Enchantment, Integer> enchantments;
     private int repairCost;
+    private final net.minecraft.nbt.NBTTagList attributes;
 
     CraftMetaItem(CraftMetaItem meta) {
         if (meta == null) {
+            attributes = null;
             return;
         }
 
@@ -196,6 +210,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         }
 
         this.repairCost = meta.repairCost;
+        this.attributes = meta.attributes;
     }
 
     CraftMetaItem(net.minecraft.nbt.NBTTagCompound tag) {
@@ -221,6 +236,51 @@ class CraftMetaItem implements ItemMeta, Repairable {
 
         if (tag.func_74764_b(REPAIR.NBT)) {
             repairCost = tag.func_74762_e(REPAIR.NBT);
+        }
+
+
+        if (tag.func_74781_a(ATTRIBUTES.NBT) instanceof net.minecraft.nbt.NBTTagList) {
+            net.minecraft.nbt.NBTTagList save = null;
+            net.minecraft.nbt.NBTTagList nbttaglist = tag.func_74761_m(ATTRIBUTES.NBT);
+
+            for (int i = 0; i < nbttaglist.func_74745_c(); ++i) {
+                if (!(nbttaglist.func_74743_b(i) instanceof net.minecraft.nbt.NBTTagCompound)) {
+                    continue;
+                }
+                net.minecraft.nbt.NBTTagCompound nbttagcompound = (net.minecraft.nbt.NBTTagCompound) nbttaglist.func_74743_b(i);
+
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_UUID_HIGH.NBT) instanceof net.minecraft.nbt.NBTTagLong)) {
+                    continue;
+                }
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_UUID_LOW.NBT) instanceof net.minecraft.nbt.NBTTagLong)) {
+                    continue;
+                }
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_NAME.NBT) instanceof net.minecraft.nbt.NBTTagString) || !CraftItemFactory.KNOWN_NBT_ATTRIBUTE_NAMES.contains(nbttagcompound.func_74779_i(ATTRIBUTES_NAME.NBT))) {
+                    continue;
+                }
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_VALUE.NBT) instanceof net.minecraft.nbt.NBTTagDouble)) {
+                    continue;
+                }
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_TYPE.NBT) instanceof net.minecraft.nbt.NBTTagInt) || nbttagcompound.func_74762_e(ATTRIBUTES_TYPE.NBT) < 0 || nbttagcompound.func_74762_e(ATTRIBUTES_TYPE.NBT) > 2) {
+                    continue;
+                }
+
+                if (save == null) {
+                    save = new net.minecraft.nbt.NBTTagList(ATTRIBUTES.NBT);
+                }
+
+                net.minecraft.nbt.NBTTagCompound entry = new net.minecraft.nbt.NBTTagCompound();
+                entry.func_74782_a(ATTRIBUTES_UUID_HIGH.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_UUID_HIGH.NBT));
+                entry.func_74782_a(ATTRIBUTES_UUID_LOW.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_UUID_LOW.NBT));
+                entry.func_74782_a(ATTRIBUTES_NAME.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_NAME.NBT));
+                entry.func_74782_a(ATTRIBUTES_VALUE.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_VALUE.NBT));
+                entry.func_74782_a(ATTRIBUTES_TYPE.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_TYPE.NBT));
+                save.func_74742_a(entry);
+            }
+
+            attributes = save;
+        } else {
+            attributes = null;
         }
     }
 
@@ -256,6 +316,8 @@ class CraftMetaItem implements ItemMeta, Repairable {
         if (repairCost != null) {
             setRepairCost(repairCost);
         }
+
+        attributes = null;
     }
 
     static Map<Enchantment, Integer> buildEnchantments(Map<String, Object> map, ItemMetaKey key) {
@@ -290,6 +352,10 @@ class CraftMetaItem implements ItemMeta, Repairable {
 
         if (hasRepairCost()) {
             itemTag.func_74768_a(REPAIR.NBT, repairCost);
+        }
+
+        if (attributes != null) {
+            itemTag.func_74782_a(ATTRIBUTES.NBT, attributes);
         }
     }
 
@@ -342,7 +408,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
 
     @Overridden
     boolean isEmpty() {
-        return !(hasDisplayName() || hasEnchants() || hasLore());
+        return !(hasDisplayName() || hasEnchants() || hasLore() || hasAttributes());
     }
 
     public String getDisplayName() {
@@ -359,6 +425,10 @@ class CraftMetaItem implements ItemMeta, Repairable {
 
     public boolean hasLore() {
         return this.lore != null && !this.lore.isEmpty();
+    }
+
+    public boolean hasAttributes() {
+        return this.attributes != null;
     }
 
     public boolean hasRepairCost() {
@@ -454,6 +524,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return ((this.hasDisplayName() ? that.hasDisplayName() && this.displayName.equals(that.displayName) : !that.hasDisplayName()))
                 && (this.hasEnchants() ? that.hasEnchants() && this.enchantments.equals(that.enchantments) : !that.hasEnchants())
                 && (this.hasLore() ? that.hasLore() && this.lore.equals(that.lore) : !that.hasLore())
+                && (this.hasAttributes() ? that.hasAttributes() && this.attributes.equals(that.attributes) : !that.hasAttributes())
                 && (this.hasRepairCost() ? that.hasRepairCost() && this.repairCost == that.repairCost : !that.hasRepairCost());
     }
 
@@ -478,6 +549,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         hash = 61 * hash + (hasDisplayName() ? this.displayName.hashCode() : 0);
         hash = 61 * hash + (hasLore() ? this.lore.hashCode() : 0);
         hash = 61 * hash + (hasEnchants() ? this.enchantments.hashCode() : 0);
+        hash = 61 * hash + (hasAttributes() ? this.attributes.hashCode() : 0);
         hash = 61 * hash + (hasRepairCost() ? this.repairCost : 0);
         return hash;
     }
