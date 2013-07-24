@@ -1,6 +1,6 @@
 --- ../net/minecraft/network/NetServerHandler.java
 +++ ../net/minecraft/network/NetServerHandler.java
-@@ -1,17 +1,21 @@
+@@ -1,17 +1,22 @@
  package net.minecraft.network;
  
  import java.io.ByteArrayInputStream;
@@ -11,6 +11,7 @@
  import java.util.Iterator;
  import java.util.Random;
 +import java.util.concurrent.Callable;
++import net.minecraft.block.Block;
  import net.minecraft.crash.CrashReport;
  import net.minecraft.crash.CrashReportCategory;
  import net.minecraft.entity.Entity;
@@ -22,7 +23,7 @@
  import net.minecraft.entity.player.EntityPlayerMP;
  import net.minecraft.entity.player.InventoryPlayer;
  import net.minecraft.entity.projectile.EntityArrow;
-@@ -19,12 +23,12 @@
+@@ -19,12 +24,12 @@
  import net.minecraft.inventory.ContainerBeacon;
  import net.minecraft.inventory.ContainerMerchant;
  import net.minecraft.inventory.ContainerRepair;
@@ -36,7 +37,7 @@
  import net.minecraft.network.packet.NetHandler;
  import net.minecraft.network.packet.Packet;
  import net.minecraft.network.packet.Packet0KeepAlive;
-@@ -49,8 +53,11 @@
+@@ -49,8 +54,11 @@
  import net.minecraft.network.packet.Packet250CustomPayload;
  import net.minecraft.network.packet.Packet255KickDisconnect;
  import net.minecraft.network.packet.Packet27PlayerInput;
@@ -48,7 +49,7 @@
  import net.minecraft.network.packet.Packet7UseEntity;
  import net.minecraft.network.packet.Packet9Respawn;
  import net.minecraft.server.MinecraftServer;
-@@ -63,10 +70,57 @@
+@@ -63,10 +71,55 @@
  import net.minecraft.util.ChatAllowedCharacters;
  import net.minecraft.util.ChatMessageComponent;
  import net.minecraft.util.EnumChatFormatting;
@@ -75,7 +76,6 @@
 +import org.bukkit.craftbukkit.entity.CraftPlayer;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +
-+import org.bukkit.Bukkit;
 +import org.bukkit.Location;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
@@ -86,7 +86,6 @@
 +import org.bukkit.event.inventory.InventoryAction;
 +import org.bukkit.event.inventory.InventoryClickEvent;
 +import org.bukkit.event.inventory.InventoryCreativeEvent;
-+import org.bukkit.event.inventory.InventoryCloseEvent;
 +import org.bukkit.event.inventory.InventoryType.SlotType;
 +import org.bukkit.event.player.AsyncPlayerChatEvent;
 +import org.bukkit.event.player.PlayerAnimationEvent;
@@ -106,7 +105,7 @@
  
  public class NetServerHandler extends NetHandler
  {
-@@ -81,12 +135,13 @@
+@@ -81,12 +134,13 @@
      private long field_72582_j;
      private static Random field_72583_k = new Random();
      private long field_72580_l;
@@ -123,7 +122,7 @@
      private IntHashMap field_72586_s = new IntHashMap();
  
      public NetServerHandler(MinecraftServer p_i1530_1_, INetworkManager p_i1530_2_, EntityPlayerMP p_i1530_3_)
-@@ -96,7 +151,36 @@
+@@ -96,7 +150,36 @@
          p_i1530_2_.func_74425_a(this);
          this.field_72574_e = p_i1530_3_;
          p_i1530_3_.field_71135_a = this;
@@ -161,7 +160,7 @@
  
      public void func_72570_d()
      {
-@@ -114,10 +198,15 @@
+@@ -114,10 +197,15 @@
              this.func_72567_b(new Packet0KeepAlive(this.field_72585_i));
          }
  
@@ -181,7 +180,7 @@
  
          if (this.field_72578_n > 0)
          {
-@@ -132,11 +221,37 @@
+@@ -132,11 +220,37 @@
      {
          if (!this.field_72576_c)
          {
@@ -221,7 +220,7 @@
              this.field_72576_c = true;
          }
      }
-@@ -165,8 +280,81 @@
+@@ -165,8 +279,81 @@
                  }
              }
  
@@ -305,7 +304,7 @@
                  double d1;
                  double d2;
                  double d3;
-@@ -250,7 +438,8 @@
+@@ -250,7 +437,8 @@
  
                      if (Math.abs(p_72498_1_.field_73545_a) > 3.2E7D || Math.abs(p_72498_1_.field_73544_c) > 3.2E7D)
                      {
@@ -315,7 +314,7 @@
                          return;
                      }
                  }
-@@ -273,12 +462,14 @@
+@@ -273,12 +461,14 @@
                  d4 = d1 - this.field_72574_e.field_70165_t;
                  double d5 = d2 - this.field_72574_e.field_70163_u;
                  double d6 = d3 - this.field_72574_e.field_70161_v;
@@ -334,7 +333,7 @@
                  {
                      this.field_72573_d.func_98033_al().func_98236_b(this.field_72574_e.func_70005_c_() + " moved too quickly! " + d4 + "," + d5 + "," + d6 + " (" + d7 + ", " + d8 + ", " + d9 + ")");
                      this.func_72569_a(this.field_72579_o, this.field_72589_p, this.field_72588_q, this.field_72574_e.field_70177_z, this.field_72574_e.field_70125_A);
-@@ -326,7 +517,7 @@
+@@ -326,7 +516,7 @@
  
                  AxisAlignedBB axisalignedbb = this.field_72574_e.field_70121_D.func_72329_c().func_72314_b((double)f4, (double)f4, (double)f4).func_72321_a(0.0D, -0.55D, 0.0D);
  
@@ -343,7 +342,7 @@
                  {
                      if (d11 >= -0.03125D)
                      {
-@@ -347,6 +538,12 @@
+@@ -347,6 +537,12 @@
  
                  this.field_72574_e.field_70122_E = p_72498_1_.field_73540_g;
                  this.field_72573_d.func_71203_ab().func_72358_d(this.field_72574_e);
@@ -356,7 +355,7 @@
                  this.field_72574_e.func_71122_b(this.field_72574_e.field_70163_u - d0, p_72498_1_.field_73540_g);
              }
              else if (this.field_72571_f % 20 == 0)
-@@ -358,20 +555,85 @@
+@@ -358,20 +554,85 @@
  
      public void func_72569_a(double p_72569_1_, double p_72569_3_, double p_72569_5_, float p_72569_7_, float p_72569_8_)
      {
@@ -447,7 +446,7 @@
              this.field_72574_e.func_71040_bB(false);
          }
          else if (p_72510_1_.field_73342_e == 3)
-@@ -425,13 +687,24 @@
+@@ -425,13 +686,24 @@
  
              if (p_72510_1_.field_73342_e == 0)
              {
@@ -472,7 +471,7 @@
                  }
              }
              else if (p_72510_1_.field_73342_e == 2)
-@@ -458,6 +731,40 @@
+@@ -458,6 +730,40 @@
      public void func_72472_a(Packet15Place p_72472_1_)
      {
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
@@ -513,7 +512,7 @@
          ItemStack itemstack = this.field_72574_e.field_71071_by.func_70448_g();
          boolean flag = false;
          int i = p_72472_1_.func_73403_d();
-@@ -472,7 +779,20 @@
+@@ -472,7 +778,20 @@
                  return;
              }
  
@@ -535,7 +534,7 @@
          }
          else if (p_72472_1_.func_73402_f() >= this.field_72573_d.func_71207_Z() - 1 && (p_72472_1_.func_73401_h() == 1 || p_72472_1_.func_73402_f() >= this.field_72573_d.func_71207_Z()))
          {
-@@ -481,11 +801,16 @@
+@@ -481,11 +800,16 @@
          }
          else
          {
@@ -557,7 +556,7 @@
              flag = true;
          }
  
-@@ -538,11 +863,12 @@
+@@ -538,11 +862,12 @@
          {
              this.field_72574_e.field_71137_h = true;
              this.field_72574_e.field_71071_by.field_70462_a[this.field_72574_e.field_71071_by.field_70461_c] = ItemStack.func_77944_b(this.field_72574_e.field_71071_by.field_70462_a[this.field_72574_e.field_71071_by.field_70461_c]);
@@ -572,7 +571,7 @@
              {
                  this.func_72567_b(new Packet103SetSlot(this.field_72574_e.field_71070_bA.field_75152_c, slot.field_75222_d, this.field_72574_e.field_71071_by.func_70448_g()));
              }
-@@ -551,9 +877,21 @@
+@@ -551,9 +876,21 @@
  
      public void func_72515_a(String p_72515_1_, Object[] p_72515_2_)
      {
@@ -596,7 +595,7 @@
          this.field_72576_c = true;
  
          if (this.field_72573_d.func_71264_H() && this.field_72574_e.func_70005_c_().equals(this.field_72573_d.func_71214_G()))
-@@ -565,6 +903,11 @@
+@@ -565,6 +902,11 @@
  
      public void func_72509_a(Packet p_72509_1_)
      {
@@ -608,7 +607,7 @@
          this.field_72573_d.func_98033_al().func_98236_b(this.getClass() + " wasn\'t prepared to deal with a " + p_72509_1_.getClass());
          this.func_72565_c("Protocol error, unexpected packet");
      }
-@@ -585,7 +928,31 @@
+@@ -585,7 +927,31 @@
              {
                  return;
              }
@@ -641,7 +640,7 @@
  
          try
          {
-@@ -595,21 +962,38 @@
+@@ -595,21 +961,38 @@
          {
              CrashReport crashreport = CrashReport.func_85055_a(throwable, "Sending packet");
              CrashReportCategory crashreportcategory = crashreport.func_85058_a("Packet being sent");
@@ -682,7 +681,7 @@
          }
      }
  
-@@ -625,7 +1009,39 @@
+@@ -625,7 +1008,39 @@
  
              if (s.length() > 100)
              {
@@ -723,7 +722,7 @@
              }
              else
              {
-@@ -635,52 +1051,322 @@
+@@ -635,52 +1050,322 @@
                  {
                      if (!ChatAllowedCharacters.func_71566_a(s.charAt(i)))
                      {
@@ -1067,7 +1066,7 @@
          if (p_72473_1_.field_73366_b == 1)
          {
              this.field_72574_e.func_70095_a(true);
-@@ -700,7 +1386,7 @@
+@@ -700,7 +1385,7 @@
          else if (p_72473_1_.field_73366_b == 3)
          {
              this.field_72574_e.func_70999_a(false, true, true);
@@ -1076,7 +1075,7 @@
          }
          else if (p_72473_1_.field_73366_b == 6)
          {
-@@ -727,6 +1413,11 @@
+@@ -727,6 +1412,11 @@
  
      public void func_72507_a(Packet7UseEntity p_72507_1_)
      {
@@ -1088,7 +1087,7 @@
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
          Entity entity = worldserver.func_73045_a(p_72507_1_.field_73604_b);
  
-@@ -742,20 +1433,59 @@
+@@ -742,20 +1432,67 @@
  
              if (this.field_72574_e.func_70068_e(entity) < d0)
              {
@@ -1097,23 +1096,31 @@
                  if (p_72507_1_.field_73605_c == 0)
                  {
 +                    // CraftBukkit start
++                    boolean triggerTagUpdate = itemInHand != null && itemInHand.field_77993_c == Item.field_111212_ci.field_77779_bT && entity instanceof EntityLiving;
++                    boolean triggerChestUpdate = itemInHand != null && itemInHand.field_77993_c == Block.field_72077_au.field_71990_ca && entity instanceof EntityHorse;
++                    boolean triggerLeashUpdate = itemInHand != null && itemInHand.field_77993_c == Item.field_111214_ch.field_77779_bT && entity instanceof EntityLiving;
 +                    PlayerInteractEntityEvent event = new PlayerInteractEntityEvent((Player) this.getPlayer(), entity.getBukkitEntity());
 +                    this.server.getPluginManager().callEvent(event);
 +
++                    if (triggerLeashUpdate && (event.isCancelled() || this.field_72574_e.field_71071_by.func_70448_g() == null || this.field_72574_e.field_71071_by.func_70448_g().field_77993_c != Item.field_111214_ch.field_77779_bT))
++                    {
++                        // Refresh the current leash state
++                        this.func_72567_b(new Packet39AttachEntity(1, entity, ((EntityLiving) entity).func_110166_bE()));
++                    }
++
++                    if (triggerTagUpdate && (event.isCancelled() || this.field_72574_e.field_71071_by.func_70448_g() == null || this.field_72574_e.field_71071_by.func_70448_g().field_77993_c != Item.field_111212_ci.field_77779_bT))
++                    {
++                        // Refresh the current entity metadata
++                        this.func_72567_b(new Packet40EntityMetadata(entity.field_70157_k, entity.field_70180_af, true));
++                    }
++
++                    if (triggerChestUpdate && (event.isCancelled() || this.field_72574_e.field_71071_by.func_70448_g() == null || this.field_72574_e.field_71071_by.func_70448_g().field_77993_c != Block.field_72077_au.field_71990_ca))
++                    {
++                        this.func_72567_b(new Packet40EntityMetadata(entity.field_70157_k, entity.field_70180_af, true));
++                    }
++
 +                    if (event.isCancelled())
 +                    {
-+                        if (itemInHand != null && itemInHand.field_77993_c == Item.field_111214_ch.field_77779_bT && entity instanceof EntityLiving)
-+                        {
-+                            // Refresh the current leash state
-+                            this.func_72567_b(new Packet39AttachEntity(1, entity, ((EntityLiving) entity).func_110166_bE()));
-+                        }
-+
-+                        if (itemInHand != null && itemInHand.field_77993_c == Item.field_111212_ci.field_77779_bT && entity instanceof EntityLiving)
-+                        {
-+                            // Refresh the current entity metadata
-+                            this.func_72567_b(new Packet40EntityMetadata(entity.field_70157_k, entity.field_70180_af, true));
-+                        }
-+
 +                        return;
 +                    }
 +
@@ -1152,7 +1159,7 @@
                  }
              }
          }
-@@ -767,7 +1497,7 @@
+@@ -767,7 +1504,7 @@
          {
              if (this.field_72574_e.field_71136_j)
              {
@@ -1161,7 +1168,7 @@
              }
              else if (this.field_72574_e.func_71121_q().func_72912_H().func_76093_s())
              {
-@@ -805,14 +1535,411 @@
+@@ -805,14 +1542,411 @@
  
      public void func_72474_a(Packet101CloseWindow p_72474_1_)
      {
@@ -1574,7 +1581,7 @@
  
              if (ItemStack.func_77989_b(p_72523_1_.field_73441_e, itemstack))
              {
-@@ -835,6 +1962,14 @@
+@@ -835,6 +1969,14 @@
                  }
  
                  this.field_72574_e.func_71110_a(this.field_72574_e.field_71070_bA, arraylist);
@@ -1589,7 +1596,7 @@
              }
          }
      }
-@@ -843,7 +1978,7 @@
+@@ -843,7 +1985,7 @@
      {
          if (this.field_72574_e.field_71070_bA.field_75152_c == p_72479_1_.field_73446_a && this.field_72574_e.field_71070_bA.func_75129_b(this.field_72574_e))
          {
@@ -1598,7 +1605,7 @@
              this.field_72574_e.field_71070_bA.func_75142_b();
          }
      }
-@@ -855,8 +1990,59 @@
+@@ -855,8 +1997,59 @@
              boolean flag = p_72464_1_.field_73385_a < 0;
              ItemStack itemstack = p_72464_1_.field_73384_b;
              boolean flag1 = p_72464_1_.field_73385_a >= 1 && p_72464_1_.field_73385_a < 36 + InventoryPlayer.func_70451_h();
@@ -1659,7 +1666,7 @@
  
              if (flag1 && flag2 && flag3)
              {
-@@ -886,6 +2072,11 @@
+@@ -886,6 +2079,11 @@
  
      public void func_72476_a(Packet106Transaction p_72476_1_)
      {
@@ -1671,7 +1678,7 @@
          Short oshort = (Short)this.field_72586_s.func_76041_a(this.field_72574_e.field_71070_bA.field_75152_c);
  
          if (oshort != null && p_72476_1_.field_73433_b == oshort.shortValue() && this.field_72574_e.field_71070_bA.field_75152_c == p_72476_1_.field_73435_a && !this.field_72574_e.field_71070_bA.func_75129_b(this.field_72574_e))
-@@ -896,6 +2087,11 @@
+@@ -896,6 +2094,11 @@
  
      public void func_72487_a(Packet130UpdateSign p_72487_1_)
      {
@@ -1683,7 +1690,7 @@
          WorldServer worldserver = this.field_72573_d.func_71218_a(this.field_72574_e.field_71093_bK);
  
          if (worldserver.func_72899_e(p_72487_1_.field_73311_a, p_72487_1_.field_73309_b, p_72487_1_.field_73310_c))
-@@ -909,6 +2105,7 @@
+@@ -909,6 +2112,7 @@
                  if (!tileentitysign.func_70409_a() || tileentitysign.func_142009_b() != this.field_72574_e)
                  {
                      this.field_72573_d.func_71236_h("Player " + this.field_72574_e.func_70005_c_() + " just tried to change non-editable sign");
@@ -1691,7 +1698,7 @@
                      return;
                  }
              }
-@@ -947,7 +2144,27 @@
+@@ -947,7 +2151,27 @@
                  int k = p_72487_1_.field_73309_b;
                  i = p_72487_1_.field_73310_c;
                  TileEntitySign tileentitysign1 = (TileEntitySign)tileentity;
@@ -1720,7 +1727,7 @@
                  tileentitysign1.func_70296_d();
                  worldserver.func_72845_h(j, k, i);
              }
-@@ -970,7 +2187,23 @@
+@@ -970,7 +2194,23 @@
  
      public void func_72471_a(Packet202PlayerAbilities p_72471_1_)
      {
@@ -1745,7 +1752,7 @@
      }
  
      public void func_72461_a(Packet203AutoComplete p_72461_1_)
-@@ -984,7 +2217,7 @@
+@@ -984,7 +2224,7 @@
  
              if (stringbuilder.length() > 0)
              {
@@ -1754,7 +1761,7 @@
              }
          }
  
-@@ -1002,6 +2235,14 @@
+@@ -1002,6 +2242,14 @@
          ItemStack itemstack;
          ItemStack itemstack1;
  
@@ -1769,7 +1776,7 @@
          if ("MC|BEdit".equals(p_72501_1_.field_73630_a))
          {
              try
-@@ -1018,12 +2259,16 @@
+@@ -1018,12 +2266,16 @@
  
                  if (itemstack != null && itemstack.field_77993_c == Item.field_77821_bF.field_77779_bT && itemstack.field_77993_c == itemstack1.field_77993_c)
                  {
@@ -1792,7 +1799,7 @@
              }
          }
          else if ("MC|BSign".equals(p_72501_1_.field_73630_a))
-@@ -1042,15 +2287,16 @@
+@@ -1042,15 +2294,16 @@
  
                  if (itemstack != null && itemstack.field_77993_c == Item.field_77823_bG.field_77779_bT && itemstack1.field_77993_c == Item.field_77821_bF.field_77779_bT)
                  {
@@ -1818,7 +1825,7 @@
              }
          }
          else
-@@ -1072,7 +2318,10 @@
+@@ -1072,7 +2325,10 @@
                  }
                  catch (Exception exception2)
                  {
@@ -1830,7 +1837,7 @@
                  }
              }
              else
-@@ -1093,7 +2342,7 @@
+@@ -1093,7 +2349,7 @@
                              i = datainputstream.readInt();
                              j = datainputstream.readInt();
                              int k = datainputstream.readInt();
@@ -1839,7 +1846,7 @@
                              TileEntity tileentity = this.field_72574_e.field_70170_p.func_72796_p(i, j, k);
  
                              if (tileentity != null && tileentity instanceof TileEntityCommandBlock)
-@@ -1105,7 +2354,10 @@
+@@ -1105,7 +2361,10 @@
                          }
                          catch (Exception exception3)
                          {
@@ -1851,7 +1858,7 @@
                          }
                      }
                      else
-@@ -1136,7 +2388,10 @@
+@@ -1136,7 +2395,10 @@
                          }
                          catch (Exception exception4)
                          {
@@ -1863,7 +1870,7 @@
                          }
                      }
                  }
-@@ -1158,6 +2413,45 @@
+@@ -1158,6 +2420,45 @@
                          containerrepair.func_82850_a("");
                      }
                  }
