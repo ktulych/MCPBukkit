@@ -73,7 +73,7 @@
              }
  
              int j = this.field_70170_p.func_72798_a(MathHelper.func_76128_c(this.field_70165_t), MathHelper.func_76128_c(this.field_70163_u - 0.2D - (double)this.field_70126_B), MathHelper.func_76128_c(this.field_70161_v));
-@@ -383,10 +414,10 @@
+@@ -383,13 +414,13 @@
      private int func_110225_cC()
      {
          int i = this.func_110265_bP();
@@ -87,7 +87,11 @@
 +    public void func_110226_cD()   // CraftBukkit - private -> public
      {
          AnimalChest animalchest = this.field_110296_bG;
-         this.field_110296_bG = new AnimalChest("HorseChest", this.func_110225_cC());
+-        this.field_110296_bG = new AnimalChest("HorseChest", this.func_110225_cC());
++        this.field_110296_bG = new AnimalChest("HorseChest", this.func_110225_cC(), this); // CraftBukkit - add this horse
+         this.field_110296_bG.func_110133_a(this.func_70023_ak());
+ 
+         if (animalchest != null)
 @@ -590,7 +621,7 @@
  
      public int func_110218_cm()

@@ -1,26 +1,33 @@
 --- ../net/minecraft/inventory/AnimalChest.java
 +++ ../net/minecraft/inventory/AnimalChest.java
-@@ -1,4 +1,11 @@
+@@ -1,4 +1,12 @@
  package net.minecraft.inventory;
 +
 +// CraftBukkit start
 +import java.util.List;
 +import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 +import org.bukkit.entity.HumanEntity;
++import net.minecraft.entity.passive.EntityHorse;
 +import net.minecraft.item.ItemStack;
 +// CraftBukkit end
  
  public class AnimalChest extends InventoryBasic
  {
-@@ -6,4 +13,52 @@
+@@ -6,4 +14,58 @@
      {
          super(p_i1796_1_, false, p_i1796_2_);
      }
 +
 +    // CraftBukkit start
 +    public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
-+    public org.bukkit.entity.Player player;
++    private EntityHorse horse;
 +    private int maxStack = MAX_STACK;
++
++    public AnimalChest(String s, int i, EntityHorse horse)
++    {
++        this(s, i);
++        this.horse = horse;
++    }
 +
 +    @Override
 +    public ItemStack[] getContents()
@@ -49,7 +56,7 @@
 +    @Override
 +    public org.bukkit.inventory.InventoryHolder getOwner()
 +    {
-+        return this.player;
++        return (org.bukkit.entity.Horse) this.horse.getBukkitEntity();
 +    }
 +
 +    @Override
