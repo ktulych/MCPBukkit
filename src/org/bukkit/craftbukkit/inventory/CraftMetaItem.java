@@ -177,6 +177,8 @@ class CraftMetaItem implements ItemMeta, Repairable {
     @Specific(Specific.To.NBT)
     static final ItemMetaKey ATTRIBUTES = new ItemMetaKey("AttributeModifiers");
     @Specific(Specific.To.NBT)
+    static final ItemMetaKey ATTRIBUTES_IDENTIFIER = new ItemMetaKey("AttributeName");
+    @Specific(Specific.To.NBT)
     static final ItemMetaKey ATTRIBUTES_NAME = new ItemMetaKey("Name");
     @Specific(Specific.To.NBT)
     static final ItemMetaKey ATTRIBUTES_VALUE = new ItemMetaKey("Amount");
@@ -255,7 +257,10 @@ class CraftMetaItem implements ItemMeta, Repairable {
                 if (!(nbttagcompound.func_74781_a(ATTRIBUTES_UUID_LOW.NBT) instanceof net.minecraft.nbt.NBTTagLong)) {
                     continue;
                 }
-                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_NAME.NBT) instanceof net.minecraft.nbt.NBTTagString) || !CraftItemFactory.KNOWN_NBT_ATTRIBUTE_NAMES.contains(nbttagcompound.func_74779_i(ATTRIBUTES_NAME.NBT))) {
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_IDENTIFIER.NBT) instanceof net.minecraft.nbt.NBTTagString) || !CraftItemFactory.KNOWN_NBT_ATTRIBUTE_NAMES.contains(nbttagcompound.func_74779_i(ATTRIBUTES_IDENTIFIER.NBT))) {
+                    continue;
+                }
+                if (!(nbttagcompound.func_74781_a(ATTRIBUTES_NAME.NBT) instanceof net.minecraft.nbt.NBTTagString) || nbttagcompound.func_74779_i(ATTRIBUTES_NAME.NBT).isEmpty()) {
                     continue;
                 }
                 if (!(nbttagcompound.func_74781_a(ATTRIBUTES_VALUE.NBT) instanceof net.minecraft.nbt.NBTTagDouble)) {
@@ -272,6 +277,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
                 net.minecraft.nbt.NBTTagCompound entry = new net.minecraft.nbt.NBTTagCompound();
                 entry.func_74782_a(ATTRIBUTES_UUID_HIGH.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_UUID_HIGH.NBT));
                 entry.func_74782_a(ATTRIBUTES_UUID_LOW.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_UUID_LOW.NBT));
+                entry.func_74782_a(ATTRIBUTES_IDENTIFIER.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_IDENTIFIER.NBT));
                 entry.func_74782_a(ATTRIBUTES_NAME.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_NAME.NBT));
                 entry.func_74782_a(ATTRIBUTES_VALUE.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_VALUE.NBT));
                 entry.func_74782_a(ATTRIBUTES_TYPE.NBT, nbttagcompound.func_74781_a(ATTRIBUTES_TYPE.NBT));
