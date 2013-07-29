@@ -17,20 +17,6 @@
      private int field_72792_d;
  
      public EntityTracker(WorldServer p_i1516_1_)
-@@ -117,11 +118,11 @@
-         }
-         else if (p_72786_1_ instanceof EntityMinecart)
-         {
--            this.func_72785_a(p_72786_1_, 80, 3, true);
-+            this.func_72785_a(p_72786_1_, 80, 2, true); // CraftBukkit - Send updates at same rate as players
-         }
-         else if (p_72786_1_ instanceof EntityBoat)
-         {
--            this.func_72785_a(p_72786_1_, 80, 3, true);
-+            this.func_72785_a(p_72786_1_, 80, 2, true); // CraftBukkit - Send updates at same rate as players
-         }
-         else if (p_72786_1_ instanceof EntitySquid)
-         {
 @@ -193,8 +194,8 @@
          {
              CrashReport crashreport = CrashReport.func_85055_a(throwable, "Adding entity to track");
