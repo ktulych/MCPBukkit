@@ -146,6 +146,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         } else if (entity instanceof net.minecraft.entity.EntityHanging) {
             if (entity instanceof net.minecraft.entity.item.EntityPainting) { return new CraftPainting(server, (net.minecraft.entity.item.EntityPainting) entity); }
             else if (entity instanceof net.minecraft.entity.item.EntityItemFrame) { return new CraftItemFrame(server, (net.minecraft.entity.item.EntityItemFrame) entity); }
+            else if (entity instanceof net.minecraft.entity.EntityLeashKnot) { return new CraftLeash(server, (net.minecraft.entity.EntityLeashKnot) entity); }
             else { return new CraftHanging(server, (net.minecraft.entity.EntityHanging) entity); }
         }
         else if (entity instanceof net.minecraft.entity.item.EntityTNTPrimed) { return new CraftTNTPrimed(server, (net.minecraft.entity.item.EntityTNTPrimed) entity); }

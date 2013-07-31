@@ -1,0 +1,77 @@
+--- ../net/minecraft/entity/EntityLeashKnot.java
++++ ../net/minecraft/entity/EntityLeashKnot.java
+@@ -4,11 +4,15 @@
+ import java.util.List;
+ import net.minecraft.block.Block;
+ import net.minecraft.entity.player.EntityPlayer;
++import net.minecraft.entity.player.EntityPlayerMP;
+ import net.minecraft.item.Item;
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.network.packet.Packet39AttachEntity;
+ import net.minecraft.util.AxisAlignedBB;
+ import net.minecraft.world.World;
++
++import org.bukkit.craftbukkit.event.CraftEventFactory; // CraftBukkit
+ 
+ public class EntityLeashKnot extends EntityHanging
+ {
+@@ -75,6 +79,14 @@
+ 
+                     if (entityliving.func_110167_bD() && entityliving.func_110166_bE() == p_130002_1_)
+                     {
++                        // CraftBukkit start
++                        if (CraftEventFactory.callPlayerLeashEntityEvent(entityliving, this, p_130002_1_).isCancelled())
++                        {
++                            ((EntityPlayerMP) p_130002_1_).field_71135_a.func_72567_b(new Packet39AttachEntity(1, entityliving, entityliving.func_110166_bE()));
++                            continue;
++                        }
++
++                        // CraftBukkit end
+                         entityliving.func_110162_b(this, true);
+                         flag = true;
+                     }
+@@ -84,9 +96,12 @@
+ 
+         if (!this.field_70170_p.field_72995_K && !flag)
+         {
+-            this.func_70106_y();
++            // CraftBukkit start - Move below
++            // this.die();
++            boolean die = true;
+ 
+-            if (p_130002_1_.field_71075_bZ.field_75098_d)
++            // CraftBukkit end
++            if (true || p_130002_1_.field_71075_bZ.field_75098_d)   // CraftBukkit - Process for non-creative as well
+             {
+                 d0 = 7.0D;
+                 list = this.field_70170_p.func_72872_a(EntityLiving.class, AxisAlignedBB.func_72332_a().func_72299_a(this.field_70165_t - d0, this.field_70163_u - d0, this.field_70161_v - d0, this.field_70165_t + d0, this.field_70163_u + d0, this.field_70161_v + d0));
+@@ -101,11 +116,27 @@
+ 
+                         if (entityliving.func_110167_bD() && entityliving.func_110166_bE() == this)
+                         {
+-                            entityliving.func_110160_i(true, false);
++                            // CraftBukkit start
++                            if (CraftEventFactory.callPlayerUnleashEntityEvent(entityliving, p_130002_1_).isCancelled())
++                            {
++                                die = false;
++                                continue;
++                            }
++
++                            entityliving.func_110160_i(true, !p_130002_1_.field_71075_bZ.field_75098_d); // false -> survival mode boolean
++                            // CraftBukkit end
+                         }
+                     }
+                 }
+             }
++
++            // CraftBukkit start
++            if (die)
++            {
++                this.func_70106_y();
++            }
++
++            // CraftBukkit end
+         }
+ 
+         return true;

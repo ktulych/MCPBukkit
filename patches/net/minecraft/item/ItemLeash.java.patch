@@ -1,0 +1,38 @@
+--- ../net/minecraft/item/ItemLeash.java
++++ ../net/minecraft/item/ItemLeash.java
+@@ -9,6 +9,8 @@
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.util.AxisAlignedBB;
+ import net.minecraft.world.World;
++
++import org.bukkit.event.hanging.HangingPlaceEvent; // CraftBukkit
+ 
+ public class ItemLeash extends Item
+ {
+@@ -60,8 +62,26 @@
+                     if (entityleashknot == null)
+                     {
+                         entityleashknot = EntityLeashKnot.func_110129_a(p_135066_1_, p_135066_2_, p_135066_3_, p_135066_4_);
++                        // CraftBukkit start
++                        HangingPlaceEvent event = new HangingPlaceEvent((org.bukkit.entity.Hanging) entityleashknot.getBukkitEntity(), p_135066_0_ != null ? (org.bukkit.entity.Player) p_135066_0_.getBukkitEntity() : null, p_135066_1_.getWorld().getBlockAt(p_135066_2_, p_135066_3_, p_135066_4_), org.bukkit.block.BlockFace.SELF);
++                        p_135066_1_.getServer().getPluginManager().callEvent(event);
++
++                        if (event.isCancelled())
++                        {
++                            entityleashknot.func_70106_y();
++                            return false;
++                        }
++
++                        // CraftBukkit end
+                     }
+ 
++                    // CraftBukkit start
++                    if (org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerLeashEntityEvent(entityliving, entityleashknot, p_135066_0_).isCancelled())
++                    {
++                        continue;
++                    }
++
++                    // CraftBukkit end
+                     entityliving.func_110162_b(entityleashknot, true);
+                     flag = true;
+                 }

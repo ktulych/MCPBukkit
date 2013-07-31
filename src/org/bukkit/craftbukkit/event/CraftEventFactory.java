@@ -7,8 +7,8 @@ import java.util.Map;
 
 
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -21,10 +21,8 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftInventoryCrafting;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.util.CraftDamageSource;
-import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
@@ -682,5 +680,17 @@ public class CraftEventFactory {
             net.minecraft.inventory.Slot slot = player.field_71070_bA.func_75147_a((net.minecraft.inventory.IInventory) player.field_71071_by, itemInHandIndex);
             player.field_71135_a.func_72567_b(new net.minecraft.network.packet.Packet103SetSlot(player.field_71070_bA.field_75152_c, slot.field_75222_d, itemInHand));
         }
+    }
+
+    public static PlayerUnleashEntityEvent callPlayerUnleashEntityEvent(net.minecraft.entity.EntityLiving entity, net.minecraft.entity.player.EntityPlayer player) {
+        PlayerUnleashEntityEvent event = new PlayerUnleashEntityEvent(entity.getBukkitEntity(), (Player) player.getBukkitEntity());
+        entity.field_70170_p.getServer().getPluginManager().callEvent(event);
+        return event;
+    }
+
+    public static PlayerLeashEntityEvent callPlayerLeashEntityEvent(net.minecraft.entity.EntityLiving entity, net.minecraft.entity.Entity leashHolder, net.minecraft.entity.player.EntityPlayer player) {
+        PlayerLeashEntityEvent event = new PlayerLeashEntityEvent(entity.getBukkitEntity(), leashHolder.getBukkitEntity(), (Player) player.getBukkitEntity());
+        entity.field_70170_p.getServer().getPluginManager().callEvent(event);
+        return event;
     }
 }

@@ -127,3 +127,11 @@
                  float f3 = MathHelper.func_76142_g(f2 - this.field_70177_z);
                  this.field_70701_bs = (float)this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e();
  
+@@ -296,6 +339,7 @@
+             {
+                 if (f > 10.0F)
+                 {
++                    this.field_70170_p.getServer().getPluginManager().callEvent(new org.bukkit.event.entity.EntityUnleashEvent(this.getBukkitEntity(), org.bukkit.event.entity.EntityUnleashEvent.UnleashReason.DISTANCE)); // CraftBukkit
+                     this.func_110160_i(true, true);
+                 }
+ 
