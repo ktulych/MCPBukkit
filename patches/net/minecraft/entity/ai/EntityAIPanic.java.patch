@@ -1,0 +1,10 @@
+--- ../net/minecraft/entity/ai/EntityAIPanic.java
++++ ../net/minecraft/entity/ai/EntityAIPanic.java
+@@ -2,7 +2,6 @@
+ 
+ import net.minecraft.entity.EntityCreature;
+ import net.minecraft.util.Vec3;
+-
+ public class EntityAIPanic extends EntityAIBase
+ {
+     private EntityCreature field_75267_a;
