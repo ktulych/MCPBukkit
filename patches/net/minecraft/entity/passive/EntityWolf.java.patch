@@ -35,6 +35,15 @@
                      this.func_70910_a(p_70085_1_.func_70005_c_());
                      this.func_70908_e(true);
                      this.field_70170_p.func_72960_a(this, (byte)7);
+@@ -466,7 +467,7 @@
+ 
+     protected boolean func_70692_ba()
+     {
+-        return !this.func_70909_n() && this.field_70173_aa > 2400;
++        return !this.func_70909_n(); // CraftBukkit
+     }
+ 
+     public boolean func_142018_a(EntityLivingBase p_142018_1_, EntityLivingBase p_142018_2_)
 @@ -477,7 +478,7 @@
              {
                  EntityWolf entitywolf = (EntityWolf)p_142018_1_;
