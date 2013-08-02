@@ -1,10 +1,27 @@
 --- ../net/minecraft/entity/ai/EntityAIPanic.java
 +++ ../net/minecraft/entity/ai/EntityAIPanic.java
-@@ -2,7 +2,6 @@
+@@ -1,8 +1,8 @@
+ package net.minecraft.entity.ai;
  
  import net.minecraft.entity.EntityCreature;
++import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.util.Vec3;
 -
  public class EntityAIPanic extends EntityAIBase
  {
      private EntityCreature field_75267_a;
+@@ -49,6 +49,14 @@
+ 
+     public boolean func_75253_b()
+     {
++        // CraftBukkit start - introduce a temporary timeout hack until this is fixed properly
++        if ((this.field_75267_a.field_70173_aa - this.field_75267_a.func_142015_aE()) > 100)
++        {
++            this.field_75267_a.func_70604_c((EntityLivingBase) null);
++            return false;
++        }
++
++        // CraftBukkit end
+         return !this.field_75267_a.func_70661_as().func_75500_f();
+     }
+ }
