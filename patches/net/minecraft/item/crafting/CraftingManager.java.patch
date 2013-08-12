@@ -111,7 +111,7 @@
          }
          else
          {
-@@ -300,7 +326,11 @@
+@@ -300,10 +326,15 @@
  
                  if (irecipe.func_77569_a(p_82787_1_, p_82787_2_))
                  {
@@ -124,3 +124,7 @@
                  }
              }
  
++            p_82787_1_.currentRecipe = null; // CraftBukkit - Clear recipe when no recipe is found
+             return null;
+         }
+     }
