@@ -74,7 +74,7 @@
 +                    // CraftBukkit start
 +                    if (!CraftEventFactory.callBlockIgniteEvent(p_i3533_1_, j, k, l, this).isCancelled())
 +                    {
-+                        p_i3533_1_.func_94575_c(i, j, k, Block.field_72067_ar.field_71990_ca);
++                        p_i3533_1_.func_94575_c(j, k, l, Block.field_72067_ar.field_71990_ca);
 +                    }
 +
 +                    // CraftBukkit end
