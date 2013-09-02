@@ -38,17 +38,22 @@
  
      public void func_72532_c()
      {
-@@ -81,6 +88,9 @@
+@@ -81,6 +88,14 @@
  
      public void func_72500_a(Packet2ClientProtocol p_72500_1_)
      {
 +        // CraftBukkit start
++        if (this.field_72543_h != null)
++        {
++            this.func_72527_a("Invalid username " + this.field_72543_h);
++        }
++
 +        this.hostname = p_72500_1_.field_73457_c == null ? "" : p_72500_1_.field_73457_c + ':' + p_72500_1_.field_73455_d;
 +        // CraftBukkit end
          this.field_72543_h = p_72500_1_.func_73454_f();
  
          if (!this.field_72543_h.equals(StringUtils.func_76338_a(this.field_72543_h)))
-@@ -139,7 +149,7 @@
+@@ -139,7 +154,7 @@
  
              if (this.field_72534_f.func_71266_T())
              {
@@ -57,7 +62,7 @@
              }
              else
              {
-@@ -152,19 +162,22 @@
+@@ -152,19 +167,22 @@
  
      public void func_72529_d()
      {
@@ -87,7 +92,7 @@
              }
          }
  
-@@ -179,33 +192,45 @@
+@@ -179,33 +197,45 @@
  
      public void func_72467_a(Packet254ServerPing p_72467_1_)
      {
@@ -143,7 +148,7 @@
              }
  
              InetAddress inetaddress = null;
-@@ -271,7 +296,7 @@
+@@ -271,7 +301,7 @@
          return p_72533_0_.field_72543_h;
      }
  
