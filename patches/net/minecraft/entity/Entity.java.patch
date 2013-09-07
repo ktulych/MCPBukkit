@@ -610,7 +610,7 @@
 +                // It's possible to move from one vehicle to another.  We need to check if they're already in a vehicle, and fire an exit event if they are.
 +                VehicleExitEvent exitEvent = null;
 +
-+                if (this.field_70154_o != null)
++                if (this.field_70154_o != null && this.field_70154_o.getBukkitEntity() instanceof Vehicle)
 +                {
 +                    exitEvent = new VehicleExitEvent((Vehicle) this.field_70154_o.getBukkitEntity(), (LivingEntity) this.bukkitEntity);
 +                    pluginManager.callEvent(exitEvent);
