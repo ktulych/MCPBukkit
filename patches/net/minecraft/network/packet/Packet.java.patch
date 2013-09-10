@@ -55,8 +55,12 @@
      {
          boolean flag1 = false;
          Packet packet = null;
-@@ -138,7 +148,19 @@
-             p_73272_0_.func_98232_c("Reached end of stream for " + p_73272_3_.getInetAddress());
+@@ -135,10 +145,22 @@
+         }
+         catch (EOFException eofexception)
+         {
+-            p_73272_0_.func_98232_c("Reached end of stream for " + p_73272_3_.getInetAddress());
++            //iconsolelogmanager.severe("Reached end of stream for " + socket.getInetAddress()); // CraftBukkit - remove unnecessary logging
              return null;
          }
 -
