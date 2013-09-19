@@ -24,7 +24,7 @@ public class CraftIronGolem extends CraftGolem implements IronGolem {
     }
 
     public void setPlayerCreated(boolean playerCreated) {
-        getHandle().func_70637_d(playerCreated);
+        getHandle().func_70849_f(playerCreated);
     }
 
     @Override

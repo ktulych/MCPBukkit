@@ -501,19 +501,7 @@
          }
          catch (Throwable throwable)
          {
-@@ -1265,22 +1511,22 @@
-         return EntityList.func_75621_b(this);
-     }
- 
--    protected abstract void func_70037_a(NBTTagCompound nbttagcompound);
--
--    protected abstract void func_70014_b(NBTTagCompound nbttagcompound);
-+    protected abstract void func_70037_a(NBTTagCompound p_70037_1_);
-+
-+    protected abstract void func_70014_b(NBTTagCompound p_70014_1_);
- 
-     public void func_110123_P() {}
- 
+@@ -1274,13 +1520,13 @@
      protected NBTTagList func_70087_a(double ... p_70087_1_)
      {
          NBTTagList nbttaglist = new NBTTagList();

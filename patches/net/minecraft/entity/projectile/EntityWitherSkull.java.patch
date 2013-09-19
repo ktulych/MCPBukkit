@@ -7,7 +7,7 @@
  import net.minecraft.block.Block;
  import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.potion.Potion;
-@@ -55,12 +56,12 @@
+@@ -55,7 +56,7 @@
                  {
                      if (p_70227_1_.field_72308_g.func_70097_a(DamageSource.func_76358_a(this.field_70235_a), 8.0F) && !p_70227_1_.field_72308_g.func_70089_S())
                      {
@@ -16,12 +16,6 @@
                      }
                  }
                  else
-                 {
--                    p_70227_1_.field_72308_g.func_70097_a(DamageSource.field_76376_m, 5.0F);
-+                    p_70227_1_.field_72308_g.func_70097_a(DamageSource.field_76376_m, 5);
-                 }
- 
-                 if (p_70227_1_.field_72308_g instanceof EntityLivingBase)
 @@ -86,7 +87,16 @@
                  }
              }

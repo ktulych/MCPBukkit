@@ -1,6 +1,6 @@
 --- ../net/minecraft/entity/EntityAgeable.java
 +++ ../net/minecraft/entity/EntityAgeable.java
-@@ -5,18 +5,18 @@
+@@ -5,11 +5,11 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.world.World;
@@ -12,14 +12,6 @@
 +    public boolean ageLocked = false; // CraftBukkit
  
      public EntityAgeable(World p_i1578_1_)
-     {
-         super(p_i1578_1_);
-     }
- 
--    public abstract EntityAgeable func_90011_a(EntityAgeable entityageable);
-+    public abstract EntityAgeable func_90011_a(EntityAgeable p_90011_1_);
- 
-     public boolean func_70085_c(EntityPlayer p_70085_1_)
      {
 @@ -36,7 +36,7 @@
                      {

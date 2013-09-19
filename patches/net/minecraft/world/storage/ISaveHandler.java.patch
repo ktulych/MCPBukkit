@@ -1,27 +1,24 @@
 --- ../net/minecraft/world/storage/ISaveHandler.java
 +++ ../net/minecraft/world/storage/ISaveHandler.java
-@@ -10,19 +10,21 @@
+@@ -10,13 +10,13 @@
  {
      WorldInfo func_75757_d();
  
 -    void func_75762_c() throws MinecraftException;
 +    void func_75762_c() throws MinecraftException; // CraftBukkit - throws ExceptionWorldConflict
  
--    IChunkLoader func_75763_a(WorldProvider worldprovider);
-+    IChunkLoader func_75763_a(WorldProvider p_75763_1_);
+     IChunkLoader func_75763_a(WorldProvider worldprovider);
  
 -    void func_75755_a(WorldInfo worldinfo, NBTTagCompound nbttagcompound);
-+    void func_75755_a(WorldInfo p_75755_1_, NBTTagCompound p_75755_2_);
++    void func_75755_a(WorldInfo worlddata, NBTTagCompound nbttagcompound);
  
 -    void func_75761_a(WorldInfo worldinfo);
-+    void func_75761_a(WorldInfo p_75761_1_);
++    void func_75761_a(WorldInfo worlddata);
  
      IPlayerFileData func_75756_e();
  
-     void func_75759_a();
- 
--    File func_75758_b(String s);
-+    File func_75758_b(String p_75758_1_);
+@@ -25,4 +25,6 @@
+     File func_75758_b(String s);
  
      String func_75760_g();
 +

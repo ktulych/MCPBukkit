@@ -576,15 +576,6 @@
              int k1 = p_72941_3_.func_76610_a(l, j1, i1);
              l += p_72941_1_;
              i1 += p_72941_2_;
-@@ -2777,7 +2995,7 @@
-         return entity1;
-     }
- 
--    public abstract Entity func_73045_a(int i);
-+    public abstract Entity func_73045_a(int p_73045_1_);
- 
-     public void func_72944_b(int p_72944_1_, int p_72944_2_, int p_72944_3_, TileEntity p_72944_4_)
-     {
 @@ -2795,10 +3013,23 @@
          {
              Entity entity = (Entity)this.field_72996_f.get(j);

@@ -35,7 +35,7 @@
 -    {
 -        return this.field_70170_p.func_72918_a(this.field_70121_D.func_72314_b(0.0D, -0.6000000238418579D, 0.0D), Material.field_76244_g, this);
 +    /* CraftBukkit start - Delegate to Entity to use existing inWater value
-+    public boolean G() {
++    public boolean H() {
 +        return this.world.a(this.boundingBox.grow(0.0D, -0.6000000238418579D, 0.0D), Material.WATER, (Entity) this);
      }
 +    // CraftBukkit end */

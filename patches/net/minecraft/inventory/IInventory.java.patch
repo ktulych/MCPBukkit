@@ -7,37 +7,18 @@
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.item.ItemStack;
  
-@@ -7,13 +8,13 @@
- {
-     int func_70302_i_();
- 
--    ItemStack func_70301_a(int i);
-+    ItemStack func_70301_a(int p_70301_1_);
- 
--    ItemStack func_70298_a(int i, int j);
-+    ItemStack func_70298_a(int p_70298_1_, int p_70298_2_);
- 
--    ItemStack func_70304_b(int i);
-+    ItemStack func_70304_b(int p_70304_1_);
- 
--    void func_70299_a(int i, ItemStack itemstack);
-+    void func_70299_a(int p_70299_1_, ItemStack p_70299_2_);
- 
-     String func_70303_b();
- 
 @@ -23,11 +24,27 @@
  
      void func_70296_d();
  
 -    boolean func_70300_a(EntityPlayer entityplayer);
-+    boolean func_70300_a(EntityPlayer p_70300_1_);
++    boolean func_70300_a(EntityPlayer entityhuman);
  
      void func_70295_k_();
  
      void func_70305_f();
  
--    boolean func_94041_b(int i, ItemStack itemstack);
-+    boolean func_94041_b(int p_94041_1_, ItemStack p_94041_2_);
+     boolean func_94041_b(int i, ItemStack itemstack);
 +
 +    // CraftBukkit start
 +    ItemStack[] getContents();

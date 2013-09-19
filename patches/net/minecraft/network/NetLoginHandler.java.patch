@@ -38,22 +38,7 @@
  
      public void func_72532_c()
      {
-@@ -81,6 +88,14 @@
- 
-     public void func_72500_a(Packet2ClientProtocol p_72500_1_)
-     {
-+        // CraftBukkit start
-+        if (this.field_72543_h != null)
-+        {
-+            this.func_72527_a("Invalid username " + this.field_72543_h);
-+        }
-+
-+        this.hostname = p_72500_1_.field_73457_c == null ? "" : p_72500_1_.field_73457_c + ':' + p_72500_1_.field_73455_d;
-+        // CraftBukkit end
-         this.field_72543_h = p_72500_1_.func_73454_f();
- 
-         if (!this.field_72543_h.equals(StringUtils.func_76338_a(this.field_72543_h)))
-@@ -139,7 +154,7 @@
+@@ -146,7 +153,7 @@
  
              if (this.field_72534_f.func_71266_T())
              {
@@ -62,7 +47,7 @@
              }
              else
              {
-@@ -152,19 +167,22 @@
+@@ -159,19 +166,22 @@
  
      public void func_72529_d()
      {
@@ -92,7 +77,7 @@
              }
          }
  
-@@ -179,33 +197,45 @@
+@@ -186,33 +196,45 @@
  
      public void func_72467_a(Packet254ServerPing p_72467_1_)
      {
@@ -116,12 +101,12 @@
              }
              else
              {
--                List list = Arrays.asList(new Serializable[] {Integer.valueOf(1), Integer.valueOf(74), this.field_72534_f.func_71249_w(), this.field_72534_f.func_71273_Y(), Integer.valueOf(serverconfigurationmanager.func_72394_k()), Integer.valueOf(serverconfigurationmanager.func_72352_l())});
+-                List list = Arrays.asList(new Serializable[] {Integer.valueOf(1), Integer.valueOf(78), this.field_72534_f.func_71249_w(), this.field_72534_f.func_71273_Y(), Integer.valueOf(serverconfigurationmanager.func_72394_k()), Integer.valueOf(serverconfigurationmanager.func_72352_l())});
 -                Object object;
 -
 -                for (Iterator iterator = list.iterator(); iterator.hasNext(); s = s + object.toString().replaceAll("\u0000", ""))
 +                // CraftBukkit start - Don't create a list from an array
-+                Object[] list = new Object[] { 1, 74, this.field_72534_f.func_71249_w(), pingEvent.getMotd(), serverconfigurationmanager.func_72394_k(), pingEvent.getMaxPlayers() };
++                Object[] list = new Object[] { 1, 78, this.field_72534_f.func_71249_w(), pingEvent.getMotd(), serverconfigurationmanager.func_72394_k(), pingEvent.getMaxPlayers() };
 +                StringBuilder builder = new StringBuilder();
 +
 +                for (Object object : list)
@@ -148,7 +133,7 @@
              }
  
              InetAddress inetaddress = null;
-@@ -271,7 +301,7 @@
+@@ -278,7 +300,7 @@
          return p_72533_0_.field_72543_h;
      }
  

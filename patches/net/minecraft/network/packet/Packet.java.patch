@@ -116,11 +116,11 @@
 -    public abstract void func_73273_a(DataOutput dataoutput) throws IOException;
 -
 -    public abstract void func_73279_a(NetHandler nethandler);
-+    public abstract void func_73267_a(DataInput p_73267_1_) throws IOException; // CraftBukkit - throws IOException
++    public abstract void func_73267_a(DataInput datainput) throws IOException; // CraftBukkit - throws IOException
 +
-+    public abstract void func_73273_a(DataOutput p_73273_1_) throws IOException; // CraftBukkit - throws IOException
++    public abstract void func_73273_a(DataOutput dataoutput) throws IOException; // CraftBukkit - throws IOException
 +
-+    public abstract void func_73279_a(NetHandler p_73279_1_);
++    public abstract void func_73279_a(NetHandler connection);
  
      public abstract int func_73284_a();
  

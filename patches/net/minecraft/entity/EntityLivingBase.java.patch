@@ -102,7 +102,17 @@
          }
  
          this.field_70727_aS = this.field_70726_aT;
-@@ -279,6 +299,22 @@
+@@ -241,7 +261,8 @@
+             --this.field_70737_aN;
+         }
+ 
+-        if (this.field_70172_ad > 0)
++        // CraftBukkit
++        if (this.field_70172_ad > 0 && !(this instanceof EntityPlayerMP))
+         {
+             --this.field_70172_ad;
+         }
+@@ -279,6 +300,22 @@
          this.field_70170_p.field_72984_F.func_76319_b();
      }
  
@@ -125,7 +135,7 @@
      public boolean func_70631_g_()
      {
          return false;
-@@ -288,22 +324,21 @@
+@@ -288,22 +325,21 @@
      {
          ++this.field_70725_aQ;
  
@@ -161,7 +171,7 @@
              this.func_70106_y();
  
              for (i = 0; i < 20; ++i)
-@@ -455,6 +490,23 @@
+@@ -455,6 +491,23 @@
              }
          }
  
@@ -185,7 +195,7 @@
          if (p_70037_1_.func_74764_b("HealF"))
          {
              this.func_70606_j(p_70037_1_.func_74760_g("HealF"));
-@@ -584,12 +636,14 @@
+@@ -584,12 +637,14 @@
  
      public boolean func_82165_m(int p_82165_1_)
      {
@@ -202,7 +212,7 @@
      }
  
      public PotionEffect func_70660_b(Potion p_70660_1_)
-@@ -675,23 +729,66 @@
+@@ -675,23 +730,66 @@
          }
      }
  
@@ -270,7 +280,7 @@
          this.field_70180_af.func_75692_b(6, Float.valueOf(MathHelper.func_76131_a(p_70606_1_, 0.0F, this.func_110138_aP())));
      }
  
-@@ -727,6 +824,20 @@
+@@ -727,6 +825,20 @@
  
                  this.field_70721_aZ = 1.5F;
                  boolean flag = true;
@@ -291,7 +301,7 @@
  
                  if ((float)this.field_70172_ad > (float)this.field_70771_an / 2.0F)
                  {
-@@ -870,7 +981,7 @@
+@@ -870,7 +982,7 @@
                  this.func_70628_a(this.field_70718_bc > 0, i);
                  this.func_82160_b(this.field_70718_bc > 0, i);
  
@@ -300,7 +310,7 @@
                  {
                      int j = this.field_70146_Z.nextInt(200) - i;
  
-@@ -879,6 +990,10 @@
+@@ -879,6 +991,10 @@
                          this.func_70600_l(j <= 0 ? 1 : 0);
                      }
                  }
@@ -311,7 +321,7 @@
              }
          }
  
-@@ -918,7 +1033,12 @@
+@@ -918,7 +1034,12 @@
          return "damage.hit";
      }
  
@@ -325,7 +335,7 @@
  
      protected void func_70628_a(boolean p_70628_1_, int p_70628_2_) {}
  
-@@ -941,7 +1061,27 @@
+@@ -941,7 +1062,27 @@
          super.func_70069_a(p_70069_1_);
          PotionEffect potioneffect = this.func_70660_b(Potion.field_76430_j);
          float f1 = potioneffect != null ? (float)(potioneffect.func_76458_c() + 1) : 0.0F;
@@ -354,7 +364,7 @@
  
          if (i > 0)
          {
-@@ -1102,7 +1242,7 @@
+@@ -1102,7 +1243,7 @@
  
              if (this.field_70170_p instanceof WorldServer)
              {
@@ -363,20 +373,7 @@
              }
          }
      }
-@@ -1156,9 +1296,9 @@
- 
-     public abstract ItemStack func_70694_bm();
- 
--    public abstract ItemStack func_71124_b(int i);
--
--    public abstract void func_70062_b(int i, ItemStack itemstack);
-+    public abstract ItemStack func_71124_b(int p_71124_1_);
-+
-+    public abstract void func_70062_b(int p_70062_1_, ItemStack p_70062_2_);
- 
-     public void func_70031_b(boolean p_70031_1_)
-     {
-@@ -1467,7 +1607,7 @@
+@@ -1467,7 +1608,7 @@
  
                  if (!ItemStack.func_77989_b(itemstack1, itemstack))
                  {
@@ -385,7 +382,7 @@
  
                      if (itemstack != null)
                      {
-@@ -1497,7 +1637,8 @@
+@@ -1497,7 +1638,8 @@
          {
              f3 = 1.0F;
              f2 = (float)Math.sqrt((double)f) * 3.0F;
@@ -395,7 +392,7 @@
          }
  
          if (this.field_70733_aJ > 0.0F)
-@@ -1711,6 +1852,15 @@
+@@ -1711,6 +1853,15 @@
              {
                  Entity entity = (Entity)list.get(i);
  
@@ -411,7 +408,7 @@
                  if (entity.func_70104_M())
                  {
                      this.func_82167_n(entity);
-@@ -1752,17 +1902,17 @@
+@@ -1752,17 +1903,17 @@
  
              if (p_71001_1_ instanceof EntityItem)
              {

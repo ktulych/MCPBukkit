@@ -69,7 +69,7 @@
      private final List field_71322_p = new ArrayList();
      private final ICommandManager field_71321_q;
      public final Profiler field_71304_b = new Profiler();
-@@ -100,7 +114,20 @@
+@@ -101,7 +115,20 @@
      private boolean field_71295_T;
      private boolean field_104057_T;
  
@@ -90,8 +90,8 @@
 +    public MinecraftServer(OptionSet options)   // CraftBukkit - signature file -> OptionSet
      {
          this.field_110456_c = Proxy.NO_PROXY;
-         this.field_71300_f = new long[100];
-@@ -110,18 +137,48 @@
+         this.field_143008_E = 0;
+@@ -112,18 +139,48 @@
          this.field_71311_j = new long[100];
          this.field_71297_P = "";
          field_71309_l = this;
@@ -144,7 +144,7 @@
  
      protected void func_71237_c(String p_71237_1_)
      {
-@@ -143,64 +200,131 @@
+@@ -145,64 +202,131 @@
          this.func_71237_c(p_71247_1_);
          this.func_71192_d("menu.loadingLevel");
          this.field_71305_c = new WorldServer[3];
@@ -318,7 +318,7 @@
          }
  
          this.func_71226_c(this.func_71232_g());
-@@ -216,28 +340,41 @@
+@@ -218,28 +342,41 @@
          int i = 0;
          this.func_71192_d("menu.generatingTerrain");
          byte b0 = 0;
@@ -382,7 +382,7 @@
          this.func_71243_i();
      }
  
-@@ -262,18 +399,17 @@
+@@ -264,18 +401,17 @@
      {
          this.field_71302_d = null;
          this.field_71303_e = 0;
@@ -409,7 +409,7 @@
  
                  if (worldserver != null)
                  {
-@@ -282,24 +418,30 @@
+@@ -284,24 +420,30 @@
                          this.func_98033_al().func_98233_a("Saving chunks for level \'" + worldserver.func_72912_H().func_76065_j() + "\'/" + worldserver.field_73011_w.func_80007_l());
                      }
  
@@ -454,7 +454,7 @@
  
              if (this.func_71212_ac() != null)
              {
-@@ -316,12 +458,13 @@
+@@ -318,12 +460,13 @@
              this.func_98033_al().func_98233_a("Saving worlds");
              this.func_71267_a(false);
  
@@ -474,7 +474,7 @@
              if (this.field_71307_n != null && this.field_71307_n.func_76468_d())
              {
                  this.field_71307_n.func_76470_e();
-@@ -364,7 +507,11 @@
+@@ -366,7 +509,11 @@
  
                      if (l > 2000L && i - this.field_71299_R >= 15000L)
                      {
@@ -487,7 +487,7 @@
                          l = 2000L;
                          this.field_71299_R = i;
                      }
-@@ -378,7 +525,7 @@
+@@ -380,7 +527,7 @@
                      j += l;
                      i = k;
  
@@ -496,7 +496,7 @@
                      {
                          this.func_71217_p();
                          j = 0L;
-@@ -387,6 +534,7 @@
+@@ -389,6 +536,7 @@
                      {
                          while (j > 50L)
                          {
@@ -504,7 +504,7 @@
                              j -= 50L;
                              this.func_71217_p();
                          }
-@@ -441,6 +589,16 @@
+@@ -443,6 +591,16 @@
              }
              finally
              {
@@ -521,7 +521,7 @@
                  this.func_71240_o();
              }
          }
-@@ -455,7 +613,7 @@
+@@ -457,7 +615,7 @@
  
      protected void func_71240_o() {}
  
@@ -530,7 +530,7 @@
      {
          long i = System.nanoTime();
          AxisAlignedBB.func_72332_a().func_72298_a();
-@@ -471,7 +629,7 @@
+@@ -473,7 +631,7 @@
          this.field_71304_b.func_76320_a("root");
          this.func_71190_q();
  
@@ -539,7 +539,7 @@
          {
              this.field_71304_b.func_76320_a("save");
              this.field_71318_t.func_72389_g();
-@@ -509,60 +667,77 @@
+@@ -511,60 +669,77 @@
      public void func_71190_q()
      {
          this.field_71304_b.func_76320_a("levels");
@@ -667,7 +667,7 @@
          }
  
          this.field_71304_b.func_76318_c("connection");
-@@ -589,13 +764,14 @@
+@@ -591,13 +766,14 @@
          this.field_71322_p.add(p_82010_1_);
      }
  
@@ -683,7 +683,7 @@
              boolean flag = !GraphicsEnvironment.isHeadless();
              String s = null;
              String s1 = ".";
-@@ -604,97 +780,94 @@
+@@ -606,97 +782,94 @@
              boolean flag2 = false;
              int i = -1;
  
@@ -836,7 +836,7 @@
 +            }
 +
 +            if (flag) {
-+                dedicatedserver.at();
++                dedicatedserver.au();
 +            }
 +            */
 +            dedicatedserver.primaryThread.start();
@@ -845,7 +845,7 @@
          }
          catch (Exception exception)
          {
-@@ -711,7 +884,7 @@
+@@ -713,7 +886,7 @@
  
      public void func_71256_s()
      {
@@ -854,7 +854,7 @@
      }
  
      public File func_71209_f(String p_71209_1_)
-@@ -731,7 +904,17 @@
+@@ -733,7 +906,17 @@
  
      public WorldServer func_71218_a(int p_71218_1_)
      {
@@ -873,7 +873,7 @@
      }
  
      public String func_71277_t()
-@@ -771,19 +954,75 @@
+@@ -773,19 +956,75 @@
  
      public String func_71258_A()
      {
@@ -958,7 +958,7 @@
      }
  
      public void func_71201_j(String p_71201_1_)
-@@ -801,21 +1040,21 @@
+@@ -803,21 +1042,21 @@
  
      public String getServerModName()
      {
@@ -987,7 +987,7 @@
          }
  
          return p_71230_1_;
-@@ -823,54 +1062,49 @@
+@@ -825,54 +1064,49 @@
  
      public List func_71248_a(ICommandSender p_71248_1_, String p_71248_2_)
      {
@@ -1061,7 +1061,7 @@
      }
  
      public static MinecraftServer func_71276_C()
-@@ -945,9 +1179,11 @@
+@@ -947,9 +1181,11 @@
  
      public void func_71226_c(int p_71226_1_)
      {
@@ -1076,7 +1076,7 @@
  
              if (worldserver != null)
              {
-@@ -1000,9 +1236,11 @@
+@@ -1002,9 +1238,11 @@
          this.field_71290_O = true;
          this.func_71254_M().func_75800_d();
  
@@ -1091,7 +1091,7 @@
  
              if (worldserver != null)
              {
-@@ -1010,7 +1248,7 @@
+@@ -1012,7 +1250,7 @@
              }
          }
  
@@ -1100,7 +1100,7 @@
          this.func_71263_m();
      }
  
-@@ -1041,22 +1279,23 @@
+@@ -1043,22 +1281,23 @@
          p_70000_1_.func_76472_a("avg_rec_packet_size", Integer.valueOf((int)MathHelper.func_76127_a(this.field_71314_i)));
          int i = 0;
  
@@ -1140,7 +1140,7 @@
          }
  
          p_70000_1_.func_76472_a("worlds", Integer.valueOf(i));
-@@ -1084,7 +1323,7 @@
+@@ -1086,7 +1325,7 @@
  
      public boolean func_71266_T()
      {
@@ -1149,7 +1149,7 @@
      }
  
      public void func_71229_d(boolean p_71229_1_)
-@@ -1171,9 +1410,11 @@
+@@ -1173,9 +1412,11 @@
  
      public void func_71235_a(EnumGameType p_71235_1_)
      {
@@ -1164,16 +1164,16 @@
          }
      }
  
-@@ -1184,7 +1425,7 @@
+@@ -1186,7 +1427,7 @@
          return false;
      }
  
 -    public abstract String func_71206_a(EnumGameType enumgametype, boolean flag);
-+    public abstract String func_71206_a(EnumGameType p_71206_1_, boolean p_71206_2_);
++    public abstract String func_71206_a(EnumGameType enumgamemode, boolean flag);
  
      public int func_71259_af()
      {
-@@ -1203,7 +1444,7 @@
+@@ -1205,7 +1446,7 @@
  
      public World func_130014_f_()
      {

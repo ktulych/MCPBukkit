@@ -82,14 +82,3 @@
      }
  
      protected void func_70623_bb()
-@@ -509,7 +535,9 @@
-         return !this.field_70128_L;
-     }
- 
--    protected void func_70069_a(float p_70069_1_) {}
-+    protected void func_70069_a(float p_70069_1_)
-+    {
-+    }
- 
-     public void func_70690_d(PotionEffect p_70690_1_) {}
- 

@@ -1,18 +1,14 @@
 --- ../net/minecraft/item/crafting/IRecipe.java
 +++ ../net/minecraft/item/crafting/IRecipe.java
-@@ -3,14 +3,15 @@
+@@ -3,7 +3,6 @@
  import net.minecraft.inventory.InventoryCrafting;
  import net.minecraft.item.ItemStack;
  import net.minecraft.world.World;
 -
  public interface IRecipe
  {
--    boolean func_77569_a(InventoryCrafting inventorycrafting, World world);
-+    boolean func_77569_a(InventoryCrafting p_77569_1_, World p_77569_2_);
- 
--    ItemStack func_77572_b(InventoryCrafting inventorycrafting);
-+    ItemStack func_77572_b(InventoryCrafting p_77572_1_);
- 
+     boolean func_77569_a(InventoryCrafting inventorycrafting, World world);
+@@ -13,4 +12,6 @@
      int func_77570_a();
  
      ItemStack func_77571_b();

@@ -32,8 +32,8 @@
          if (p_70037_1_.func_74764_b("ExplosionPower"))
          {
 -            this.field_92057_e = p_70037_1_.func_74762_e("ExplosionPower");
-+            // CraftBukkit - set yield when setting explosionpower
-+            this.yield = this.field_92057_e = p_70037_1_.func_74762_e("ExplosionPower");
++            // CraftBukkit - set bukkitYield when setting explosionpower
++            this.bukkitYield = this.field_92057_e = p_70037_1_.func_74762_e("ExplosionPower");
          }
      }
  }

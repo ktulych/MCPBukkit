@@ -53,7 +53,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
     public void setCarryingChest(boolean chest) {
         if (chest == isCarryingChest()) return;
         getHandle().func_110207_m(chest);
-        getHandle().func_110226_cD(); // Should be loadChest
+        getHandle().func_110226_cD();
     }
 
     public int getDomestication() {
@@ -67,7 +67,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
     }
 
     public int getMaxDomestication() {
-        return getHandle().func_110218_cm(); // Should be getMaxDomestication
+        return getHandle().func_110218_cm();
     }
 
     public void setMaxDomestication(int value) {

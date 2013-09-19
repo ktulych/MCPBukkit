@@ -13,7 +13,7 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
     }
 
     public float getYield() {
-        return getHandle().yield;
+        return getHandle().bukkitYield;
     }
 
     public boolean isIncendiary() {
@@ -25,7 +25,7 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
     }
 
     public void setYield(float yield) {
-        getHandle().yield = yield;
+        getHandle().bukkitYield = yield;
     }
 
     public LivingEntity getShooter() {

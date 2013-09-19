@@ -99,8 +99,8 @@
                      this.field_70170_p.func_72889_a((EntityPlayer)null, 1008, (int)this.field_70165_t, (int)this.field_70163_u, (int)this.field_70161_v, 0);
                      EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.field_70170_p, this, d5, d6, d7);
 -                    entitylargefireball.field_92057_e = this.field_92014_j;
-+                    // CraftBukkit - set yield when setting explosionpower
-+                    entitylargefireball.yield = entitylargefireball.field_92057_e = this.field_92014_j;
++                    // CraftBukkit - set bukkitYield when setting explosionpower
++                    entitylargefireball.bukkitYield = entitylargefireball.field_92057_e  = this.field_92014_j;
                      double d8 = 4.0D;
                      Vec3 vec3 = this.func_70676_i(1.0F);
                      entitylargefireball.field_70165_t = this.field_70165_t + vec3.field_72450_a * d8;

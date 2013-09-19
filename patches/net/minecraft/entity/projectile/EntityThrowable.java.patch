@@ -35,12 +35,3 @@
              }
          }
  
-@@ -246,7 +254,7 @@
-         return 0.03F;
-     }
- 
--    protected abstract void func_70184_a(MovingObjectPosition movingobjectposition);
-+    protected abstract void func_70184_a(MovingObjectPosition p_70184_1_);
- 
-     public void func_70014_b(NBTTagCompound p_70014_1_)
-     {

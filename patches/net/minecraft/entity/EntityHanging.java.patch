@@ -125,12 +125,15 @@
  
      public abstract int func_82330_g();
  
--    public abstract void func_110128_b(Entity entity);
--
-     protected boolean func_142008_O()
-     {
-         return false;
-     }
++    protected boolean func_142008_O()
++    {
++        return false;
++    }
 +
-+    public abstract void func_110128_b(Entity p_110128_1_);
+     public abstract void func_110128_b(Entity entity);
+-
+-    protected boolean func_142008_O()
+-    {
+-        return false;
+-    }
  }

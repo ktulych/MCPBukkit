@@ -4,7 +4,7 @@
      public double field_70232_b;
      public double field_70233_c;
      public double field_70230_d;
-+    public float yield = 1; // CraftBukkit
++    public float bukkitYield = 1; // CraftBukkit
 +    public boolean isIncendiary = true; // CraftBukkit
  
      public EntityFireball(World p_i1759_1_)
@@ -61,15 +61,6 @@
              }
  
              this.field_70165_t += this.field_70159_w;
-@@ -209,7 +226,7 @@
-         return 0.95F;
-     }
- 
--    protected abstract void func_70227_a(MovingObjectPosition movingobjectposition);
-+    protected abstract void func_70227_a(MovingObjectPosition p_70227_1_);
- 
-     public void func_70014_b(NBTTagCompound p_70014_1_)
-     {
 @@ -218,7 +235,8 @@
          p_70014_1_.func_74777_a("zTile", (short)this.field_70229_g);
          p_70014_1_.func_74774_a("inTile", (byte)this.field_70237_h);
