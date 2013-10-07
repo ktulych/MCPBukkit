@@ -1,12 +1,11 @@
 --- ../net/minecraft/world/storage/SaveHandler.java
 +++ ../net/minecraft/world/storage/SaveHandler.java
-@@ -6,13 +6,23 @@
+@@ -6,13 +6,22 @@
  import java.io.FileInputStream;
  import java.io.FileOutputStream;
  import java.io.IOException;
 +import java.io.InputStream;
 +import java.io.OutputStream;
-+import java.util.logging.Logger;
  import net.minecraft.entity.player.EntityPlayer;
 +import net.minecraft.entity.player.EntityPlayerMP;
  import net.minecraft.nbt.CompressedStreamTools;
@@ -24,7 +23,7 @@
  
  public class SaveHandler implements ISaveHandler, IPlayerFileData
  {
-@@ -21,6 +31,7 @@
+@@ -21,6 +30,7 @@
      private final File field_75768_d;
      private final long field_75769_e = MinecraftServer.func_130071_aq();
      private final String field_75767_f;
@@ -32,7 +31,7 @@
  
      public SaveHandler(File p_i2146_1_, String p_i2146_2_, boolean p_i2146_3_)
      {
-@@ -62,12 +73,12 @@
+@@ -62,12 +72,12 @@
          }
      }
  
@@ -47,7 +46,7 @@
      {
          try
          {
-@@ -107,7 +118,7 @@
+@@ -107,7 +117,7 @@
          {
              try
              {
@@ -56,7 +55,7 @@
                  nbttagcompound1 = nbttagcompound.func_74775_l("Data");
                  return new WorldInfo(nbttagcompound1);
              }
-@@ -123,7 +134,7 @@
+@@ -123,7 +133,7 @@
          {
              try
              {
@@ -65,7 +64,7 @@
                  nbttagcompound1 = nbttagcompound.func_74775_l("Data");
                  return new WorldInfo(nbttagcompound1);
              }
-@@ -147,7 +158,7 @@
+@@ -147,7 +157,7 @@
              File file1 = new File(this.field_75770_b, "level.dat_new");
              File file2 = new File(this.field_75770_b, "level.dat_old");
              File file3 = new File(this.field_75770_b, "level.dat");
@@ -74,7 +73,7 @@
  
              if (file2.exists())
              {
-@@ -185,7 +196,7 @@
+@@ -185,7 +195,7 @@
              File file1 = new File(this.field_75770_b, "level.dat_new");
              File file2 = new File(this.field_75770_b, "level.dat_old");
              File file3 = new File(this.field_75770_b, "level.dat");
@@ -83,7 +82,7 @@
  
              if (file2.exists())
              {
-@@ -220,7 +231,7 @@
+@@ -220,7 +230,7 @@
              p_75753_1_.func_70109_d(nbttagcompound);
              File file1 = new File(this.field_75771_c, p_75753_1_.func_70005_c_() + ".dat.tmp");
              File file2 = new File(this.field_75771_c, p_75753_1_.func_70005_c_() + ".dat");
@@ -92,7 +91,7 @@
  
              if (file2.exists())
              {
-@@ -241,6 +252,14 @@
+@@ -241,6 +251,14 @@
  
          if (nbttagcompound != null)
          {
@@ -107,7 +106,7 @@
              p_75752_1_.func_70020_e(nbttagcompound);
          }
  
-@@ -255,7 +274,7 @@
+@@ -255,7 +273,7 @@
  
              if (file1.exists())
              {
@@ -116,7 +115,7 @@
              }
          }
          catch (Exception exception)
-@@ -297,4 +316,45 @@
+@@ -297,4 +315,80 @@
      {
          return this.field_75767_f;
      }
@@ -129,31 +128,66 @@
 +            return uuid;
 +        }
 +
++        File file1 = new File(this.field_75770_b, "uid.dat");
++
++        if (file1.exists())
++        {
++            DataInputStream dis = null;
++
++            try
++            {
++                dis = new DataInputStream(new FileInputStream(file1));
++                return uuid = new UUID(dis.readLong(), dis.readLong());
++            }
++            catch (IOException ex)
++            {
++                MinecraftServer.func_71276_C().func_98033_al().func_98234_c("Failed to read " + file1 + ", generating new random UUID", ex);
++            }
++            finally
++            {
++                if (dis != null)
++                {
++                    try
++                    {
++                        dis.close();
++                    }
++                    catch (IOException ex)
++                    {
++                        // NOOP
++                    }
++                }
++            }
++        }
++
++        uuid = UUID.randomUUID();
++        DataOutputStream dos = null;
++
 +        try
 +        {
-+            File file1 = new File(this.field_75770_b, "uid.dat");
-+
-+            if (!file1.exists())
-+            {
-+                DataOutputStream dos = new DataOutputStream(new FileOutputStream(file1));
-+                uuid = UUID.randomUUID();
-+                dos.writeLong(uuid.getMostSignificantBits());
-+                dos.writeLong(uuid.getLeastSignificantBits());
-+                dos.close();
-+            }
-+            else
-+            {
-+                DataInputStream dis = new DataInputStream(new FileInputStream(file1));
-+                uuid = new UUID(dis.readLong(), dis.readLong());
-+                dis.close();
-+            }
-+
-+            return uuid;
++            dos = new DataOutputStream(new FileOutputStream(file1));
++            dos.writeLong(uuid.getMostSignificantBits());
++            dos.writeLong(uuid.getLeastSignificantBits());
 +        }
 +        catch (IOException ex)
 +        {
-+            return null;
++            MinecraftServer.func_71276_C().func_98033_al().func_98234_c("Failed to write " + file1, ex);
 +        }
++        finally
++        {
++            if (dos != null)
++            {
++                try
++                {
++                    dos.close();
++                }
++                catch (IOException ex)
++                {
++                    // NOOP
++                }
++            }
++        }
++
++        return uuid;
 +    }
 +
 +    public File getPlayerDir()
