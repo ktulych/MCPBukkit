@@ -34,8 +34,8 @@
          if (p_77963_1_.func_74764_b("tag"))
          {
 -            this.field_77990_d = p_77963_1_.func_74775_l("tag");
-+            // CraftBukkit - clear name from compound and make defensive copy as this data may be coming from the save thread
-+            this.field_77990_d = (NBTTagCompound) p_77963_1_.func_74775_l("tag").func_74737_b().func_74738_o("");
++            // CraftBukkit - make defensive copy as this data may be coming from the save thread
++            this.field_77990_d = (NBTTagCompound) p_77963_1_.func_74775_l("tag").func_74737_b();
          }
      }
  
@@ -93,3 +93,17 @@
  
          if (flag)
          {
+@@ -399,6 +428,13 @@
+ 
+     public void func_77982_d(NBTTagCompound p_77982_1_)
+     {
++        // CraftBukkit start - Set compound name to "tag," remove discrepancy
++        if (p_77982_1_ != null)
++        {
++            p_77982_1_.func_74738_o("tag");
++        }
++
++        // CraftBukkit end
+         this.field_77990_d = p_77982_1_;
+     }
+ 
