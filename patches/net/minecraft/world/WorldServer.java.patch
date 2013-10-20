@@ -617,7 +617,7 @@
      {
          if (this.field_73020_y.func_73157_c())
          {
-@@ -744,7 +1021,7 @@
+@@ -744,11 +1021,18 @@
          }
      }
  
@@ -626,7 +626,19 @@
      {
          this.func_72906_B();
          this.field_73019_z.func_75755_a(this.field_72986_A, this.field_73061_a.func_71203_ab().func_72378_q());
-@@ -788,9 +1065,19 @@
+-        this.field_72988_C.func_75744_a();
++
++        // CraftBukkit start - save worldMaps once, rather than once per shared world
++        if (!(this instanceof WorldServerMulti))
++        {
++            this.field_72988_C.func_75744_a();
++        }
++
++        // CraftBukkit end
+     }
+ 
+     protected void func_72923_a(Entity p_72923_1_)
+@@ -788,9 +1072,19 @@
  
      public boolean func_72942_c(Entity p_72942_1_)
      {
@@ -647,7 +659,7 @@
              return true;
          }
          else
-@@ -807,11 +1094,21 @@
+@@ -807,11 +1101,21 @@
  
      public Explosion func_72885_a(Entity p_72885_1_, double p_72885_2_, double p_72885_4_, double p_72885_6_, float p_72885_8_, boolean p_72885_9_, boolean p_72885_10_)
      {
@@ -674,7 +686,7 @@
  
          if (!p_72885_10_)
          {
-@@ -866,7 +1163,8 @@
+@@ -866,7 +1170,8 @@
  
                  if (this.func_73043_a(blockeventdata))
                  {
@@ -684,7 +696,7 @@
                  }
              }
  
-@@ -892,14 +1190,16 @@
+@@ -892,14 +1197,16 @@
  
          if (flag != this.func_72896_J())
          {
@@ -709,7 +721,7 @@
          }
      }
  
-@@ -922,4 +1222,35 @@
+@@ -922,4 +1229,35 @@
      {
          return this.field_85177_Q;
      }
