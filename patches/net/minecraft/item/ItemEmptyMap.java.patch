@@ -11,12 +11,17 @@
  public class ItemEmptyMap extends ItemMapBase
  {
      protected ItemEmptyMap(int p_i1858_1_)
-@@ -18,13 +19,14 @@
-         ItemStack itemstack1 = new ItemStack(Item.field_77744_bd, 1, p_77659_2_.func_72841_b("map"));
+@@ -15,16 +16,18 @@
+ 
+     public ItemStack func_77659_a(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+     {
+-        ItemStack itemstack1 = new ItemStack(Item.field_77744_bd, 1, p_77659_2_.func_72841_b("map"));
++        World worldMain = p_77659_2_.getServer().getServer().worlds.get(0); // CraftBukkit - store reference to primary world
++        ItemStack itemstack1 = new ItemStack(Item.field_77744_bd, 1, worldMain.func_72841_b("map")); // CraftBukkit - use primary world for maps
          String s = "map_" + itemstack1.func_77960_j();
          MapData mapdata = new MapData(s);
 -        p_77659_2_.func_72823_a(s, mapdata);
-+        p_77659_2_.func_72823_a(s, (WorldSavedData) mapdata);
++        worldMain.func_72823_a(s, (WorldSavedData) mapdata); // CraftBukkit - use primary world for maps
          mapdata.field_76197_d = 0;
          int i = 128 * (1 << mapdata.field_76197_d);
          mapdata.field_76201_a = (int)(Math.round(p_77659_3_.field_70165_t / (double)i) * (long)i);

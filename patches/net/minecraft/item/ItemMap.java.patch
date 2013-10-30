@@ -22,16 +22,22 @@
  
  public class ItemMap extends ItemMapBase
  {
-@@ -23,7 +29,7 @@
+@@ -22,21 +28,26 @@
+ 
      public MapData func_77873_a(ItemStack p_77873_1_, World p_77873_2_)
      {
++        World worldMain = p_77873_2_.getServer().getServer().worlds.get(0); // CraftBukkit - store reference to primary world
          String s = "map_" + p_77873_1_.func_77960_j();
 -        MapData mapdata = (MapData)p_77873_2_.func_72943_a(MapData.class, s);
-+        MapData mapdata = (MapData) p_77873_2_.getServer().getServer().worlds.get(0).func_72943_a(MapData.class, s); // CraftBukkit - use primary world for maps
++        MapData mapdata = (MapData) worldMain.func_72943_a(MapData.class, s); // CraftBukkit - use primary world for maps
  
          if (mapdata == null && !p_77873_2_.field_72995_K)
          {
-@@ -34,9 +40,13 @@
+-            p_77873_1_.func_77964_b(p_77873_2_.func_72841_b("map"));
++            p_77873_1_.func_77964_b(worldMain.func_72841_b("map")); // CraftBukkit - use primary world for maps
+             s = "map_" + p_77873_1_.func_77960_j();
+             mapdata = new MapData(s);
+             mapdata.field_76197_d = 3;
              int i = 128 * (1 << mapdata.field_76197_d);
              mapdata.field_76201_a = Math.round((float)p_77873_2_.func_72912_H().func_76079_c() / (float)i) * i;
              mapdata.field_76199_b = Math.round((float)(p_77873_2_.func_72912_H().func_76074_e() / i)) * i;
@@ -39,7 +45,7 @@
 +            mapdata.field_76200_c = (byte)((WorldServer) p_77873_2_).dimension;  // CraftBukkit - fixes Bukkit multiworld maps
              mapdata.func_76185_a();
 -            p_77873_2_.func_72823_a(s, mapdata);
-+            p_77873_2_.func_72823_a(s, (WorldSavedData) mapdata);
++            worldMain.func_72823_a(s, (WorldSavedData) mapdata); // CraftBukkit - use primary world for maps
 +            // CraftBukkit start
 +            MapInitializeEvent event = new MapInitializeEvent(mapdata.mapView);
 +            Bukkit.getServer().getPluginManager().callEvent(event);
@@ -47,7 +53,7 @@
          }
  
          return mapdata;
-@@ -44,7 +54,8 @@
+@@ -44,7 +55,8 @@
  
      public void func_77872_a(World p_77872_1_, Entity p_77872_2_, MapData p_77872_3_)
      {
@@ -57,7 +63,15 @@
          {
              short short1 = 128;
              short short2 = 128;
-@@ -301,7 +312,11 @@
+@@ -288,6 +300,7 @@
+         if (p_77622_1_.func_77942_o() && p_77622_1_.func_77978_p().func_74767_n("map_is_scaling"))
+         {
+             MapData mapdata = Item.field_77744_bd.func_77873_a(p_77622_1_, p_77622_2_);
++            p_77622_2_ = p_77622_2_.getServer().getServer().worlds.get(0); // CraftBukkit - use primary world for maps
+             p_77622_1_.func_77964_b(p_77622_2_.func_72841_b("map"));
+             MapData mapdata1 = new MapData("map_" + p_77622_1_.func_77960_j());
+             mapdata1.field_76197_d = (byte)(mapdata.field_76197_d + 1);
+@@ -301,7 +314,11 @@
              mapdata1.field_76199_b = mapdata.field_76199_b;
              mapdata1.field_76200_c = mapdata.field_76200_c;
              mapdata1.func_76185_a();
