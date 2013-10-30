@@ -702,7 +702,6 @@ public final class CraftServer implements Server {
             return null;
         }
 
-        internal.field_72988_C = console.worlds.get(0).field_72988_C;
         internal.field_96442_D = getScoreboardManager().getMainScoreboard().getHandle();
 
         internal.field_73062_L = new net.minecraft.entity.EntityTracker(internal);

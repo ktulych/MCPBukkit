@@ -22,6 +22,15 @@
  
  public class ItemMap extends ItemMapBase
  {
+@@ -23,7 +29,7 @@
+     public MapData func_77873_a(ItemStack p_77873_1_, World p_77873_2_)
+     {
+         String s = "map_" + p_77873_1_.func_77960_j();
+-        MapData mapdata = (MapData)p_77873_2_.func_72943_a(MapData.class, s);
++        MapData mapdata = (MapData) p_77873_2_.getServer().getServer().worlds.get(0).func_72943_a(MapData.class, s); // CraftBukkit - use primary world for maps
+ 
+         if (mapdata == null && !p_77873_2_.field_72995_K)
+         {
 @@ -34,9 +40,13 @@
              int i = 128 * (1 << mapdata.field_76197_d);
              mapdata.field_76201_a = Math.round((float)p_77873_2_.func_72912_H().func_76079_c() / (float)i) * i;
